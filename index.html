@@ -1,0 +1,2806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Japan 2026">
+<meta name="theme-color" content="#cc0000">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<!-- BUILD: 20260828-051305 -->
+<title>Japan 2026 — Kellys in Japan v20260828-051305</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+/* ═══════════════════════════════════════════
+   JAPAN 2026 — POKÉMON GO THEME
+═══════════════════════════════════════════ */
+
+:root {
+  /* PGo palette */
+  --sky:        #0d1b4b;
+  --sky2:       #162259;
+  --sky3:       #1e2f7a;
+  --pokered:    #cc0000;
+  --pokered2:   #ff1a1a;
+  --yellow:     #ffd700;
+  --yellow2:    #ffe566;
+  --white:      #ffffff;
+  --card-bg:    #f0f4ff;
+  --card-bg2:   #e8eeff;
+  --border:     #c8d4f8;
+  --muted:      #6b7fc4;
+  --caught:     #1fa86b;
+  --caught-bg:  #e6f9f0;
+  --caught-border: #7ddbb0;
+  --rare:       #a855f7;
+  --rare-bg:    #f5eeff;
+  --pokeball-white: #f5f5f5;
+
+  /* city colors — kept vivid */
+  --tokyo:      #2979ff;
+  --hakone:     #00c853;
+  --osaka:      #d500f9;
+  --kyoto:      #ff1744;
+  --nara:       #ff9100;
+  --kobe:       #00b0ff;
+  --awaji:      #ff6d00;
+
+  --radius:     14px;
+  --radius-sm:  8px;
+  --radius-pill:50px;
+  --shadow:     0 2px 16px rgba(13,27,75,.13);
+  --shadow-glow:0 0 16px rgba(255,215,0,.25);
+  --nav-h:      68px;
+  --header-h:   56px;
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--sky);
+  color:#1a1f3a;
+  height:100%;
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+button{cursor:pointer;font-family:inherit;border:none;background:none}
+a{color:inherit;text-decoration:none}
+input,textarea{font-family:inherit}
+
+/* ── SHELL ── */
+.app-shell{
+  display:flex;flex-direction:column;
+  height:100dvh;max-width:430px;
+  margin:0 auto;background:var(--sky);
+  position:relative;
+  box-shadow:0 0 60px rgba(0,0,0,.4);
+}
+
+/* ── HEADER ── */
+.app-header{
+  height:var(--header-h);
+  background:linear-gradient(135deg,var(--pokered) 0%,#990000 100%);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;flex-shrink:0;
+  border-bottom:3px solid var(--yellow);
+  position:relative;z-index:10;
+  box-shadow:0 2px 20px rgba(204,0,0,.5);
+}
+.app-header::after{
+  content:'';position:absolute;bottom:-3px;left:0;right:0;
+  height:3px;background:linear-gradient(90deg,var(--yellow),var(--yellow2),var(--yellow));
+}
+.app-header-title{display:flex;align-items:center;gap:10px}
+.pokeball-icon{
+  width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(180deg,var(--pokered2) 50%,var(--pokeball-white) 50%);
+  border:2px solid white;position:relative;flex-shrink:0;
+  box-shadow:0 0 8px rgba(255,255,255,.4);
+}
+.pokeball-icon::after{
+  content:'';position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  width:8px;height:8px;border-radius:50%;
+  background:white;border:2px solid #ccc;
+}
+.app-header-title h1{
+  font-size:1.1rem;font-weight:900;
+  color:var(--white);letter-spacing:.03em;
+  text-shadow:0 1px 4px rgba(0,0,0,.4);
+}
+.app-header-title .jp{
+  font-family:'Noto Serif JP',serif;
+  font-size:.75rem;color:var(--yellow);
+  opacity:.9;font-weight:700;
+}
+.app-header-meta{
+  font-size:.6rem;color:rgba(255,255,255,.7);
+  letter-spacing:.06em;text-transform:uppercase;
+  text-align:right;line-height:1.5;
+}
+.install-btn{
+  background:var(--yellow);color:var(--pokered);
+  font-size:.65rem;font-weight:900;padding:5px 11px;
+  border-radius:var(--radius-pill);letter-spacing:.04em;
+  display:none;border:2px solid white;
+  text-transform:uppercase;
+}
+.install-btn.visible{display:block}
+
+/* ── CONTENT ── */
+.content-area{flex:1;overflow:hidden;display:flex;flex-direction:column;position:relative}
+
+/* ── SCREENS ── */
+.screen{
+  position:absolute;inset:0;overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:10px 10px calc(var(--nav-h) + var(--safe-bottom) + 10px);
+  display:none;
+  background:linear-gradient(180deg,var(--sky) 0%,var(--sky2) 100%);
+}
+.screen.active{display:block}
+.screen::-webkit-scrollbar{display:none}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav::-webkit-scrollbar{display:none;width:0;height:0}
+.bottom-nav{
+  height:calc(var(--nav-h) + var(--safe-bottom));
+  padding-bottom:var(--safe-bottom);
+  background:linear-gradient(180deg,#0a1540 0%,#070e2e 100%);
+  border-top:2px solid rgba(255,215,0,.3);
+  display:flex;align-items:stretch;flex-shrink:0;z-index:20;
+  overflow-x:scroll;overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+.bottom-nav::-webkit-scrollbar{display:none;}
+.nav-btn{
+  flex:0 0 68px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:2px;padding:4px 2px;
+  color:rgba(255,255,255,.35);transition:color .15s;
+  position:relative;
+  scroll-snap-align:start;
+}
+.nav-btn.active{color:var(--yellow)}
+.nav-btn.active .nav-label{color:var(--yellow)}
+.nav-btn.active::before{
+  content:'';position:absolute;
+  top:0;left:20%;right:20%;height:2px;
+  background:var(--yellow);
+  border-radius:0 0 3px 3px;
+  box-shadow:0 0 8px var(--yellow);
+}
+.nav-icon{font-size:1.15rem;line-height:1}
+.nav-label{font-size:.54rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.nav-badge{
+  position:absolute;top:5px;right:14%;
+  background:var(--pokered2);color:#fff;
+  font-size:.5rem;font-weight:900;
+  min-width:15px;height:15px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  padding:0 3px;border:1.5px solid white;
+  box-shadow:0 0 6px rgba(255,26,26,.6);
+}
+
+/* ── SECTION TITLE ── */
+.section-title{
+  font-size:.65rem;font-weight:900;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--yellow);
+  margin-bottom:8px;padding:0 2px;
+  text-shadow:0 0 10px rgba(255,215,0,.4);
+}
+
+/* ── POKÉDEX CARDS (Day Cards) ── */
+.day-card{
+  background:var(--card-bg);
+  border:2px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:8px;overflow:hidden;
+  box-shadow:var(--shadow);
+  transition:box-shadow .15s,transform .1s;
+  position:relative;
+}
+.day-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--city-color,#2979ff),transparent);
+  opacity:.6;
+}
+.day-card.has-tickets{
+  border-color:var(--caught-border);
+  box-shadow:0 2px 16px rgba(31,168,107,.2);
+}
+.day-card.has-tickets::before{
+  background:linear-gradient(90deg,var(--caught),transparent);
+  opacity:1;
+}
+
+.day-header{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 12px;cursor:pointer;
+  user-select:none;-webkit-tap-highlight-color:transparent;
+  background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(240,244,255,.95));
+}
+.day-num{
+  font-size:.58rem;font-weight:900;letter-spacing:.08em;
+  text-transform:uppercase;color:#fff;
+  border-radius:var(--radius-sm);padding:3px 7px;flex-shrink:0;
+  text-shadow:0 1px 2px rgba(0,0,0,.3);
+  box-shadow:0 2px 6px rgba(0,0,0,.2);
+}
+.day-date{font-size:.78rem;font-weight:700;color:#1a1f3a;flex:1;line-height:1.2}
+.day-city-tag{font-size:.6rem;color:var(--muted);white-space:nowrap;font-weight:600}
+.day-chevron{font-size:.75rem;color:var(--border);transition:transform .2s;flex-shrink:0}
+.day-card.expanded .day-chevron{transform:rotate(180deg)}
+
+/* ticket chips on cards */
+.day-ticket-bar{
+  padding:4px 12px 8px;
+  display:flex;flex-wrap:wrap;gap:4px;
+  background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(240,244,255,.95));
+}
+.ticket-chip{
+  display:inline-flex;align-items:center;gap:3px;
+  background:var(--caught-bg);color:var(--caught);
+  font-size:.58rem;font-weight:800;
+  padding:2px 8px;border-radius:var(--radius-pill);
+  border:1.5px solid var(--caught-border);
+  text-transform:uppercase;letter-spacing:.04em;
+}
+.ticket-chip::before{content:'✓ '}
+.ticket-chip.pending{
+  background:rgba(255,215,0,.15);color:#b8860b;
+  border-color:var(--yellow);
+}
+.ticket-chip.pending::before{content:'⏳ '}
+
+/* card body */
+.day-body{
+  display:none;
+  border-top:1.5px solid var(--border);
+  background:rgba(255,255,255,.97);
+}
+.day-card.expanded .day-body{display:block}
+
+.travel-banner{
+  background:linear-gradient(135deg,#1a237e,#283593);
+  border-radius:0;padding:8px 12px;
+  font-size:.68rem;color:#e8eaf6;line-height:1.5;
+  border-left:4px solid var(--yellow);
+}
+
+/* stop rows */
+.stop-row{
+  display:flex;align-items:flex-start;gap:8px;
+  padding:8px 12px;border-bottom:1px solid rgba(200,212,248,.5);
+  -webkit-tap-highlight-color:transparent;
+  background:transparent;transition:background .1s;
+}
+.stop-row:last-child{border-bottom:none}
+.stop-row:active{background:rgba(200,212,248,.3)}
+.stop-dot{
+  width:9px;height:9px;border-radius:50%;flex-shrink:0;
+  margin-top:4px;box-shadow:0 0 6px currentColor;
+}
+.stop-name{font-size:.77rem;font-weight:700;color:#1a1f3a;line-height:1.3}
+.stop-note{font-size:.66rem;color:#4a5280;line-height:1.35;margin-top:2px}
+.stop-tip{
+  font-size:.63rem;color:var(--pokered);
+  margin-top:3px;line-height:1.35;font-weight:600;
+}
+.stop-tip::before{content:'⚡ '}
+.stop-booked-tag{
+  display:inline-flex;align-items:center;gap:3px;
+  background:var(--caught-bg);color:var(--caught);
+  font-size:.58rem;font-weight:800;
+  padding:2px 8px;border-radius:var(--radius-pill);
+  border:1px solid var(--caught-border);
+  margin-top:3px;text-transform:uppercase;letter-spacing:.03em;
+}
+
+/* ── FLIGHT CARDS ── */
+.flight-group-label{
+  font-size:.6rem;font-weight:900;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--yellow);
+  margin:12px 0 6px;text-shadow:0 0 8px rgba(255,215,0,.3);
+}
+.flight-card{
+  background:var(--card-bg);border:2px solid var(--border);
+  border-radius:var(--radius);padding:12px;margin-bottom:8px;
+  box-shadow:var(--shadow);
+}
+.flight-card.confirmed{border-color:var(--caught-border);box-shadow:0 2px 12px rgba(31,168,107,.15)}
+.flight-card.needs-confirm{border-color:rgba(255,215,0,.5);box-shadow:0 2px 12px rgba(255,215,0,.1)}
+.fc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.fc-label-badge{
+  font-size:.58rem;font-weight:800;letter-spacing:.08em;
+  text-transform:uppercase;padding:3px 8px;border-radius:var(--radius-pill);
+}
+.fc-label-badge.intl{background:var(--sky3);color:var(--yellow)}
+.fc-label-badge.dom{background:var(--rare-bg);color:var(--rare)}
+.fc-confirmed-badge{
+  font-size:.6rem;font-weight:800;color:var(--caught);
+  background:var(--caught-bg);padding:2px 8px;
+  border-radius:var(--radius-pill);border:1px solid var(--caught-border);
+}
+.fc-route{font-size:1rem;font-weight:900;color:#1a1f3a;letter-spacing:.01em;margin-bottom:4px}
+.fc-date{font-size:.72rem;font-weight:700;color:#1a1f3a;margin-bottom:3px}
+.fc-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:.64rem;color:var(--muted)}
+.fc-note{font-size:.64rem;color:var(--muted);margin-top:6px;line-height:1.4;padding-top:6px;border-top:1px solid var(--border)}
+.fc-note.warn{color:var(--pokered);font-weight:600}
+.flight-timing-alert{
+  background:rgba(204,0,0,.08);border:1.5px solid rgba(204,0,0,.3);
+  border-left:3px solid var(--pokered);border-radius:var(--radius-sm);
+  padding:10px 12px;margin-bottom:12px;
+  font-size:.68rem;color:#8b0000;line-height:1.5;
+}
+
+/* ── HOTEL CARDS ── */
+.hotel-card{
+  background:var(--card-bg);border:2px solid var(--border);
+  border-radius:var(--radius);padding:12px;margin-bottom:8px;
+  box-shadow:var(--shadow);
+}
+.hotel-nights-badge{
+  font-size:.58rem;font-weight:800;letter-spacing:.08em;
+  text-transform:uppercase;color:#fff;
+  border-radius:var(--radius-pill);padding:3px 10px;
+  display:inline-block;margin-bottom:6px;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+.hotel-name{font-size:.85rem;font-weight:800;color:#1a1f3a;margin-bottom:2px}
+.hotel-sub{font-size:.67rem;color:var(--muted);margin-bottom:5px;font-weight:600}
+.hotel-note{font-size:.68rem;color:#4a5280;line-height:1.45}
+.hotel-cut{
+  background:rgba(204,0,0,.06);border:1.5px solid rgba(204,0,0,.2);
+  border-radius:var(--radius);padding:11px;margin-top:4px;
+}
+
+/* ── POKÉDEX TICKET ITEMS ── */
+.tickets-intro{
+  background:linear-gradient(135deg,var(--sky3),#1a237e);
+  border:1.5px solid rgba(255,215,0,.3);
+  border-radius:var(--radius);padding:12px;margin-bottom:12px;
+  font-size:.69rem;color:#c5caf5;line-height:1.5;
+}
+.tickets-intro strong{color:var(--yellow)}
+
+/* XP progress bar */
+.xp-bar-wrap{
+  background:rgba(255,255,255,.1);border-radius:var(--radius-pill);
+  height:10px;margin-bottom:14px;overflow:hidden;
+  border:1px solid rgba(255,215,0,.2);
+}
+.xp-bar-fill{
+  background:linear-gradient(90deg,var(--caught),#34d399);
+  height:100%;border-radius:var(--radius-pill);
+  transition:width .4s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 0 8px rgba(31,168,107,.5);
+}
+.xp-summary{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:8px;padding:0 2px;
+}
+.xp-label{font-size:.72rem;font-weight:800;color:var(--yellow)}
+.xp-sub{font-size:.65rem;color:rgba(255,255,255,.5)}
+
+.urgency-section-label{
+  font-size:.6rem;font-weight:900;letter-spacing:.12em;
+  text-transform:uppercase;margin:10px 0 6px;
+  padding:4px 8px;border-radius:var(--radius-sm);
+  display:inline-block;
+}
+.urgency-section-label.high{background:rgba(204,0,0,.15);color:#ff6b6b}
+.urgency-section-label.med{background:rgba(255,215,0,.15);color:var(--yellow)}
+.urgency-section-label.low{background:rgba(31,168,107,.15);color:#34d399}
+
+.bookable-item{
+  background:var(--card-bg);border:2px solid var(--border);
+  border-radius:var(--radius);margin-bottom:8px;overflow:hidden;
+  box-shadow:var(--shadow);transition:box-shadow .15s;
+}
+.bookable-item.booked{
+  border-color:var(--caught-border);
+  box-shadow:0 2px 16px rgba(31,168,107,.2);
+}
+.bookable-item.expanded{box-shadow:0 4px 24px rgba(13,27,75,.2)}
+
+.bi-header{
+  display:flex;align-items:center;gap:10px;padding:11px 12px;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;
+  background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(240,244,255,.95));
+}
+.bi-icon{font-size:1.4rem;flex-shrink:0}
+.bi-info{flex:1;min-width:0}
+.bi-name{font-size:.8rem;font-weight:800;color:#1a1f3a}
+.bi-day{font-size:.62rem;color:var(--muted);margin-top:1px;font-weight:600}
+.bi-status{
+  font-size:.58rem;font-weight:800;
+  padding:3px 9px;border-radius:var(--radius-pill);
+  flex-shrink:0;text-transform:uppercase;letter-spacing:.04em;
+}
+.bi-status.booked{background:var(--caught-bg);color:var(--caught);border:1px solid var(--caught-border)}
+.bi-status.unbooked{background:rgba(200,212,248,.5);color:var(--muted)}
+.bi-urgency-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.urgency-high{background:var(--pokered2);box-shadow:0 0 6px rgba(255,26,26,.5)}
+.urgency-med{background:var(--yellow);box-shadow:0 0 6px rgba(255,215,0,.5)}
+.urgency-low{background:#34d399;box-shadow:0 0 6px rgba(52,211,153,.5)}
+
+.bi-body{
+  display:none;padding:12px;
+  border-top:1.5px solid var(--border);
+  background:rgba(255,255,255,.98);
+}
+.bookable-item.expanded .bi-body{display:block}
+
+.bi-instructions{
+  font-size:.68rem;color:#4a5280;line-height:1.5;
+  margin-bottom:10px;background:var(--card-bg2);
+  border-radius:var(--radius-sm);padding:8px 10px;
+  border-left:3px solid var(--sky3);
+}
+.bi-link{
+  display:inline-flex;align-items:center;gap:5px;
+  background:linear-gradient(135deg,var(--sky),var(--sky3));
+  color:var(--yellow);font-size:.68rem;font-weight:800;
+  padding:7px 14px;border-radius:var(--radius-pill);
+  margin-bottom:12px;border:1.5px solid rgba(255,215,0,.3);
+  text-transform:uppercase;letter-spacing:.04em;
+}
+
+/* ticket form */
+.ticket-form{display:flex;flex-direction:column;gap:8px}
+.form-row{display:flex;flex-direction:column;gap:3px}
+.form-label{
+  font-size:.6rem;font-weight:800;color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.form-input{
+  border:1.5px solid var(--border);border-radius:var(--radius-sm);
+  padding:8px 10px;font-size:.78rem;color:#1a1f3a;
+  background:var(--card-bg);width:100%;transition:border-color .15s;
+}
+.form-input:focus{outline:none;border-color:var(--sky3);box-shadow:0 0 0 3px rgba(30,47,122,.1)}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.form-actions{display:flex;gap:8px;margin-top:4px}
+.btn-save{
+  flex:1;
+  background:linear-gradient(135deg,var(--pokered),#990000);
+  color:#fff;font-size:.75rem;font-weight:900;
+  padding:10px;border-radius:var(--radius-pill);
+  letter-spacing:.06em;text-transform:uppercase;
+  box-shadow:0 4px 12px rgba(204,0,0,.3);
+  border:1.5px solid rgba(255,255,255,.2);
+}
+.btn-save::before{content:'⚡ '}
+.btn-clear{
+  background:rgba(204,0,0,.1);color:var(--pokered);
+  font-size:.75rem;font-weight:800;
+  padding:10px 14px;border-radius:var(--radius-pill);
+  border:1.5px solid rgba(204,0,0,.3);
+}
+.saved-ticket-display{
+  background:var(--caught-bg);border:1.5px solid var(--caught-border);
+  border-radius:var(--radius-sm);padding:10px 12px;margin-top:8px;
+}
+.std-label{
+  font-size:.58rem;font-weight:900;color:var(--caught);
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;
+}
+.std-row{display:flex;justify-content:space-between;font-size:.7rem;color:#2d5a45;margin-top:3px}
+.std-val{font-weight:800;color:var(--caught)}
+
+/* ── LINKS ── */
+.link-section-label{
+  font-size:.6rem;font-weight:900;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--yellow);
+  margin:12px 0 6px;text-shadow:0 0 8px rgba(255,215,0,.3);
+}
+.link-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 12px;background:var(--card-bg);
+  border:1.5px solid var(--border);border-radius:var(--radius-sm);
+  margin-bottom:5px;box-shadow:var(--shadow);
+  cursor:pointer;transition:background .1s;
+  -webkit-tap-highlight-color:transparent;
+}
+.link-item:active{background:var(--card-bg2)}
+.link-item.urgent{border-left:3px solid var(--pokered)}
+.link-name{font-size:.75rem;font-weight:700;color:#1a1f3a}
+.link-desc{font-size:.62rem;color:var(--muted);margin-top:1px}
+.link-arr{font-size:.9rem;color:var(--border)}
+
+/* ── ALERTS ── */
+.alert-card{
+  background:var(--card-bg);border:1.5px solid var(--border);
+  border-left:3px solid var(--pokered);
+  border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:7px;
+  box-shadow:var(--shadow);
+}
+.alert-card.info{border-left-color:var(--yellow)}
+.alert-title{font-size:.76rem;font-weight:800;color:#1a1f3a;margin-bottom:3px}
+.alert-body{font-size:.66rem;color:#4a5280;line-height:1.45}
+.alert-section-label{
+  font-size:.6rem;font-weight:900;letter-spacing:.12em;
+  text-transform:uppercase;margin:4px 0 7px;display:block;
+  color:#ff6b6b;text-shadow:0 0 8px rgba(255,26,26,.3);
+}
+.alert-section-label.soon{color:var(--yellow);text-shadow:0 0 8px rgba(255,215,0,.3);margin-top:14px}
+
+/* ── MAP ── */
+.map-screen{padding:0!important;display:none}
+.map-screen.active{display:flex;flex-direction:column}
+#map{flex:1;margin-bottom:calc(var(--nav-h) + var(--safe-bottom))}
+
+/* dark map filters */
+.map-filters{
+  display:flex;gap:5px;padding:8px 10px;
+  overflow-x:auto;background:rgba(10,20,64,.95);
+  border-bottom:1px solid rgba(255,215,0,.2);flex-shrink:0;
+  -webkit-overflow-scrolling:touch;
+}
+.map-filters::-webkit-scrollbar{display:none}
+.map-filter-chip{
+  white-space:nowrap;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:var(--radius-pill);
+  padding:4px 10px;font-size:.63rem;font-weight:700;
+  color:rgba(255,255,255,.45);flex-shrink:0;transition:all .15s;
+  text-transform:uppercase;letter-spacing:.04em;
+}
+.map-filter-chip.on{
+  background:var(--yellow);color:var(--sky);
+  border-color:var(--yellow);
+  box-shadow:0 0 10px rgba(255,215,0,.4);
+}
+
+/* leaflet overrides for dark theme */
+.leaflet-popup-content-wrapper{
+  border-radius:var(--radius)!important;padding:0!important;
+  overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.3)!important;
+  max-width:250px;border:2px solid var(--border);
+}
+.leaflet-popup-content{margin:0!important;width:100%!important}
+.popup-inner{padding:12px 14px;background:var(--card-bg)}
+.popup-day{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;font-weight:700}
+.popup-name{font-size:.92rem;font-weight:900;color:#1a1f3a;margin-bottom:5px;line-height:1.3}
+.popup-desc{font-size:.66rem;color:#4a5280;line-height:1.45}
+.popup-tip{margin-top:7px;padding-top:7px;border-top:1px solid var(--border);font-size:.63rem;color:var(--pokered);font-weight:700}
+.popup-tip::before{content:'⚡ '}
+
+.leaflet-control-zoom{border:none!important;box-shadow:var(--shadow)!important}
+.leaflet-control-zoom a{
+  background:var(--sky)!important;color:var(--yellow)!important;
+  border-bottom:1px solid rgba(255,215,0,.2)!important;
+  font-weight:900!important;width:30px!important;height:30px!important;line-height:30px!important;
+}
+.leaflet-control-attribution{font-size:.5rem!important;background:rgba(10,20,64,.8)!important;color:rgba(255,255,255,.4)!important}
+
+/* ── INFO BANNERS ── */
+.info-banner{border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:10px;font-size:.69rem;line-height:1.5}
+.info-banner.green{background:var(--caught-bg);border:1.5px solid var(--caught-border);color:#1b5e20}
+.info-banner.warn{background:rgba(204,0,0,.08);border:1.5px solid rgba(204,0,0,.3);color:#8b0000;border-left:3px solid var(--pokered)}
+.info-banner.blue{background:linear-gradient(135deg,var(--sky3),#1a237e);border:1.5px solid rgba(255,215,0,.2);color:#c5caf5}
+.info-banner strong{color:var(--yellow)}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;
+  bottom:calc(var(--nav-h) + var(--safe-bottom) + 12px);
+  left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--pokered),#990000);
+  color:#fff;font-size:.74rem;font-weight:800;
+  padding:8px 18px;border-radius:var(--radius-pill);
+  box-shadow:0 4px 20px rgba(204,0,0,.4);
+  z-index:9999;white-space:nowrap;
+  opacity:0;transition:opacity .2s;pointer-events:none;
+  max-width:90%;border:1.5px solid rgba(255,255,255,.2);
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.toast.show{opacity:1}
+
+/* badges */
+.cbadge{display:inline-block;background:var(--caught-bg);color:var(--caught);font-size:.56rem;font-weight:900;border-radius:4px;padding:1px 5px;margin-left:4px;vertical-align:middle;border:1px solid var(--caught-border)}
+.wbadge{display:inline-block;background:rgba(255,215,0,.15);color:#b8860b;font-size:.56rem;font-weight:900;border-radius:4px;padding:1px 5px;margin-left:4px;vertical-align:middle;border:1px solid var(--yellow)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+
+/* ═══════════════════════════════════════════
+   EDIT MODE STYLES
+═══════════════════════════════════════════ */
+
+/* Edit screen header */
+.edit-section-title {
+  font-size:.65rem;font-weight:900;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--yellow);
+  margin:14px 0 8px;padding:0 2px;
+  text-shadow:0 0 10px rgba(255,215,0,.4);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.edit-section-title:first-child { margin-top:0; }
+
+/* Edit cards */
+.edit-card {
+  background:var(--card-bg);border:2px solid var(--border);
+  border-radius:var(--radius);margin-bottom:8px;
+  overflow:hidden;box-shadow:var(--shadow);
+}
+.edit-card-header {
+  display:flex;align-items:center;gap:8px;
+  padding:10px 12px;cursor:pointer;
+  background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(240,244,255,.95));
+  -webkit-tap-highlight-color:transparent;
+}
+.edit-card-header .day-num { font-size:.58rem; }
+.edit-card-body {
+  display:none;padding:12px;
+  border-top:1.5px solid var(--border);
+  background:rgba(255,255,255,.98);
+}
+.edit-card.open .edit-card-body { display:block; }
+.edit-card-chevron {
+  font-size:.75rem;color:var(--border);
+  margin-left:auto;transition:transform .2s;
+}
+.edit-card.open .edit-card-chevron { transform:rotate(180deg); }
+
+/* Stop edit rows */
+.stop-edit-row {
+  background:var(--card-bg2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:10px;
+  margin-bottom:8px;position:relative;
+}
+.stop-edit-row:last-child { margin-bottom:0; }
+.stop-edit-label {
+  font-size:.58rem;font-weight:900;color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:6px;display:flex;align-items:center;
+  justify-content:space-between;
+}
+.stop-color-dot {
+  width:8px;height:8px;border-radius:50%;
+  display:inline-block;margin-right:4px;
+}
+
+/* Edit inputs */
+.edit-input {
+  border:1.5px solid var(--border);border-radius:var(--radius-sm);
+  padding:7px 10px;font-size:.75rem;color:var(--ink);
+  background:var(--paper);width:100%;
+  transition:border-color .15s;margin-bottom:6px;
+}
+.edit-input:last-child { margin-bottom:0; }
+.edit-input:focus { outline:none;border-color:var(--sky3);box-shadow:0 0 0 3px rgba(30,47,122,.1); }
+.edit-input.small { font-size:.7rem; }
+
+/* Edit action buttons */
+.edit-btn-row {
+  display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;
+}
+.btn-edit-save {
+  background:linear-gradient(135deg,var(--pokered),#990000);
+  color:#fff;font-size:.68rem;font-weight:900;
+  padding:7px 14px;border-radius:var(--radius-pill);
+  letter-spacing:.04em;text-transform:uppercase;
+  box-shadow:0 3px 8px rgba(204,0,0,.25);
+  border:1.5px solid rgba(255,255,255,.2);
+}
+.btn-edit-save::before { content:'⚡ '; }
+.btn-edit-cancel {
+  background:rgba(200,212,248,.4);color:var(--muted);
+  font-size:.68rem;font-weight:700;
+  padding:7px 12px;border-radius:var(--radius-pill);
+  border:1px solid var(--border);
+}
+.btn-edit-danger {
+  background:rgba(204,0,0,.08);color:var(--pokered);
+  font-size:.68rem;font-weight:700;
+  padding:7px 12px;border-radius:var(--radius-pill);
+  border:1.5px solid rgba(204,0,0,.25);
+  margin-left:auto;
+}
+.btn-add-stop {
+  width:100%;background:linear-gradient(135deg,var(--sky),var(--sky3));
+  color:var(--yellow);font-size:.68rem;font-weight:800;
+  padding:8px;border-radius:var(--radius-sm);
+  border:1.5px solid rgba(255,215,0,.25);
+  text-transform:uppercase;letter-spacing:.04em;
+  margin-top:8px;
+}
+.btn-add-stop::before { content:'+ '; }
+
+/* Day reorder controls */
+.move-btn {
+  background:rgba(200,212,248,.4);border:1px solid var(--border);
+  border-radius:4px;padding:2px 6px;font-size:.7rem;
+  color:var(--muted);
+}
+
+/* Reset banner */
+.reset-banner {
+  background:rgba(204,0,0,.08);border:1.5px solid rgba(204,0,0,.25);
+  border-radius:var(--radius-sm);padding:10px 12px;
+  margin-bottom:12px;font-size:.68rem;color:#8b0000;
+  line-height:1.5;display:flex;align-items:center;
+  justify-content:space-between;gap:10px;
+}
+.btn-reset-all {
+  background:rgba(204,0,0,.15);color:var(--pokered);
+  font-size:.65rem;font-weight:900;
+  padding:6px 12px;border-radius:var(--radius-pill);
+  border:1.5px solid rgba(204,0,0,.3);
+  white-space:nowrap;flex-shrink:0;
+}
+
+/* Hotel edit cards */
+.hotel-edit-card {
+  background:var(--card-bg);border:2px solid var(--border);
+  border-radius:var(--radius);padding:12px;
+  margin-bottom:8px;box-shadow:var(--shadow);
+}
+.hotel-edit-card .hotel-nights-badge { margin-bottom:8px; }
+
+/* Edit mode intro */
+.edit-intro {
+  background:linear-gradient(135deg,var(--sky3),#1a237e);
+  border:1.5px solid rgba(255,215,0,.2);
+  border-radius:var(--radius);padding:10px 12px;
+  margin-bottom:12px;font-size:.68rem;color:#c5caf5;
+  line-height:1.5;
+}
+.edit-intro strong { color:var(--yellow); }
+
+/* Unsaved indicator */
+.unsaved-dot {
+  display:inline-block;width:7px;height:7px;
+  border-radius:50%;background:var(--yellow);
+  margin-left:5px;vertical-align:middle;
+  box-shadow:0 0 6px rgba(255,215,0,.6);
+  animation:pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:.6; transform:scale(.8); }
+}
+
+/* ── FLOATING EDIT BUTTON ── */
+.edit-fab {
+  position: fixed;
+  right: 16px;
+  bottom: calc(var(--nav-h) + var(--safe-bottom) + 12px);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--pokered), #990000);
+  color: white;
+  font-size: 1.2rem;
+  border: 2.5px solid var(--yellow);
+  box-shadow: 0 4px 16px rgba(204,0,0,.5), 0 0 0 3px rgba(255,215,0,.15);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .15s, box-shadow .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.edit-fab:active {
+  transform: scale(.92);
+  box-shadow: 0 2px 8px rgba(204,0,0,.4);
+}
+/* Hide FAB when edit screen is active */
+.edit-fab.hidden { display: none; }
+
+
+/* ── FOOD & STORES SCREEN ── */
+.food-city-header{
+  font-family:'Noto Serif JP',serif;font-size:1rem;font-weight:700;
+  color:var(--yellow);padding:10px 12px;margin:4px 0 8px;
+  background:linear-gradient(135deg,rgba(255,215,0,.08),transparent);
+  border-left:3px solid var(--yellow);border-radius:0 8px 8px 0;
+  text-shadow:0 0 10px rgba(255,215,0,.3);
+}
+.food-cat-label{
+  font-size:.6rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);margin:12px 0 6px 2px;
+}
+.food-card{
+  background:#fff;border:2px solid var(--border);border-radius:12px;
+  margin-bottom:8px;overflow:hidden;box-shadow:0 2px 12px rgba(13,27,75,.1);
+}
+.food-card-hdr{
+  display:flex;align-items:center;gap:10px;padding:11px 12px;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;
+  background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(240,244,255,.95));
+}
+.food-icon{font-size:1.35rem;flex-shrink:0}
+.food-info{flex:1;min-width:0}
+.food-name{font-size:.8rem;font-weight:800;color:#1a1f3a;line-height:1.2}
+.food-meta{font-size:.62rem;color:var(--muted);margin-top:1px;font-weight:600}
+.food-price{
+  font-size:.65rem;font-weight:800;padding:3px 8px;
+  border-radius:20px;flex-shrink:0;white-space:nowrap;
+}
+.price-cheap{background:#e6f9f0;color:var(--caught);border:1px solid var(--caught-bd)}
+.price-mid{background:rgba(255,215,0,.15);color:#8b6914;border:1px solid rgba(255,215,0,.4)}
+.price-high{background:rgba(204,0,0,.08);color:var(--red);border:1px solid rgba(204,0,0,.25)}
+.food-body{
+  display:none;padding:11px 12px;border-top:1.5px solid var(--border);
+  background:rgba(255,255,255,.98);
+}
+.food-card.open .food-body{display:block}
+.food-desc{font-size:.7rem;color:#4a5280;line-height:1.5;margin-bottom:8px}
+.food-tip{
+  font-size:.67rem;color:var(--red);font-weight:600;
+  margin-bottom:8px;line-height:1.4;
+}
+.food-tip::before{content:'⚡ '}
+.food-tag-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.food-tag{
+  font-size:.58rem;font-weight:700;padding:2px 8px;
+  border-radius:20px;background:var(--card);
+  border:1px solid var(--border);color:var(--muted);
+}
+.food-map-btn{
+  display:inline-flex;align-items:center;gap:4px;
+  background:linear-gradient(135deg,var(--ink),var(--ink2));
+  color:var(--yellow);font-size:.67rem;font-weight:800;
+  padding:7px 14px;border-radius:20px;
+  border:1.5px solid rgba(255,215,0,.3);text-decoration:none;
+  text-transform:uppercase;letter-spacing:.04em;
+}
+
+
+/* ── APPS SCREEN ── */
+.app-category { font-size:.6rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--yellow);margin:12px 0 6px 2px;text-shadow:0 0 8px rgba(255,215,0,.3); }
+.app-card { background:#fff;border:2px solid var(--border);border-radius:12px;display:flex;align-items:center;gap:12px;padding:11px 12px;margin-bottom:8px;box-shadow:0 2px 12px rgba(13,27,75,.1); }
+.app-emoji { font-size:1.8rem;flex-shrink:0; }
+.app-info { flex:1;min-width:0; }
+.app-name { font-size:.8rem;font-weight:800;color:#1a1f3a;margin-bottom:1px; }
+.app-desc { font-size:.63rem;color:var(--muted);line-height:1.35; }
+.app-tag { font-size:.57rem;font-weight:700;padding:1px 7px;border-radius:10px;display:inline-block;margin-top:3px; }
+.app-tag.free { background:#e6f9f0;color:var(--caught);border:1px solid var(--caught-bd); }
+.app-tag.preinstalled { background:rgba(255,215,0,.15);color:#8b6914;border:1px solid rgba(255,215,0,.4); }
+.app-tag.paid { background:rgba(204,0,0,.08);color:var(--red);border:1px solid rgba(204,0,0,.25); }
+.app-btn { background:linear-gradient(135deg,var(--ink),var(--ink2));color:var(--yellow);font-size:.63rem;font-weight:800;padding:7px 12px;border-radius:20px;border:1.5px solid rgba(255,215,0,.3);text-decoration:none;white-space:nowrap;flex-shrink:0;display:flex;align-items:center; }
+.app-btn.installed { background:linear-gradient(135deg,var(--caught),#16834f);color:#fff;border-color:var(--caught-bd); }
+.app-priority { border-left:3px solid var(--red); }
+.app-priority-badge { font-size:.55rem;font-weight:900;background:var(--red);color:#fff;padding:1px 6px;border-radius:10px;margin-left:4px;vertical-align:middle; }
+
+
+/* ════════════════════════════════════
+   POKÉMON GO ENHANCED VISUAL THEME
+   Kid-friendly, vibrant, tactile
+════════════════════════════════════ */
+
+/* Animated gradient background for screens */
+.screen {
+  background: linear-gradient(160deg, #0d1b4b 0%, #162259 40%, #1a2d6e 100%) !important;
+}
+
+/* Day cards — PGo Pokédex style */
+.day-card {
+  border-radius: 16px !important;
+  border-width: 2px !important;
+  position: relative;
+  overflow: visible !important;
+}
+
+/* Glowing caught border */
+.day-card.has-tickets {
+  box-shadow: 0 0 0 2px var(--caught-bd), 0 4px 20px rgba(31,168,107,.3) !important;
+}
+
+/* Day number badge — bigger, rounder, more PGo */
+.day-num {
+  font-size: .65rem !important;
+  border-radius: 8px !important;
+  padding: 4px 8px !important;
+  font-weight: 900 !important;
+  letter-spacing: .05em !important;
+  box-shadow: 0 3px 8px rgba(0,0,0,.3) !important;
+}
+
+/* Card header gradient */
+.day-header {
+  background: linear-gradient(135deg, rgba(255,255,255,.96) 0%, rgba(232,238,255,.97) 100%) !important;
+  border-radius: 14px 14px 0 0 !important;
+  padding: 11px 14px !important;
+}
+
+/* Stop dots — glowing */
+.stop-dot {
+  width: 10px !important;
+  height: 10px !important;
+  border: 2px solid rgba(255,255,255,.6) !important;
+  box-shadow: 0 0 6px currentColor !important;
+}
+
+/* Stop tips — PGo lightning bolt style */
+.stop-tip::before { content: '⚡ ' !important; }
+.stop-tip { 
+  background: rgba(204,0,0,.06) !important;
+  border-left: 2px solid var(--red) !important;
+  padding: 4px 8px !important;
+  border-radius: 0 6px 6px 0 !important;
+}
+
+/* Ticket chips — more PGo */
+.ticket-chip {
+  font-size: .62rem !important;
+  padding: 3px 10px !important;
+  border-radius: 20px !important;
+  letter-spacing: .05em !important;
+  box-shadow: 0 2px 6px rgba(31,168,107,.2) !important;
+}
+.ticket-chip::before { content: '✓ ' !important; }
+
+/* Nav bar — PGo bottom bar style */
+.bottom-nav {
+  border-top: 2px solid rgba(255,215,0,.4) !important;
+  background: linear-gradient(180deg, #0a1540 0%, #060d2a 100%) !important;
+}
+.nav-btn.active .nav-label { color: var(--yellow) !important; font-weight: 900 !important; }
+.nav-icon { font-size: 1.25rem !important; }
+
+/* Pokéball spinner in header */
+.pokeball {
+  animation: pokeball-spin 8s linear infinite;
+}
+@keyframes pokeball-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Header — stronger red gradient */
+.hdr {
+  background: linear-gradient(135deg, #dd0000 0%, #aa0000 50%, #880000 100%) !important;
+  box-shadow: 0 3px 20px rgba(204,0,0,.6) !important;
+}
+
+/* Edit + book button bar */
+.top-action-bar button {
+  border-radius: 12px !important;
+  font-size: .75rem !important;
+  font-weight: 900 !important;
+  padding: 10px !important;
+  letter-spacing: .04em !important;
+}
+
+/* Pokédex catch screen */
+.poke-item {
+  border-radius: 14px !important;
+  border-width: 2px !important;
+}
+.poke-item.caught {
+  box-shadow: 0 0 0 2px var(--caught-bd), 0 4px 16px rgba(31,168,107,.25) !important;
+}
+.bi-status.ok {
+  animation: caught-pulse 2s ease-in-out infinite;
+}
+@keyframes caught-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(31,168,107,.4); }
+  50% { box-shadow: 0 0 0 4px rgba(31,168,107,.1); }
+}
+
+/* urgency dots — glowing */
+.urgency-high { box-shadow: 0 0 8px rgba(255,26,26,.8) !important; animation: red-pulse 1.5s ease infinite; }
+.urgency-med  { box-shadow: 0 0 8px rgba(255,215,0,.6) !important; }
+@keyframes red-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .7; transform: scale(1.2); }
+}
+
+/* XP bar — more vibrant */
+.xp-fill {
+  background: linear-gradient(90deg, #00e676, #1fa86b, #00c853) !important;
+  box-shadow: 0 0 12px rgba(0,230,118,.5) !important;
+}
+.xp-bar-wrap {
+  height: 12px !important;
+  border-radius: 6px !important;
+}
+
+/* Food cards */
+.food-card { border-radius: 14px !important; }
+.food-card-hdr { background: linear-gradient(135deg, rgba(255,255,255,.96), rgba(232,238,255,.97)) !important; }
+
+/* App cards */
+.app-card { border-radius: 14px !important; }
+.app-card.app-priority { 
+  border-left: 4px solid var(--red) !important;
+  box-shadow: 0 0 0 1px rgba(204,0,0,.15), 0 4px 16px rgba(204,0,0,.1) !important;
+}
+
+/* Catch button */
+.btn-catch, .btn-save {
+  font-size: .8rem !important;
+  padding: 11px !important;
+  border-radius: 25px !important;
+  letter-spacing: .08em !important;
+  box-shadow: 0 4px 16px rgba(204,0,0,.4) !important;
+}
+.btn-catch::before, .btn-save::before { content: '⚡ ' !important; }
+
+/* Toast — more PGo */
+.toast {
+  border-radius: 25px !important;
+  font-size: .78rem !important;
+  padding: 10px 22px !important;
+  box-shadow: 0 6px 24px rgba(204,0,0,.5) !important;
+}
+
+/* Section labels */
+.sec, .xp-lbl, .food-city-header {
+  text-shadow: 0 0 15px rgba(255,215,0,.5) !important;
+}
+
+/* Banner improvements */
+.banner.blue {
+  border-radius: 12px !important;
+  border: 1.5px solid rgba(255,215,0,.25) !important;
+}
+.banner.green {
+  border-radius: 12px !important;
+}
+
+/* Flight cards */
+.flight-card, .hotel-card {
+  border-radius: 14px !important;
+}
+
+/* Map filter chips */
+.mchip.on {
+  box-shadow: 0 0 12px rgba(255,215,0,.5) !important;
+  font-weight: 900 !important;
+}
+
+/* Edit cards */
+.ecard { border-radius: 12px !important; }
+.ecard-hdr { background: linear-gradient(135deg, rgba(255,255,255,.95), rgba(232,238,255,.97)) !important; }
+
+/* Scrollbar styling for screens */
+.screen { scrollbar-width: thin; scrollbar-color: rgba(255,215,0,.3) transparent; }
+
+</style>
+</head>
+<body>
+<div class="app-shell">
+  <header class="app-header">
+    <div class="app-header-title">
+      <div class="pokeball-icon"></div>
+      <h1>JAPAN 2026</h1>
+      <span class="jp">日本旅行</span>
+    </div>
+    <div class="app-header-meta">OCT 22 – NOV 4<br>TRAINER PARTY: 3</div>
+    <button class="install-btn" id="install-btn" onclick="promptInstall()">+ HOME</button>
+  </header>
+  <div class="content-area">
+    <div class="screen active" id="screen-itin"></div>
+    <div class="screen" id="screen-flights"></div>
+    <div class="screen" id="screen-hotels"></div>
+    <div class="screen" id="screen-tickets"></div>
+    <div class="screen map-screen" id="screen-map">
+      <div class="map-filters" id="map-filter-bar"></div>
+      <div id="map"></div>
+    </div>
+    <div class="screen" id="screen-links"></div>
+    <div class="screen" id="screen-alerts"></div>
+    <div class="screen" id="screen-edit"></div>
+    <div class="screen" id="screen-apps"></div>
+    <div class="screen" id="screen-food"></div>
+  </div>
+  <nav class="bottom-nav">
+    <button class="nav-btn active" id="nav-itin" onclick="navigate('itin')">
+      <span class="nav-icon">📅</span><span class="nav-label">Route</span>
+    </button>
+    <button class="nav-btn" id="nav-flights" onclick="navigate('flights')">
+      <span class="nav-icon">✈️</span><span class="nav-label">Fly</span>
+    </button>
+    <button class="nav-btn" id="nav-hotels" onclick="navigate('hotels')">
+      <span class="nav-icon">🏨</span><span class="nav-label">Base</span>
+    </button>
+    <button class="nav-btn" id="nav-tickets" onclick="navigate('tickets');renderTickets()">
+      <span class="nav-icon">🎟</span><span class="nav-label">Catch</span>
+      <span class="nav-badge" id="ticket-badge" style="display:none">0</span>
+    </button>
+    <button class="nav-btn" id="nav-map" onclick="navigate('map')">
+      <span class="nav-icon">🗺</span><span class="nav-label">Map</span>
+    </button>
+    <button class="nav-btn" id="nav-food" onclick="navigate('food')">
+      <span class="nav-icon">🍜</span><span class="nav-label">Food</span>
+    </button>
+    <button class="nav-btn" id="nav-apps" onclick="navigate('apps')">
+      <span class="nav-icon">📱</span><span class="nav-label">Apps</span>
+    </button>
+  </nav>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ═══════════════════════════════════════════
+   JAPAN 2026 — TRIP DATA
+═══════════════════════════════════════════ */
+
+const CITIES={
+  tokyo: {color:'#2c5f8a',label:'Tokyo'},
+  hakone:{color:'#5b8c5a',label:'Hakone'},
+  osaka: {color:'#8b3a62',label:'Osaka'},
+  kyoto: {color:'#c0392b',label:'Kyoto'},
+  nara:  {color:'#7a6b3d',label:'Nara'},
+  kobe:  {color:'#4a7fa5',label:'Kobe'},
+  awaji: {color:'#b87333',label:'Awaji'},
+};
+
+// Each stop has an optional `ticketKey` matching a BOOKABLE_ITEMS key
+const DAYS=[
+  {day:1,date:'Oct 22',dateObj:'2026-10-22',city:'tokyo',label:'Arrive Tokyo',
+   stops:[
+    {name:'Haneda Airport (HND) — Arrive',lat:35.5494,lng:139.7798,
+     note:'Fly in from LAX. Get IC cards (Suica/Pasmo) at airport. ~30 min monorail to central Tokyo.',
+     tip:'Load ¥5,000–10,000 (~$33–67) on Suica. Works on trains, buses, and convenience stores.'}
+  ]},
+  {day:2,date:'Oct 23',dateObj:'2026-10-23',city:'tokyo',label:'Tokyo Orientation + Shopping',
+   stops:[
+    {name:'Nakano Broadway',lat:35.7086,lng:139.6661,
+     note:'5-min walk from your hotel. Pokémon, anime, manga, vintage toys, Mandarake. Your son will love it.',
+     tip:'Go early on a weekday — weekends get very crowded. Mandarake has the best rare Pokémon cards.'},
+    {name:'Shinjuku Shopping',lat:35.6896,lng:139.7006,
+     note:'5 min by train. Uniqlo flagship, Takashimaya, Lumine, Don Quijote. Best all-round shopping in Tokyo.',
+     tip:'Don Quijote (Donki) is open until 5am — perfect for late night adventuring. Tax-free over ¥5,000 (~$33) with passport.'},
+    {name:'Shibuya Crossing & Shibuya 109',lat:35.6580,lng:139.7016,
+     note:'8 floors of Japanese fashion brands, ¥2,000–¥15,000 (~$13–$100). Fast-fashion Japanese style.',
+     tip:'Hit Miyashita Park rooftop after 109 — curated streetwear and great food options.'}
+  ]},
+  {day:3,date:'Oct 24',dateObj:'2026-10-24',city:'tokyo',label:'Ghibli + Pokémon',badge:'FIXED ✓',
+   stops:[
+    {name:'Ghibli Museum',lat:35.6962,lng:139.5704,ticketKey:'ghibli',
+     note:'Saturday — open ✅. Morning entry slot. Book via Lawson Tickets on the 10th of prior month.',
+     tip:'Inokashira Park 15-min walk away. Kichijoji has great affordable shopping + lunch.'},
+    {name:'Kichijoji Shopping District',lat:35.7022,lng:139.5796,
+     note:'Right next to Ghibli Museum. Great affordable clothing, character goods, food. Very walkable streets.',
+     tip:'Harmonica Yokocho alley has great cheap eats for lunch. Loft store has unique Japanese goods and gifts.'},
+    {name:'Pokémon Cafe Tokyo',lat:35.6806,lng:139.7744,ticketKey:'pokemon_cafe_tokyo',
+     note:'Afternoon visit after Mitaka. Book 1 month ahead at exactly 6am JST.',
+     tip:'Arrive right at reservation time — enforced. Budget ~¥3,000–4,000 (~$20–27)/person.'}
+  ]},
+  {day:4,date:'Oct 25',dateObj:'2026-10-25',city:'tokyo',label:'Disc Golf + Snoopy',
+   stops:[
+    {name:'Showa Kinen Park',lat:35.7118,lng:139.3936,ticketKey:'showa_kinen',
+     note:'18-hole JPDGA disc golf — bamboo groves, wooded terrain. ~¥450 (~$3) entry.',
+     tip:'Arrive before 10am for disc golf before picnic crowds. Bring your own discs.'},
+    {name:'Snoopy Museum Tokyo',lat:35.5102,lng:139.4695,ticketKey:'snoopy',
+     note:'~45 min train from Shinjuku. Open Sundays until 7pm.',
+     tip:'Book timed entry tickets in advance on the Snoopy Museum website.'},
+    {name:'Shimokitazawa Vintage Shopping',lat:35.6613,lng:139.6683,
+     note:'20 min from Snoopy Museum. Best vintage clothing in Tokyo — New York Joe Exchange, Chicago Thrift, BerBerJin.',
+     tip:'Narrow charming streets, great cafes between shops. Perfect relaxed evening browse after a big day.'}
+  ]},
+  {day:5,date:'Oct 26',dateObj:'2026-10-26',city:'tokyo',label:'DisneySea Halloween 🎃',
+   stops:[
+    {name:'Tokyo DisneySea',lat:35.6267,lng:139.8851,ticketKey:'disneysea',
+     note:'Monday = lower crowds. Villains parade, Coco event, Harbor Greeting. Costumes allowed.',
+     tip:'Buy Premier Access for Villains parade (¥3,500 (~$23)) via TDR app. Arrive at rope drop 8am.'}
+  ]},
+  {day:6,date:'Oct 27',dateObj:'2026-10-27',city:'tokyo',label:'Asakusa + Harajuku Shopping',
+   stops:[
+    {name:'Senso-ji Temple',lat:35.7148,lng:139.7967,
+     note:'Free. Tokyo\'s oldest temple. Sleep in, visit mid-morning.',
+     tip:'Walk the back streets of Yanaka after — quiet, old-Tokyo neighborhood.'},
+    {name:'Samurai Ninja Museum',lat:35.7115,lng:139.7918,ticketKey:'samurai',
+     note:'4.9★ highest-rated Tokyo experience. ~90 min. Armor, sword moves. Very kid-friendly.',
+     tip:'Book at samurai-museum.com. Premium Sword Experience worth the upgrade.'},
+    {name:'Harajuku — Takeshita Street',lat:35.6715,lng:139.7027,
+     note:'Afternoon. Teen street fashion, kawaii, cosplay shops, crepes. Wild and fun for kids too.',
+     tip:'Best on a weekday — weekends are extremely crowded. Free to walk — budget ¥3,000–10,000 (~$20–67) for shopping.'},
+    {name:'Cat Street & Omotesando',lat:35.6687,lng:139.7078,
+     note:'Just off Harajuku. Vintage boutiques, independent designers, Japanese streetwear. More relaxed vibe.',
+     tip:'GU and Uniqlo flagships are nearby — great cheap Japanese basics for the whole family.'}
+  ]},
+  {day:7,date:'Oct 28',dateObj:'2026-10-28',city:'hakone',label:'Mt. Fuji → Hakone',
+   stops:[
+    {name:'Chureito Pagoda',lat:35.5013,lng:138.8014,
+     note:'Iconic Fuji + pagoda shot. ~400 steps. Late Oct = peak autumn foliage at the base.',
+     tip:'Go early morning for clearest Fuji views before afternoon clouds form.'},
+    {name:'Tōnosawa Ichinoyu Honkan',lat:35.2332,lng:139.0934,ticketKey:'hakone_ryokan',
+     note:'400-yr-old ryokan. Private family onsen, kaiseki dinner + breakfast.',
+     tip:'Request room with private outdoor onsen (Type B or Matsuda). River sound at night is magical.'}
+  ]},
+  {day:8,date:'Oct 29',dateObj:'2026-10-29',city:'hakone',label:'Hakone → Osaka',
+   stops:[
+    {name:'Hakone Komagatake Ropeway',lat:35.2185,lng:139.0170,ticketKey:'hakone_ropeway',
+     note:'Morning ropeway with Fuji views. Use Hakone Free Pass for all local transport.',
+     tip:'Clear Oct mornings are common — summit Fuji views can be spectacular.'},
+    {name:'MIMARU Osaka Shinsaibashi',lat:34.6759,lng:135.5055,ticketKey:'osaka_hotel',
+     note:'Shinkansen Odawara→Shin-Osaka ~2.5 hrs. Evening arrival. Dotonbori 5-min walk.',
+     tip:'Ask front desk for restaurant recommendations — consistently praised by guests.'}
+  ]},
+  {day:9,date:'Oct 30',dateObj:'2026-10-30',city:'osaka',label:'Osaka Exploration',
+   stops:[
+    {name:'Dotonbori & Kuromon Ichiba',lat:34.6687,lng:135.5012,
+     note:'Kuromon Market, Dotonbori canal walk. Takoyaki, okonomiyaki, sashimi.',
+     tip:'Kuromon opens ~8am — great for market breakfast.'},
+    {name:'Nintendo Museum (Uji)',lat:34.8928,lng:135.7842,ticketKey:'nintendo',
+     note:'30 min from Kyoto Station via Kintetsu. Lottery tickets only.',
+     tip:'¥3,300 (~$22) adult / ¥1,100 (~$7) child. Check museum-tickets.nintendo.com for cancellations.'}
+  ]},
+  {day:10,date:'Oct 31',dateObj:'2026-10-31',city:'awaji',label:'Nijigen no Mori 🎃',
+   stops:[
+    {name:'Nijigen no Mori — Awaji Island',lat:34.5752,lng:135.0008,ticketKey:'nijigen',
+     note:'Bus from Namba (~1hr, ¥1,850 (~$12) one-way). Dragon Quest, Naruto, Godzilla. Halloween!',
+     tip:'Book West Japan JR Bus in advance. Arrive early — Halloween Saturday will be huge.'}
+  ]},
+  {day:11,date:'Nov 1',dateObj:'2026-11-01',city:'kyoto',label:'Kyoto — South',
+   stops:[
+    {name:'Fushimi Inari Taisha',lat:34.9677,lng:135.7792,
+     note:'Free! Thousands of vermillion torii gates. Dawn visit for empty gates.',
+     tip:'Even a 45-min partial hike is worthwhile. Full summit is 2–3 hrs round trip.'},
+    {name:'Arashiyama Bamboo Forest',lat:35.0168,lng:135.6713,
+     note:'Before 8am = serene. Tenryu-ji garden next door (¥500 (~$3)). Riverside lunch nearby.',
+     tip:'Combine with Tenryu-ji, then riverside lunch before heading to Nishiki Market.'},
+    {name:'Nishiki Market',lat:35.0050,lng:135.7647,
+     note:'400m covered market. Pickles, grilled squid, matcha sweets. Bring cash.',
+     tip:'Great for street food lunch between Arashiyama and Fushimi Inari.'}
+  ]},
+  {day:12,date:'Nov 2',dateObj:'2026-11-02',city:'nara',label:'Nara Day Trip',
+   stops:[
+    {name:'Tōdai-ji Temple',lat:34.6890,lng:135.8398,
+     note:'Giant bronze Buddha (¥600 (~$4)). Kids crawl through Buddha\'s nostril for good luck!',
+     tip:'Buy deer crackers (¥200 (~$1.30)) at the gate. Deer bow back when you bow to them!'}
+  ]},
+  {day:13,date:'Nov 3',dateObj:'2026-11-03',city:'kobe',label:'Kobe + Kyoto Day 2',
+   stops:[
+    {name:'Kobe Harborland & Kitano-cho',lat:34.6791,lng:135.1861,
+     note:'Morning: 30 min from Osaka. Waterfront, historic district. Kobe beef lunch set.',
+     tip:'Lunch sets ¥3,000–5,000 (~$20–33). Moriumoto and Wakkoqu near Harborland are excellent.'},
+    {name:'Kinkaku-ji (Golden Pavilion)',lat:35.0394,lng:135.7292,
+     note:'Afternoon Kyoto. ¥500 (~$3) entry. Peak Nov foliage. Go at opening for the reflection shot.',
+     tip:'Philosopher\'s Path walk nearby — gorgeous in early November colour.'},
+    {name:'Gion District → HND Area Hotel',lat:35.0036,lng:135.7781,
+     note:'Geisha district at dusk. Then travel to Haneda area for the night.',
+     tip:'⚠️ Must reach HND area tonight — 6am departure tomorrow requires 4am airport arrival!'}
+  ]},
+  {day:14,date:'Nov 4',dateObj:'2026-11-04',city:'tokyo',label:'Fly Home',badge:'✈ Travel Day',travelDay:true,
+   stops:[
+    {name:'Haneda Airport (HND) — Depart 6:00am',lat:35.5494,lng:139.7798,
+     note:'International Terminal 3. Arrive by 4:00am. Security can be slow for international departures.',
+     tip:'HND duty-free has excellent Japanese whisky and Kit-Kat varieties — budget 30 min.'},
+    {name:'LAX — Connect to SLC',lat:33.9425,lng:-118.4081,
+     note:'Land LAX ~11am. Customs + Immigration. Domestic flight LAX→SLC departs 5:05pm.',
+     tip:'6hr buffer is comfortable. Get food at LAX — you deserve it after 14 days!'},
+    {name:'Salt Lake City (SLC) — Home! 🏠',lat:40.7884,lng:-111.9778,
+     note:'Land SLC 7:59pm. Welcome home!',
+     tip:'You\'ll be exhausted and happy. Japan will already feel like a dream.'}
+  ]},
+];
+
+const FLIGHTS=[
+  {
+    id:'slc_lax_out', group:'SLC ↔ LAX',
+    label:'Outbound', type:'dom',
+    code:'Flight #3618', route:'SLC → LAX',
+    date:'Wed, Oct 21', time:'6:35pm – 7:30pm',
+    duration:'1h 55m', stop:'Nonstop',
+    note:'Night before Japan departure. Overnight in LAX area hotel.',
+    confirmed: true
+  },
+  {
+    id:'lax_hnd', group:'LAX ↔ HND',
+    label:'To Japan', type:'intl',
+    code:'', route:'LAX → HND (Haneda)',
+    date:'Thu, Oct 22', time:'Departs LAX evening',
+    duration:'~11–12 hrs', stop:'Check booking',
+    note:'Arrives Tokyo Oct 23 local time. Get Suica card at Haneda on arrival.',
+    confirmed: false
+  },
+  {
+    id:'hnd_lax', group:'LAX ↔ HND',
+    label:'From Japan', type:'intl',
+    code:'', route:'HND → LAX',
+    date:'Wed, Nov 4', time:'Departs 6:00am → Arrives ~11:00am LAX',
+    duration:'~10 hrs', stop:'Check booking',
+    note:'⚠️ Must be at HND by 4:00am. Stay near Haneda the night of Nov 3.',
+    confirmed: false
+  },
+  {
+    id:'lax_slc_ret', group:'SLC ↔ LAX',
+    label:'Return', type:'dom',
+    code:'Flight #4752', route:'LAX → SLC',
+    date:'Wed, Nov 4', time:'5:05pm – 7:59pm',
+    duration:'1h 54m', stop:'Nonstop',
+    note:'6hr buffer from Japan landing — very comfortable. Delta DL2311.',
+    confirmed: true
+  },
+];
+
+// Items that can have tickets purchased and linked to itinerary days
+const BOOKABLE_ITEMS=[
+  {key:'disneysea',   name:'Tokyo DisneySea',         day:5,  icon:'🏰', url:'https://www.tokyodisneyresort.jp/en/', urgency:'high',
+   instructions:'Book via Tokyo Disney Resort app. Select Oct 26. Halloween event included with standard ticket.'},
+  {key:'ghibli',      name:'Ghibli Museum',            day:3,  icon:'🎨', url:'https://www.ghibli-museum.jp/en/tickets/', urgency:'high',
+   instructions:'Tickets released on the 10th of each month at 10am JST for the following month. Use Lawson Ticket English site. Bring passport to entry.'},
+  {key:'nintendo',    name:'Nintendo Museum',          day:9,  icon:'🎮', url:'https://www.nintendo.com/en-GB/Nintendo-Museum/Tickets/', urgency:'high',
+   instructions:'Monthly lottery — apply at museum-tickets.nintendo.com. Check for cancellations immediately. ¥3,300 (~$22) adult / ¥1,100 (~$7) child.'},
+  {key:'pokemon_cafe_tokyo', name:'Pokémon Cafe Tokyo', day:3, icon:'⚡', url:'https://shop.pokemon.co.jp/en/shop/pokemoncafe-tokyo/', urgency:'high',
+   instructions:'Reservations open 1 month ahead at exactly 6am JST. For Oct 24 visit: alarm on Sep 24 at 6am JST (Sep 23 ~1pm MDT).'},
+  {key:'samurai',     name:'Samurai Ninja Museum',     day:6,  icon:'⚔️', url:'https://www.samurai-museum.com/en/', urgency:'med',
+   instructions:'Book online at samurai-museum.com. Asakusa location. ~90 min experience. Consider the Premium Sword Experience upgrade.'},
+  {key:'snoopy',      name:'Snoopy Museum',            day:4,  icon:'🐾', url:'https://www.snoopymuseum.tokyo/s/smt/page/ticket', urgency:'med',
+   instructions:'Book timed entry tickets on the Snoopy Museum website in advance.'},
+  {key:'nijigen',     name:'Nijigen no Mori',          day:10, icon:'🐉', url:'https://nijigennomori.com/en/ticket/', urgency:'med',
+   instructions:'Buy attraction tickets online. Book the highway bus (West Japan JR Bus) from Namba separately — ¥1,850 (~$12) one-way.'},
+  {key:'hakone_ryokan', name:'Tōnosawa Ichinoyu Honkan', day:7, icon:'♨️', url:'https://www.ichinoyu.co.jp/english/', urgency:'med',
+   instructions:'Book directly with the ryokan. Request room with private outdoor onsen (Type B or Matsuda). Oct 28 is a Wed — likely available but book soon.'},
+  {key:'hakone_ropeway', name:'Hakone Free Pass',     day:8,  icon:'🚡', url:'https://www.hakonenavi.jp/international/en/', urgency:'low',
+   instructions:'Buy Hakone Free Pass at Odakyu stations or Shinjuku. Covers ropeway, boats, buses in Hakone area.'},
+  {key:'showa_kinen', name:'Showa Kinen Park',         day:4,  icon:'🥏', url:'https://www.showakinen-koen.jp/use/ticket/', urgency:'low',
+   instructions:'No advance booking needed. ¥450 (~$3) entry. Disc golf equipment rental may be available, bring your own discs to be safe.'},
+  {key:'jr_pass',     name:'Japan Rail Pass (14-day)', day:1,  icon:'🚅', url:'https://japanrailpass.net/en/purchase/', urgency:'high',
+   instructions:'Must buy OUTSIDE Japan before departure. 14-day pass covers all Shinkansen (Hikari/Kodama), local JR lines, Hakone JR. ~$500–600 adult, ~$250 child. Activate at Haneda on arrival.'},
+  {key:'osaka_hotel', name:'MIMARU Osaka Shinsaibashi', day:8, icon:'🏨', url:'https://mimaru.com/en/', urgency:'med',
+   instructions:'Book 5 nights (Oct 29–Nov 3) at MIMARU Osaka Shinsaibashi. Apartment-style, great for family of 3.'},
+  {key:'hnd_hotel',   name:'HND Area Hotel (Nov 3)',   day:13, icon:'🏨', url:'https://www.tokyuhotels.co.jp/haneda-e/index.html', urgency:'high',
+   instructions:'Book 1 night near Haneda Airport for Nov 3. Haneda Excel Hotel Tokyu or APA Hotel Haneda are both excellent options right at the terminal.'},
+  // ── PARKS, HIKES & NATURE ──
+  {key:'showa_disc_golf', name:'Disc Golf — Showa Kinen Park', day:4, icon:'🥏', url:'https://udisc.com/courses/showa-kinen-park-imLU', urgency:'low',
+   instructions:'18-hole JPDGA course. 4.3★ rated (522 reviews). Park entry ¥450 (~$3). Holes 1-9 short/technical through bamboo grove; holes 10-18 longer with open areas. Bring your own discs (max 159g for JPDGA). Take Chuo Line from Shinjuku to Nishi-Tachikawa. Monthly event 1st Sunday 10am.'},
+  {key:'fushimi_hike',  name:'Fushimi Inari Full Hike', day:11, icon:'⛩️', url:'https://maps.google.com/?q=Fushimi+Inari+Taisha+Kyoto', urgency:'low',
+   instructions:'Free! Full summit hike is 2-3 hrs round trip over the mountain. Even a 45-min partial hike past the first torii gates is stunning. Start before 7am for near-empty gates. Kids love counting gates and spotting the kitsune (fox) statues. Wear good shoes — paved but hilly.'},
+  {key:'arashiyama_monkey', name:'Arashiyama Monkey Park', day:11, icon:'🐒', url:'https://www.monkeypark.jp/', urgency:'low',
+   instructions:'¥550 (~$3.70) adults, ¥250 (~$1.70) kids. 20-min hike up stairs to the top where wild Japanese macaques roam free. You feed them through a cage (inside) while they roam outside — unique reversal! Perfect add-on after the bamboo forest. Your son will love it.'},
+  {key:'mount_ikoma',  name:'Mount Ikoma (Osaka/Nara border)', day:12, icon:'⛰️', url:'https://www.ikomazan.jp/', urgency:'low',
+   instructions:'Easy family hike with cable car option. Gentle forested trails with views across Osaka and Nara. Retro amusement park at the summit — charmingly old-school and perfect for kids. Hike up, cable car down (or reverse). Near Nara — combine with Todai-ji day.'},
+  // ── KID-FRIENDLY EXPERIENCES ──
+  {key:'pokemon_center_dx', name:'Pokémon Center Tokyo DX', day:6, icon:'🔴', url:'https://shop.pokemon.co.jp/en/shop/pokecenter-tokyodx/', urgency:'med',
+   instructions:'Nihombashi (near Pokémon Café). Biggest Pokémon Center in Tokyo — exclusive Tokyo-only merchandise. Buy here before DisneySea and the Café. No reservation needed, just walk in. Same building as the Pokémon Café Tokyo.'},
+  {key:'kidzania',     name:'KidZania Tokyo', day:2, icon:'👷', url:'https://www.kidzania.jp/tokyo/en/', urgency:'low',
+   instructions:'Role-play city for kids — your son can be a pilot, chef, doctor, firefighter. Incredibly well done. English supported. In Koto (Toyosu area), 30 min from Nakano. Book tickets online in advance. Half-day activity, great for a relaxed Tokyo day.'},
+  {key:'teamlab',      name:'teamLab Planets Tokyo', day:2, icon:'🌌', url:'https://planets.teamlab.art/tokyo/', urgency:'med',
+   instructions:'Immersive digital art museum — you walk through pools of water with projected worlds around you. Absolutely mind-blowing for kids and adults. In Toyosu, east Tokyo. Book tickets in advance — sells out. ¥3,200 (~$21) adults, ¥1,000 (~$7) kids under 15.'},
+  {key:'osaka_castle_park', name:'Osaka Castle Park', day:9, icon:'🏯', url:'https://www.osakacastle.net/english/', urgency:'low',
+   instructions:'Free to enter the park (¥600/~$4 for castle interior). Massive park with moats, cherry trees, and lawns perfect for a relaxed picnic morning. Castle interior has museum about Hideyoshi. 20-min walk from Namba hotel. Great morning activity before afternoon adventures.'},
+  {key:'nara_wakakusa', name:'Mount Wakakusa Hike (Nara)', day:12, icon:'🦌', url:'https://narashikanko.or.jp/en/spot/wakakusayama/', urgency:'low',
+   instructions:'Free hike up sacred grassland mountain in Nara Park. Easy 30-40 min climb, panoramic views of Nara, Osaka, and surrounding countryside. Free-roaming deer accompany you up the trail. Combine with Todai-ji for a perfect Nara day. Open Oct–Nov.'},
+  // ── CONCERTS & SHOWS ──
+  {key:'mario_kart',   name:'Mario Kart Street Tour Tokyo', day:2, icon:'🏎️', url:'https://mariokart-street.com/', urgency:'med',
+   instructions:'Real-life Mario Kart driving experience through Tokyo streets in costume. Your son will absolutely flip out. Book well in advance — very popular. Routes go through Shibuya, Asakusa, or Odaiba areas. International license required for drivers. ¥7,000-9,000 (~$47-60).'},
+  {key:'taiko_drum',   name:'Taiko Drum Experience', day:3, icon:'🥁', url:'https://www.tripadvisor.com/Attractions-g298184-Activities-c55-t242-Tokyo_Tokyo_Prefecture_Kanto.html', urgency:'low',
+   instructions:'Traditional Japanese taiko drumming lesson — incredibly fun and physical for kids. Various studios offer 1-hr English sessions in Tokyo. Look for Taiko-Lab or similar studios near Shinjuku or Asakusa. Great rainy day activity. ~¥3,000-5,000 (~$20-33).'},
+];
+
+const LINKS=[
+  {section:'✈️ Flights & Transport', items:[
+    {name:'Japan Rail Pass',desc:'Buy 14-day pass BEFORE leaving the US',url:'https://japanrailpass.net/en/purchase/',urgent:true},
+    {name:'JR Seat Reservations',desc:'Reserve Shinkansen seats (included with JR Pass)',url:'https://www.jreast.co.jp/e/pass/reservation.html',urgent:false},
+    {name:'Hakone Free Pass',desc:'Covers ropeway, buses & boats in Hakone',url:'https://www.hakonenavi.jp/international/en/',urgent:false},
+    {name:'Nijigen no Mori Bus',desc:'Highway bus Namba→Awaji (Oct 31)',url:'https://www.westjr.co.jp/global/en/',urgent:false},
+    {name:'Hyperdia Train Planner',desc:'Best Japan train route planner',url:'https://www.hyperdia.com/en/',urgent:false},
+    {name:'Visit Japan Web (Customs)',desc:'Pre-register for faster HND arrival customs',url:'https://www.vjw.digital.go.jp/',urgent:true},
+  ]},
+  {section:'🎡 Attractions', items:[
+    {name:'Tokyo DisneySea',desc:'Book Oct 26 tickets via TDR app',url:'https://www.tokyodisneyresort.jp/en/',urgent:true},
+    {name:'Ghibli Museum (Lawson)',desc:'Oct 24 — tickets on 10th of prior month 10am JST',url:'https://www.ghibli-museum.jp/en/tickets/',urgent:true},
+    {name:'Nintendo Museum Lottery',desc:'Check NOW for cancellations',url:'https://www.nintendo.com/en-GB/Nintendo-Museum/Tickets/',urgent:true},
+    {name:'Pokémon Cafe Tokyo',desc:'Reservations open 1 month ahead at 6am JST',url:'https://shop.pokemon.co.jp/en/shop/pokemoncafe-tokyo/',urgent:true},
+    {name:'Pokémon Cafe Osaka (backup)',desc:'Shinsaibashi location if Tokyo is full',url:'https://shop.pokemon.co.jp/en/shop/pokemoncafe-tokyo/',urgent:false},
+    {name:'Samurai Ninja Museum',desc:'Book Asakusa location in advance',url:'https://www.samurai-museum.com/en/',urgent:false},
+    {name:'Nijigen no Mori',desc:'Awaji Island anime park attraction tickets',url:'https://nijigennomori.com/en/ticket/',urgent:false},
+    {name:'Snoopy Museum Tokyo',desc:'Book timed entry in advance',url:'https://www.snoopymuseum.tokyo/s/smt/page/ticket',urgent:false},
+  ]},
+  {section:'🏨 Hotels', items:[
+    {name:'MIMARU Tokyo',desc:'6 nights Oct 22–28, family apartment-style',url:'https://mimaru.com/en/',urgent:false},
+    {name:'Tōnosawa Ichinoyu Honkan',desc:'Hakone ryokan — request private onsen room',url:'https://www.ichinoyu.co.jp/english/',urgent:false},
+    {name:'MIMARU Osaka Shinsaibashi',desc:'5 nights Oct 29–Nov 3 Kansai base',url:'https://mimaru.com/en/',urgent:false},
+    {name:'Haneda Excel Hotel Tokyu',desc:'Nov 3 night — right at HND terminal',url:'https://www.tokyuhotels.co.jp/haneda-e/index.html',urgent:true},
+  ]},
+  {section:'🍜 Food & Restaurants', items:[
+    {name:'Kobe Beef — Moriumoto',desc:'Nov 3 Kobe beef lunch, book ahead',url:'https://mouriy.com/en/',urgent:false},
+    {name:'Nishiki Market Kyoto',desc:'400m street food market, no booking needed',url:'https://www.kyoto-nishiki.or.jp/en/',urgent:false},
+  ]},
+  {section:'📱 Travel Tools', items:[
+    {name:'Google Translate',desc:'Download Japanese offline pack before you go',url:'https://translate.google.com/',urgent:false},
+    {name:'Suica IC Card Guide',desc:'Set up Suica on iPhone Wallet before departure',url:'https://suica.jr-central.co.jp/en/',urgent:false},
+    {name:'Japan Travel by NAVITIME',desc:'Best offline Japan transit app',url:'https://japantravel.navitime.com/en/',urgent:false},
+    {name:'XE Currency Converter',desc:'Track JPY exchange rate',url:'https://www.xe.com/',urgent:false},
+  ]},
+];
+
+const ALERTS=[
+  {urgent:true, title:'🏨 Book HND-Area Hotel for Nov 3',body:'HND departs 6:00am Nov 4 — must be at airport by 4am. After Gion on Nov 3, travel to Haneda area and stay the night. Try Haneda Excel Hotel Tokyu or APA Hotel Haneda.'},
+  {urgent:true, title:'🎋 Ghibli Museum Tickets',body:'Book via Lawson Ticket for Oct 24 (Sat). Tickets for October on sale Sep 10 at 10am JST. Check for cancellations now if that window passed.'},
+  {urgent:true, title:'🎮 Nintendo Museum Lottery',body:'Monthly lottery at museum-tickets.nintendo.com. Check immediately for Oct/Nov cancellations.'},
+  {urgent:true, title:'🏰 DisneySea — Oct 26',body:'Book via Tokyo Disney Resort app. Monday = lower crowds. Halloween event included with standard ticket. Premier Access for Villains parade = ¥3,500 (~$23).'},
+  {urgent:true, title:'⚡ Pokémon Cafe Tokyo',body:'Reservations open 1 month ahead at 6am JST. For Oct 24: alarm Sep 24, 6am JST (Sep 23 ~1pm MDT).'},
+  {urgent:false,title:'🚅 JR Pass — Buy Before You Leave',body:'14-day pass must be purchased OUTSIDE Japan. ~$500–600 adult, ~$250 child. Covers all Shinkansen (Hikari/Kodama). For fastest Nov 4 morning run, buy a separate Nozomi ticket (~¥14,000 (~$93)/adult).'},
+  {urgent:false,title:'♨️ Tōnosawa Ichinoyu Honkan',body:'Book directly. Request private outdoor onsen room. Oct 28 is a Wednesday — likely available but autumn season fills fast.'},
+  {urgent:false,title:'🌐 Visit Japan Web',body:'Register all 3 family members at vjw.digital.go.jp before Oct 22. Significantly speeds up customs at HND on arrival.'},
+  {urgent:false,title:'⚔️ Samurai Ninja Museum',body:'Book online at samurai-museum.com. Asakusa location. Consider Premium Sword Experience upgrade for your son.'},
+  {urgent:false,title:'🚌 Nijigen no Mori Bus',body:'Book West Japan JR Bus from Namba for Oct 31. ¥1,850 (~$12) one-way. Halloween Saturday — take the earliest bus.'},
+];
+
+</script>
+<script>
+/* ═══════════════════════════════════════════
+   JAPAN 2026 — APP LOGIC
+═══════════════════════════════════════════ */
+
+/* ── SERVICE WORKER ──────────────────────── */
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js').catch(()=>{});
+}
+
+/* ── STATE ───────────────────────────────── */
+const STATE = {
+  activeScreen: 'itin',
+  tickets: {},        // { [key]: {confirmation, date, time, notes, adults, children, status} }
+  mapFilters: new Set(Object.keys(CITIES)),
+  mapMarkers: [],
+  map: null,
+  expandedDays: new Set(),
+  expandedItems: new Set(),
+  deferredInstall: null,
+};
+
+/* ── STORAGE ─────────────────────────────── */
+function saveTickets(){
+  try{ localStorage.setItem('japan2026_tickets', JSON.stringify(STATE.tickets)); }catch(e){}
+}
+function loadTickets(){
+  try{
+    const raw=localStorage.getItem('japan2026_tickets');
+    if(raw) STATE.tickets=JSON.parse(raw);
+  }catch(e){ STATE.tickets={}; }
+}
+
+/* ── TOAST ───────────────────────────────── */
+function showToast(msg, duration=2000){
+  let t=document.querySelector('.toast');
+  if(!t){ t=document.createElement('div'); t.className='toast'; document.body.appendChild(t); }
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), duration);
+}
+
+/* ── NAV ─────────────────────────────────── */
+function navigate(screen){
+  STATE.activeScreen=screen;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const screenEl=document.getElementById('screen-'+screen);
+  if(screenEl) screenEl.classList.add('active');
+  const navEl=document.getElementById('nav-'+screen);
+  if(navEl) navEl.classList.add('active');
+  if(screen==='map') initMap();
+  if(screen==='edit') renderEdit();
+  if(screen==='food') renderFood();
+  if(screen==='apps') renderApps();
+  if(screen==='alerts') renderAlerts();
+  if(screen==='links') renderLinks();
+  updateAlertBadge();
+}
+
+/* ── ITINERARY SCREEN ────────────────────── */
+function renderItin(){
+  const wrap=document.getElementById('screen-itin');
+  wrap.innerHTML='';
+
+  // Edit + Book buttons always visible at top
+  const topBar=document.createElement('div');
+  topBar.style.cssText='display:flex;gap:8px;margin-bottom:10px;'; topBar.className='top-action-bar';
+  topBar.innerHTML=`
+    <button onclick="navigate('edit')" style="flex:1;background:linear-gradient(135deg,#cc0000,#990000);color:#fff;font-size:.72rem;font-weight:900;padding:9px;border-radius:10px;border:1.5px solid rgba(255,215,0,.4);letter-spacing:.03em;">✏️ EDIT ITINERARY</button>
+    <button onclick="navigate('links')" style="flex:1;background:linear-gradient(135deg,#1e2f7a,#162259);color:#ffd700;font-size:.72rem;font-weight:900;padding:9px;border-radius:10px;border:1.5px solid rgba(255,215,0,.3);letter-spacing:.03em;">🔗 BOOKING LINKS</button>
+  `;
+  wrap.appendChild(topBar);
+
+
+
+  DAYS.forEach(rawDay=>{
+    const day=(STATE.edits&&getEffectiveDay)?getEffectiveDay(rawDay):rawDay;
+    const color=CITIES[rawDay.city].color;
+    const bookedTickets=getBookedTicketsForDay(rawDay.day);
+    const card=document.createElement('div');
+    card.className='day-card'+(bookedTickets.length?' has-tickets':'');
+    card.dataset.day=rawDay.day;
+
+    // header
+    let badgeHtml='';
+    if(rawDay.badge){
+      const cls=rawDay.badge.includes('✓')?'cbadge':'wbadge';
+      badgeHtml=`<span class="${cls}" style="font-size:.56rem;font-weight:700;border-radius:3px;padding:1px 5px;margin-left:4px;vertical-align:middle;display:inline-block;background:${rawDay.badge.includes('✓')?'#e8f5e9':'#fff3e0'};color:${rawDay.badge.includes('✓')?'#2e7d32':'#e65100'}">${rawDay.badge}</span>`;
+    }
+    const hdr=document.createElement('div'); hdr.className='day-header';
+    hdr.innerHTML=`
+      <span class="day-num" style="background:${color}">Day ${rawDay.day}</span>
+      <div class="day-date">${day.date} <span style="font-size:.68rem;font-weight:400;color:var(--muted)">${day.label}</span>${badgeHtml}</div>
+      <span class="day-city-tag">${CITIES[rawDay.city].label}</span>
+      <span class="day-chevron">▾</span>
+    `;
+    hdr.onclick=()=>toggleDay(rawDay.day, card);
+    card.appendChild(hdr);
+
+    // booked ticket chips (always visible)
+    if(bookedTickets.length){
+      const bar=document.createElement('div'); bar.className='day-ticket-bar';
+      bookedTickets.forEach(t=>{
+        const chip=document.createElement('span');
+        chip.className='ticket-chip'+(t.status==='pending'?' pending':'');
+        chip.innerHTML=`${t.icon} ${t.name}`;
+        if(t.time) chip.title=t.time;
+        bar.appendChild(chip);
+      });
+      card.appendChild(bar);
+    }
+
+    // body (collapsible)
+    const body=document.createElement('div'); body.className='day-body';
+
+    if(rawDay.travelDay){
+      body.innerHTML=`<div class="travel-banner">🛫 <strong>HND departs 6:00am</strong> — arrive airport by 4:00am<br>Must be near Haneda the night of Nov 3</div>`;
+    }
+
+    // filter out deleted stops
+    const visibleStops=day.stops.filter(s=>s.name!=='[Removed]');
+    visibleStops.forEach(stop=>{
+      const bookedStop=stop.ticketKey?STATE.tickets[stop.ticketKey]:null;
+      const row=document.createElement('div'); row.className='stop-row';
+      let bookedTag='';
+      if(bookedStop?.confirmation){
+        bookedTag=`<div class="stop-booked-tag">✓ ${bookedStop.confirmation}${bookedStop.time?' · '+bookedStop.time:''}</div>`;
+      }
+      row.innerHTML=`
+        <div class="stop-dot" style="background:${color}"></div>
+        <div class="stop-content">
+          <div class="stop-name">${stop.name}</div>
+          <div class="stop-note">${stop.note}</div>
+          ${stop.tip?`<div class="stop-tip">💡 ${stop.tip}</div>`:''}
+          ${bookedTag}
+        </div>
+      `;
+      if(stop.lat){
+        row.style.cursor='pointer';
+        row.onclick=()=>{ navigate('map'); setTimeout(()=>{ if(STATE.map) STATE.map.flyTo([stop.lat,stop.lng],14,{duration:1}); },300); };
+      }
+      body.appendChild(row);
+    });
+
+    card.appendChild(body);
+    if(STATE.expandedDays.has(day.day)) card.classList.add('expanded');
+    wrap.appendChild(card);
+  });
+}
+
+function toggleDay(dayNum, card){
+  if(STATE.expandedDays.has(dayNum)){
+    STATE.expandedDays.delete(dayNum);
+    card.classList.remove('expanded');
+  } else {
+    STATE.expandedDays.add(dayNum);
+    card.classList.add('expanded');
+  }
+}
+
+function getBookedTicketsForDay(dayNum){
+  const result=[];
+  BOOKABLE_ITEMS.forEach(item=>{
+    if(item.day===dayNum && STATE.tickets[item.key]?.confirmation){
+      result.push({
+        name: item.name,
+        icon: item.icon,
+        time: STATE.tickets[item.key].time,
+        status: STATE.tickets[item.key].status||'booked'
+      });
+    }
+  });
+  return result;
+}
+
+/* ── FLIGHTS SCREEN ──────────────────────── */
+function renderFlights(){
+  const wrap=document.getElementById('screen-flights');
+  wrap.innerHTML=`
+    <div class="info-banner warn">
+      <strong>⚠️ Nov 3 Night — Book HND-Area Hotel</strong><br>
+      HND departs 6:00am Nov 4. Must be at airport by 4am. Travel to Haneda area after Gion evening on Nov 3.
+    </div>
+  `;
+
+  // Group flights
+  const groups={};
+  FLIGHTS.forEach(f=>{
+    if(!groups[f.group]) groups[f.group]=[];
+    groups[f.group].push(f);
+  });
+
+  Object.entries(groups).forEach(([grp,flights])=>{
+    const lbl=document.createElement('div'); lbl.className='flight-group-label'; lbl.textContent=grp;
+    wrap.appendChild(lbl);
+    flights.forEach(f=>{
+      const card=document.createElement('div');
+      card.className='flight-card '+(f.confirmed?'confirmed':'needs-confirm');
+      const noteClass=f.note.includes('⚠')?'fc-note warn':'fc-note';
+      card.innerHTML=`
+        <div class="fc-top">
+          <span class="fc-label-badge ${f.type}">${f.label} · ${f.type==='intl'?'International':'Domestic'}</span>
+          <span class="fc-confirmed-badge">${f.confirmed?'✓ Confirmed':'Confirm details'}</span>
+        </div>
+        <div class="fc-route">${f.route}</div>
+        <div class="fc-date">${f.date}</div>
+        <div class="fc-meta">
+          <span>🕐 ${f.time}</span>
+          <span>⏱ ${f.duration}</span>
+          <span>${f.stop}</span>
+          ${f.code?`<span>${f.code}</span>`:''}
+        </div>
+        ${f.note?`<div class="${noteClass}">${f.note}</div>`:''}
+      `;
+      wrap.appendChild(card);
+    });
+  });
+
+  // Connection timing summary
+  const summary=document.createElement('div');
+  summary.className='info-banner green';
+  summary.style.marginTop='12px';
+  summary.innerHTML=`<strong>✅ Nov 4 Connection Summary</strong><br>
+    HND departs 6:00am → lands LAX ~11:00am<br>
+    LAX→SLC departs 5:05pm → arrives SLC 7:59pm<br>
+    Buffer: <strong>~6 hours</strong> — comfortable for customs + domestic connect`;
+  wrap.appendChild(summary);
+}
+
+/* ── HOTELS SCREEN ───────────────────────── */
+function renderHotels(){
+  const wrap=document.getElementById('screen-hotels');
+  wrap.innerHTML='';
+
+  const note=document.createElement('div');
+  note.className='info-banner green';
+  note.innerHTML='<strong>✈️ Flying home from HND (Haneda)</strong><br>Check out MIMARU Osaka Nov 3 morning. Kobe + Kyoto day. Travel to HND area that evening. 6am Nov 4 departure.';
+  wrap.appendChild(note);
+
+  const hotels=[
+    {city:'tokyo', name:'ARiA Stay Nakano',sub:'Nakano, Tokyo (5-min walk to Nakano Broadway)',nights:'Oct 22–28 · 6 nights',note:'Booked ✅. Apartment-style, 2 beds, full kitchen. 5-min walk to Nakano Broadway. 5-min train to Shinjuku. Washing machine in room — essential for carry-on travel.',color:'#2c5f8a'},
+    {city:'hakone',name:'Tōnosawa Ichinoyu Honkan',sub:'Hakone, Kanagawa',nights:'Oct 28–29 · 1 night',note:'Founded 1630. Private family onsen, kaiseki dinner + breakfast included. Request room with outdoor river-view bath.',color:'#5b8c5a'},
+    {city:'osaka', name:'MIMARU Osaka Shinsaibashi',sub:'Namba / Shinsaibashi, Osaka',nights:'Oct 29–Nov 3 · 5 nights',note:'Apartment hotel, 2-min walk to metro, 5-min to Dotonbori. Your Kansai base for day trips.',color:'#8b3a62'},
+    {city:'tokyo', name:'Hotel Near Haneda Airport',sub:'Haneda / Ota-ku, Tokyo',nights:'Nov 3 · 1 night',note:'REQUIRED for 6am Nov 4 departure. Try Haneda Excel Hotel Tokyu or APA Hotel Haneda — both are right at the terminal.',color:'#2c5f8a'},
+  ];
+
+  hotels.forEach(h=>{
+    const card=document.createElement('div'); card.className='hotel-card';
+    card.innerHTML=`
+      <span class="hotel-nights-badge" style="background:${h.color}">${h.nights}</span>
+      <div class="hotel-name">${h.name}</div>
+      <div class="hotel-sub">${h.sub}</div>
+      <div class="hotel-note">${h.note}</div>
+    `;
+    wrap.appendChild(card);
+  });
+
+  const cut=document.createElement('div'); cut.className='hotel-cut';
+  cut.innerHTML='<div style="font-size:.67rem;font-weight:700;color:#c62828;margin-bottom:3px">✂️ Cut for schedule (save for next trip!)</div><div style="font-size:.67rem;color:#555;line-height:1.4">Kinosaki Onsen overnight — 2.5 hrs each way from Osaka. Magical but not enough time on the 14-day schedule.</div>';
+  wrap.appendChild(cut);
+}
+
+/* ── TICKETS SCREEN ──────────────────────── */
+function renderTickets(){
+  const wrap=document.getElementById('screen-tickets');
+  wrap.innerHTML='';
+
+  const intro=document.createElement('div'); intro.className='info-banner blue';
+  intro.innerHTML='<strong>🎮 POKÉDEX — Catch Your Bookings</strong><br>Add confirmation numbers, entry times, and notes for each booking. They\'ll appear on your itinerary automatically.';
+  wrap.appendChild(intro);
+
+  // summary row
+  const booked=BOOKABLE_ITEMS.filter(i=>STATE.tickets[i.key]?.confirmation).length;
+  const total=BOOKABLE_ITEMS.length;
+  const summary=document.createElement('div');
+  summary.style.cssText='display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 2px';
+  summary.innerHTML=`
+    <span style="font-size:.72rem;font-weight:600;color:var(--ink)">${booked} of ${total} booked</span>
+    <span style="font-size:.67rem;color:var(--muted)">${total-booked} still out there</span>
+  `;
+  wrap.appendChild(summary);
+
+  // progress bar
+  const progWrap=document.createElement('div');
+  progWrap.style.cssText='background:var(--smoke);border-radius:4px;height:6px;margin-bottom:14px;overflow:hidden';
+  const progFill=document.createElement('div');
+  progFill.style.cssText=`background:var(--success);height:100%;border-radius:4px;width:${Math.round((booked/total)*100)}%;transition:width .3s`;
+  progWrap.appendChild(progFill); wrap.appendChild(progWrap);
+
+  // urgency groups
+  const groups=[
+    {label:'🔴 LEGENDARY — Catch Now!', urgency:'high'},
+    {label:'🟡 RARE — Catch Soon', urgency:'med'},
+    {label:'🟢 COMMON — Catch When Ready', urgency:'low'},
+  ];
+
+  groups.forEach(grp=>{
+    const items=BOOKABLE_ITEMS.filter(i=>i.urgency===grp.urgency);
+    if(!items.length) return;
+
+    const lbl=document.createElement('div');
+    lbl.style.cssText='font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:10px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border)';
+    lbl.textContent=grp.label;
+    wrap.appendChild(lbl);
+
+    items.forEach(item=>{ wrap.appendChild(buildBookableItem(item)); });
+  });
+}
+
+function buildBookableItem(item){
+  const t=STATE.tickets[item.key]||{};
+  const isBooked=!!t.confirmation;
+  const isExpanded=STATE.expandedItems.has(item.key);
+
+  const el=document.createElement('div');
+  el.className='bookable-item'+(isBooked?' booked':'')+(isExpanded?' expanded':'');
+  el.id='bi-'+item.key;
+
+  const statusLabel=isBooked?'Booked':t.status==='pending'?'Pending':'Not booked';
+  const statusClass=isBooked?'booked':t.status==='pending'?'pending':'unbooked';
+  const dayInfo=DAYS.find(d=>d.day===item.day);
+
+  el.innerHTML=`
+    <div class="bi-header" onclick="toggleBookable('${item.key}')">
+      <span class="bi-icon">${item.icon}</span>
+      <div class="bi-info">
+        <div class="bi-name">${item.name}</div>
+        <div class="bi-day">Day ${item.day} · ${dayInfo?.date||''} · ${dayInfo?.city?CITIES[dayInfo.city].label:''}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <span class="bi-urgency-dot urgency-${item.urgency}"></span>
+        <span class="bi-status ${statusClass}">${statusLabel}</span>
+      </div>
+    </div>
+    <div class="bi-body">
+      <div class="bi-instructions">${item.instructions}</div>
+      <a class="bi-link" href="${item.url}" target="_blank" rel="noopener">Book Now ↗</a>
+      <div class="ticket-form" id="tf-${item.key}">
+        <div class="form-row">
+          <label class="form-label">Confirmation / Booking #</label>
+          <input class="form-input" id="fi-conf-${item.key}" type="text" placeholder="e.g. ABC123" value="${t.confirmation||''}">
+        </div>
+        <div class="form-row-2">
+          <div class="form-row">
+            <label class="form-label">Date</label>
+            <input class="form-input" id="fi-date-${item.key}" type="date" value="${t.date||''}">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Entry Time</label>
+            <input class="form-input" id="fi-time-${item.key}" type="time" value="${t.time||''}">
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-row">
+            <label class="form-label">Adults</label>
+            <input class="form-input" id="fi-adults-${item.key}" type="number" min="0" max="20" placeholder="2" value="${t.adults||''}">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Children</label>
+            <input class="form-input" id="fi-children-${item.key}" type="number" min="0" max="20" placeholder="1" value="${t.children||''}">
+          </div>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Notes</label>
+          <input class="form-input" id="fi-notes-${item.key}" type="text" placeholder="Seat numbers, special instructions..." value="${t.notes||''}">
+        </div>
+        <div class="form-actions">
+          <button class="btn-save" onclick="saveTicket('${item.key}')">⚡ CATCH IT!</button>
+          ${isBooked?`<button class="btn-clear" onclick="clearTicket('${item.key}')">Clear</button>`:''}
+        </div>
+      </div>
+      ${isBooked?buildSavedDisplay(item.key,t):''}
+    </div>
+  `;
+  return el;
+}
+
+function buildSavedDisplay(key, t){
+  if(!t.confirmation) return '';
+  return `<div class="saved-ticket-display">
+    <div class="std-label">✓ Booking Saved</div>
+    ${t.confirmation?`<div class="std-row"><span>Confirmation</span><span class="std-val">${t.confirmation}</span></div>`:''}
+    ${t.date?`<div class="std-row"><span>Date</span><span class="std-val">${t.date}</span></div>`:''}
+    ${t.time?`<div class="std-row"><span>Entry Time</span><span class="std-val">${t.time}</span></div>`:''}
+    ${(t.adults||t.children)?`<div class="std-row"><span>Guests</span><span class="std-val">${t.adults||0} adults, ${t.children||0} children</span></div>`:''}
+    ${t.notes?`<div class="std-row"><span>Notes</span><span class="std-val">${t.notes}</span></div>`:''}
+  </div>`;
+}
+
+function toggleBookable(key){
+  if(STATE.expandedItems.has(key)){
+    STATE.expandedItems.delete(key);
+    document.getElementById('bi-'+key)?.classList.remove('expanded');
+  } else {
+    STATE.expandedItems.add(key);
+    document.getElementById('bi-'+key)?.classList.add('expanded');
+  }
+}
+
+function saveTicket(key){
+  const conf=document.getElementById('fi-conf-'+key)?.value.trim();
+  if(!conf){ showToast('Please enter a confirmation number'); return; }
+  STATE.tickets[key]={
+    confirmation: conf,
+    date: document.getElementById('fi-date-'+key)?.value||'',
+    time: document.getElementById('fi-time-'+key)?.value||'',
+    adults: document.getElementById('fi-adults-'+key)?.value||'',
+    children: document.getElementById('fi-children-'+key)?.value||'',
+    notes: document.getElementById('fi-notes-'+key)?.value||'',
+    status: 'booked',
+    savedAt: new Date().toISOString(),
+  };
+  saveTickets();
+  showToast('✓ Booking saved!');
+  renderTickets();
+  renderItin(); // update itinerary with new ticket data
+  updateAlertBadge();
+}
+
+function clearTicket(key){
+  if(!confirm('Release this booking from your Pokédex?')) return;
+  delete STATE.tickets[key];
+  saveTickets();
+  showToast('Booking removed');
+  renderTickets();
+  renderItin();
+  updateAlertBadge();
+}
+
+/* ── LINKS SCREEN ────────────────────────── */
+function renderLinks(){
+  const wrap=document.getElementById('screen-links');
+  wrap.innerHTML='';
+
+  LINKS.forEach(section=>{
+    const lbl=document.createElement('div'); lbl.className='link-section-label';
+    lbl.textContent=section.section; wrap.appendChild(lbl);
+
+    section.items.forEach(item=>{
+      const el=document.createElement('div');
+      el.className='link-item'+(item.urgent?' urgent':'');
+      el.innerHTML=`<div><div class="link-name">${item.name}</div><div class="link-desc">${item.desc}</div></div><span class="link-arr">›</span>`;
+      el.onclick=()=>window.open(item.url,'_blank','noopener');
+      wrap.appendChild(el);
+    });
+  });
+}
+
+/* ── ALERTS SCREEN ───────────────────────── */
+function renderAlerts(){
+  const wrap=document.getElementById('screen-alerts');
+  wrap.innerHTML='';
+
+  const urgentLbl=document.createElement('span'); urgentLbl.className='alert-section-label';
+  urgentLbl.textContent='🔴 LEGENDARY — Catch Now!'; wrap.appendChild(urgentLbl);
+  ALERTS.filter(a=>a.urgent).forEach(a=>{
+    const card=document.createElement('div'); card.className='alert-card';
+    card.innerHTML=`<div class="alert-title">${a.title}</div><div class="alert-body">${a.body}</div>`;
+    wrap.appendChild(card);
+  });
+
+  const soonLbl=document.createElement('span'); soonLbl.className='alert-section-label soon';
+  soonLbl.textContent='🟡 RARE — Catch Soon'; wrap.appendChild(soonLbl);
+  ALERTS.filter(a=>!a.urgent).forEach(a=>{
+    const card=document.createElement('div'); card.className='alert-card info';
+    card.innerHTML=`<div class="alert-title">${a.title}</div><div class="alert-body">${a.body}</div>`;
+    wrap.appendChild(card);
+  });
+}
+
+function updateAlertBadge(){
+  const urgentCount=ALERTS.filter(a=>a.urgent).length;
+  const bookedCount=BOOKABLE_ITEMS.filter(i=>STATE.tickets[i.key]?.confirmation).length;
+  const stillOutThere=Math.max(0, urgentCount-bookedCount);
+  const badge=document.getElementById('alert-badge');
+  if(badge){ badge.textContent=stillOutThere; badge.style.display=stillOutThere?'flex':'none'; }
+  const tbadge=document.getElementById('ticket-badge');
+  const totalRemaining=BOOKABLE_ITEMS.filter(i=>!STATE.tickets[i.key]?.confirmation).length;
+  if(tbadge){ tbadge.textContent=totalRemaining; tbadge.style.display=totalRemaining>0?'flex':'none'; }
+}
+
+/* ── MAP SCREEN ──────────────────────────── */
+function initMap(){
+  if(STATE.map) return;
+  STATE.map=L.map('map',{zoomControl:true}).setView([35.6,137.2],6);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+    attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">Carto</a>',
+    subdomains:'abcd', maxZoom:19,
+  }).addTo(STATE.map);
+  buildMapMarkers();
+  buildMapFilters();
+}
+
+function makeMarkerIcon(dayNum, color){
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="30" height="38" viewBox="0 0 30 38">
+    <path d="M15 0C6.7 0 0 6.7 0 15c0 9.4 15 23 15 23S30 24.4 30 15C30 6.7 23.3 0 15 0z" fill="${color}" stroke="white" stroke-width="1.8"/>
+    <circle cx="15" cy="15" r="7" fill="white"/>
+    <text x="15" y="${dayNum>9?'19.5':'19'}" text-anchor="middle" font-size="${dayNum>9?'7':'9'}" font-weight="bold" fill="${color}" font-family="Inter,sans-serif">${dayNum}</text>
+  </svg>`;
+  return L.icon({
+    iconUrl:'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg),
+    iconSize:[26,33], iconAnchor:[13,33], popupAnchor:[0,-33],
+  });
+}
+
+function buildMapMarkers(){
+  STATE.mapMarkers.forEach(m=>STATE.map.removeLayer(m));
+  STATE.mapMarkers=[];
+  DAYS.forEach(day=>{
+    if(!STATE.mapFilters.has(day.city)) return;
+    const color=CITIES[day.city].color;
+    day.stops.forEach(stop=>{
+      if(!stop.lat) return;
+      const marker=L.marker([stop.lat,stop.lng],{icon:makeMarkerIcon(day.day,color)});
+      const tipHtml=stop.tip?`<div class="popup-tip">💡 ${stop.tip}</div>`:'';
+      marker.bindPopup(`<div class="popup-inner">
+        <div class="popup-day">Day ${day.day} · ${day.date} · ${CITIES[day.city].label}</div>
+        <div class="popup-name">${stop.name}</div>
+        <div class="popup-desc">${stop.note}</div>
+        ${tipHtml}
+      </div>`,{maxWidth:240});
+      marker.addTo(STATE.map);
+      STATE.mapMarkers.push(marker);
+    });
+  });
+}
+
+function buildMapFilters(){
+  const bar=document.getElementById('map-filter-bar'); bar.innerHTML='';
+  const allBtn=document.createElement('button');
+  allBtn.className='map-filter-chip on'; allBtn.textContent='All'; allBtn.dataset.city='all';
+  allBtn.onclick=()=>toggleMapFilter('all',allBtn); bar.appendChild(allBtn);
+  Object.entries(CITIES).forEach(([k,v])=>{
+    const btn=document.createElement('button');
+    btn.className='map-filter-chip on'; btn.textContent=v.label; btn.dataset.city=k;
+    btn.onclick=()=>toggleMapFilter(k,btn); bar.appendChild(btn);
+  });
+}
+
+function toggleMapFilter(city,btn){
+  if(city==='all'){
+    STATE.mapFilters=new Set(Object.keys(CITIES));
+    document.querySelectorAll('.map-filter-chip').forEach(b=>b.classList.add('on'));
+  } else {
+    if(STATE.mapFilters.has(city)){ STATE.mapFilters.delete(city); btn.classList.remove('on'); }
+    else{ STATE.mapFilters.add(city); btn.classList.add('on'); }
+    document.querySelector('[data-city="all"]').classList.toggle('on', STATE.mapFilters.size===Object.keys(CITIES).length);
+  }
+  buildMapMarkers();
+}
+
+/* ── PWA INSTALL ─────────────────────────── */
+window.addEventListener('beforeinstallprompt', e=>{
+  e.preventDefault();
+  STATE.deferredInstall=e;
+  document.getElementById('install-btn').classList.add('visible');
+});
+function promptInstall(){
+  if(STATE.deferredInstall){
+    STATE.deferredInstall.prompt();
+    STATE.deferredInstall.userChoice.then(()=>{ document.getElementById('install-btn').classList.remove('visible'); });
+  }
+}
+
+/* ── INIT ────────────────────────────────── */
+document.addEventListener('DOMContentLoaded',()=>{
+  STATE.edits={};
+  STATE.hotelEdits={};
+  loadTickets();
+  loadEdits();
+  renderItin();
+  renderFlights();
+  renderHotels();
+  renderLinks();
+  renderAlerts();
+  updateAlertBadge();
+  navigate('itin');
+});
+
+/* ═══════════════════════════════════════════
+   EDIT MODE — Full in-app editor
+   Saves overrides to localStorage.
+   data.js is always the fallback default.
+═══════════════════════════════════════════ */
+
+// ── Storage keys ──────────────────────────
+const EDIT_KEY  = 'japan2026_edits';   // day/stop edits
+const HOTEL_KEY = 'japan2026_hotels';  // hotel edits
+
+// ── Load edits ────────────────────────────
+function loadEdits(){
+  try {
+    const raw=localStorage.getItem(EDIT_KEY);
+    if(raw) STATE.edits=JSON.parse(raw);
+    else STATE.edits={};
+  } catch(e){ STATE.edits={}; }
+
+  try {
+    const raw=localStorage.getItem(HOTEL_KEY);
+    if(raw) STATE.hotelEdits=JSON.parse(raw);
+    else STATE.hotelEdits={};
+  } catch(e){ STATE.hotelEdits={}; }
+}
+
+function saveEdits(){
+  try { localStorage.setItem(EDIT_KEY, JSON.stringify(STATE.edits)); } catch(e){}
+}
+function saveHotelEdits(){
+  try { localStorage.setItem(HOTEL_KEY, JSON.stringify(STATE.hotelEdits)); } catch(e){}
+}
+
+// ── Get effective day data (edits override defaults) ──
+function getEffectiveDay(day){
+  const edit=STATE.edits['day_'+day.day]||{};
+  const stops=(edit.stops||day.stops).map((s,i)=>{
+    const se=(STATE.edits['stop_'+day.day+'_'+i])||{};
+    return {...s,...se};
+  });
+  // also handle added stops
+  const added=STATE.edits['added_'+day.day]||[];
+  return {
+    ...day,
+    date: edit.date||day.date,
+    label: edit.label||day.label,
+    stops: [...stops,...added],
+  };
+}
+
+function getEffectiveHotel(h,idx){
+  const edit=STATE.hotelEdits['hotel_'+idx]||{};
+  return {...h,...edit};
+}
+
+// ── EDIT SCREEN ───────────────────────────
+function renderEdit(){
+  // Edit screen uses its own container, not sbody
+  const wrap=document.getElementById('screen-edit');
+  wrap.innerHTML='';
+
+  // Back button row
+  const backRow=document.createElement('div');
+  backRow.style.cssText='display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 2px';
+  backRow.innerHTML=`
+    <button onclick="navigate('itin')" style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,215,0,.3);border-radius:20px;padding:6px 14px;font-size:.68rem;font-weight:800;color:var(--yellow);letter-spacing:.04em">← BACK</button>
+    <span style="font-size:.65rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--yellow);text-shadow:0 0 8px rgba(255,215,0,.4)">✏️ EDIT MODE</span>
+  `;
+  wrap.appendChild(backRow);
+
+  const body=wrap; // render into screen-edit directly
+
+  // Intro
+  const intro=document.createElement('div');
+  intro.className='edit-intro';
+  intro.innerHTML='<strong>⚙️ Edit Mode</strong><br>Tap any section to edit names, dates, notes, or add new stops. Changes save instantly and update your itinerary.';
+  wrap.appendChild(intro);
+
+  // Reset button
+  const resetBar=document.createElement('div');
+  resetBar.className='reset-banner';
+  resetBar.innerHTML='<span>Reset all edits back to defaults</span>';
+  const resetBtn=document.createElement('button');
+  resetBtn.className='btn-reset-all';
+  resetBtn.textContent='Reset All';
+  resetBtn.onclick=()=>{
+    if(!confirm('Reset ALL edits to defaults? This cannot be undone.')) return;
+    STATE.edits={}; STATE.hotelEdits={};
+    saveEdits(); saveHotelEdits();
+    showToast('🔄 Reset to defaults');
+    renderEdit(); renderItin(); renderHotels();
+  };
+  resetBar.appendChild(resetBtn);
+  wrap.appendChild(resetBar);
+
+  // ── HOTELS section ──
+  const hotelTitle=document.createElement('div');
+  hotelTitle.className='edit-section-title';
+  hotelTitle.textContent='🏨 Hotels';
+  wrap.appendChild(hotelTitle);
+
+  HOTELS.forEach((h,idx)=>{
+    const eff=getEffectiveHotel(h,idx);
+    const card=document.createElement('div');
+    card.className='hotel-edit-card';
+    card.innerHTML=`
+      <span class="hotel-nights-badge" style="background:${h.color}">${eff.nights}</span>
+      <div class="edit-btn-row" style="margin-top:0;margin-bottom:8px">
+        <button class="btn-edit-save" style="font-size:.62rem;padding:5px 10px" onclick="openHotelEdit(${idx})">✏️ Edit</button>
+      </div>
+      <div class="hotel-name">${eff.name}</div>
+      <div class="hotel-sub">${eff.sub}</div>
+      <div class="hotel-note" style="font-size:.65rem;color:#555;margin-top:3px">${eff.note}</div>
+    `;
+    wrap.appendChild(card);
+  });
+
+  // ── DAYS section ──
+  const dayTitle=document.createElement('div');
+  dayTitle.className='edit-section-title';
+  dayTitle.textContent='📅 Days & Stops';
+  wrap.appendChild(dayTitle);
+
+  DAYS.forEach(day=>{
+    const eff=getEffectiveDay(day);
+    const color=CITIES[day.city].color;
+    const hasEdits=!!(STATE.edits['day_'+day.day]||STATE.edits['added_'+day.day]||
+      eff.stops.some((_,i)=>STATE.edits['stop_'+day.day+'_'+i]));
+
+    const card=document.createElement('div');
+    card.className='edit-card';
+    card.id='edit-card-'+day.day;
+
+    const hdr=document.createElement('div');
+    hdr.className='edit-card-header';
+    hdr.innerHTML=`
+      <span class="day-num" style="background:${color}">Day ${day.day}</span>
+      <div style="flex:1">
+        <div style="font-size:.78rem;font-weight:700;color:var(--ink)">${eff.date}</div>
+        <div style="font-size:.65rem;color:var(--muted)">${eff.label}</div>
+      </div>
+      ${hasEdits?'<span class="unsaved-dot" title="Has edits"></span>':''}
+      <span class="edit-card-chevron">▾</span>
+    `;
+    hdr.onclick=()=>{
+      card.classList.toggle('open');
+    };
+    card.appendChild(hdr);
+
+    const bodyEl=document.createElement('div');
+    bodyEl.className='edit-card-body';
+
+    // Day-level fields
+    bodyEl.innerHTML=`
+      <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border)">
+        <div class="stop-edit-label">Day Header</div>
+        <input class="edit-input small" id="edit-date-${day.day}" placeholder="Date (e.g. Oct 24)" value="${eff.date}">
+        <input class="edit-input small" id="edit-label-${day.day}" placeholder="Day label/title" value="${eff.label}">
+        <div class="edit-btn-row">
+          <button class="btn-edit-save" onclick="saveDayHeader(${day.day})">Save Header</button>
+        </div>
+      </div>
+    `;
+
+    // Stops
+    const stopsWrap=document.createElement('div');
+    stopsWrap.id='stops-wrap-'+day.day;
+
+    eff.stops.forEach((stop,si)=>{
+      stopsWrap.appendChild(buildStopEditRow(day.day, si, stop, color, si>=day.stops.length));
+    });
+
+    bodyEl.appendChild(stopsWrap);
+
+    // Add stop button
+    const addBtn=document.createElement('button');
+    addBtn.className='btn-add-stop';
+    addBtn.textContent='Add New Stop';
+    addBtn.onclick=()=>addNewStop(day.day, color);
+    bodyEl.appendChild(addBtn);
+
+    card.appendChild(bodyEl);
+    wrap.appendChild(card);
+  });
+}
+
+function buildStopEditRow(dayNum, stopIdx, stop, color, isAdded){
+  const row=document.createElement('div');
+  row.className='stop-edit-row';
+  row.id=`stop-edit-${dayNum}-${stopIdx}`;
+  row.innerHTML=`
+    <div class="stop-edit-label">
+      <span><span class="stop-color-dot" style="background:${color}"></span>Stop ${stopIdx+1}${isAdded?' (Added)':''}</span>
+      <button class="btn-edit-danger" style="padding:2px 8px;font-size:.58rem" onclick="deleteStop(${dayNum},${stopIdx},${isAdded})">✕ Remove</button>
+    </div>
+    <input class="edit-input" id="se-name-${dayNum}-${stopIdx}" placeholder="Stop name" value="${(stop.name||'').replace(/"/g,'&quot;')}">
+    <input class="edit-input small" id="se-note-${dayNum}-${stopIdx}" placeholder="Note / description" value="${(stop.note||'').replace(/"/g,'&quot;')}">
+    <input class="edit-input small" id="se-tip-${dayNum}-${stopIdx}" placeholder="Tip (optional)" value="${(stop.tip||'').replace(/"/g,'&quot;')}">
+    <div class="edit-btn-row">
+      <button class="btn-edit-save" onclick="saveStop(${dayNum},${stopIdx},${isAdded})">Save Stop</button>
+    </div>
+  `;
+  return row;
+}
+
+function saveDayHeader(dayNum){
+  const date=document.getElementById('edit-date-'+dayNum)?.value.trim();
+  const label=document.getElementById('edit-label-'+dayNum)?.value.trim();
+  if(!STATE.edits['day_'+dayNum]) STATE.edits['day_'+dayNum]={};
+  if(date) STATE.edits['day_'+dayNum].date=date;
+  if(label) STATE.edits['day_'+dayNum].label=label;
+  saveEdits();
+  showToast('✓ Day header saved!');
+  renderItin();
+  // refresh card header
+  const day=DAYS.find(d=>d.day===dayNum);
+  if(day) renderEdit();
+}
+
+function saveStop(dayNum, stopIdx, isAdded){
+  const name=document.getElementById(`se-name-${dayNum}-${stopIdx}`)?.value.trim();
+  const note=document.getElementById(`se-note-${dayNum}-${stopIdx}`)?.value.trim();
+  const tip=document.getElementById(`se-tip-${dayNum}-${stopIdx}`)?.value.trim();
+
+  if(isAdded){
+    const added=STATE.edits['added_'+dayNum]||[];
+    const realIdx=stopIdx - (DAYS.find(d=>d.day===dayNum)?.stops.length||0);
+    if(!added[realIdx]) added[realIdx]={};
+    if(name) added[realIdx].name=name;
+    if(note!==undefined) added[realIdx].note=note;
+    if(tip!==undefined) added[realIdx].tip=tip;
+    STATE.edits['added_'+dayNum]=added;
+  } else {
+    const key='stop_'+dayNum+'_'+stopIdx;
+    if(!STATE.edits[key]) STATE.edits[key]={};
+    if(name) STATE.edits[key].name=name;
+    if(note!==undefined) STATE.edits[key].note=note;
+    if(tip!==undefined) STATE.edits[key].tip=tip;
+  }
+  saveEdits();
+  showToast('✓ Stop saved!');
+  renderItin();
+}
+
+function deleteStop(dayNum, stopIdx, isAdded){
+  if(!confirm('Remove this stop?')) return;
+  if(isAdded){
+    const day=DAYS.find(d=>d.day===dayNum);
+    const realIdx=stopIdx-(day?.stops.length||0);
+    const added=STATE.edits['added_'+dayNum]||[];
+    added.splice(realIdx,1);
+    STATE.edits['added_'+dayNum]=added;
+  } else {
+    // Mark as deleted
+    const key='stop_'+dayNum+'_'+stopIdx;
+    if(!STATE.edits[key]) STATE.edits[key]={};
+    STATE.edits[key].deleted=true;
+    STATE.edits[key].name='[Removed]';
+    STATE.edits[key].note='';
+    STATE.edits[key].tip='';
+  }
+  saveEdits();
+  showToast('Stop removed');
+  renderEdit();
+  renderItin();
+}
+
+function addNewStop(dayNum, color){
+  const added=STATE.edits['added_'+dayNum]||[];
+  added.push({name:'New Stop',note:'',tip:''});
+  STATE.edits['added_'+dayNum]=added;
+  saveEdits();
+  renderEdit();
+  // open that card
+  const card=document.getElementById('edit-card-'+dayNum);
+  if(card) card.classList.add('open');
+  showToast('New stop added — fill in the details');
+}
+
+// ── Hotel edit modal ──────────────────────
+function openHotelEdit(idx){
+  const h=getEffectiveHotel(HOTELS[idx],idx);
+
+  // Build inline form below the hotel card
+  const existing=document.getElementById('hotel-edit-form-'+idx);
+  if(existing){ existing.remove(); return; } // toggle
+
+  const form=document.createElement('div');
+  form.id='hotel-edit-form-'+idx;
+  form.style.cssText='background:rgba(255,255,255,.98);border:2px solid var(--border);border-radius:var(--radius);padding:12px;margin-top:-4px;margin-bottom:8px;box-shadow:var(--shadow)';
+  form.innerHTML=`
+    <div class="stop-edit-label" style="margin-bottom:8px">Edit Hotel ${idx+1}</div>
+    <input class="edit-input" id="he-name-${idx}" placeholder="Hotel name" value="${h.name}">
+    <input class="edit-input small" id="he-sub-${idx}" placeholder="Location / subtitle" value="${h.sub}">
+    <input class="edit-input small" id="he-nights-${idx}" placeholder="Nights (e.g. Oct 22–28 · 6 nights)" value="${h.nights}">
+    <input class="edit-input small" id="he-note-${idx}" placeholder="Notes" value="${h.note}">
+    <div class="edit-btn-row">
+      <button class="btn-edit-save" onclick="saveHotelEdit(${idx})">Save Hotel</button>
+      <button class="btn-edit-cancel" onclick="document.getElementById('hotel-edit-form-${idx}').remove()">Cancel</button>
+    </div>
+  `;
+
+  // Insert after the hotel card
+  const hotelCards=document.querySelectorAll('.hotel-edit-card');
+  if(hotelCards[idx]) hotelCards[idx].after(form);
+}
+
+function saveHotelEdit(idx){
+  const name=document.getElementById('he-name-'+idx)?.value.trim();
+  const sub=document.getElementById('he-sub-'+idx)?.value.trim();
+  const nights=document.getElementById('he-nights-'+idx)?.value.trim();
+  const note=document.getElementById('he-note-'+idx)?.value.trim();
+  if(!STATE.hotelEdits['hotel_'+idx]) STATE.hotelEdits['hotel_'+idx]={};
+  const edit=STATE.hotelEdits['hotel_'+idx];
+  if(name) edit.name=name;
+  if(sub) edit.sub=sub;
+  if(nights) edit.nights=nights;
+  if(note) edit.note=note;
+  saveHotelEdits();
+  showToast('🏨 Hotel updated!');
+  document.getElementById('hotel-edit-form-'+idx)?.remove();
+  renderEdit();
+  renderHotels();
+}
+
+</script>
+<script>
+
+/* ═══════════════════════════════════
+   FOOD & STORES DATA
+═══════════════════════════════════ */
+const FOOD_DATA = {
+  tokyo: {
+    label: '🗼 Tokyo',
+    categories: [
+      {
+        cat: '🍜 Ramen',
+        items: [
+          {
+            icon:'🍜', name:'Fuunji', area:'Shinjuku',
+            price:'¥1,000–1,500 (~$7–10)', priceClass:'price-cheap',
+            tags:['Tsukemen','Cash only','Queues form'],
+            desc:'One of Tokyo’s most acclaimed tsukemen (dipping ramen) spots. Rich, thick broth with perfectly chewy noodles. Tiny shop — arrive before opening to beat the line.',
+            tip:'Get there 15 min before opening. Order the tokusei tsukemen (special). Cash only.',
+            maps:'https://maps.google.com/?q=Fuunji+Shinjuku+Tokyo'
+          },
+          {
+            icon:'🍜', name:'Ichiran Ramen (Nakano or Shinjuku)', area:'Nakano / Shinjuku',
+            price:'¥980–1,300 (~$7–9)', priceClass:'price-cheap',
+            tags:['Solo booths','English menu','Great for kids'],
+            desc:'Famous solo-booth ramen — everyone gets their own private cubicle. Your son will think it’s the coolest restaurant ever. Customize broth richness, noodle firmness, and toppings on a form.',
+            tip:'Multiple locations near you. Nakano branch is a 5-min walk from your hotel.',
+            maps:'https://maps.google.com/?q=Ichiran+Ramen+Nakano+Tokyo'
+          },
+          {
+            icon:'🍜', name:'Nagi Golden Gai (Shinjuku)', area:'Shinjuku Golden Gai',
+            price:'¥1,000–1,200 (~$7–8)', priceClass:'price-cheap',
+            tags:['Niboshi broth','Atmospheric','Tiny bar'],
+            desc:'Legendary sardine-broth ramen in the atmospheric Golden Gai alley district. The broth is uniquely savory and deep. One of Shinjuku’s most talked-about bowls.',
+            tip:'Very small — 10 seats. Go right when they open (11am) or expect a wait.',
+            maps:'https://maps.google.com/?q=Nagi+Golden+Gai+Shinjuku'
+          },
+        ]
+      },
+      {
+        cat: '🍣 Conveyor Belt Sushi',
+        items: [
+          {
+            icon:'🍣', name:'Sushiro', area:'Multiple Tokyo locations',
+            price:'¥110–330 (~$0.75–2.20) per plate', priceClass:'price-cheap',
+            tags:['English app ordering','Kids love it','Bullet delivery'],
+            desc:'Japan’s largest and most beloved kaiten-sushi chain. Plates from ¥110 (~$0.75). Order via tablet in English. The bullet-train delivery system for ordered items is genuinely exciting for kids.',
+            tip:'Use the Sushiro app to join the waitlist before you arrive — saves up to an hour.',
+            maps:'https://maps.google.com/?q=Sushiro+Shinjuku+Tokyo'
+          },
+          {
+            icon:'🍣', name:'Uobei Shibuya (Genki Sushi)', area:'Shibuya',
+            price:'¥115–330 (~$0.75–2.20) per plate', priceClass:'price-cheap',
+            tags:['Bullet train delivery','Fun atmosphere','Near Shibuya'],
+            desc:'Known for the high-speed bullet-train lane that delivers ordered sushi directly to your table. Extremely fun for families. Right in Shibuya after shopping.',
+            tip:'Order via touchscreen tablet. The delivery speed is genuinely impressive — your son will be obsessed.',
+            maps:'https://maps.google.com/?q=Uobei+Shibuya+Tokyo'
+          },
+        ]
+      },
+      {
+        cat: '🍱 Must-Try Tokyo Eats',
+        items: [
+          {
+            icon:'🥟', name:'Omoide Yokocho (Memory Lane)', area:'Shinjuku',
+            price:'¥500–2,000 (~$3–13)', priceClass:'price-cheap',
+            tags:['Yakitori','Atmospheric','Open late'],
+            desc:'A narrow alley of tiny yakitori (grilled skewer) stalls behind Shinjuku Station. Smoky, atmospheric, cheap, and unforgettable. One of Tokyo’s most iconic eating experiences.',
+            tip:'Go after 6pm when the smoke and neon are in full effect. Cash only at most stalls.',
+            maps:'https://maps.google.com/?q=Omoide+Yokocho+Shinjuku+Tokyo'
+          },
+          {
+            icon:'🍡', name:'Nakamise Shopping Street Snacks', area:'Asakusa',
+            price:'¥100–500 (~$0.70–3)', priceClass:'price-cheap',
+            tags:['Street food','Traditional sweets','Near Senso-ji'],
+            desc:'The 250m street leading to Senso-ji is lined with vendors selling ningyo-yaki (sweet cakes), imo-youkan (sweet potato jelly), and senbei (rice crackers). Excellent cheap snacking.',
+            tip:'Agemanju (deep-fried sweet bun) stalls are the highlight — get them fresh and hot.',
+            maps:'https://maps.google.com/?q=Nakamise+Shopping+Street+Asakusa+Tokyo'
+          },
+          {
+            icon:'🍦', name:'7-Eleven / FamilyMart / Lawson', area:'Everywhere',
+            price:'¥150–600 (~$1–4)', priceClass:'price-cheap',
+            tags:['Open 24hrs','Surprisingly good','Great breakfast'],
+            desc:'Japan’s convenience stores are legitimately delicious — onigiri, egg salad sandwiches, hot foods, matcha sweets. Breakfast here every morning saves significant money.',
+            tip:'Lawson’s Karaage-kun chicken bites are legendary. 7-Eleven egg salad sandwich is genuinely iconic.',
+            maps:'https://maps.google.com/?q=7-Eleven+Nakano+Tokyo'
+          },
+        ]
+      },
+      {
+        cat: '🛍️ Clothing Stores — Tokyo',
+        items: [
+          {
+            icon:'👕', name:'Uniqlo Shinjuku Flagship', area:'Shinjuku',
+            price:'¥990–9,900 (~$7–66)', priceClass:'price-cheap',
+            tags:['All ages','Tax-free','Huge selection'],
+            desc:'Largest Uniqlo in Tokyo. Excellent quality Japanese basics — Heattech, AIRism, fleeces, and basics for all three of you. Tax-free with passport over ¥5,000 (~$33).',
+            tip:'Pick up Heattech base layers for the cooler Nov days. They pack down tiny — perfect for carry-on travel.',
+            maps:'https://maps.google.com/?q=Uniqlo+Shinjuku+Tokyo'
+          },
+          {
+            icon:'👗', name:'GU Harajuku', area:'Harajuku',
+            price:'¥490–3,990 (~$3–27)', priceClass:'price-cheap',
+            tags:['Very affordable','Trendy','All ages'],
+            desc:'Uniqlo’s cheaper sister brand. Similar quality at lower prices with trendier cuts. Great for picking up affordable Japanese-style fashion for your wife and son.',
+            tip:'GU collaborations with anime and pop culture brands are frequently available — great unique finds.',
+            maps:'https://maps.google.com/?q=GU+Harajuku+Tokyo'
+          },
+          {
+            icon:'🧥', name:'Beams Shinjuku', area:'Shinjuku',
+            price:'¥3,000–20,000 (~$20–133)', priceClass:'price-mid',
+            tags:['Japanese menswear','Quality','Unique designs'],
+            desc:'Japan’s most respected mid-range fashion brand for men. Unique designs you won’t find at home. Quality construction. Great for picking up a few special pieces.',
+            tip:'Beams Japan floor has traditional craft-inspired items — excellent unique souvenirs that are also wearable.',
+            maps:'https://maps.google.com/?q=Beams+Shinjuku+Tokyo'
+          },
+          {
+            icon:'🕶️', name:'Shimokitazawa Vintage Stores', area:'Shimokitazawa',
+            price:'¥500–8,000 (~$3–53)', priceClass:'price-cheap',
+            tags:['Vintage','Unique finds','Great for wife'],
+            desc:'New York Joe Exchange, Chicago Thrift, BerBerJin — Tokyo’s best vintage clothing neighborhood. Curated American vintage, Japanese streetwear, and European finds.',
+            tip:'New York Joe Exchange is a buy-sell-trade store in a converted public bath — worth it for the atmosphere alone.',
+            maps:'https://maps.google.com/?q=New+York+Joe+Exchange+Shimokitazawa+Tokyo'
+          },
+          {
+            icon:'🧸', name:'Nakano Broadway', area:'Nakano (walking distance from hotel)',
+            price:'¥100–50,000 (~$0.70–333)', priceClass:'price-cheap',
+            tags:['Anime','Pokémon','Mandarake','Walking distance'],
+            desc:'5-min walk from your hotel! Hundreds of specialist shops — Mandarake (30+ units across floors), rare Pokémon cards, vintage toys, anime figures, manga. Your son’s paradise.',
+            tip:'Mandarake is the main draw — each unit specializes in different categories. Budget extra time and money here.',
+            maps:'https://maps.google.com/?q=Nakano+Broadway+Tokyo'
+          },
+          {
+            icon:'🎮', name:'Akihabara Electronics & Anime', area:'Akihabara',
+            price:'Varies widely', priceClass:'price-cheap',
+            tags:['Pokémon Center','Yodobashi','Anime'],
+            desc:'Pokémon Center Tokyo DX is here (bigger than the Café), plus Yodobashi Akiba (electronics), Animate (anime merch), and countless specialty shops in back alleys.',
+            tip:'Pokémon Center Tokyo DX has exclusive Tokyo-only merchandise. Buy here before DisneySea and Pokémon Café.',
+            maps:'https://maps.google.com/?q=Pokemon+Center+Tokyo+DX+Akihabara'
+          },
+        ]
+      },
+    ]
+  },
+  osaka: {
+    label: '🏯 Osaka',
+    categories: [
+      {
+        cat: '🐙 Osaka Street Food — Must Try',
+        items: [
+          {
+            icon:'🐙', name:'Takoyaki — Wanaka Dotonbori', area:'Dotonbori',
+            price:'¥600–800 (~$4–5) for 6 balls', priceClass:'price-cheap',
+            tags:['Osaka icon','Street food','Near hotel'],
+            desc:'Wanaka is considered one of the best takoyaki spots in Dotonbori, right near the famous Glico sign. Watch the cook flip the octopus balls with expert speed. Eat them immediately — they cool fast.',
+            tip:'Blow on them first — they are molten inside. The creamy mayo + bonito flake version is the classic.',
+            maps:'https://maps.google.com/?q=Wanaka+Takoyaki+Dotonbori+Osaka'
+          },
+          {
+            icon:'🥞', name:'Okonomiyaki — Mizuno', area:'Dotonbori',
+            price:'¥1,500–2,500 (~$10–17)', priceClass:'price-cheap',
+            tags:['Osaka style','Open kitchen','Dotonbori canal'],
+            desc:'One of Osaka’s most famous okonomiyaki restaurants, right on the Dotonbori canal. Watch chefs expertly grill savory pancakes in an open kitchen. The yam flour version and pork + scallop are standouts.',
+            tip:'Expect a wait — no reservations. Go at 5pm when they open to beat dinner crowds.',
+            maps:'https://maps.google.com/?q=Mizuno+Okonomiyaki+Dotonbori+Osaka'
+          },
+          {
+            icon:'🍡', name:'Kushikatsu — Daruma Dotonbori', area:'Dotonbori',
+            price:'¥150–300 (~$1–2) per skewer', priceClass:'price-cheap',
+            tags:['Osaka original','No double dipping!','Kids love it'],
+            desc:'The most famous kushikatsu chain in Osaka. Deep-fried skewers of meat, seafood, and vegetables in crispy batter. Look for the giant chef statue above the door. Remember the rule: NO double dipping the sauce.',
+            tip:'Order the mixed set to try everything. Kids absolutely love pointing at what they want to try next.',
+            maps:'https://maps.google.com/?q=Kushikatsu+Daruma+Dotonbori+Osaka'
+          },
+          {
+            icon:'🥟', name:'551 Horai Butaman', area:'Dotonbori / Namba',
+            price:'¥220 (~$1.50) each', priceClass:'price-cheap',
+            tags:['Osaka institution','Pork buns','Queue for it'],
+            desc:'Osaka’s most beloved pork buns — steaming, juicy, and sold by the millions. The red-and-white boxes are an Osaka icon. Multiple locations in Namba/Dotonbori area.',
+            tip:'Buy a box to take back to your hotel for late night snacking. The gyoza are also excellent.',
+            maps:'https://maps.google.com/?q=551+Horai+Namba+Osaka'
+          },
+          {
+            icon:'🎂', name:'Rikuro Ojisan Jiggly Cheesecake', area:'Namba',
+            price:'¥965 (~$6.50) per whole cake', priceClass:'price-cheap',
+            tags:['Osaka dessert icon','Jiggly','Must try'],
+            desc:'Famous ultra-jiggly Japanese cheesecake fresh from the oven. They stamp each cake with a cartoon old man face. The Namba location has a window where you can watch them being made.',
+            tip:'Buy it warm from the oven (they come out every ~15 min). Eat within a few hours — it deflates as it cools.',
+            maps:'https://maps.google.com/?q=Rikuro+Ojisan+Cheesecake+Namba+Osaka'
+          },
+        ]
+      },
+      {
+        cat: '🍣 Sushi — Osaka',
+        items: [
+          {
+            icon:'🍣', name:'Daiki Suisan Kaiten Sushi', area:'Multiple Osaka locations',
+            price:'¥140–550 (~$0.95–3.70) per plate', priceClass:'price-cheap',
+            tags:['Market-fresh','Local favorite','No tourist trap'],
+            desc:'Local favorite for conveyor belt sushi — market-fresh fish sourced directly from Osaka’s wholesale markets. Better quality than tourist-area spots at the same price. Queue at lunch.',
+            tip:'Avoid the Dotonbori tourist-trap sushi restaurants. This is where Osaka residents actually eat sushi.',
+            maps:'https://maps.google.com/?q=Daiki+Suisan+Osaka'
+          },
+        ]
+      },
+      {
+        cat: '🍜 Ramen — Osaka',
+        items: [
+          {
+            icon:'🍜', name:'Kinryu Ramen Dotonbori', area:'Dotonbori',
+            price:'¥750–900 (~$5–6)', priceClass:'price-cheap',
+            tags:['24hrs','Cheap','Dotonbori classic'],
+            desc:'Open 24 hours, incredibly cheap, and perfectly decent ramen right in Dotonbori. Great for a late-night bowl after evening food crawling. Recognizable by the giant dragon outside.',
+            tip:'Order at the vending machine outside. Tonkotsu broth is the way to go here.',
+            maps:'https://maps.google.com/?q=Kinryu+Ramen+Dotonbori+Osaka'
+          },
+        ]
+      },
+      {
+        cat: '🛍️ Shopping — Osaka',
+        items: [
+          {
+            icon:'🛒', name:'Kuromon Ichiba Market', area:'Namba (near hotel)',
+            price:'¥200–3,000 (~$1.35–20)', priceClass:'price-cheap',
+            tags:['Fresh seafood','Street food','Morning visits'],
+            desc:'580m covered market — Japan’s Kitchen. Crab, fresh sashimi, wagyu beef on sticks, fresh oysters, Japanese pickles. Open early morning. Best for a market breakfast or lunch.',
+            tip:'Many stalls let you eat on the spot. The fresh oysters and wagyu beef skewers are the highlights.',
+            maps:'https://maps.google.com/?q=Kuromon+Ichiba+Market+Osaka'
+          },
+          {
+            icon:'🕹️', name:'Den Den Town (Osaka Akihabara)', area:'Nipponbashi',
+            price:'Varies widely', priceClass:'price-cheap',
+            tags:['Anime','Electronics','Manga','Figure stores'],
+            desc:'Osaka’s answer to Akihabara. Multi-story shops selling anime merch, retro games, electronics, and figures. Less crowded than Akihabara with often better prices.',
+            tip:'Super Potato Osaka (retro gaming) and Jungle shops are highlights. Great for picking up cheaper figures.',
+            maps:'https://maps.google.com/?q=Den+Den+Town+Nipponbashi+Osaka'
+          },
+          {
+            icon:'👕', name:'Shinsaibashi Shopping Arcade', area:'Shinsaibashi (near hotel)',
+            price:'¥1,000–30,000 (~$7–200)', priceClass:'price-mid',
+            tags:['Near hotel','Covered arcade','All brands'],
+            desc:'600m covered shopping arcade right near your hotel. Uniqlo, GU, H&M, American Eagle, and dozens of Japanese brands. Great for picking up clothing on rainy days.',
+            tip:'The arcade connects to the underground Namba Walking Town — you can shop for blocks without going outside.',
+            maps:'https://maps.google.com/?q=Shinsaibashi+Shopping+Arcade+Osaka'
+          },
+        ]
+      },
+    ]
+  },
+  kyoto: {
+    label: '⛩️ Kyoto',
+    categories: [
+      {
+        cat: '🍱 Must-Try Kyoto Food',
+        items: [
+          {
+            icon:'🍡', name:'Nishiki Market Street Food', area:'Nishiki Market',
+            price:'¥100–600 (~$0.70–4) per item', priceClass:'price-cheap',
+            tags:['Walking food','400m market','Bring cash'],
+            desc:'400m covered market — grilled squid, fresh pickles, sesame tofu, matcha soft cream, tamagoyaki (rolled egg). The best walking lunch in Kyoto. Bring cash — many vendors are cash only.',
+            tip:'Aritsugu knife shop at the end of the market is world-famous — great for unique kitchen gift souvenirs.',
+            maps:'https://maps.google.com/?q=Nishiki+Market+Kyoto'
+          },
+          {
+            icon:'🌿', name:'Shigetsu (Tenryu-ji Temple)', area:'Arashiyama',
+            price:'¥3,850–5,500 (~$26–37)', priceClass:'price-mid',
+            tags:['Buddhist cuisine','Garden views','Vegetarian'],
+            desc:'Inside the grounds of Tenryu-ji Temple, this shojin-ryori (Buddhist vegetarian cuisine) restaurant serves a beautiful multi-course lunch surrounded by the temple garden. Unique experience.',
+            tip:'Reservation recommended. Combine with your bamboo forest morning — the restaurant opens at 11am.',
+            maps:'https://maps.google.com/?q=Shigetsu+Tenryuji+Arashiyama+Kyoto'
+          },
+          {
+            icon:'🍵', name:'Matcha Everything — Gion Tsujiri', area:'Gion',
+            price:'¥600–1,500 (~$4–10)', priceClass:'price-cheap',
+            tags:['Matcha','Kyoto specialty','Desserts'],
+            desc:'Kyoto is the home of matcha and Gion Tsujiri is one of the best places to experience it. Matcha parfait, matcha soft serve, matcha floats. The parfait is a showstopper.',
+            tip:'The parfait has a 30-40 min wait at peak times but it is worth it. Order at the window, not inside.',
+            maps:'https://maps.google.com/?q=Gion+Tsujiri+Kyoto'
+          },
+          {
+            icon:'🍜', name:'Pontocho Alley Dining', area:'Pontocho',
+            price:'¥1,500–5,000 (~$10–33)', priceClass:'price-mid',
+            tags:['Atmospheric','Riverside','Evening'],
+            desc:'Narrow alley running parallel to the Kamogawa River, packed with restaurants. Great for a sit-down Kyoto dinner in the evening after Gion. Atmosphere is unmatched at dusk.',
+            tip:'Walk the whole alley first and read menus before committing. Many have English menus and river terrace seating.',
+            maps:'https://maps.google.com/?q=Pontocho+Alley+Kyoto'
+          },
+        ]
+      },
+      {
+        cat: '🛍️ Shopping — Kyoto',
+        items: [
+          {
+            icon:'🎎', name:'Ninenzaka & Sannenzaka', area:'Higashiyama',
+            price:'¥300–5,000 (~$2–33)', priceClass:'price-cheap',
+            tags:['Traditional crafts','Pottery','Souvenirs'],
+            desc:'Two beautifully preserved stone-paved lanes between Kiyomizudera and Gion. Lined with pottery, fans, lacquerware, and traditional craft shops. One of Japan’s most photogenic shopping streets.',
+            tip:'Starbucks here is in a 100-year-old townhouse with tatami seating — worth a stop even if you don’t drink coffee.',
+            maps:'https://maps.google.com/?q=Ninenzaka+Kyoto'
+          },
+          {
+            icon:'🔪', name:'Aritsugu Knives — Nishiki Market', area:'Nishiki Market',
+            price:'¥3,000–50,000 (~$20–333)', priceClass:'price-mid',
+            tags:['Japanese knives','400yr old shop','Unique gift'],
+            desc:'400-year-old shop selling handcrafted Japanese kitchen knives. A knife from Aritsugu is one of the best souvenirs you can bring home from Japan — functional, beautiful, and uniquely Japanese.',
+            tip:'They engrave your name in Japanese for free while you wait. A single good knife makes a great family keepsake.',
+            maps:'https://maps.google.com/?q=Aritsugu+Knives+Nishiki+Market+Kyoto'
+          },
+        ]
+      },
+    ]
+  }
+};
+
+/* ── RENDER FOOD SCREEN ── */
+function renderFood() {
+  const wrap = document.getElementById('screen-food');
+  wrap.innerHTML = '';
+
+  // Intro banner
+  const intro = document.createElement('div');
+  intro.className = 'banner blue';
+  intro.innerHTML = '<strong>🍜 Food & Stores Guide</strong><br>Tap any card for details, tips, and a map link. Organized by city — Tokyo, Osaka, and Kyoto.';
+  wrap.appendChild(intro);
+
+  Object.values(FOOD_DATA).forEach(city => {
+    // City header
+    const cityHdr = document.createElement('div');
+    cityHdr.className = 'food-city-header';
+    cityHdr.textContent = city.label;
+    wrap.appendChild(cityHdr);
+
+    city.categories.forEach(cat => {
+      // Category label
+      const catLbl = document.createElement('div');
+      catLbl.className = 'food-cat-label';
+      catLbl.textContent = cat.cat;
+      wrap.appendChild(catLbl);
+
+      cat.items.forEach((item, idx) => {
+        const id = `food-${city.label}-${cat.cat}-${idx}`.replace(/[^a-z0-9]/gi,'_');
+        const card = document.createElement('div');
+        card.className = 'food-card';
+        card.id = id;
+
+        const hdr = document.createElement('div');
+        hdr.className = 'food-card-hdr';
+        hdr.innerHTML = `
+          <span class="food-icon">${item.icon}</span>
+          <div class="food-info">
+            <div class="food-name">${item.name}</div>
+            <div class="food-meta">📍 ${item.area}</div>
+          </div>
+          <span class="food-price ${item.priceClass}">${item.price}</span>
+        `;
+        hdr.onclick = () => {
+          card.classList.toggle('open');
+        };
+        card.appendChild(hdr);
+
+        const body = document.createElement('div');
+        body.className = 'food-body';
+        const tags = item.tags.map(t => `<span class="food-tag">${t}</span>`).join('');
+        body.innerHTML = `
+          <div class="food-tag-row">${tags}</div>
+          <div class="food-desc">${item.desc}</div>
+          <div class="food-tip">${item.tip}</div>
+          <a class="food-map-btn" href="${item.maps}" target="_blank" rel="noopener">📍 Open in Maps</a>
+        `;
+        card.appendChild(body);
+        wrap.appendChild(card);
+      });
+    });
+  });
+}
+
+</script>
+<script>
+
+/* ═══════════════════════════════════
+   APPS DATA & RENDER
+═══════════════════════════════════ */
+const APPS_DATA = [
+  {
+    cat: '🔴 Install Before You Go — Priority',
+    items: [
+      { emoji:'🗾', name:'Japan Travel by NAVITIME', desc:'Best train routing in Japan. Shows JR Pass compatibility, exact platforms, fares. Offline spot search.', tag:'Free', tagClass:'free', priority:true, url:'https://play.google.com/store/apps/details?id=com.navitime.inbound.walk' },
+      { emoji:'🏰', name:'Tokyo Disney Resort', desc:'Book DisneySea tickets Oct 26, Premier Access for Villains parade (¥3,500/~$23), show times and virtual queues.', tag:'Free', tagClass:'free', priority:true, url:'https://play.google.com/store/apps/details?id=jp.tokyodisneyresort.app' },
+      { emoji:'🌐', name:'Google Translate', desc:'Download Japanese OFFLINE pack now — works without data. Point camera at any menu or sign for instant translation.', tag:'Pre-installed', tagClass:'preinstalled', priority:true, url:'https://play.google.com/store/apps/details?id=com.google.android.apps.translate' },
+      { emoji:'🛂', name:'Visit Japan Web', desc:'Register all 3 family members before Oct 22. Pre-fills customs and immigration — significantly speeds up HND arrival.', tag:'Free / Browser', tagClass:'free', priority:true, url:'https://www.vjw.digital.go.jp/' },
+    ]
+  },
+  {
+    cat: '🗺️ Navigation & Transit',
+    items: [
+      { emoji:'📍', name:'Google Maps', desc:'Download Japan OFFLINE map before you go — works without data. Great for walking navigation between stops.', tag:'Pre-installed', tagClass:'preinstalled', url:'https://play.google.com/store/apps/details?id=com.google.android.apps.maps' },
+      { emoji:'🚆', name:'Hyperdia', desc:'Japan train timetables and route planning. Great backup to NAVITIME for double-checking times and fares.', tag:'Free', tagClass:'free', url:'https://play.google.com/store/apps/details?id=jp.co.jorudan.JapanTransit' },
+      { emoji:'💳', name:'Google Wallet (Suica)', desc:'Add a Suica IC card in Google Wallet — tap to pay on all trains, buses, and convenience stores. Works on any NFC Android phone.', tag:'Pre-installed', tagClass:'preinstalled', url:'https://play.google.com/store/apps/details?id=com.google.android.apps.walletnfcrel' },
+    ]
+  },
+  {
+    cat: '💰 Money & Currency',
+    items: [
+      { emoji:'💸', name:'Wise', desc:'Best USD→JPY exchange rates. Load money before you leave — significantly better than airport exchange or credit card fees.', tag:'Free', tagClass:'free', url:'https://play.google.com/store/apps/details?id=com.transferwise.android' },
+      { emoji:'💱', name:'XE Currency', desc:'Quick yen to dollar converter for shopping. ¥3,500 = $23? Know instantly whether something is good value.', tag:'Free', tagClass:'free', url:'https://play.google.com/store/apps/details?id=com.xe.currency' },
+    ]
+  },
+  {
+    cat: '🎮 Fun & Attractions',
+    items: [
+      { emoji:'🔴', name:'Pokémon GO', desc:'Japan has region-exclusive Pokémon unavailable in the US — Farfetch’d and others. Your son can catch them at Senso-ji, DisneySea, and everywhere in between.', tag:'Free', tagClass:'free', url:'https://play.google.com/store/apps/details?id=com.nianticlabs.pokemongo' },
+      { emoji:'🍣', name:'Sushiro App', desc:'Join the Sushiro waitlist before you arrive — saves up to an hour of waiting. Essential for the most popular kaiten-sushi chain in Japan.', tag:'Free', tagClass:'free', url:'https://play.google.com/store/apps/details?id=jp.co.akindo_sushiro.sushiroapp' },
+    ]
+  },
+  {
+    cat: '📸 Photos & Practical',
+    items: [
+      { emoji:'📷', name:'Google Photos', desc:'Set up automatic backup before you leave. You will take thousands of photos — automatic cloud backup means you never lose them.', tag:'Pre-installed', tagClass:'preinstalled', url:'https://play.google.com/store/apps/details?id=com.google.android.apps.photos' },
+      { emoji:'🌤️', name:'AccuWeather', desc:'Late October weather in Japan can shift. Hakone especially can be misty. Check daily before heading out.', tag:'Free', tagClass:'free', url:'https://play.google.com/store/apps/details?id=com.accuweather.android' },
+      { emoji:'🏨', name:'Booking.com', desc:'Manage your hotel reservations, check confirmation numbers, and message properties directly. Keep it installed for the whole trip.', tag:'Free', tagClass:'free', url:'https://play.google.com/store/apps/details?id=com.booking' },
+    ]
+  },
+];
+
+function renderApps() {
+  const wrap = document.getElementById('screen-apps');
+  wrap.innerHTML = '';
+
+  // Intro banner
+  const intro = document.createElement('div');
+  intro.className = 'banner blue';
+  intro.innerHTML = '<strong>📱 Essential Apps — Android</strong><br>All confirmed on Google Play. Tap <strong>GET APP</strong> to open Play Store directly. Install the Priority apps before Oct 22.';
+  wrap.appendChild(intro);
+
+  APPS_DATA.forEach(section => {
+    const catEl = document.createElement('div');
+    catEl.className = 'app-category';
+    catEl.textContent = section.cat;
+    wrap.appendChild(catEl);
+
+    section.items.forEach(app => {
+      const card = document.createElement('div');
+      card.className = 'app-card' + (app.priority ? ' app-priority' : '');
+
+      const isPreinstalled = app.tagClass === 'preinstalled';
+      card.innerHTML = `
+        <span class="app-emoji">${app.emoji}</span>
+        <div class="app-info">
+          <div class="app-name">${app.name}${app.priority ? '<span class="app-priority-badge">NOW</span>' : ''}</div>
+          <div class="app-desc">${app.desc}</div>
+          <span class="app-tag ${app.tagClass}">${app.tag}</span>
+        </div>
+        <a class="app-btn ${isPreinstalled ? 'installed' : ''}" href="${app.url}" target="_blank" rel="noopener">
+          ${isPreinstalled ? '✓ GOT IT' : 'GET APP'}
+        </a>
+      `;
+      wrap.appendChild(card);
+    });
+  });
+
+  // Bottom note
+  const note = document.createElement('div');
+  note.className = 'banner green';
+  note.style.marginTop = '12px';
+  note.innerHTML = '<strong>💡 Before Oct 22 checklist:</strong><br>① Download Japanese offline pack in Google Translate<br>② Download Japan offline map in Google Maps<br>③ Register family at Visit Japan Web (vjw.digital.go.jp)<br>④ Add Suica card to Google Wallet<br>⑤ Set up Google Photos auto-backup';
+  wrap.appendChild(note);
+}
+
+</script>
+</body>
+</html>
