@@ -1099,6 +1099,9 @@ input,textarea{font-family:inherit}
     <div class="screen" id="screen-links"></div>
     <div class="screen" id="screen-alerts"></div>
     <div class="screen" id="screen-edit"></div>
+    <div class="screen" id="screen-adventure"></div>
+    <div class="screen" id="screen-photos"></div>
+    <div class="screen" id="screen-translate"></div>
     <div class="screen" id="screen-apps"></div>
     <div class="screen" id="screen-food"></div>
   </div>
@@ -1109,21 +1112,23 @@ input,textarea{font-family:inherit}
     <button class="nav-btn" id="nav-flights" onclick="navigate('flights')">
       <span class="nav-icon">✈️</span><span class="nav-label">Fly</span>
     </button>
-    <button class="nav-btn" id="nav-hotels" onclick="navigate('hotels')">
-      <span class="nav-icon">🏨</span><span class="nav-label">Base</span>
-    </button>
     <button class="nav-btn" id="nav-tickets" onclick="navigate('tickets');renderTickets()">
       <span class="nav-icon">🎟</span><span class="nav-label">Catch</span>
       <span class="nav-badge" id="ticket-badge" style="display:none">0</span>
     </button>
-    <button class="nav-btn" id="nav-map" onclick="navigate('map')">
-      <span class="nav-icon">🗺</span><span class="nav-label">Map</span>
-    </button>
     <button class="nav-btn" id="nav-food" onclick="navigate('food')">
       <span class="nav-icon">🍜</span><span class="nav-label">Food</span>
     </button>
-    <button class="nav-btn" id="nav-apps" onclick="navigate('apps')">
-      <span class="nav-icon">📱</span><span class="nav-label">Apps</span>
+    <button class="nav-btn" id="nav-adventure" onclick="navigate('adventure')">
+      <span class="nav-icon">⭐</span><span class="nav-label">Quest</span>
+      <span class="nav-badge" id="quest-badge" style="display:none">!</span>
+    </button>
+    <button class="nav-btn" id="nav-translate" onclick="navigate('translate')">
+      <span class="nav-icon">🌐</span><span class="nav-label">Translate</span>
+    </button>
+    <button class="nav-btn" id="nav-alerts" onclick="navigate('alerts')">
+      <span class="nav-icon">⚠️</span><span class="nav-label">Alerts</span>
+      <span class="nav-badge" id="alert-badge" style="display:none">0</span>
     </button>
   </nav>
 </div>
@@ -1282,9 +1287,9 @@ const DAYS=[
     {name:'Kinkaku-ji (Golden Pavilion)',lat:35.0394,lng:135.7292,
      note:'Afternoon Kyoto. ¥500 (~$3) entry. Peak Nov foliage. Go at opening for the reflection shot.',
      tip:'Philosopher\'s Path walk nearby — gorgeous in early November colour.'},
-    {name:'Gion District → HND Area Hotel',lat:35.0036,lng:135.7781,
-     note:'Geisha district at dusk. Then travel to Haneda area for the night.',
-     tip:'⚠️ Must reach HND area tonight — 6:00pm departure — arrive HND by 3:30pm!'}
+    {name:'Gion District → Last Osaka Night',lat:35.0036,lng:135.7781,
+     note:'Geisha district at dusk. Return to Osaka for a final night — check out next morning Nov 4, Nozomi to HND by noon.',
+     tip:'Last night in Osaka! One final Dotonbori street food crawl and souvenir run!'}
   ]},
   {day:14,date:'Nov 4',dateObj:'2026-11-04',city:'tokyo',label:'Fly Home',badge:'✈ Travel Day',travelDay:true,
    stops:[
@@ -1364,7 +1369,7 @@ const BOOKABLE_ITEMS=[
   {key:'jr_pass',     name:'Japan Rail Pass (14-day)', day:1,  icon:'🚅', url:'https://japanrailpass.net/en/purchase/', urgency:'high',
    instructions:'Must buy OUTSIDE Japan before departure. 14-day pass covers all Shinkansen (Hikari/Kodama), local JR lines, Hakone JR. ~$500–600 adult, ~$250 child. Activate at Haneda on arrival.'},
   {key:'osaka_hotel', name:'MIMARU Osaka Shinsaibashi', day:8, icon:'🏨', url:'https://mimaru.com/en/', urgency:'med',
-   instructions:'Book 5 nights (Oct 29–Nov 3) at MIMARU Osaka Shinsaibashi. Apartment-style, great for family of 3.'},
+   instructions:'Book 6 nights (Oct 29–Nov 4) at MIMARU Osaka Shinsaibashi. Apartment-style, great for family of 3.'},
   {key:'hnd_hotel',   name:'HND Area Hotel (Nov 3)',   day:13, icon:'🏨', url:'https://www.tokyuhotels.co.jp/haneda-e/index.html', urgency:'high',
    instructions:'Book 1 night near Haneda Airport for Nov 3. Haneda Excel Hotel Tokyu or APA Hotel Haneda are both excellent options right at the terminal.'},
   // ── PARKS, HIKES & NATURE ──
@@ -1416,7 +1421,7 @@ const LINKS=[
   {section:'🏨 Hotels', items:[
     {name:'MIMARU Tokyo',desc:'6 nights Oct 22–28, family apartment-style',url:'https://mimaru.com/en/',urgent:false},
     {name:'Tōnosawa Ichinoyu Honkan',desc:'Hakone ryokan — request private onsen room',url:'https://www.ichinoyu.co.jp/english/',urgent:false},
-    {name:'MIMARU Osaka Shinsaibashi',desc:'5 nights Oct 29–Nov 3 Kansai base',url:'https://mimaru.com/en/',urgent:false},
+    {name:'MIMARU Osaka Shinsaibashi',desc:'6 nights Oct 29–Nov 4 Kansai base',url:'https://mimaru.com/en/',urgent:false},
     {name:'Haneda Excel Hotel Tokyu',desc:'Nov 3 night — right at HND terminal',url:'https://www.tokyuhotels.co.jp/haneda-e/index.html',urgent:true},
   ]},
   {section:'🍜 Food & Restaurants', items:[
@@ -1432,7 +1437,7 @@ const LINKS=[
 ];
 
 const ALERTS=[
-  {urgent:true, title:'🏨 Book HND-Area Hotel for Nov 3',body:'AA 26 departs HND 6:00pm Nov 4 — arrive airport by 3:30pm. After Gion on Nov 3, travel to Haneda area and stay the night. Try Haneda Excel Hotel Tokyu or APA Hotel Haneda.'},
+  {urgent:true, title:'✅ No HND Hotel Needed — Stay in Osaka',body:'Decided to stay extra night in Osaka (6 nights total Oct 29–Nov 4). Take Nozomi from Shin-Osaka ~11am Nov 4, arrive HND ~2pm — comfortable 4hr buffer for AA 26 6pm departure. Book Osaka hotel for 6 nights.e night. Try Haneda Excel Hotel Tokyu or APA Hotel Haneda.'},
   {urgent:true, title:'🎋 Ghibli Museum Tickets',body:'Book via Lawson Ticket for Oct 24 (Sat). Tickets for October on sale Sep 10 at 10am JST. Check for cancellations now if that window passed.'},
   {urgent:true, title:'🎮 Nintendo Museum Lottery',body:'Monthly lottery at museum-tickets.nintendo.com. Check immediately for Oct/Nov cancellations.'},
   {urgent:true, title:'🏰 DisneySea — Oct 26',body:'Book via Tokyo Disney Resort app. Monday = lower crowds. Halloween event included with standard ticket. Premier Access for Villains parade = ¥3,500 (~$23).'},
@@ -1681,14 +1686,14 @@ function renderHotels(){
 
   const note=document.createElement('div');
   note.className='info-banner green';
-  note.innerHTML='<strong>✈️ Flying home from HND (Haneda)</strong><br>Check out MIMARU Osaka Nov 3 morning. Kobe + Kyoto day. Travel to HND area that evening. 6:00pm Nov 4 departure (AA 26).';
+  note.innerHTML='<strong>✈️ Flying home from HND (Haneda)</strong><br>Stay in Osaka through Nov 4 morning checkout. Take Nozomi ~11am to HND, arrive ~2pm. AA 26 departs 6:00pm — 4hr buffer.';
   wrap.appendChild(note);
 
   const hotels=[
     {city:'tokyo', name:'ARiA Stay Nakano',sub:'Nakano, Tokyo (5-min walk to Nakano Broadway)',nights:'Oct 22–28 · 6 nights',note:'Booked ✅. Apartment-style, 2 beds, full kitchen. 5-min walk to Nakano Broadway. 5-min train to Shinjuku. Washing machine in room — essential for carry-on travel.',color:'#2c5f8a'},
     {city:'hakone',name:'Tōnosawa Ichinoyu Honkan',sub:'Hakone, Kanagawa',nights:'Oct 28–29 · 1 night',note:'Founded 1630. Private family onsen, kaiseki dinner + breakfast included. Request room with outdoor river-view bath.',color:'#5b8c5a'},
-    {city:'osaka', name:'MIMARU Osaka Shinsaibashi',sub:'Namba / Shinsaibashi, Osaka',nights:'Oct 29–Nov 3 · 5 nights',note:'Apartment hotel, 2-min walk to metro, 5-min to Dotonbori. Your Kansai base for day trips.',color:'#8b3a62'},
-    {city:'tokyo', name:'Hotel Near Haneda Airport',sub:'Haneda / Ota-ku, Tokyo',nights:'Nov 3 · 1 night',note:'REQUIRED for 6:00pm Nov 4 departure (AA 26). Try Haneda Excel Hotel Tokyu or APA Hotel Haneda — both are right at the terminal.',color:'#2c5f8a'},
+    {city:'osaka', name:'MIMARU Osaka Shinsaibashi',sub:'Namba / Shinsaibashi, Osaka',nights:'Oct 29–Nov 4 · 6 nights',note:'Apartment hotel, 2-min walk to metro, 5-min to Dotonbori. Your Kansai base for day trips.',color:'#8b3a62'},
+    {city:'tokyo', name:'Hotel Near Haneda Airport',sub:'Haneda / Ota-ku, Tokyo',nights:'Nov 3 · 1 night',note:'NOT NEEDED — staying extra night in Osaka. Take Nozomi ~11am Nov 4, arrive HND ~2pm. 4hr buffer before AA 26 6pm departure.',color:'#8b3a62'},
   ];
 
   hotels.forEach(h=>{
@@ -2936,3 +2941,905 @@ function renderApps() {
 </script>
 </body>
 </html>
+<!-- INJECTED STYLES -->
+<style>
+/* ════════════════════════════════════
+   ADVENTURE / QUEST SCREEN
+════════════════════════════════════ */
+.trainer-card {
+  background: linear-gradient(135deg, #1a237e, #283593);
+  border: 2px solid var(--yellow);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 14px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255,215,0,.2);
+}
+.trainer-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;left: -50%;
+  width: 200%;height: 200%;
+  background: radial-gradient(circle, rgba(255,215,0,.05) 0%, transparent 60%);
+  animation: trainer-glow 3s ease-in-out infinite;
+}
+@keyframes trainer-glow {
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.1);opacity:.7}
+}
+.trainer-avatar {
+  font-size: 3.5rem;
+  margin-bottom: 6px;
+  display: block;
+  filter: drop-shadow(0 0 10px rgba(255,215,0,.4));
+}
+.trainer-name {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--yellow);
+  letter-spacing: .08em;
+  text-shadow: 0 0 12px rgba(255,215,0,.5);
+}
+.trainer-rank {
+  font-size: .65rem;
+  font-weight: 700;
+  color: rgba(255,255,255,.7);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.trainer-xp-wrap {
+  background: rgba(0,0,0,.3);
+  border-radius: 20px;
+  height: 14px;
+  overflow: hidden;
+  margin: 8px 0 4px;
+  border: 1px solid rgba(255,215,0,.2);
+}
+.trainer-xp-fill {
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #ffd700, #ffec6e, #ffd700);
+  background-size: 200% 100%;
+  animation: xp-shimmer 2s linear infinite;
+  transition: width .5s cubic-bezier(.34,1.56,.64,1);
+  box-shadow: 0 0 10px rgba(255,215,0,.6);
+}
+@keyframes xp-shimmer {
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+.trainer-xp-label {
+  font-size: .62rem;
+  color: rgba(255,255,255,.6);
+  display: flex;
+  justify-content: space-between;
+}
+.trainer-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+.trainer-stat {
+  background: rgba(0,0,0,.25);
+  border-radius: 8px;
+  padding: 6px 4px;
+  border: 1px solid rgba(255,215,0,.15);
+}
+.trainer-stat-val {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--yellow);
+  display: block;
+}
+.trainer-stat-lbl {
+  font-size: .55rem;
+  color: rgba(255,255,255,.5);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+}
+
+/* Quest items */
+.quest-section-lbl {
+  font-size: .62rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin: 12px 0 6px;
+  text-shadow: 0 0 8px rgba(255,215,0,.4);
+}
+.quest-item {
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 12px;
+  margin-bottom: 7px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all .15s;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 2px 8px rgba(13,27,75,.08);
+}
+.quest-item.completed {
+  background: var(--caught-bg);
+  border-color: var(--caught-bd);
+  box-shadow: 0 0 12px rgba(31,168,107,.2);
+}
+.quest-item.completed .quest-name { text-decoration: line-through; color: var(--muted); }
+.quest-check {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2.5px solid var(--border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .9rem;
+  transition: all .2s;
+}
+.quest-item.completed .quest-check {
+  background: var(--caught);
+  border-color: var(--caught);
+  box-shadow: 0 0 8px rgba(31,168,107,.4);
+}
+.quest-icon { font-size: 1.3rem; flex-shrink: 0; }
+.quest-info { flex: 1; min-width: 0; }
+.quest-name { font-size: .78rem; font-weight: 700; color: #1a1f3a; }
+.quest-day  { font-size: .62rem; color: var(--muted); margin-top: 1px; }
+.quest-xp   {
+  font-size: .58rem; font-weight: 900;
+  background: rgba(255,215,0,.15);
+  color: #8b6914;
+  border: 1px solid rgba(255,215,0,.4);
+  border-radius: 10px;
+  padding: 2px 7px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.quest-item.completed .quest-xp {
+  background: var(--caught-bg);
+  color: var(--caught);
+  border-color: var(--caught-bd);
+}
+
+/* Level up toast */
+.levelup-toast {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%) scale(0);
+  background: linear-gradient(135deg, #1a237e, #283593);
+  border: 3px solid var(--yellow);
+  border-radius: 20px;
+  padding: 24px 32px;
+  text-align: center;
+  z-index: 9999;
+  box-shadow: 0 0 40px rgba(255,215,0,.4);
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.levelup-toast.show { transform: translate(-50%,-50%) scale(1); }
+.levelup-emoji { font-size: 3rem; display: block; margin-bottom: 8px; }
+.levelup-title { font-size: 1.1rem; font-weight: 900; color: var(--yellow); }
+.levelup-sub   { font-size: .75rem; color: rgba(255,255,255,.7); margin-top: 4px; }
+
+/* ════════════════════════════════════
+   PHOTOS SCREEN
+════════════════════════════════════ */
+.photos-day-header {
+  font-size: .72rem;
+  font-weight: 900;
+  color: var(--yellow);
+  margin: 12px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.photo-thumb {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+}
+.photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.photo-thumb .photo-del {
+  position: absolute;
+  top: 3px; right: 3px;
+  background: rgba(204,0,0,.85);
+  color: #fff;
+  border-radius: 50%;
+  width: 18px; height: 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .6rem;
+  cursor: pointer;
+}
+.photo-add-btn {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  border: 2px dashed rgba(255,215,0,.4);
+  background: rgba(255,215,0,.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: rgba(255,215,0,.5);
+  -webkit-tap-highlight-color: transparent;
+}
+.photo-add-btn span {
+  font-size: .55rem;
+  color: rgba(255,255,255,.35);
+  margin-top: 2px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.photo-memory-note {
+  width: 100%;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,215,0,.2);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: .68rem;
+  color: rgba(255,255,255,.7);
+  margin-top: 4px;
+  resize: none;
+}
+.photo-memory-note::placeholder { color: rgba(255,255,255,.25); }
+
+/* ════════════════════════════════════
+   TRANSLATE SCREEN  
+════════════════════════════════════ */
+.translate-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+  scrollbar-width: none;
+}
+.translate-tabs::-webkit-scrollbar { display: none; }
+.ttab {
+  white-space: nowrap;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: .65rem;
+  font-weight: 700;
+  color: rgba(255,255,255,.5);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all .15s;
+}
+.ttab.on {
+  background: var(--yellow);
+  color: var(--ink);
+  border-color: var(--yellow);
+  box-shadow: 0 0 10px rgba(255,215,0,.3);
+}
+.phrase-card {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 12px;
+  margin-bottom: 7px;
+  box-shadow: 0 2px 8px rgba(13,27,75,.08);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background .1s;
+}
+.phrase-card:active { background: var(--card); }
+.phrase-en {
+  font-size: .78rem;
+  font-weight: 700;
+  color: #1a1f3a;
+  margin-bottom: 4px;
+}
+.phrase-jp {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--red);
+  margin-bottom: 3px;
+  font-family: 'Noto Serif JP', serif;
+}
+.phrase-rom {
+  font-size: .68rem;
+  color: var(--muted);
+  font-style: italic;
+}
+.phrase-copy {
+  float: right;
+  background: var(--ink);
+  color: var(--yellow);
+  font-size: .58rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 10px;
+  margin-top: -2px;
+  border: 1px solid rgba(255,215,0,.3);
+}
+.phrase-card.copied { border-color: var(--caught-bd); }
+.phrase-card.copied .phrase-copy {
+  background: var(--caught);
+  color: #fff;
+  border-color: var(--caught-bd);
+}
+.translate-search {
+  width: 100%;
+  background: rgba(255,255,255,.1);
+  border: 1.5px solid rgba(255,215,0,.25);
+  border-radius: 25px;
+  padding: 9px 16px;
+  font-size: .78rem;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.translate-search::placeholder { color: rgba(255,255,255,.35); }
+.translate-search:focus { outline: none; border-color: var(--yellow); }
+.kid-section {
+  background: linear-gradient(135deg, rgba(255,215,0,.1), rgba(255,215,0,.05));
+  border: 1.5px solid rgba(255,215,0,.3);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 14px;
+}
+.kid-section-title {
+  font-size: .68rem;
+  font-weight: 900;
+  color: var(--yellow);
+  margin-bottom: 10px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.kid-word {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255,255,255,.95);
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,.1);
+  min-width: 70px;
+  -webkit-tap-highlight-color: transparent;
+}
+.kid-word:active { transform: scale(.95); }
+.kid-emoji { font-size: 1.6rem; }
+.kid-jp { font-size: .78rem; font-weight: 700; color: var(--red); font-family: 'Noto Serif JP', serif; }
+.kid-en { font-size: .58rem; color: var(--muted); margin-top: 1px; }
+</style>
+<script>
+/* ════════════════════════════════════
+   QUEST / ADVENTURE DATA
+════════════════════════════════════ */
+const QUESTS = [
+  // 🏯 Temples & Shrines
+  {id:'q_sensoji',    cat:'🏯 Temples & Shrines', icon:'⛩️', name:'Senso-ji Temple',         day:'Day 6',  xp:100, photo:true},
+  {id:'q_fushimi',    cat:'🏯 Temples & Shrines', icon:'⛩️', name:'Fushimi Inari — 1000 Gates',day:'Day 11', xp:200, photo:true},
+  {id:'q_kinkakuji',  cat:'🏯 Temples & Shrines', icon:'🏯', name:'Kinkaku-ji Golden Pavilion', day:'Day 13', xp:150, photo:true},
+  {id:'q_todaiji',    cat:'🏯 Temples & Shrines', icon:'🏯', name:'Tōdai-ji Giant Buddha',      day:'Day 10', xp:150, photo:true},
+  {id:'q_tenryuji',   cat:'🏯 Temples & Shrines', icon:'🎋', name:'Tenryu-ji Temple Garden',    day:'Day 11', xp:100, photo:true},
+  {id:'q_chureito',   cat:'🏯 Temples & Shrines', icon:'🗻', name:'Chureito Pagoda + Mt. Fuji',  day:'Day 7',  xp:250, photo:true},
+  // 🌿 Parks & Nature
+  {id:'q_bamboo',     cat:'🌿 Parks & Nature', icon:'🎋', name:'Arashiyama Bamboo Forest',   day:'Day 11', xp:150, photo:true},
+  {id:'q_showa',      cat:'🌿 Parks & Nature', icon:'🌳', name:'Showa Kinen Park',            day:'Day 4',  xp:100, photo:false},
+  {id:'q_inokashira', cat:'🌿 Parks & Nature', icon:'🦆', name:'Inokashira Park',             day:'Day 3',  xp:75,  photo:true},
+  {id:'q_kawaguchi',  cat:'🌿 Parks & Nature', icon:'🏔️', name:'Lake Kawaguchiko',            day:'Day 7',  xp:200, photo:true},
+  {id:'q_narapark',   cat:'🌿 Parks & Nature', icon:'🦌', name:'Nara Park — Free Deer!',     day:'Day 10', xp:125, photo:true},
+  {id:'q_osaka_castle',cat:'🌿 Parks & Nature', icon:'🏯', name:'Osaka Castle Park',          day:'Day 9',  xp:100, photo:true},
+  // ⛰️ Hikes & Walks
+  {id:'q_fushimi_hike',cat:'⛰️ Hikes & Walks', icon:'🥾', name:'Fushimi Inari Full Mountain Hike', day:'Day 11', xp:300, photo:true},
+  {id:'q_chureito_steps',cat:'⛰️ Hikes & Walks', icon:'🪜', name:'Climb Chureito 400 Steps',  day:'Day 7',  xp:200, photo:true},
+  {id:'q_monkey_hike',cat:'⛰️ Hikes & Walks', icon:'🐒', name:'Arashiyama Monkey Park Hike',day:'Day 11', xp:150, photo:true},
+  {id:'q_ochudo',     cat:'⛰️ Hikes & Walks', icon:'🌋', name:'Mt. Fuji Ochudo Trail Walk',  day:'Day 7',  xp:200, photo:true},
+  // 🥏 Activities
+  {id:'q_discgolf',   cat:'🎯 Activities', icon:'🥏', name:'Disc Golf — Showa Kinen',     day:'Day 4',  xp:200, photo:false},
+  {id:'q_ropeway',    cat:'🎯 Activities', icon:'🚡', name:'Hakone Komagatake Ropeway',   day:'Day 8',  xp:150, photo:true},
+  {id:'q_onsen',      cat:'🎯 Activities', icon:'♨️', name:'First Onsen Soak (Hakone)',   day:'Day 7',  xp:200, photo:false},
+  {id:'q_samurai',    cat:'🎯 Activities', icon:'⚔️', name:'Samurai Ninja Museum',        day:'Day 6',  xp:175, photo:true},
+  {id:'q_mario_kart', cat:'🎯 Activities', icon:'🏎️', name:'Mario Kart Street Tour',      day:'Day 2',  xp:250, photo:true},
+  {id:'q_taiko',      cat:'🎯 Activities', icon:'🥁', name:'Taiko Drum Experience',       day:'Day 3',  xp:150, photo:true},
+  // 🦌 Wildlife
+  {id:'q_deer_bow',   cat:'🦌 Wildlife', icon:'🦌', name:'Bow to a Deer (gets it back!)',day:'Day 10', xp:100, photo:true},
+  {id:'q_deer_crackers',cat:'🦌 Wildlife', icon:'🍘', name:'Feed Deer Shika Senbei',     day:'Day 10', xp:75,  photo:true},
+  {id:'q_monkey_meet',cat:'🦌 Wildlife', icon:'🐒', name:'See Wild Japanese Macaques',  day:'Day 11', xp:175, photo:true},
+  // 🍜 Food Challenges
+  {id:'q_takoyaki',   cat:'🍜 Food Challenges', icon:'🐙', name:'Eat Takoyaki in Dotonbori',  day:'Day 9',  xp:100, photo:true},
+  {id:'q_ramen',      cat:'🍜 Food Challenges', icon:'🍜', name:'Solo Booth Ramen at Ichiran', day:'Any',    xp:125, photo:true},
+  {id:'q_sushi',      cat:'🍜 Food Challenges', icon:'🍣', name:'Conveyor Belt Sushi (Sushiro)',day:'Any',   xp:100, photo:true},
+  {id:'q_kobe_beef',  cat:'🍜 Food Challenges', icon:'🥩', name:'Try Kobe Beef!',             day:'Day 13', xp:200, photo:true},
+  {id:'q_conbini',    cat:'🍜 Food Challenges', icon:'🏪', name:'Convenience Store Breakfast', day:'Any',    xp:50,  photo:true},
+  {id:'q_onigiri',    cat:'🍜 Food Challenges', icon:'🍙', name:'Eat Onigiri from 7-Eleven',  day:'Any',    xp:50,  photo:false},
+  {id:'q_matcha',     cat:'🍜 Food Challenges', icon:'🍵', name:'Matcha Parfait in Kyoto',    day:'Day 11', xp:100, photo:true},
+  {id:'q_cheesecake', cat:'🍜 Food Challenges', icon:'🎂', name:'Rikuro Jiggly Cheesecake',   day:'Day 9',  xp:125, photo:true},
+  // 🎡 Attractions
+  {id:'q_disneysea',  cat:'🎡 Attractions', icon:'🏰', name:'Tokyo DisneySea',             day:'Day 5',  xp:300, photo:true},
+  {id:'q_ghibli',     cat:'🎡 Attractions', icon:'🎨', name:'Ghibli Museum',               day:'Day 3',  xp:250, photo:true},
+  {id:'q_nintendo',   cat:'🎡 Attractions', icon:'🎮', name:'Nintendo Museum',             day:'Day 9',  xp:250, photo:true},
+  {id:'q_pokemon_cafe',cat:'🎡 Attractions', icon:'⚡', name:'Pokémon Cafe Tokyo',         day:'Day 3',  xp:200, photo:true},
+  {id:'q_nijigen',    cat:'🎡 Attractions', icon:'🐉', name:'Nijigen no Mori Awaji',       day:'Day 12', xp:250, photo:true},
+  {id:'q_snoopy',     cat:'🎡 Attractions', icon:'🐾', name:'Snoopy Museum',              day:'Day 4',  xp:150, photo:true},
+  {id:'q_nakano',     cat:'🎡 Attractions', icon:'🔴', name:'Nakano Broadway',            day:'Day 2',  xp:150, photo:true},
+  // 🗾 Japan Moments
+  {id:'q_yukata',     cat:'🗾 Japan Moments', icon:'👘', name:'Wear a Yukata (Hakone)',    day:'Day 7',  xp:150, photo:true},
+  {id:'q_suica',      cat:'🗾 Japan Moments', icon:'💳', name:'Use Suica Card on Train',  day:'Day 1',  xp:50,  photo:false},
+  {id:'q_halloween',  cat:'🗾 Japan Moments', icon:'🎃', name:'Dotonbori Halloween Night',day:'Day 10', xp:200, photo:true},
+  {id:'q_pokemon_go', cat:'🗾 Japan Moments', icon:'📱', name:'Catch Japan-Exclusive Pokémon',day:'Any',xp:150,photo:true},
+  {id:'q_fuji_photo', cat:'🗾 Japan Moments', icon:'📸', name:'The Perfect Mt. Fuji Photo',day:'Day 7', xp:200, photo:true},
+  {id:'q_temple_stamp',cat:'🗾 Japan Moments',icon:'📖', name:'Get a Goshuin Temple Stamp',day:'Any',  xp:100, photo:true},
+];
+
+const RANKS = [
+  {name:'Rookie Trainer 🌱',  min:0,    next:500},
+  {name:'Explorer 🗺️',        min:500,  next:1500},
+  {name:'Adventurer ⚔️',      min:1500, next:3000},
+  {name:'Champion 🏆',        min:3000, next:5000},
+  {name:'Japan Master 🎌',    min:5000, next:7000},
+  {name:'LEGENDARY TRAINER ⭐',min:7000, next:9999},
+];
+
+const PHRASES = {
+  basics: [
+    {en:'Hello',                jp:'こんにちは',        rom:'Konnichiwa'},
+    {en:'Thank you',            jp:'ありがとうございます',rom:'Arigatou gozaimasu'},
+    {en:'Thank you (casual)',   jp:'ありがとう',         rom:'Arigatou'},
+    {en:'Excuse me / Sorry',    jp:'すみません',         rom:'Sumimasen'},
+    {en:'Yes',                  jp:'はい',               rom:'Hai'},
+    {en:'No',                   jp:'いいえ',             rom:'Iie'},
+    {en:'Please (give me)',     jp:'ください',            rom:'Kudasai'},
+    {en:'I understand',         jp:'わかりました',        rom:'Wakarimashita'},
+    {en:"I don't understand",   jp:'わかりません',        rom:'Wakarimasen'},
+    {en:'Do you speak English?',jp:'英語を話せますか？',   rom:'Eigo wo hanasemasu ka?'},
+  ],
+  restaurant: [
+    {en:'A table for 3 please', jp:'3人です',            rom:'San-nin desu'},
+    {en:'This please (pointing)',jp:'これをください',      rom:'Kore wo kudasai'},
+    {en:'Delicious!',           jp:'おいしい！',          rom:'Oishii!'},
+    {en:'The bill please',      jp:'お会計をください',     rom:'Okaikei wo kudasai'},
+    {en:'Water please',         jp:'お水をください',       rom:'Omizu wo kudasai'},
+    {en:'No spicy please',      jp:'辛くしないでください', rom:'Karakunai de kudasai'},
+    {en:'Vegetarian',           jp:'ベジタリアン',         rom:'Bejitarian'},
+    {en:'How much is this?',    jp:'これはいくらですか？', rom:'Kore wa ikura desu ka?'},
+    {en:'It was delicious!',    jp:'ごちそうさまでした',   rom:'Gochisousama deshita'},
+    {en:'Menu please',          jp:'メニューをください',   rom:'Menyu wo kudasai'},
+  ],
+  transport: [
+    {en:'Where is the station?',jp:'駅はどこですか？',    rom:'Eki wa doko desu ka?'},
+    {en:'One ticket please',    jp:'切符を一枚ください',  rom:'Kippu wo ichimai kudasai'},
+    {en:'To Shinjuku please',   jp:'新宿まで',           rom:'Shinjuku made'},
+    {en:'To Namba please',      jp:'難波まで',           rom:'Namba made'},
+    {en:'To Kyoto please',      jp:'京都まで',           rom:'Kyoto made'},
+    {en:'Is this the right train?',jp:'この電車で合ってますか？',rom:'Kono densha de attemas ka?'},
+    {en:'Where is the toilet?', jp:'トイレはどこですか？', rom:'Toire wa doko desu ka?'},
+    {en:'I am lost',            jp:'迷子になりました',    rom:'Maigo ni narimashita'},
+    {en:'Left / Right / Straight',jp:'左/右/まっすぐ',  rom:'Hidari / Migi / Massugu'},
+    {en:'Taxi please',          jp:'タクシーをお願いします',rom:'Takushi wo onegaishimasu'},
+  ],
+  shopping: [
+    {en:'How much?',            jp:'いくらですか？',      rom:'Ikura desu ka?'},
+    {en:'Too expensive',        jp:'高すぎます',          rom:'Taka sugimasu'},
+    {en:'Do you have this in a different size?',jp:'別のサイズはありますか？',rom:'Betsu no saizu wa arimasu ka?'},
+    {en:'Tax free please',      jp:'免税でお願いします',  rom:'Menzei de onegaishimasu'},
+    {en:'Can I try this on?',   jp:'試着できますか？',    rom:'Shichaku dekimasu ka?'},
+    {en:'I\'ll take this',      jp:'これをください',      rom:'Kore wo kudasai'},
+    {en:'Do you accept cards?', jp:'カードで払えますか？', rom:'Kado de haraemasu ka?'},
+    {en:'Cash only?',           jp:'現金のみですか？',    rom:'Genkin nomi desu ka?'},
+    {en:'Gift wrapping please', jp:'プレゼント用に包んでください',rom:'Purezento-you ni tsunde kudasai'},
+  ],
+  emergency: [
+    {en:'Help!',                jp:'助けて！',            rom:'Tasukete!'},
+    {en:'Call the police',      jp:'警察を呼んでください', rom:'Keisatsu wo yonde kudasai'},
+    {en:'Call an ambulance',    jp:'救急車を呼んでください',rom:'Kyukyusha wo yonde kudasai'},
+    {en:'I need a doctor',      jp:'医者が必要です',       rom:'Isha ga hitsuyou desu'},
+    {en:'I am allergic to...',  jp:'...アレルギーがあります',rom:'...arerugii ga arimasu'},
+    {en:'I am lost',            jp:'道に迷いました',       rom:'Michi ni mayoimashita'},
+    {en:'My child is lost',     jp:'子供が迷子になりました',rom:'Kodomo ga maigo ni narimashita'},
+    {en:'Hospital',             jp:'病院',                rom:'Byouin'},
+    {en:'Police station',       jp:'警察署',              rom:'Keisatsu-sho'},
+    {en:'Embassy',              jp:'大使館',              rom:'Taishikan'},
+  ],
+  kids: [
+    {en:'Pokemon!',             jp:'ポケモン！',           rom:'Pokemon!'},
+    {en:'So cool!',             jp:'すごい！',            rom:'Sugoi!'},
+    {en:'I want this',          jp:'これが欲しい',         rom:'Kore ga hoshii'},
+    {en:'Can I take a photo?',  jp:'写真を撮ってもいいですか？',rom:'Shashin wo totte mo ii desu ka?'},
+    {en:'Friend',               jp:'友達',                rom:'Tomodachi'},
+    {en:'Cute!',                jp:'かわいい！',           rom:'Kawaii!'},
+    {en:'Strong!',              jp:'つよい！',            rom:'Tsuyoi!'},
+    {en:'Let\'s go!',           jp:'行こう！',            rom:'Ikou!'},
+    {en:'I am hungry',          jp:'お腹がすきました',     rom:'Onaka ga sukimashita'},
+    {en:'Ice cream please',     jp:'アイスクリームをください',rom:'Aisu kuriimu wo kudasai'},
+  ],
+};
+
+const KID_WORDS = [
+  {emoji:'🐙', jp:'タコ',      en:'Octopus'},
+  {emoji:'🦌', jp:'シカ',      en:'Deer'},
+  {emoji:'🐒', jp:'サル',      en:'Monkey'},
+  {emoji:'⚡', jp:'ピカチュウ', en:'Pikachu'},
+  {emoji:'🍜', jp:'ラーメン',  en:'Ramen'},
+  {emoji:'🍣', jp:'すし',      en:'Sushi'},
+  {emoji:'🏔️', jp:'ふじさん',  en:'Mt. Fuji'},
+  {emoji:'🚅', jp:'しんかんせん',en:'Shinkansen'},
+  {emoji:'⛩️', jp:'じんじゃ',  en:'Shrine'},
+  {emoji:'👘', jp:'ゆかた',    en:'Yukata'},
+  {emoji:'🎮', jp:'ゲーム',    en:'Game'},
+  {emoji:'🌟', jp:'ほし',      en:'Star'},
+];
+
+/* ════════════════════════════════════
+   ADVENTURE / QUEST FUNCTIONS
+════════════════════════════════════ */
+function loadQuestState(){
+  try{ return JSON.parse(localStorage.getItem('japan2026_quests')||'{}'); }catch(e){ return {}; }
+}
+function saveQuestState(state){
+  try{ localStorage.setItem('japan2026_quests', JSON.stringify(state)); }catch(e){}
+}
+function getTotalXP(){
+  const state=loadQuestState();
+  return QUESTS.filter(q=>state[q.id]).reduce((sum,q)=>sum+q.xp,0);
+}
+function getCompletedCount(){
+  const state=loadQuestState();
+  return QUESTS.filter(q=>state[q.id]).length;
+}
+function getRank(xp){
+  let rank=RANKS[0];
+  for(const r of RANKS){ if(xp>=r.min) rank=r; }
+  return rank;
+}
+function toggleQuest(id){
+  const state=loadQuestState();
+  const wasComplete=!!state[id];
+  const quest=QUESTS.find(q=>q.id===id);
+  const prevXP=getTotalXP();
+  const prevRank=getRank(prevXP);
+
+  state[id]=!state[id];
+  saveQuestState(state);
+
+  const newXP=getTotalXP();
+  const newRank=getRank(newXP);
+
+  // Level up check
+  if(!wasComplete && newRank.name!==prevRank.name){
+    showLevelUp(newRank.name);
+  } else if(!wasComplete){
+    showToast(`⚡ +${quest.xp} XP — ${quest.name}!`);
+  }
+  renderAdventure();
+  updateQuestBadge();
+}
+
+function showLevelUp(rankName){
+  let el=document.getElementById('levelup-toast');
+  if(!el){
+    el=document.createElement('div');
+    el.id='levelup-toast';
+    el.className='levelup-toast';
+    document.body.appendChild(el);
+  }
+  el.innerHTML=`<span class="levelup-emoji">🌟</span><div class="levelup-title">LEVEL UP!</div><div class="levelup-sub">${rankName}</div>`;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 2500);
+}
+
+function updateQuestBadge(){
+  const remaining=QUESTS.length-getCompletedCount();
+  const badge=document.getElementById('quest-badge');
+  if(badge){ badge.textContent=remaining; badge.style.display=remaining>0?'flex':'none'; }
+}
+
+function renderAdventure(){
+  const wrap=document.getElementById('screen-adventure');
+  wrap.innerHTML='';
+  const state=loadQuestState();
+  const totalXP=getTotalXP();
+  const completed=getCompletedCount();
+  const rank=getRank(totalXP);
+  const nextRank=RANKS[RANKS.indexOf(rank)+1];
+  const xpForNext=nextRank?nextRank.min:rank.min;
+  const xpPct=Math.min(100, Math.round(((totalXP-rank.min)/(xpForNext-rank.min))*100));
+
+  // Trainer card
+  const tc=document.createElement('div');
+  tc.className='trainer-card';
+  tc.innerHTML=`
+    <span class="trainer-avatar">🧢</span>
+    <div class="trainer-name">KELLY FAMILY</div>
+    <div class="trainer-rank">${rank.name}</div>
+    <div class="trainer-xp-wrap"><div class="trainer-xp-fill" style="width:${xpPct}%"></div></div>
+    <div class="trainer-xp-label"><span>${totalXP} XP</span><span>${nextRank?xpForNext+' XP to '+nextRank.name:'MAX RANK!'}</span></div>
+    <div class="trainer-stats">
+      <div class="trainer-stat"><span class="trainer-stat-val">${completed}</span><span class="trainer-stat-lbl">Caught</span></div>
+      <div class="trainer-stat"><span class="trainer-stat-val">${QUESTS.length-completed}</span><span class="trainer-stat-lbl">Remaining</span></div>
+      <div class="trainer-stat"><span class="trainer-stat-val">${totalXP}</span><span class="trainer-stat-lbl">Total XP</span></div>
+    </div>
+  `;
+  wrap.appendChild(tc);
+
+  // Photo Journal link
+  const photoBtn=document.createElement('button');
+  photoBtn.style.cssText='width:100%;background:linear-gradient(135deg,var(--ink),var(--ink2));color:var(--yellow);font-size:.75rem;font-weight:800;padding:10px;border-radius:12px;border:1.5px solid rgba(255,215,0,.3);margin-bottom:14px;letter-spacing:.04em;';
+  photoBtn.innerHTML='📸 Open Photo Journal';
+  photoBtn.onclick=()=>navigate('photos');
+  wrap.appendChild(photoBtn);
+
+  // Quest categories
+  const cats=[...new Set(QUESTS.map(q=>q.cat))];
+  cats.forEach(cat=>{
+    const items=QUESTS.filter(q=>q.cat===cat);
+    const catComplete=items.filter(q=>state[q.id]).length;
+
+    const lbl=document.createElement('div');
+    lbl.className='quest-section-lbl';
+    lbl.innerHTML=`${cat} <span style="font-size:.58rem;color:rgba(255,255,255,.4);font-weight:600">${catComplete}/${items.length}</span>`;
+    wrap.appendChild(lbl);
+
+    items.forEach(quest=>{
+      const done=!!state[quest.id];
+      const card=document.createElement('div');
+      card.className='quest-item'+(done?' completed':'');
+      card.innerHTML=`
+        <div class="quest-check">${done?'✓':''}</div>
+        <span class="quest-icon">${quest.icon}</span>
+        <div class="quest-info">
+          <div class="quest-name">${quest.name}</div>
+          <div class="quest-day">${quest.day}${quest.photo?' · 📸 Photo spot':''}</div>
+        </div>
+        <span class="quest-xp">${done?'✓':'+'}${quest.xp} XP</span>
+      `;
+      card.onclick=()=>toggleQuest(quest.id);
+      wrap.appendChild(card);
+    });
+  });
+}
+
+/* ════════════════════════════════════
+   PHOTO JOURNAL FUNCTIONS
+════════════════════════════════════ */
+function loadPhotos(){
+  try{ return JSON.parse(localStorage.getItem('japan2026_photos')||'{}'); }catch(e){ return {}; }
+}
+function savePhotos(photos){
+  try{ localStorage.setItem('japan2026_photos', JSON.stringify(photos)); }catch(e){}
+}
+
+function renderPhotos(){
+  const wrap=document.getElementById('screen-photos');
+  wrap.innerHTML='';
+
+  const banner=document.createElement('div');
+  banner.className='banner blue';
+  banner.innerHTML='<strong>📸 Photo Journal</strong><br>Tap the + to add photos from your camera or gallery for each day. Photos are saved on your device.';
+  wrap.appendChild(banner);
+
+  const backBtn=document.createElement('button');
+  backBtn.style.cssText='width:100%;background:rgba(255,215,0,.1);border:1.5px solid rgba(255,215,0,.3);border-radius:10px;padding:8px;font-size:.72rem;font-weight:800;color:var(--yellow);margin-bottom:14px;';
+  backBtn.innerHTML='← Back to Quest';
+  backBtn.onclick=()=>navigate('adventure');
+  wrap.appendChild(backBtn);
+
+  const photos=loadPhotos();
+
+  DAYS.forEach(day=>{
+    const dayPhotos=photos[day.day]||{imgs:[],note:''};
+    const color=CITIES[day.city].color;
+
+    const hdr=document.createElement('div');
+    hdr.className='photos-day-header';
+    hdr.innerHTML=`<span style="background:${color};color:#fff;border-radius:6px;padding:2px 8px;font-size:.6rem;">Day ${day.day}</span> ${day.date} — ${day.label}`;
+    wrap.appendChild(hdr);
+
+    const grid=document.createElement('div');
+    grid.className='photo-grid';
+    grid.id=`photo-grid-${day.day}`;
+
+    // Existing photos
+    (dayPhotos.imgs||[]).forEach((dataUrl,idx)=>{
+      const thumb=document.createElement('div');
+      thumb.className='photo-thumb';
+      thumb.innerHTML=`<img src="${dataUrl}" alt="Day ${day.day} photo"><div class="photo-del" onclick="deletePhoto(${day.day},${idx})">✕</div>`;
+      grid.appendChild(thumb);
+    });
+
+    // Add button
+    const addBtn=document.createElement('div');
+    addBtn.className='photo-add-btn';
+    addBtn.innerHTML='📷<span>Add Photo</span>';
+    addBtn.onclick=()=>addPhoto(day.day);
+    grid.appendChild(addBtn);
+    wrap.appendChild(grid);
+
+    // Memory note
+    const note=document.createElement('textarea');
+    note.className='photo-memory-note';
+    note.placeholder=`Add a memory note for Day ${day.day}...`;
+    note.rows=2;
+    note.value=dayPhotos.note||'';
+    note.onchange=()=>{
+      const p=loadPhotos();
+      if(!p[day.day]) p[day.day]={imgs:[]};
+      p[day.day].note=note.value;
+      savePhotos(p);
+    };
+    wrap.appendChild(note);
+  });
+}
+
+function addPhoto(dayNum){
+  const input=document.createElement('input');
+  input.type='file'; input.accept='image/*';
+  input.onchange=(e)=>{
+    const file=e.target.files[0];
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=(ev)=>{
+      const photos=loadPhotos();
+      if(!photos[dayNum]) photos[dayNum]={imgs:[],note:''};
+      photos[dayNum].imgs.push(ev.target.result);
+      savePhotos(photos);
+      renderPhotos();
+      showToast('📸 Photo saved!');
+    };
+    reader.readAsDataURL(file);
+  };
+  input.click();
+}
+
+function deletePhoto(dayNum,idx){
+  if(!confirm('Delete this photo?')) return;
+  const photos=loadPhotos();
+  if(photos[dayNum]?.imgs) photos[dayNum].imgs.splice(idx,1);
+  savePhotos(photos);
+  renderPhotos();
+}
+
+/* ════════════════════════════════════
+   TRANSLATOR FUNCTIONS
+════════════════════════════════════ */
+let currentTranslateTab='basics';
+let searchQuery='';
+
+function renderTranslate(){
+  const wrap=document.getElementById('screen-translate');
+  wrap.innerHTML='';
+
+  // Kid words section
+  const kidSec=document.createElement('div');
+  kidSec.className='kid-section';
+  kidSec.innerHTML=`<div class="kid-section-title">⭐ Fun Words for Kids — Tap to Hear!</div><div style="display:flex;flex-wrap:wrap;">`;
+  KID_WORDS.forEach(w=>{
+    const el=document.createElement('div');
+    el.className='kid-word';
+    el.innerHTML=`<span class="kid-emoji">${w.emoji}</span><span class="kid-jp">${w.jp}</span><span class="kid-en">${w.en}</span>`;
+    el.onclick=()=>{
+      // Try text-to-speech
+      if('speechSynthesis' in window){
+        const utt=new SpeechSynthesisUtterance(w.jp);
+        utt.lang='ja-JP'; utt.rate=0.8;
+        speechSynthesis.speak(utt);
+      }
+      showToast(`${w.emoji} ${w.jp} = ${w.en}`);
+    };
+    kidSec.querySelector('div:last-child').appendChild(el);
+  });
+  wrap.appendChild(kidSec);
+
+  // Search
+  const search=document.createElement('input');
+  search.className='translate-search';
+  search.placeholder='🔍 Search phrases...';
+  search.value=searchQuery;
+  search.oninput=(e)=>{ searchQuery=e.target.value; renderTranslateContent(wrap, searchQuery); };
+  wrap.appendChild(search);
+
+  // Category tabs
+  const tabs=document.createElement('div');
+  tabs.className='translate-tabs';
+  const cats=[
+    {key:'basics', label:'👋 Basics'},
+    {key:'restaurant', label:'🍜 Restaurant'},
+    {key:'transport', label:'🚆 Transport'},
+    {key:'shopping', label:'🛍️ Shopping'},
+    {key:'emergency', label:'🆘 Emergency'},
+    {key:'kids', label:'⭐ Kids'},
+  ];
+  cats.forEach(cat=>{
+    const btn=document.createElement('button');
+    btn.className='ttab'+(currentTranslateTab===cat.key?' on':'');
+    btn.textContent=cat.label;
+    btn.onclick=()=>{ currentTranslateTab=cat.key; searchQuery=''; search.value=''; renderTranslate(); };
+    tabs.appendChild(btn);
+  });
+  wrap.appendChild(tabs);
+
+  // Phrases container
+  const container=document.createElement('div');
+  container.id='translate-content';
+  wrap.appendChild(container);
+  renderTranslateContent(container, searchQuery);
+}
+
+function renderTranslateContent(container, query){
+  const el=document.getElementById('translate-content')||container;
+  el.innerHTML='';
+
+  let phrases=query
+    ? Object.values(PHRASES).flat().filter(p=>
+        p.en.toLowerCase().includes(query.toLowerCase())||
+        p.rom.toLowerCase().includes(query.toLowerCase()))
+    : PHRASES[currentTranslateTab]||[];
+
+  if(phrases.length===0){
+    el.innerHTML=`<div style="text-align:center;padding:20px;color:rgba(255,255,255,.4);font-size:.75rem;">No phrases found</div>`;
+    return;
+  }
+
+  phrases.forEach((phrase,i)=>{
+    const card=document.createElement('div');
+    card.className='phrase-card';
+    card.id=`phrase-${i}`;
+    card.innerHTML=`
+      <span class="phrase-copy" onclick="copyPhrase(event,'${phrase.jp}',${i})">COPY</span>
+      <div class="phrase-en">${phrase.en}</div>
+      <div class="phrase-jp">${phrase.jp}</div>
+      <div class="phrase-rom">${phrase.rom}</div>
+    `;
+    card.onclick=()=>{
+      if('speechSynthesis' in window){
+        const utt=new SpeechSynthesisUtterance(phrase.jp);
+        utt.lang='ja-JP'; utt.rate=0.75;
+        speechSynthesis.speak(utt);
+      }
+    };
+    el.appendChild(card);
+  });
+}
+
+function copyPhrase(e, text, idx){
+  e.stopPropagation();
+  if(navigator.clipboard){ navigator.clipboard.writeText(text).catch(()=>{}); }
+  const card=document.getElementById(`phrase-${idx}`);
+  if(card){
+    card.classList.add('copied');
+    card.querySelector('.phrase-copy').textContent='✓ COPIED';
+    setTimeout(()=>{ card.classList.remove('copied'); card.querySelector('.phrase-copy').textContent='COPY'; }, 2000);
+  }
+  showToast('📋 Copied to clipboard!');
+}
+
+/* Update navigate to handle new screens */
+const _origNavigate = navigate;
+navigate = function(screen){
+  _origNavigate(screen);
+  if(screen==='adventure') renderAdventure();
+  if(screen==='photos') renderPhotos();
+  if(screen==='translate') renderTranslate();
+};
+
+// Update quest badge on load
+document.addEventListener('DOMContentLoaded', ()=>{ updateQuestBadge(); }, {once:false});
+setTimeout(updateQuestBadge, 500);
+</script>
