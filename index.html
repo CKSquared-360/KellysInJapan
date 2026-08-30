@@ -1147,8 +1147,8 @@ const CITIES={
 const DAYS=[
   {day:1,date:'Oct 22',dateObj:'2026-10-22',city:'tokyo',label:'Arrive Tokyo',
    stops:[
-    {name:'Haneda Airport (HND) — Arrive',lat:35.5494,lng:139.7798,
-     note:'Fly in from LAX. Get IC cards (Suica/Pasmo) at airport. ~30 min monorail to central Tokyo.',
+    {name:'Narita Airport (NRT) — Arrive 5:50pm',lat:35.7720,lng:140.3929,
+     note:'Singapore Airlines SQ 11. Confirmation: DMWBR3. Take Narita Express (NEX) to Shinjuku ~80 min (~¥3,200/~$21, JR Pass ✅). Then 5 min to Nakano hotel.',
      tip:'Load ¥5,000–10,000 (~$33–67) on Suica. Works on trains, buses, and convenience stores.'}
   ]},
   {day:2,date:'Oct 23',dateObj:'2026-10-23',city:'tokyo',label:'Tokyo Orientation + Shopping',
@@ -1284,15 +1284,15 @@ const DAYS=[
      tip:'Philosopher\'s Path walk nearby — gorgeous in early November colour.'},
     {name:'Gion District → HND Area Hotel',lat:35.0036,lng:135.7781,
      note:'Geisha district at dusk. Then travel to Haneda area for the night.',
-     tip:'⚠️ Must reach HND area tonight — 6am departure tomorrow requires 4am airport arrival!'}
+     tip:'⚠️ Must reach HND area tonight — 6:00pm departure — arrive HND by 3:30pm!'}
   ]},
   {day:14,date:'Nov 4',dateObj:'2026-11-04',city:'tokyo',label:'Fly Home',badge:'✈ Travel Day',travelDay:true,
    stops:[
-    {name:'Haneda Airport (HND) — Depart 6:00am',lat:35.5494,lng:139.7798,
-     note:'International Terminal 3. Arrive by 4:00am. Security can be slow for international departures.',
+    {name:'Haneda Airport (HND) — Depart 6:00pm (AA 26)',lat:35.5494,lng:139.7798,
+     note:'American Airlines AA 26. Departs 6:00pm. International Terminal 3. Arrive by 3:30pm. Economy class — dinner + snack served.',
      tip:'HND duty-free has excellent Japanese whisky and Kit-Kat varieties — budget 30 min.'},
     {name:'LAX — Connect to SLC',lat:33.9425,lng:-118.4081,
-     note:'Land LAX ~11am. Customs + Immigration. Domestic flight LAX→SLC departs 5:05pm.',
+     note:'Land LAX 10:55am. Customs + Immigration. Domestic flight LAX→SLC departs 5:05pm. ~6hr buffer — very comfortable.',
      tip:'6hr buffer is comfortable. Get food at LAX — you deserve it after 14 days!'},
     {name:'Salt Lake City (SLC) — Home! 🏠',lat:40.7884,lng:-111.9778,
      note:'Land SLC 7:59pm. Welcome home!',
@@ -1311,22 +1311,22 @@ const FLIGHTS=[
     confirmed: true
   },
   {
-    id:'lax_hnd', group:'LAX ↔ HND',
+    id:'lax_nrt', group:'LAX ↔ NRT (Narita)',
     label:'To Japan', type:'intl',
-    code:'', route:'LAX → HND (Haneda)',
-    date:'Thu, Oct 22', time:'Departs LAX evening',
-    duration:'~11–12 hrs', stop:'Check booking',
-    note:'Arrives Tokyo Oct 23 local time. Get Suica card at Haneda on arrival.',
-    confirmed: false
+    code:'SQ 11', route:'LAX → NRT (Narita)',
+    date:'Thu, Oct 22', time:'Departs LAX 2:20pm → Arrives NRT 5:50pm (Oct 23)',
+    duration:'11h 30m', stop:'Singapore Airlines · Nonstop',
+    note:'Confirmation: DMWBR3. Narita Airport Oct 23. Take Narita Express (NEX) to Shinjuku ~80 min (~¥3,200/~$21, JR Pass covers this).',
+    confirmed: true
   },
   {
-    id:'hnd_lax', group:'LAX ↔ HND',
+    id:'hnd_lax', group:'HND ↔ LAX (Return)',
     label:'From Japan', type:'intl',
     code:'', route:'HND → LAX',
-    date:'Wed, Nov 4', time:'Departs 6:00am → Arrives ~11:00am LAX',
-    duration:'~10 hrs', stop:'Check booking',
-    note:'⚠️ Must be at HND by 4:00am. Stay near Haneda the night of Nov 3.',
-    confirmed: false
+    date:'Wed, Nov 4', time:'Departs HND 6:00pm → Arrives LAX 10:55am (same day)',
+    duration:'~9 hrs', stop:'AA 26 · Nonstop · Economy',
+    note:'Dinner + Snack included. Arrive HND by 3:30pm. Depart Osaka by 11am.',
+    confirmed: true
   },
   {
     id:'lax_slc_ret', group:'SLC ↔ LAX',
@@ -1432,7 +1432,7 @@ const LINKS=[
 ];
 
 const ALERTS=[
-  {urgent:true, title:'🏨 Book HND-Area Hotel for Nov 3',body:'HND departs 6:00am Nov 4 — must be at airport by 4am. After Gion on Nov 3, travel to Haneda area and stay the night. Try Haneda Excel Hotel Tokyu or APA Hotel Haneda.'},
+  {urgent:true, title:'🏨 Book HND-Area Hotel for Nov 3',body:'AA 26 departs HND 6:00pm Nov 4 — arrive airport by 3:30pm. After Gion on Nov 3, travel to Haneda area and stay the night. Try Haneda Excel Hotel Tokyu or APA Hotel Haneda.'},
   {urgent:true, title:'🎋 Ghibli Museum Tickets',body:'Book via Lawson Ticket for Oct 24 (Sat). Tickets for October on sale Sep 10 at 10am JST. Check for cancellations now if that window passed.'},
   {urgent:true, title:'🎮 Nintendo Museum Lottery',body:'Monthly lottery at museum-tickets.nintendo.com. Check immediately for Oct/Nov cancellations.'},
   {urgent:true, title:'🏰 DisneySea — Oct 26',body:'Book via Tokyo Disney Resort app. Monday = lower crowds. Halloween event included with standard ticket. Premier Access for Villains parade = ¥3,500 (~$23).'},
@@ -1561,7 +1561,7 @@ function renderItin(){
     const body=document.createElement('div'); body.className='day-body';
 
     if(rawDay.travelDay){
-      body.innerHTML=`<div class="travel-banner">🛫 <strong>HND departs 6:00am</strong> — arrive airport by 4:00am<br>Must be near Haneda the night of Nov 3</div>`;
+      body.innerHTML=`<div class="travel-banner">🛫 <strong>AA 26 departs HND 6:00pm</strong> — arrive airport by 3:30pm<br>Depart Osaka by ~11am · Arrives LAX 10:55am</div>`;
     }
 
     // filter out deleted stops
@@ -1626,7 +1626,7 @@ function renderFlights(){
   wrap.innerHTML=`
     <div class="info-banner warn">
       <strong>⚠️ Nov 3 Night — Book HND-Area Hotel</strong><br>
-      HND departs 6:00am Nov 4. Must be at airport by 4am. Travel to Haneda area after Gion evening on Nov 3.
+      AA 26 departs HND 6:00pm Nov 4. Arrive airport by 3:30pm. Travel to Haneda area after Gion evening on Nov 3.
     </div>
   `;
 
@@ -1668,7 +1668,7 @@ function renderFlights(){
   summary.className='info-banner green';
   summary.style.marginTop='12px';
   summary.innerHTML=`<strong>✅ Nov 4 Connection Summary</strong><br>
-    HND departs 6:00am → lands LAX ~11:00am<br>
+    AA 26 departs HND 6:00pm → lands LAX 10:55am (same day)<br>
     LAX→SLC departs 5:05pm → arrives SLC 7:59pm<br>
     Buffer: <strong>~6 hours</strong> — comfortable for customs + domestic connect`;
   wrap.appendChild(summary);
@@ -1681,14 +1681,14 @@ function renderHotels(){
 
   const note=document.createElement('div');
   note.className='info-banner green';
-  note.innerHTML='<strong>✈️ Flying home from HND (Haneda)</strong><br>Check out MIMARU Osaka Nov 3 morning. Kobe + Kyoto day. Travel to HND area that evening. 6am Nov 4 departure.';
+  note.innerHTML='<strong>✈️ Flying home from HND (Haneda)</strong><br>Check out MIMARU Osaka Nov 3 morning. Kobe + Kyoto day. Travel to HND area that evening. 6:00pm Nov 4 departure (AA 26).';
   wrap.appendChild(note);
 
   const hotels=[
     {city:'tokyo', name:'ARiA Stay Nakano',sub:'Nakano, Tokyo (5-min walk to Nakano Broadway)',nights:'Oct 22–28 · 6 nights',note:'Booked ✅. Apartment-style, 2 beds, full kitchen. 5-min walk to Nakano Broadway. 5-min train to Shinjuku. Washing machine in room — essential for carry-on travel.',color:'#2c5f8a'},
     {city:'hakone',name:'Tōnosawa Ichinoyu Honkan',sub:'Hakone, Kanagawa',nights:'Oct 28–29 · 1 night',note:'Founded 1630. Private family onsen, kaiseki dinner + breakfast included. Request room with outdoor river-view bath.',color:'#5b8c5a'},
     {city:'osaka', name:'MIMARU Osaka Shinsaibashi',sub:'Namba / Shinsaibashi, Osaka',nights:'Oct 29–Nov 3 · 5 nights',note:'Apartment hotel, 2-min walk to metro, 5-min to Dotonbori. Your Kansai base for day trips.',color:'#8b3a62'},
-    {city:'tokyo', name:'Hotel Near Haneda Airport',sub:'Haneda / Ota-ku, Tokyo',nights:'Nov 3 · 1 night',note:'REQUIRED for 6am Nov 4 departure. Try Haneda Excel Hotel Tokyu or APA Hotel Haneda — both are right at the terminal.',color:'#2c5f8a'},
+    {city:'tokyo', name:'Hotel Near Haneda Airport',sub:'Haneda / Ota-ku, Tokyo',nights:'Nov 3 · 1 night',note:'REQUIRED for 6:00pm Nov 4 departure (AA 26). Try Haneda Excel Hotel Tokyu or APA Hotel Haneda — both are right at the terminal.',color:'#2c5f8a'},
   ];
 
   hotels.forEach(h=>{
