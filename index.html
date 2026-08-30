@@ -1208,14 +1208,23 @@ const DAYS=[
      note:'Just off Harajuku. Vintage boutiques, independent designers, Japanese streetwear. More relaxed vibe.',
      tip:'GU and Uniqlo flagships are nearby — great cheap Japanese basics for the whole family.'}
   ]},
-  {day:7,date:'Oct 28',dateObj:'2026-10-28',city:'hakone',label:'Mt. Fuji → Hakone',
+  {day:7,date:'Oct 28',dateObj:'2026-10-28',city:'hakone',label:'Mt. Fuji + Kawaguchiko → Hakone',
    stops:[
-    {name:'Chureito Pagoda',lat:35.5013,lng:138.8014,
-     note:'Iconic Fuji + pagoda shot. ~400 steps. Late Oct = peak autumn foliage at the base.',
-     tip:'Go early morning for clearest Fuji views before afternoon clouds form.'},
-    {name:'Tōnosawa Ichinoyu Honkan',lat:35.2332,lng:139.0934,ticketKey:'hakone_ryokan',
-     note:'400-yr-old ryokan. Private family onsen, kaiseki dinner + breakfast.',
-     tip:'Request room with private outdoor onsen (Type B or Matsuda). River sound at night is magical.'}
+    {name:'Shinjuku → Kawaguchiko (Train)',lat:35.5120,lng:138.7641,
+     note:'Depart Shinjuku ~7am. JR Chuo Line to Otsuki, transfer to Fujikyu Railway to Kawaguchiko. ~2 hrs total. ~¥2,000 (~$13) each way.',
+     tip:'Take the express — local trains take much longer. The Fujikyu Railway portion has great Fuji views on a clear morning.'},
+    {name:'Chureito Pagoda — Arakurayama Sengen Park',lat:35.4972,lng:138.7918,
+     note:'~400 steps uphill from Fujiyoshida. The iconic Mt. Fuji + pagoda shot with early autumn foliage. Late Oct = foliage beginning at lower elevations — stunning backdrop.',
+     tip:'Go first thing in the morning for clearest Fuji views. Clouds often roll in by afternoon. Bring water for the steps — totally worth it!'},
+    {name:'Lake Kawaguchiko — Lakeside Walk',lat:35.5116,lng:138.7573,
+     note:'Flat, easy lakeside walk with Mt. Fuji reflected in the water. One of the most photographed views in Japan. Peak foliage begins late October.',
+     tip:'The north shore of the lake (Kawaguchi Asama Shrine area) gives the best reflection shots. Perfect for your wife’s leg — completely flat.'},
+    {name:'Kawaguchiko Ropeway (Optional)',lat:35.5067,lng:138.7688,
+     note:'Optional 3-min ropeway up Kachi Kachi Mountain. Panoramic Fuji and lake views from above. ¥900 (~$6) adults, ¥450 (~$3) kids. Very easy on legs.',
+     tip:'The tanuki (raccoon dog) themed station at the top is a fun photo stop. Your son will love the cable car ride.'},
+    {name:'Tōnosawa Ichinoyu Honkan — Check In',lat:35.2332,lng:139.0934,ticketKey:'hakone_ryokan',
+     note:'From Kawaguchiko take train/bus to Hakone (~1.5 hrs). Check in from 3pm. Private family onsen, kaiseki dinner + breakfast included.',
+     tip:'Request room with private outdoor onsen overlooking the Hayakawa River. Wear yukata provided — walk to the outdoor bath before dinner.'}
   ]},
   {day:8,date:'Oct 29',dateObj:'2026-10-29',city:'hakone',label:'Hakone → Osaka',
    stops:[
@@ -1235,11 +1244,17 @@ const DAYS=[
      note:'30 min from Kyoto Station via Kintetsu. Lottery tickets only.',
      tip:'¥3,300 (~$22) adult / ¥1,100 (~$7) child. Check museum-tickets.nintendo.com for cancellations.'}
   ]},
-  {day:10,date:'Oct 31',dateObj:'2026-10-31',city:'awaji',label:'Nijigen no Mori 🎃',
+  {day:10,date:'Oct 31',dateObj:'2026-10-31',city:'nara',label:'Nara 🦌 + Halloween Dotonbori 🎃',
    stops:[
-    {name:'Nijigen no Mori — Awaji Island',lat:34.5752,lng:135.0008,ticketKey:'nijigen',
-     note:'Bus from Namba (~1hr, ¥1,850 (~$12) one-way). Dragon Quest, Naruto, Godzilla. Halloween!',
-     tip:'Book West Japan JR Bus in advance. Arrive early — Halloween Saturday will be huge.'}
+    {name:'Tōdai-ji Temple',lat:34.6890,lng:135.8398,
+     note:'Morning visit. Giant bronze Buddha (¥600/~$4). Kids crawl through Buddha nostril pillar for good luck! Free-roaming deer everywhere.',
+     tip:'Buy deer crackers (¥200/~$1.30) at gate. Wear your Halloween costume — deer + costumes = best photos of the trip!'},
+    {name:'Nara Park — Halloween Morning',lat:34.6851,lng:135.8333,
+     note:'Free-roaming deer in the park. In costume on Halloween morning — your son will love this. Very short trip from Namba (~40 min by Kintetsu).',
+     tip:'Back in Namba by early afternoon — plenty of time to rest before the Halloween night crowds peak at 8pm.'},
+    {name:'Dotonbori Halloween Night 🎃',lat:34.6687,lng:135.5012,
+     note:'FREE. Thousands of cosplayers flood Dotonbori canal from 7pm. Anime characters, zombies, Osaka joke costumes. One of the best Halloween events in Asia.',
+     tip:'Keep costumes on from Nara! Peak crowds 8–11pm at Dotonbori bridge. Americamura (5-min walk) has simultaneous cosplay gathering.'}
   ]},
   {day:11,date:'Nov 1',dateObj:'2026-11-01',city:'kyoto',label:'Kyoto — South',
    stops:[
@@ -1253,11 +1268,11 @@ const DAYS=[
      note:'400m covered market. Pickles, grilled squid, matcha sweets. Bring cash.',
      tip:'Great for street food lunch between Arashiyama and Fushimi Inari.'}
   ]},
-  {day:12,date:'Nov 2',dateObj:'2026-11-02',city:'nara',label:'Nara Day Trip',
+  {day:12,date:'Nov 2',dateObj:'2026-11-02',city:'awaji',label:'Nijigen no Mori — Awaji Island',
    stops:[
-    {name:'Tōdai-ji Temple',lat:34.6890,lng:135.8398,
-     note:'Giant bronze Buddha (¥600 (~$4)). Kids crawl through Buddha\'s nostril for good luck!',
-     tip:'Buy deer crackers (¥200 (~$1.30)) at the gate. Deer bow back when you bow to them!'}
+    {name:'Nijigen no Mori — Awaji Island',lat:34.5752,lng:135.0008,ticketKey:'nijigen',
+     note:'Bus from Namba (~1hr, ¥1,850/~$12 one-way). Dragon Quest Island, Naruto & Boruto Village, Godzilla Intercept Operation.',
+     tip:'Book West Japan JR Bus in advance for Nov 2. Same route as original Oct 31 booking — rebook if you had Oct 31 tickets.'}
   ]},
   {day:13,date:'Nov 3',dateObj:'2026-11-03',city:'kobe',label:'Kobe + Kyoto Day 2',
    stops:[
@@ -2065,133 +2080,250 @@ function getEffectiveHotel(h,idx){
 
 // ── EDIT SCREEN ───────────────────────────
 function renderEdit(){
-  // Edit screen uses its own container, not sbody
   const wrap=document.getElementById('screen-edit');
   wrap.innerHTML='';
 
-  // Back button row
-  const backRow=document.createElement('div');
-  backRow.style.cssText='display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 2px';
-  backRow.innerHTML=`
-    <button onclick="navigate('itin')" style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,215,0,.3);border-radius:20px;padding:6px 14px;font-size:.68rem;font-weight:800;color:var(--yellow);letter-spacing:.04em">← BACK</button>
+  // Header
+  const hdr=document.createElement('div');
+  hdr.style.cssText='display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;';
+  hdr.innerHTML=`
+    <button onclick="navigate('itin')" style="background:rgba(255,215,0,.15);border:1.5px solid rgba(255,215,0,.4);border-radius:20px;padding:7px 14px;font-size:.72rem;font-weight:800;color:var(--yellow);">← BACK</button>
     <span style="font-size:.65rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--yellow);text-shadow:0 0 8px rgba(255,215,0,.4)">✏️ EDIT MODE</span>
+    <button onclick="resetAllEdits()" style="background:rgba(204,0,0,.12);border:1.5px solid rgba(204,0,0,.3);border-radius:20px;padding:7px 12px;font-size:.68rem;font-weight:800;color:#ff6b6b;">↺ RESET</button>
   `;
-  wrap.appendChild(backRow);
-
-  const body=wrap; // render into screen-edit directly
+  wrap.appendChild(hdr);
 
   // Intro
   const intro=document.createElement('div');
-  intro.className='edit-intro';
-  intro.innerHTML='<strong>⚙️ Edit Mode</strong><br>Tap any section to edit names, dates, notes, or add new stops. Changes save instantly and update your itinerary.';
+  intro.className='banner blue';
+  intro.style.marginBottom='12px';
+  intro.innerHTML='<strong>✏️ Tap any day to edit</strong><br>Change dates, labels, stop names and notes. Use ↑↓ arrows to reorder stops. Use Move to reassign a stop to a different day.';
   wrap.appendChild(intro);
 
-  // Reset button
-  const resetBar=document.createElement('div');
-  resetBar.className='reset-banner';
-  resetBar.innerHTML='<span>Reset all edits back to defaults</span>';
-  const resetBtn=document.createElement('button');
-  resetBtn.className='btn-reset-all';
-  resetBtn.textContent='Reset All';
-  resetBtn.onclick=()=>{
-    if(!confirm('Reset ALL edits to defaults? This cannot be undone.')) return;
-    STATE.edits={}; STATE.hotelEdits={};
-    saveEdits(); saveHotelEdits();
-    showToast('🔄 Reset to defaults');
-    renderEdit(); renderItin(); renderHotels();
-  };
-  resetBar.appendChild(resetBtn);
-  wrap.appendChild(resetBar);
-
-  // ── HOTELS section ──
-  const hotelTitle=document.createElement('div');
-  hotelTitle.className='edit-section-title';
-  hotelTitle.textContent='🏨 Hotels';
-  wrap.appendChild(hotelTitle);
+  // Hotel section
+  const hotelSec=document.createElement('div');
+  hotelSec.innerHTML=`<div class="sec" style="margin-bottom:8px">🏨 HOTELS</div>`;
+  wrap.appendChild(hotelSec);
 
   HOTELS.forEach((h,idx)=>{
-    const eff=getEffectiveHotel(h,idx);
-    const card=document.createElement('div');
-    card.className='hotel-edit-card';
-    card.innerHTML=`
-      <span class="hotel-nights-badge" style="background:${h.color}">${eff.nights}</span>
-      <div class="edit-btn-row" style="margin-top:0;margin-bottom:8px">
-        <button class="btn-edit-save" style="font-size:.62rem;padding:5px 10px" onclick="openHotelEdit(${idx})">✏️ Edit</button>
+    const eff=getEffectiveHotel?getEffectiveHotel(h,idx):h;
+    const hcard=document.createElement('div');
+    hcard.style.cssText='background:#fff;border:2px solid var(--border);border-radius:12px;padding:11px 12px;margin-bottom:8px;';
+    hcard.innerHTML=`
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+        <span style="font-size:.6rem;font-weight:800;background:${h.color};color:#fff;padding:2px 9px;border-radius:10px;">${eff.nights}</span>
+        <button onclick="toggleHotelEdit(${idx},this)" style="background:linear-gradient(135deg,var(--red),#990000);color:#fff;font-size:.62rem;font-weight:800;padding:4px 12px;border-radius:10px;border:none;">✏️ Edit</button>
       </div>
-      <div class="hotel-name">${eff.name}</div>
-      <div class="hotel-sub">${eff.sub}</div>
-      <div class="hotel-note" style="font-size:.65rem;color:#555;margin-top:3px">${eff.note}</div>
-    `;
-    wrap.appendChild(card);
-  });
-
-  // ── DAYS section ──
-  const dayTitle=document.createElement('div');
-  dayTitle.className='edit-section-title';
-  dayTitle.textContent='📅 Days & Stops';
-  wrap.appendChild(dayTitle);
-
-  DAYS.forEach(day=>{
-    const eff=getEffectiveDay(day);
-    const color=CITIES[day.city].color;
-    const hasEdits=!!(STATE.edits['day_'+day.day]||STATE.edits['added_'+day.day]||
-      eff.stops.some((_,i)=>STATE.edits['stop_'+day.day+'_'+i]));
-
-    const card=document.createElement('div');
-    card.className='edit-card';
-    card.id='edit-card-'+day.day;
-
-    const hdr=document.createElement('div');
-    hdr.className='edit-card-header';
-    hdr.innerHTML=`
-      <span class="day-num" style="background:${color}">Day ${day.day}</span>
-      <div style="flex:1">
-        <div style="font-size:.78rem;font-weight:700;color:var(--ink)">${eff.date}</div>
-        <div style="font-size:.65rem;color:var(--muted)">${eff.label}</div>
+      <div id="hotel-display-${idx}">
+        <div style="font-size:.8rem;font-weight:800;color:#1a1f3a;">${eff.name}</div>
+        <div style="font-size:.67rem;color:var(--muted);">${eff.sub}</div>
       </div>
-      ${hasEdits?'<span class="unsaved-dot" title="Has edits"></span>':''}
-      <span class="edit-card-chevron">▾</span>
-    `;
-    hdr.onclick=()=>{
-      card.classList.toggle('open');
-    };
-    card.appendChild(hdr);
-
-    const bodyEl=document.createElement('div');
-    bodyEl.className='edit-card-body';
-
-    // Day-level fields
-    bodyEl.innerHTML=`
-      <div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border)">
-        <div class="stop-edit-label">Day Header</div>
-        <input class="edit-input small" id="edit-date-${day.day}" placeholder="Date (e.g. Oct 24)" value="${eff.date}">
-        <input class="edit-input small" id="edit-label-${day.day}" placeholder="Day label/title" value="${eff.label}">
-        <div class="edit-btn-row">
-          <button class="btn-edit-save" onclick="saveDayHeader(${day.day})">Save Header</button>
+      <div id="hotel-form-${idx}" style="display:none;margin-top:8px;">
+        <input class="f-in" id="hf-name-${idx}" placeholder="Hotel name" value="${eff.name}" style="margin-bottom:6px;">
+        <input class="f-in" id="hf-sub-${idx}" placeholder="Location" value="${eff.sub}" style="margin-bottom:6px;">
+        <input class="f-in" id="hf-nights-${idx}" placeholder="Dates & nights" value="${eff.nights}" style="margin-bottom:8px;">
+        <div style="display:flex;gap:6px;">
+          <button onclick="saveHotelEdit(${idx})" style="flex:1;background:linear-gradient(135deg,var(--red),#990000);color:#fff;font-size:.72rem;font-weight:900;padding:8px;border-radius:20px;border:none;">⚡ SAVE</button>
+          <button onclick="toggleHotelEdit(${idx},null,true)" style="background:rgba(200,212,248,.4);color:var(--muted);font-size:.72rem;font-weight:700;padding:8px 14px;border-radius:20px;border:1px solid var(--border);">Cancel</button>
         </div>
       </div>
     `;
+    wrap.appendChild(hcard);
+  });
+
+  // Days section
+  const daySec=document.createElement('div');
+  daySec.innerHTML=`<div class="sec" style="margin:14px 0 8px">📅 DAYS & STOPS</div>`;
+  wrap.appendChild(daySec);
+
+  DAYS.forEach(rawDay=>{
+    const eff=STATE.edits?getEffectiveDay(rawDay):rawDay;
+    const color=CITIES[rawDay.city].color;
+    const hasEdits=STATE.edits&&(STATE.edits['day_'+rawDay.day]||STATE.edits['added_'+rawDay.day]);
+
+    const dc=document.createElement('div');
+    dc.style.cssText='background:#fff;border:2px solid var(--border);border-radius:12px;margin-bottom:8px;overflow:hidden;';
+    if(hasEdits) dc.style.borderColor='rgba(255,215,0,.6)';
+
+    // Day header - always visible
+    const dhdr=document.createElement('div');
+    dhdr.style.cssText='display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(232,238,255,.97));';
+    dhdr.innerHTML=`
+      <span style="font-size:.6rem;font-weight:900;background:${color};color:#fff;border-radius:6px;padding:3px 8px;">${rawDay.day}</span>
+      <div style="flex:1;">
+        <div style="font-size:.76rem;font-weight:700;color:#1a1f3a;">${eff.date}</div>
+        <div style="font-size:.64rem;color:var(--muted);">${eff.label}${hasEdits?'<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--yellow);margin-left:5px;vertical-align:middle;"></span>':''}</div>
+      </div>
+      <span style="font-size:.7rem;color:var(--border);transition:transform .2s;" class="edit-chev-${rawDay.day}">▾</span>
+    `;
+    dhdr.onclick=()=>toggleEditDay(rawDay.day, dc);
+    dc.appendChild(dhdr);
+
+    // Day body - collapsible
+    const dbody=document.createElement('div');
+    dbody.id=`edit-day-body-${rawDay.day}`;
+    dbody.style.cssText='display:none;padding:10px 12px;border-top:1.5px solid var(--border);';
+
+    // Date + label edit fields
+    dbody.innerHTML=`
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+        <div>
+          <div class="f-lbl">Date</div>
+          <input class="f-in" id="ed-date-${rawDay.day}" value="${eff.date}" placeholder="e.g. Oct 31">
+        </div>
+        <div>
+          <div class="f-lbl">Label</div>
+          <input class="f-in" id="ed-label-${rawDay.day}" value="${eff.label}" placeholder="Day title">
+        </div>
+      </div>
+      <button onclick="saveDayHeader(${rawDay.day})" style="width:100%;background:linear-gradient(135deg,var(--red),#990000);color:#fff;font-size:.7rem;font-weight:900;padding:7px;border-radius:20px;border:none;margin-bottom:10px;">⚡ SAVE HEADER</button>
+      <div style="font-size:.6rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">STOPS</div>
+    `;
 
     // Stops
-    const stopsWrap=document.createElement('div');
-    stopsWrap.id='stops-wrap-'+day.day;
-
-    eff.stops.forEach((stop,si)=>{
-      stopsWrap.appendChild(buildStopEditRow(day.day, si, stop, color, si>=day.stops.length));
+    const visStops=eff.stops.filter(s=>s.name!=='[Removed]');
+    visStops.forEach((stop, si)=>{
+      const isAdded=si>=rawDay.stops.length;
+      const srow=document.createElement('div');
+      srow.style.cssText='background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 10px;margin-bottom:7px;';
+      srow.id=`stop-edit-row-${rawDay.day}-${si}`;
+      srow.innerHTML=`
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+          <span style="font-size:.58rem;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;">
+            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${color};margin-right:4px;"></span>
+            Stop ${si+1}${isAdded?' (Added)':''}
+          </span>
+          <div style="display:flex;gap:4px;">
+            ${si>0?`<button onclick="moveStopUp(${rawDay.day},${si})" style="background:rgba(200,212,248,.5);border:1px solid var(--border);border-radius:5px;padding:2px 7px;font-size:.7rem;color:var(--muted);">↑</button>`:''}
+            ${si<visStops.length-1?`<button onclick="moveStopDown(${rawDay.day},${si})" style="background:rgba(200,212,248,.5);border:1px solid var(--border);border-radius:5px;padding:2px 7px;font-size:.7rem;color:var(--muted);">↓</button>`:''}
+            <button onclick="removeStop(${rawDay.day},${si},${isAdded})" style="background:rgba(204,0,0,.08);border:1.5px solid rgba(204,0,0,.25);border-radius:5px;padding:2px 8px;font-size:.62rem;font-weight:700;color:var(--red);">✕</button>
+          </div>
+        </div>
+        <input class="f-in" id="sn-${rawDay.day}-${si}" placeholder="Stop name" value="${(stop.name||'').replace(/"/g,'&quot;')}" style="margin-bottom:5px;">
+        <input class="f-in" id="snt-${rawDay.day}-${si}" placeholder="Note / description" value="${(stop.note||'').replace(/"/g,'&quot;')}" style="margin-bottom:5px;">
+        <input class="f-in" id="stp-${rawDay.day}-${si}" placeholder="⚡ Tip (optional)" value="${(stop.tip||'').replace(/"/g,'&quot;')}" style="margin-bottom:6px;">
+        <div style="display:flex;gap:6px;align-items:center;">
+          <button onclick="saveStop(${rawDay.day},${si},${isAdded})" style="flex:1;background:linear-gradient(135deg,var(--ink),var(--ink2));color:var(--yellow);font-size:.67rem;font-weight:800;padding:6px;border-radius:20px;border:1.5px solid rgba(255,215,0,.3);">Save Stop</button>
+          <select onchange="moveStopToDay(${rawDay.day},${si},this.value,${isAdded})" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:5px 8px;font-size:.65rem;color:var(--ink);max-width:120px;">
+            <option value="">Move to day...</option>
+            ${DAYS.filter(d=>d.day!==rawDay.day).map(d=>`<option value="${d.day}">Day ${d.day} — ${d.date}</option>`).join('')}
+          </select>
+        </div>
+      `;
+      dbody.appendChild(srow);
     });
-
-    bodyEl.appendChild(stopsWrap);
 
     // Add stop button
     const addBtn=document.createElement('button');
-    addBtn.className='btn-add-stop';
-    addBtn.textContent='Add New Stop';
-    addBtn.onclick=()=>addNewStop(day.day, color);
-    bodyEl.appendChild(addBtn);
+    addBtn.style.cssText='width:100%;background:linear-gradient(135deg,var(--ink),var(--ink2));color:var(--yellow);font-size:.68rem;font-weight:800;padding:8px;border-radius:8px;border:1.5px solid rgba(255,215,0,.25);text-transform:uppercase;letter-spacing:.04em;margin-top:4px;';
+    addBtn.textContent='+ Add New Stop';
+    addBtn.onclick=()=>addNewStop(rawDay.day, color);
+    dbody.appendChild(addBtn);
 
-    card.appendChild(bodyEl);
-    wrap.appendChild(card);
+    dc.appendChild(dbody);
+    wrap.appendChild(dc);
   });
+}
+
+function toggleEditDay(dayNum, card){
+  const body=document.getElementById(`edit-day-body-${dayNum}`);
+  const chev=card.querySelector(`.edit-chev-${dayNum}`);
+  if(body.style.display==='none'){
+    body.style.display='block';
+    if(chev) chev.style.transform='rotate(180deg)';
+  } else {
+    body.style.display='none';
+    if(chev) chev.style.transform='';
+  }
+}
+
+function toggleHotelEdit(idx, btn, cancel){
+  const form=document.getElementById(`hotel-form-${idx}`);
+  const display=document.getElementById(`hotel-display-${idx}`);
+  if(cancel||form.style.display==='block'){
+    form.style.display='none';
+    display.style.display='block';
+  } else {
+    form.style.display='block';
+    display.style.display='none';
+  }
+}
+
+function moveStopUp(dayNum, stopIdx){
+  if(stopIdx===0) return;
+  swapStops(dayNum, stopIdx, stopIdx-1);
+}
+
+function moveStopDown(dayNum, stopIdx){
+  const day=DAYS.find(d=>d.day===dayNum);
+  const eff=getEffectiveDay(day);
+  if(stopIdx>=eff.stops.length-1) return;
+  swapStops(dayNum, stopIdx, stopIdx+1);
+}
+
+function swapStops(dayNum, i, j){
+  const day=DAYS.find(d=>d.day===dayNum);
+  const eff=getEffectiveDay(day);
+  const stops=[...eff.stops];
+  // Swap
+  [stops[i],stops[j]]=[stops[j],stops[i]];
+  // Save all stop edits in new order
+  const baseLen=day.stops.length;
+  stops.forEach((stop,idx)=>{
+    if(idx<baseLen){
+      STATE.edits['stop_'+dayNum+'_'+idx]={name:stop.name,note:stop.note||'',tip:stop.tip||''};
+    }
+  });
+  // Handle added stops
+  const added=stops.slice(baseLen).map(s=>({name:s.name,note:s.note||'',tip:s.tip||''}));
+  if(added.length) STATE.edits['added_'+dayNum]=added;
+  saveEdits();
+  renderEdit();
+  renderItin();
+}
+
+function moveStopToDay(fromDay, stopIdx, toDay, isAdded){
+  if(!toDay) return;
+  const day=DAYS.find(d=>d.day===fromDay);
+  const eff=getEffectiveDay(day);
+  const stop={...eff.stops[stopIdx]};
+  // Remove from source
+  removeStop(fromDay, stopIdx, isAdded, true);
+  // Add to destination
+  const added=STATE.edits['added_'+toDay]||[];
+  added.push({name:stop.name,note:stop.note||'',tip:stop.tip||''});
+  STATE.edits['added_'+toDay]=added;
+  saveEdits();
+  showToast(`✓ Stop moved to Day ${toDay}!`);
+  renderEdit();
+  renderItin();
+}
+
+function removeStop(dayNum, stopIdx, isAdded, silent){
+  if(!silent && !confirm('Remove this stop?')) return;
+  if(isAdded){
+    const day=DAYS.find(d=>d.day===dayNum);
+    const realIdx=stopIdx-day.stops.length;
+    const added=STATE.edits['added_'+dayNum]||[];
+    added.splice(realIdx,1);
+    STATE.edits['added_'+dayNum]=added;
+  } else {
+    STATE.edits['stop_'+dayNum+'_'+stopIdx]={name:'[Removed]',note:'',tip:'',deleted:true};
+  }
+  saveEdits();
+  if(!silent){
+    showToast('Stop removed');
+    renderEdit();
+    renderItin();
+  }
+}
+
+function resetAllEdits(){
+  if(!confirm('Reset ALL edits to defaults? This cannot be undone.')) return;
+  STATE.edits={};STATE.hotelEdits={};
+  saveEdits();saveHotelEdits();
+  showToast('🔄 Reset to defaults');
+  renderEdit();renderItin();renderHotels();
 }
 
 function buildStopEditRow(dayNum, stopIdx, stop, color, isAdded){
