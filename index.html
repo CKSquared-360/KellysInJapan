@@ -1074,6 +1074,122 @@ input,textarea{font-family:inherit}
 /* Scrollbar styling for screens */
 .screen { scrollbar-width: thin; scrollbar-color: rgba(255,215,0,.3) transparent; }
 
+
+/* ════════════════════════════════════
+   CUSTOMS DUTY CALCULATOR
+════════════════════════════════════ */
+.customs-card {
+  background: linear-gradient(135deg, #0b1a3a, #132552);
+  border: 2px solid var(--yellow);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 12px;
+  box-shadow: 0 0 20px rgba(255,215,0,.15);
+}
+.customs-title {
+  font-size: 1rem; font-weight: 900;
+  color: var(--yellow); text-align: center;
+  margin-bottom: 4px;
+  text-shadow: 0 0 10px rgba(255,215,0,.4);
+}
+.customs-sub {
+  font-size: .67rem; color: rgba(255,255,255,.5);
+  text-align: center; margin-bottom: 16px;
+}
+.customs-label {
+  font-size: .65rem; font-weight: 700;
+  color: #cfd6ee; margin-bottom: 5px; display: block;
+}
+.customs-input {
+  width: 100%; padding: 10px 12px;
+  border-radius: 8px; border: 1.5px solid var(--yellow);
+  background: #0d1f4a; color: #fff;
+  font-size: .82rem; margin-bottom: 12px;
+  box-sizing: border-box;
+}
+.customs-input:focus { outline: none; border-color: #fff; }
+.customs-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--red), #990000);
+  color: #fff; font-size: .8rem; font-weight: 900;
+  padding: 12px; border-radius: 25px;
+  border: 1.5px solid rgba(255,215,0,.3);
+  letter-spacing: .06em; text-transform: uppercase;
+  box-shadow: 0 4px 16px rgba(204,0,0,.4);
+  margin-bottom: 14px;
+}
+.customs-result-row {
+  display: flex; justify-content: space-between;
+  align-items: center; padding: 9px 12px;
+  border-radius: 8px; margin-bottom: 6px;
+  background: rgba(255,255,255,.05);
+}
+.customs-result-row.exempt { background: rgba(31,168,107,.12); }
+.customs-result-row.flat   { background: rgba(255,215,0,.08); }
+.customs-result-row.excess { background: rgba(204,0,0,.12); }
+.customs-result-label { font-size: .67rem; color: #cfd6ee; }
+.customs-result-val   { font-size: .75rem; font-weight: 800; color: #fff; }
+.customs-total {
+  background: linear-gradient(90deg, var(--yellow), #ffe566);
+  color: var(--ink); border-radius: 10px;
+  padding: 14px; text-align: center;
+  font-weight: 900; font-size: 1rem;
+  margin-top: 10px;
+  box-shadow: 0 0 16px rgba(255,215,0,.3);
+}
+.customs-cat-panel {
+  display: none;
+  background: rgba(13,31,74,.8);
+  border: 1px solid rgba(255,215,0,.3);
+  border-radius: 10px; padding: 12px;
+  margin-bottom: 10px;
+}
+.customs-cat-title {
+  font-size: .7rem; font-weight: 900;
+  color: var(--yellow); margin-bottom: 4px;
+}
+.customs-cat-sub {
+  font-size: .6rem; color: rgba(255,255,255,.4);
+  margin-bottom: 10px; line-height: 1.4;
+}
+.customs-cat-row {
+  display: flex; align-items: center;
+  gap: 6px; margin-bottom: 7px;
+}
+.customs-cat-label {
+  flex: 1; font-size: .63rem; color: #cfd6ee;
+}
+.customs-cat-input {
+  width: 72px; padding: 5px 7px;
+  border-radius: 6px; border: 1px solid rgba(255,215,0,.4);
+  background: #0d1f4a; color: #fff; font-size: .68rem;
+}
+.customs-cat-rate {
+  width: 52px; padding: 5px 7px;
+  border-radius: 6px; border: 1px solid rgba(255,215,0,.4);
+  background: #0d1f4a; color: var(--yellow); font-size: .68rem;
+}
+.customs-cat-pct { font-size: .6rem; color: rgba(255,255,255,.4); }
+.customs-toggle-btn {
+  width: 100%; padding: 9px;
+  border: 1px solid var(--yellow); border-radius: 8px;
+  background: transparent; color: var(--yellow);
+  font-size: .7rem; font-weight: 700; margin-bottom: 10px;
+}
+.customs-bracket-info {
+  background: rgba(255,255,255,.05);
+  border-radius: 10px; padding: 12px;
+  margin-bottom: 12px;
+}
+.customs-bracket-row {
+  display: flex; justify-content: space-between;
+  font-size: .65rem; padding: 4px 0;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  color: #cfd6ee;
+}
+.customs-bracket-row:last-child { border-bottom: none; }
+.customs-bracket-row span:last-child { font-weight: 800; color: var(--yellow); }
+
 </style>
 </head>
 <body>
@@ -1099,6 +1215,7 @@ input,textarea{font-family:inherit}
     <div class="screen" id="screen-links"></div>
     <div class="screen" id="screen-alerts"></div>
     <div class="screen" id="screen-edit"></div>
+    <div class="screen" id="screen-customs"></div>
     <div class="screen" id="screen-adventure"></div>
     <div class="screen" id="screen-photos"></div>
     <div class="screen" id="screen-translate"></div>
@@ -1110,7 +1227,7 @@ input,textarea{font-family:inherit}
       <span class="nav-icon">📅</span><span class="nav-label">Route</span>
     </button>
     <button class="nav-btn" id="nav-flights" onclick="navigate('flights')">
-      <span class="nav-icon">✈️</span><span class="nav-label">Fly</span>
+      <span class="nav-icon">🗺️</span><span class="nav-label">Travel</span>
     </button>
     <button class="nav-btn" id="nav-tickets" onclick="navigate('tickets');renderTickets()">
       <span class="nav-icon">🎟</span><span class="nav-label">Catch</span>
@@ -1125,6 +1242,9 @@ input,textarea{font-family:inherit}
     </button>
     <button class="nav-btn" id="nav-translate" onclick="navigate('translate')">
       <span class="nav-icon">🌐</span><span class="nav-label">Translate</span>
+    </button>
+    <button class="nav-btn" id="nav-customs" onclick="navigate('customs')">
+      <span class="nav-icon">🛃</span><span class="nav-label">Customs</span>
     </button>
     <button class="nav-btn" id="nav-alerts" onclick="navigate('alerts')">
       <span class="nav-icon">⚠️</span><span class="nav-label">Alerts</span>
@@ -1156,8 +1276,11 @@ const DAYS=[
      note:'Singapore Airlines SQ 11. Confirmation: DMWBR3. Take Narita Express (NEX) to Shinjuku ~80 min (~¥3,200/~$21, JR Pass ✅). Then 5 min to Nakano hotel.',
      tip:'Load ¥5,000–10,000 (~$33–67) on Suica. Works on trains, buses, and convenience stores.'}
   ]},
-  {day:2,date:'Oct 23',dateObj:'2026-10-23',city:'tokyo',label:'Tokyo Orientation + Shopping',
+  {day:2,date:'Oct 23',dateObj:'2026-10-23',city:'tokyo',label:'Park Golf + Tokyo Orientation',
    stops:[
+    {name:'Park Golf — Kiba Park or Tatsumi no Mori',lat:35.6716,lng:139.8017,ticketKey:'park_golf',
+     note:'Uniquely Japanese sport — wooden mallet, large ball, 9-18 holes in a park setting. ¥840 (~$5.60) for 9 holes, ¥1,580 (~$10.50) for 18 holes including club and ball rental. Perfect jet-lag morning activity — low effort, great fun for all three.',
+     tip:'Get there when it opens (9:30am). Your son will love beating you at it. Clubs and balls provided — no equipment needed. Tatsumi no Mori is near Shinonome Station (Yurakucho Line).'},
     {name:'Nakano Broadway',lat:35.7086,lng:139.6661,
      note:'5-min walk from your hotel. Pokémon, anime, manga, vintage toys, Mandarake. Your son will love it.',
      tip:'Go early on a weekday — weekends get very crowded. Mandarake has the best rare Pokémon cards.'},
@@ -1231,77 +1354,110 @@ const DAYS=[
      note:'From Kawaguchiko take train/bus to Hakone (~1.5 hrs). Check in from 3pm. Private family onsen, kaiseki dinner + breakfast included.',
      tip:'Request room with private outdoor onsen overlooking the Hayakawa River. Wear yukata provided — walk to the outdoor bath before dinner.'}
   ]},
-  {day:8,date:'Oct 29',dateObj:'2026-10-29',city:'hakone',label:'Hakone → Osaka',
+  {day:8,date:'Oct 29',dateObj:'2026-10-29',city:'osaka',label:'Arrive Osaka — Rest Night',
    stops:[
-    {name:'Hakone Komagatake Ropeway',lat:35.2185,lng:139.0170,ticketKey:'hakone_ropeway',
-     note:'Morning ropeway with Fuji views. Use Hakone Free Pass for all local transport.',
-     tip:'Clear Oct mornings are common — summit Fuji views can be spectacular.'},
-    {name:'MIMARU Osaka Shinsaibashi',lat:34.6759,lng:135.5055,ticketKey:'osaka_hotel',
-     note:'Shinkansen Odawara→Shin-Osaka ~2.5 hrs. Evening arrival. Dotonbori 5-min walk.',
-     tip:'Ask front desk for restaurant recommendations — consistently praised by guests.'}
+    {name:'Shinkansen Odawara → Shin-Osaka',lat:34.7334,lng:135.5000,
+     note:'Depart Odawara after morning Hakone ropeway. ~2h 20min to Shin-Osaka. Arrive early evening.',
+     tip:'Buy reserved seat via SmartEX app. Suica works on local trains from Shin-Osaka to your Airbnb.'},
+    {name:'Osaka Castle Airbnb — Check In',lat:34.6851,lng:135.5277,
+     note:'Check in, drop bags, freshen up. Osaka Castle Park is a 5-min walk — your son can see it lit up at night.',
+     tip:'Your Airbnb host may offer luggage storage — confirm Takkyubin delivery from Tokyo has arrived.'},
+    {name:'Dotonbori First Night Dinner',lat:34.6687,lng:135.5012,
+     note:'15 min by train. Easy arrival dinner — Kinryu Ramen, 551 Horai pork buns, or takoyaki from Wanaka. Budget ¥1,500 (~$10) per person.',
+     tip:'Keep it light — you just traveled all day. Tomorrow is your big Osaka exploration day.'}
   ]},
-  {day:9,date:'Oct 30',dateObj:'2026-10-30',city:'osaka',label:'Osaka Exploration',
+  {day:9,date:'Oct 30',dateObj:'2026-10-30',city:'osaka',label:'Osaka + Good Times Ink Tattoo',
    stops:[
-    {name:'Dotonbori & Kuromon Ichiba',lat:34.6687,lng:135.5012,
-     note:'Kuromon Market, Dotonbori canal walk. Takoyaki, okonomiyaki, sashimi.',
-     tip:'Kuromon opens ~8am — great for market breakfast.'},
-    {name:'Nintendo Museum (Uji)',lat:34.8928,lng:135.7842,ticketKey:'nintendo',
-     note:'30 min from Kyoto Station via Kintetsu. Lottery tickets only.',
-     tip:'¥3,300 (~$22) adult / ¥1,100 (~$7) child. Check museum-tickets.nintendo.com for cancellations.'}
+    {name:'Osaka Castle Park — Morning',lat:34.6873,lng:135.5262,
+     note:'Walk from your Airbnb — free to enter the park. Moat walk, castle exterior, autumn leaves beginning. ¥600 (~$4) to enter castle interior museum.',
+     tip:'Go early (9am) before tour groups arrive. The castle grounds are stunning in late October morning light.'},
+    {name:'Kuromon Ichiba Market',lat:34.6659,lng:135.5063,
+     note:'20 min by train from castle area. Japan’s Kitchen — fresh oysters, wagyu beef skewers, takoyaki, fresh sashimi. Great late morning market lunch.',
+     tip:'Bring cash. Try the giant fresh oysters and the crab legs — your son will love pointing at everything he wants to try.'},
+    {name:'Good Times Ink — Cherry Blossom Tattoo 🌸',lat:34.6694,lng:135.4993,ticketKey:'tattoo',
+     note:'Americamura, Nishi Shinsaibashi 2-12-14, Ocean Drive 4F. Open noon–7pm (closed Tue). Cherry blossom fine line tattoo. Book via goodtimesink.jp/en in advance.',
+     tip:'Bring a reference photo of the cherry blossom design you want. English-speaking artists. Confirm your appointment time when booking — afternoon slots fill fast.'},
+    {name:'Shinsaibashi Shopping Evening',lat:34.6732,lng:135.5005,
+     note:'Post-tattoo relaxed shopping. Covered arcade 1-min walk from Good Times Ink. Uniqlo, GU, Don Quijote, Japanese fashion. Good for browsing while arm rests.',
+     tip:'Keep tattoo covered and avoid sun. Convenience store cold pack on the arm helps with swelling if needed.'}
   ]},
-  {day:10,date:'Oct 31',dateObj:'2026-10-31',city:'nara',label:'Nara 🦌 + Halloween Dotonbori 🎃',
+  {day:10,date:'Oct 31',dateObj:'2026-10-31',city:'nara',label:'Nara 🦌 + Dotonbori Halloween 🎃',
    stops:[
-    {name:'Tōdai-ji Temple',lat:34.6890,lng:135.8398,
-     note:'Morning visit. Giant bronze Buddha (¥600/~$4). Kids crawl through Buddha nostril pillar for good luck! Free-roaming deer everywhere.',
-     tip:'Buy deer crackers (¥200/~$1.30) at gate. Wear your Halloween costume — deer + costumes = best photos of the trip!'},
-    {name:'Nara Park — Halloween Morning',lat:34.6851,lng:135.8333,
-     note:'Free-roaming deer in the park. In costume on Halloween morning — your son will love this. Very short trip from Namba (~40 min by Kintetsu).',
-     tip:'Back in Namba by early afternoon — plenty of time to rest before the Halloween night crowds peak at 8pm.'},
+    {name:'Nara — Tōdai-ji Temple',lat:34.6890,lng:135.8398,
+     note:'40 min by Kintetsu from Namba. Giant bronze Buddha (¥600/~$4). Kids crawl through Buddha nostril pillar for good luck! Free-roaming deer everywhere.',
+     tip:'Buy deer crackers (¥200/~$1.30) at gate. Wear Halloween costume today — deer + costumes = best photos of the trip! Back in Osaka by 3pm.'},
+    {name:'Nara Park — Deer in Costume',lat:34.6851,lng:135.8333,
+     note:'Free roaming deer throughout the park. Perfect Halloween morning — costume photos with deer before the Dotonbori crowd tonight.',
+     tip:'The deer bow back when you bow to them. Your son will be obsessed. Head back to Osaka by early afternoon to rest before the night.'},
     {name:'Dotonbori Halloween Night 🎃',lat:34.6687,lng:135.5012,
-     note:'FREE. Thousands of cosplayers flood Dotonbori canal from 7pm. Anime characters, zombies, Osaka joke costumes. One of the best Halloween events in Asia.',
-     tip:'Keep costumes on from Nara! Peak crowds 8–11pm at Dotonbori bridge. Americamura (5-min walk) has simultaneous cosplay gathering.'}
+     note:'FREE. Thousands of cosplayers flood Dotonbori from 7pm. Anime characters, zombies, Osaka joke costumes. One of the best Halloween events in Asia.',
+     tip:'Keep costumes on from Nara all day! Peak crowds 8-11pm at Dotonbori bridge. Americamura (5-min walk) has simultaneous cosplay gathering.'}
   ]},
-  {day:11,date:'Nov 1',dateObj:'2026-11-01',city:'kyoto',label:'Kyoto — South',
+  {day:11,date:'Nov 1',dateObj:'2026-11-01',city:'kyoto',label:'Kyoto — Fushimi + Arashiyama',
    stops:[
-    {name:'Fushimi Inari Taisha',lat:34.9677,lng:135.7792,
-     note:'Free! Thousands of vermillion torii gates. Dawn visit for empty gates.',
-     tip:'Even a 45-min partial hike is worthwhile. Full summit is 2–3 hrs round trip.'},
+    {name:'Fushimi Inari Taisha — Dawn Visit',lat:34.9677,lng:135.7792,
+     note:'FREE. Go at 6-7am — thousands of vermillion torii gates with almost no one there. Even a 45-min partial hike past the first gates is magical.',
+     tip:'First light is extraordinary. Bring a torch/phone light if arriving before sunrise. Fox (kitsune) statues hidden throughout — your son can count them.'},
     {name:'Arashiyama Bamboo Forest',lat:35.0168,lng:135.6713,
-     note:'Before 8am = serene. Tenryu-ji garden next door (¥500 (~$3)). Riverside lunch nearby.',
-     tip:'Combine with Tenryu-ji, then riverside lunch before heading to Nishiki Market.'},
+     note:'Before 8am = serene and nearly empty. Tenryu-ji garden next door (¥500/~$3.30). Riverside lunch options after.',
+     tip:'Combine with Tenryu-ji garden, then riverside lunch before Nishiki Market.'},
+    {name:'Arashiyama Monkey Park',lat:35.0090,lng:135.6670,ticketKey:'arashiyama_monkey',
+     note:'¥550 (~$3.70) adults, ¥250 (~$1.70) kids. 20-min hike up — wild Japanese macaques roam free at the top. You feed them through a cage inside while they roam outside.',
+     tip:'Perfect after the bamboo forest. Your son will absolutely love this — unique reversal where humans are in the cage!'},
     {name:'Nishiki Market',lat:35.0050,lng:135.7647,
-     note:'400m covered market. Pickles, grilled squid, matcha sweets. Bring cash.',
-     tip:'Great for street food lunch between Arashiyama and Fushimi Inari.'}
+     note:'400m covered market. Pickles, grilled squid, matcha sweets. Bring cash — many vendors cash only.',
+     tip:'Great street food lunch. Try the grilled mochi and fresh yudofu tofu. Walk the whole length first before buying.'}
   ]},
-  {day:12,date:'Nov 2',dateObj:'2026-11-02',city:'awaji',label:'Nijigen no Mori — Awaji Island',
+  {day:12,date:'Nov 2',dateObj:'2026-11-02',city:'awaji',label:'Rest Morning + Nijigen no Mori',
    stops:[
+    {name:'Osaka Castle Area — Rest Morning',lat:34.6873,lng:135.5262,
+     note:'Deliberately light morning. Sleep in, breakfast at a local cafe, walk the castle moat. Osaka Castle Park is beautiful at this time of year with early autumn colors.',
+     tip:'Convenience store breakfast in the park is a perfectly good Japanese morning. Rest up — Nijigen is a full afternoon and the bus back can be tiring.'},
     {name:'Nijigen no Mori — Awaji Island',lat:34.5752,lng:135.0008,ticketKey:'nijigen',
-     note:'Bus from Namba (~1hr, ¥1,850/~$12 one-way). Dragon Quest Island, Naruto & Boruto Village, Godzilla Intercept Operation.',
-     tip:'Book West Japan JR Bus in advance for Nov 2. Same route as original Oct 31 booking — rebook if you had Oct 31 tickets.'}
+     note:'Bus from Namba OCAT terminal (~1hr, ¥1,850/~$12 one-way). Dragon Quest Island, Naruto & Boruto Village, Godzilla Intercept Operation.',
+     tip:'Book West Japan JR Bus return for early evening (6-7pm) so you are back in Osaka by 8pm. Buy attraction tickets online in advance.'}
   ]},
-  {day:13,date:'Nov 3',dateObj:'2026-11-03',city:'kobe',label:'Kobe + Kyoto Day 2',
+  {day:13,date:'Nov 3',dateObj:'2026-11-03',city:'kobe',label:'Himeji + Kobe + Samurai + Conrad Tokyo',
    stops:[
-    {name:'Kobe Harborland & Kitano-cho',lat:34.6791,lng:135.1861,
-     note:'Morning: 30 min from Osaka. Waterfront, historic district. Kobe beef lunch set.',
-     tip:'Lunch sets ¥3,000–5,000 (~$20–33). Moriumoto and Wakkoqu near Harborland are excellent.'},
-    {name:'Kinkaku-ji (Golden Pavilion)',lat:35.0394,lng:135.7292,
-     note:'Afternoon Kyoto. ¥500 (~$3) entry. Peak Nov foliage. Go at opening for the reflection shot.',
-     tip:'Philosopher\'s Path walk nearby — gorgeous in early November colour.'},
-    {name:'Gion District → Last Osaka Night',lat:35.0036,lng:135.7781,
-     note:'Geisha district at dusk. Return to Osaka for a final night — check out next morning Nov 4, Nozomi to HND by noon.',
-     tip:'Last night in Osaka! One final Dotonbori street food crawl and souvenir run!'}
+    {name:'Ship Luggage — Takkyubin to HND',lat:34.6873,lng:135.5277,
+     note:'First thing morning — arrange Yamato Transport pickup from Airbnb. Schedule delivery to HND Yamato counter for Nov 4. You ride train tonight with just a small overnight bag.',
+     tip:'Host can help arrange or go to nearest convenience store (FamilyMart/7-Eleven) to drop bags. Ship by 9am to guarantee Nov 4 HND delivery.'},
+    {name:'Himeji Castle — Best Samurai Castle',lat:34.8394,lng:134.6939,ticketKey:'himeji',
+     note:'Take early Shinkansen — Shin-Osaka to Himeji ~35 min (¥2,990/~$20 adult). Open 9am. UNESCO Heritage. Maze corridors, hidden rooms, trap doors.',
+     tip:'Arrive at opening (9am) — buy tickets online to skip queues. Allow 1.5-2 hrs. Your son can try to navigate the maze without getting lost.'},
+    {name:'Kobe — Harborland + Kobe Beef Lunch',lat:34.6791,lng:135.1861,
+     note:'30 min from Himeji by Shinkansen. Harborland waterfront, Kitano-cho foreign district. Kobe beef lunch set ¥3,000-5,000 (~$20-33).',
+     tip:'Moriumoto or Wakkoqu near Harborland. Book in advance or arrive at 11:30am before lunch rush. Kitano-cho historic district is a beautiful 20-min uphill walk.'},
+    {name:'Sword Master Training — Osaka/Kyoto',lat:34.6931,lng:135.5023,ticketKey:'sword_master',
+     note:'Private samurai sword training. Real katana technique, full armor photos, family private session. Book via Klook. ~¥8,000 (~$53) adult, ¥5,000 (~$33) child.',
+     tip:'Schedule mid-afternoon — fits between Kobe lunch and Kyoto evening. Wear comfortable clothes. Your son will remember this forever.'},
+    {name:'Samurai Ninja Museum Kyoto',lat:35.0116,lng:135.7681,ticketKey:'samurai_kyoto',
+     note:'Largest location. Edo period armor, English tours, shuriken throwing, ninja outfit experience. Book at mai-ko.com.',
+     tip:'Combo tickets with sword experience available. Shuriken throwing range is the highlight for kids.'},
+    {name:'Gion District — Final Kyoto Evening',lat:35.0036,lng:135.7781,
+     note:'Hanamikoji Street lanterns at dusk. Historic geisha district. Beautiful final Kyoto moment before heading to Tokyo.',
+     tip:'Walk slowly and soak it in — this is your last evening in Kansai. Head to Shin-Osaka by 8pm.'},
+    {name:'Shinkansen → Conrad Tokyo Ariake',lat:35.6298,lng:139.7938,
+     note:'Shin-Osaka ~8-9pm. Arrive Shinagawa ~10:30pm. Rinkai Line to Kokusai-tenjijo Station → 2-min walk to Conrad. Check in, Tokyo Bay views.',
+     tip:'Conrad Tokyo is on floors 28-37. Request a high floor Tokyo Bay view room. You deserve this — incredible trip sendoff.'}
   ]},
-  {day:14,date:'Nov 4',dateObj:'2026-11-04',city:'tokyo',label:'Fly Home',badge:'✈ Travel Day',travelDay:true,
+  {day:14,date:'Nov 4',dateObj:'2026-11-04',city:'tokyo',label:'Conrad → Fly Home ✈️',travelDay:true,
    stops:[
-    {name:'Haneda Airport (HND) — Depart 6:00pm (AA 26)',lat:35.5494,lng:139.7798,
-     note:'American Airlines AA 26. Departs 6:00pm. International Terminal 3. Arrive by 3:30pm. Economy class — dinner + snack served.',
-     tip:'HND duty-free has excellent Japanese whisky and Kit-Kat varieties — budget 30 min.'},
-    {name:'LAX — Connect to SLC',lat:33.9425,lng:-118.4081,
-     note:'Land LAX 10:55am. Customs + Immigration. Domestic flight LAX→SLC departs 5:05pm. ~6hr buffer — very comfortable.',
-     tip:'6hr buffer is comfortable. Get food at LAX — you deserve it after 14 days!'},
-    {name:'Salt Lake City (SLC) — Home! 🏠',lat:40.7884,lng:-111.9778,
-     note:'Land SLC 7:59pm. Welcome home!',
-     tip:'You\'ll be exhausted and happy. Japan will already feel like a dream.'}
+    {name:'Conrad Tokyo — Last Morning',lat:35.6615,lng:139.7590,
+     note:'Leisurely breakfast at the Conrad. Enjoy the Tokyo Bay views one last time. Checkout by 11am.',
+     tip:'Conrad breakfast is exceptional — worth the splurge on your final morning. Take photos of the Hamarikyu Gardens view.'},
+    {name:'Airport Limousine Bus → HND',lat:35.5494,lng:139.7798,
+     note:'Direct Airport Limousine Bus from Conrad/Shiodome area to HND Terminal 3. ~¥800 (~$5.30) per adult. ~40 min. Check timetable at hotel front desk.',
+     tip:'Hotel staff will help book the bus. Note: service can be infrequent — confirm departure time night before. Taxi is 13 min (~$40-55) as reliable backup.'},
+    {name:'Collect Takkyubin Bags at HND',lat:35.5494,lng:139.7798,
+     note:'Pick up shipped luggage at Yamato Transport counter in HND Terminal 3 arrivals area. Open early — confirm hours when shipping.',
+     tip:'Collect bags first, then check in for AA 26. Allows you to check luggage without carrying it from Conrad.'},
+    {name:'HND International Terminal 3 — AA 26',lat:35.5494,lng:139.7798,
+     note:'American Airlines AA 26. Departs 6:00pm. Arrive by 3:30pm for international check-in. Economy — dinner + snack included.',
+     tip:'HND duty-free is exceptional — Japanese whisky, Kit-Kat varieties, cosmetics. Budget 45 min for shopping before your gate. Safe travels!'},
+    {name:'LAX → SLC — Home! 🏠',lat:40.7884,lng:-111.9778,
+     note:'Land LAX 10:55am. Customs. Flight #4752 LAX→SLC departs 5:05pm, arrives 7:59pm. Welcome home!',
+     tip:'You will be exhausted and happy. Japan will already feel like a dream you never want to wake from.'}
   ]},
 ];
 
@@ -1362,12 +1518,14 @@ const BOOKABLE_ITEMS=[
    instructions:'Buy attraction tickets online. Book the highway bus (West Japan JR Bus) from Namba separately — ¥1,850 (~$12) one-way.'},
   {key:'hakone_ryokan', name:'Tōnosawa Ichinoyu Honkan', day:7, icon:'♨️', url:'https://www.ichinoyu.co.jp/english/', urgency:'med',
    instructions:'Book directly with the ryokan. Request room with private outdoor onsen (Type B or Matsuda). Oct 28 is a Wed — likely available but book soon.'},
+  {key:'smartex',      name:'SmartEX — Book Shinkansen Tickets', day:1, icon:'🚄', url:'https://smart-ex.jp/en/', urgency:'high',
+   instructions:'Book all Shinkansen tickets via SmartEX app BEFORE the trip. Register with an international credit card. Key bookings: (1) Tokyo→Odawara Oct 28 ¥4,270/~$28 adult, (2) Odawara→Shin-Osaka Oct 29 ¥13,870/~$92 adult, (3) Shin-Osaka→Tokyo Nov 4 ¥13,870/~$92 adult. Child is half price. Total family ~$585.'},
   {key:'hakone_ropeway', name:'Hakone Free Pass',     day:8,  icon:'🚡', url:'https://www.hakonenavi.jp/international/en/', urgency:'low',
    instructions:'Buy Hakone Free Pass at Odakyu stations or Shinjuku. Covers ropeway, boats, buses in Hakone area.'},
   {key:'showa_kinen', name:'Showa Kinen Park',         day:4,  icon:'🥏', url:'https://www.showakinen-koen.jp/use/ticket/', urgency:'low',
    instructions:'No advance booking needed. ¥450 (~$3) entry. Disc golf equipment rental may be available, bring your own discs to be safe.'},
-  {key:'jr_pass',     name:'Japan Rail Pass (14-day)', day:1,  icon:'🚅', url:'https://japanrailpass.net/en/purchase/', urgency:'high',
-   instructions:'Must buy OUTSIDE Japan before departure. 14-day pass covers all Shinkansen (Hikari/Kodama), local JR lines, Hakone JR. ~$500–600 adult, ~$250 child. Activate at Haneda on arrival.'},
+  {key:'jr_pass',     name:'JR Pass — Skip It, Buy Individual Tickets', day:1,  icon:'🚅', url:'https://www.jreast.co.jp/e/index.html', urgency:'low',
+   instructions:'MATH: Individual tickets for your routes = ~$585 total (family of 3). 14-day JR Pass = $1,267 (family of 3). You SAVE ~$682 buying individual tickets. Buy via SmartEX app or at station. Key routes: NRT→Shinjuku ¥3,070/~$20 adult, Tokyo→Odawara ¥4,270/~$28, Odawara→Shin-Osaka ¥13,870/~$92, Shin-Osaka→Tokyo ¥13,870/~$92.'},
   {key:'osaka_hotel', name:'MIMARU Osaka Shinsaibashi', day:8, icon:'🏨', url:'https://mimaru.com/en/', urgency:'med',
    instructions:'Book 6 nights (Oct 29–Nov 4) at MIMARU Osaka Shinsaibashi. Apartment-style, great for family of 3.'},
   {key:'hnd_hotel',   name:'HND Area Hotel (Nov 3)',   day:13, icon:'🏨', url:'https://www.tokyuhotels.co.jp/haneda-e/index.html', urgency:'high',
@@ -1397,6 +1555,20 @@ const BOOKABLE_ITEMS=[
    instructions:'Real-life Mario Kart driving experience through Tokyo streets in costume. Your son will absolutely flip out. Book well in advance — very popular. Routes go through Shibuya, Asakusa, or Odaiba areas. International license required for drivers. ¥7,000-9,000 (~$47-60).'},
   {key:'taiko_drum',   name:'Taiko Drum Experience', day:3, icon:'🥁', url:'https://www.tripadvisor.com/Attractions-g298184-Activities-c55-t242-Tokyo_Tokyo_Prefecture_Kanto.html', urgency:'low',
    instructions:'Traditional Japanese taiko drumming lesson — incredibly fun and physical for kids. Various studios offer 1-hr English sessions in Tokyo. Look for Taiko-Lab or similar studios near Shinjuku or Asakusa. Great rainy day activity. ~¥3,000-5,000 (~$20-33).'},
+
+  // ── NEW ADDITIONS ──
+  {key:'park_golf',    name:'Park Golf — Kiba Park Tokyo',    day:2,  icon:'⛳', url:'https://www.tokyo-park.net/park-golf/', urgency:'low',
+   instructions:'Uniquely Japanese park sport — wooden mallet, large ball, 9-18 holes in a park. ¥840 (~$5.60) for 9 holes, ¥1,580 (~$10.50) for 18 holes including rentals. No booking needed — show up at 9:30am. Kiba Park (Koto-ku, 30 min from Nakano) or Tatsumi no Mori Kaihin Park. Perfect family morning activity.'},
+  {key:'nijo_castle',  name:'Nijo Castle — Nightingale Floors', day:11, icon:'🏯', url:'https://nijo-jocastle.city.kyoto.lg.jp/en/', urgency:'low',
+   instructions:'¥1,000 (~$6.70) adults, ¥350 (~$2.30) kids. UNESCO World Heritage. Famous squeaky nightingale floors designed to detect ninja assassins. Hidden rooms, trap doors, stunning interior. 15 min from Kinkakuji. Buy tickets online to skip queues.'},
+  {key:'himeji',       name:'Himeji Castle',                  day:13, icon:'🏰', url:'https://www.himejicastle.jp/en/', urgency:'med',
+   instructions:'UNESCO World Heritage — best preserved feudal castle in Japan. 35 min from Shin-Osaka by Shinkansen (~¥2,990/~$20 adult each way). Open 9am. ¥1,000 (~$6.70) adults, ¥300 (~$2) kids. Take early Shinkansen (~8am) to arrive at opening. Allow 2 hrs, then head to Kobe.'},
+  {key:'tattoo', name:'Good Times Ink — Cherry Blossom Tattoo 🌸', day:9, icon:'🌸', url:'https://goodtimesink.jp/en/', urgency:'med',
+   instructions:'Book via goodtimesink.jp/en contact form — English supported. Located in Americamura, Nishi Shinsaibashi 2-12-14, Ocean Drive 4F, Osaka. Open noon-7pm, closed Tuesdays. Cherry blossom fine line tattoo — bring a reference image. Small piece (coin to business card size) runs ¥15,000-25,000 (~$100-167). Contact via LINE app. Book at least 2 weeks in advance.'},
+  {key:'sword_master', name:'Samurai Sword Master Training',   day:13, icon:'⚔️', url:'https://www.klook.com/en-US/activity/osaka-samurai-experience/', urgency:'med',
+   instructions:'Private samurai sword training with a master instructor. Real katana technique, one-on-one instruction, photos in armor. Book via Klook or Viator — search Osaka Samurai Experience. ~¥8,000 (~$53) adult, ¥5,000 (~$33) child. Family private session available. Book well in advance.'},
+  {key:'samurai_kyoto',name:'Samurai Ninja Museum Kyoto',     day:13, icon:'🥷', url:'https://mai-ko.com/tour/samurai-experience-kyoto-samurai-museum-tour-and-armor-trial/', urgency:'med',
+   instructions:'Largest Samurai Ninja Museum. Edo period armor, English tours daily, shuriken throwing, full ninja outfit. Book at mai-ko.com. Combo tickets with sword experience available. Central Kyoto near Shijo.'},
 ];
 
 const LINKS=[
@@ -1504,6 +1676,7 @@ function navigate(screen){
   if(screen==='edit') renderEdit();
   if(screen==='food') renderFood();
   if(screen==='apps') renderApps();
+  if(screen==='customs') renderCustoms();
   if(screen==='alerts') renderAlerts();
   if(screen==='links') renderLinks();
   updateAlertBadge();
@@ -1627,73 +1800,145 @@ function getBookedTicketsForDay(dayNum){
 
 /* ── FLIGHTS SCREEN ──────────────────────── */
 function renderFlights(){
+  /* renderFlights now renders the full Travel screen */
   const wrap=document.getElementById('screen-flights');
-  wrap.innerHTML=`
-    <div class="info-banner warn">
-      <strong>⚠️ Nov 3 Night — Book HND-Area Hotel</strong><br>
-      AA 26 departs HND 6:00pm Nov 4. Arrive airport by 3:30pm. Travel to Haneda area after Gion evening on Nov 3.
-    </div>
-  `;
+  wrap.innerHTML='';
 
-  // Group flights
-  const groups={};
-  FLIGHTS.forEach(f=>{
-    if(!groups[f.group]) groups[f.group]=[];
-    groups[f.group].push(f);
-  });
+  // ── SECTION: FLIGHTS ────────────────────────────────────────
+  const fsec=document.createElement('div');
+  fsec.innerHTML='<div class="sec">✈️ FLIGHTS</div>';
+  wrap.appendChild(fsec);
 
-  Object.entries(groups).forEach(([grp,flights])=>{
-    const lbl=document.createElement('div'); lbl.className='flight-group-label'; lbl.textContent=grp;
-    wrap.appendChild(lbl);
-    flights.forEach(f=>{
-      const card=document.createElement('div');
-      card.className='flight-card '+(f.confirmed?'confirmed':'needs-confirm');
-      const noteClass=f.note.includes('⚠')?'fc-note warn':'fc-note';
-      card.innerHTML=`
-        <div class="fc-top">
-          <span class="fc-label-badge ${f.type}">${f.label} · ${f.type==='intl'?'International':'Domestic'}</span>
-          <span class="fc-confirmed-badge">${f.confirmed?'✓ Confirmed':'Confirm details'}</span>
+  // Flight timing alert
+  const alert=document.createElement('div');
+  alert.className='banner warn';
+  alert.style.marginBottom='10px';
+  alert.innerHTML='<strong>⚠️ Note:</strong> Flying INTO NRT (Narita) but OUT OF HND (Haneda) — two different airports!';
+  wrap.appendChild(alert);
+
+  const TRAVEL_FLIGHTS=[
+    {group:'Outbound — SLC to Japan',flights:[
+      {label:'SLC → LAX',type:'dom',code:'Flight #3618',route:'Salt Lake City → Los Angeles',
+       date:'Wed Oct 21',time:'6:35pm → 7:30pm',dur:'1h 55m',stop:'Nonstop',
+       note:'Night before Japan departure. Stay overnight near LAX.',confirmed:true},
+      {label:'LAX → NRT (Narita)',type:'intl',code:'SQ 11 · Singapore Airlines',route:'Los Angeles → Tokyo Narita',
+       date:'Thu Oct 22',time:'2:20pm → 5:50pm (Oct 23)',dur:'11h 30m',stop:'Nonstop',
+       note:'Confirmation: DMWBR3. Arrive Narita Oct 23 at 5:50pm. Take NEX to Shinjuku ~80 min (~¥3,070/~$20, buy at airport).',confirmed:true},
+    ]},
+    {group:'Return — Japan to SLC',flights:[
+      {label:'HND → LAX',type:'intl',code:'AA 26 · American Airlines',route:'Tokyo Haneda → Los Angeles',
+       date:'Wed Nov 4',time:'6:00pm → 10:55am (same day)',dur:'~9 hrs',stop:'Nonstop',
+       note:'Economy. Dinner + Snack included. Arrive HND by 3:30pm. Depart Osaka ~11am on Nozomi (~¥13,870/~$92 adult, buy via SmartEX).',confirmed:true},
+      {label:'LAX → SLC',type:'dom',code:'Flight #4752',route:'Los Angeles → Salt Lake City',
+       date:'Wed Nov 4',time:'5:05pm → 7:59pm',dur:'1h 54m',stop:'Nonstop',
+       note:'~6hr buffer from Japan landing. Delta DL2311. Welcome home!',confirmed:true},
+    ]},
+  ];
+
+  TRAVEL_FLIGHTS.forEach(section=>{
+    const glbl=document.createElement('div');
+    glbl.style.cssText='font-size:.6rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--yellow);margin:10px 0 6px;text-shadow:0 0 8px rgba(255,215,0,.3);';
+    glbl.textContent=section.group;
+    wrap.appendChild(glbl);
+
+    section.flights.forEach(f=>{
+      const fc=document.createElement('div');
+      fc.style.cssText='background:#fff;border:2px solid '+(f.confirmed?'var(--caught-bd)':'var(--border)')+';border-radius:12px;padding:12px;margin-bottom:8px;box-shadow:0 2px 10px rgba(13,27,75,.08);';
+      fc.innerHTML=`
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+          <span style="font-size:.58rem;font-weight:800;padding:2px 8px;border-radius:10px;background:${f.type==='intl'?'var(--info-bg)':'#f3e5f5'};color:${f.type==='intl'?'var(--info)':'#6a1b9a'};">${f.label} · ${f.type==='intl'?'International':'Domestic'}</span>
+          <span style="font-size:.6rem;font-weight:800;background:var(--caught-bg);color:var(--caught);padding:2px 8px;border-radius:10px;border:1px solid var(--caught-bd);">${f.confirmed?'✓ Confirmed':'Pending'}</span>
         </div>
-        <div class="fc-route">${f.route}</div>
-        <div class="fc-date">${f.date}</div>
-        <div class="fc-meta">
-          <span>🕐 ${f.time}</span>
-          <span>⏱ ${f.duration}</span>
-          <span>${f.stop}</span>
-          ${f.code?`<span>${f.code}</span>`:''}
+        <div style="font-size:.98rem;font-weight:900;color:#1a1f3a;margin-bottom:2px;">${f.route}</div>
+        <div style="font-size:.7rem;font-weight:700;color:#1a1f3a;margin-bottom:3px;">${f.date} · ${f.code}</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;font-size:.63rem;color:var(--muted);margin-bottom:4px;">
+          <span>🕐 ${f.time}</span><span>⏱ ${f.dur}</span><span>${f.stop}</span>
         </div>
-        ${f.note?`<div class="${noteClass}">${f.note}</div>`:''}
+        <div style="font-size:.63rem;color:var(--muted);padding-top:5px;border-top:1px solid var(--border);line-height:1.4;">${f.note}</div>
       `;
-      wrap.appendChild(card);
+      wrap.appendChild(fc);
     });
   });
 
-  // Connection timing summary
-  const summary=document.createElement('div');
-  summary.className='info-banner green';
-  summary.style.marginTop='12px';
-  summary.innerHTML=`<strong>✅ Nov 4 Connection Summary</strong><br>
-    AA 26 departs HND 6:00pm → lands LAX 10:55am (same day)<br>
-    LAX→SLC departs 5:05pm → arrives SLC 7:59pm<br>
-    Buffer: <strong>~6 hours</strong> — comfortable for customs + domestic connect`;
-  wrap.appendChild(summary);
-}
+  // ── SECTION: TRAINS ─────────────────────────────────────────
+  const tsec=document.createElement('div');
+  tsec.innerHTML='<div class="sec" style="margin-top:16px;">🚅 TRAINS</div>';
+  wrap.appendChild(tsec);
 
-/* ── HOTELS SCREEN ───────────────────────── */
-function renderHotels(){
-  const wrap=document.getElementById('screen-hotels');
-  wrap.innerHTML='';
+  // JR Pass decision banner
+  const jrBanner=document.createElement('div');
+  jrBanner.className='banner green';
+  jrBanner.innerHTML='<strong>💡 JR Pass NOT recommended for your trip</strong><br>Individual tickets = ~$585 family · JR Pass = ~$1,267 family · <strong>Save ~$682 buying separately via SmartEX app</strong>';
+  wrap.appendChild(jrBanner);
 
-  const note=document.createElement('div');
-  note.className='info-banner green';
-  note.innerHTML='<strong>✈️ Flying home from HND (Haneda)</strong><br>Stay in Osaka through Nov 4 morning checkout. Take Nozomi ~11am to HND, arrive ~2pm. AA 26 departs 6:00pm — 4hr buffer.';
-  wrap.appendChild(note);
+  const TRAINS=[
+    {icon:'🚆',name:'Narita Express (NEX)',route:'NRT Airport → Shinjuku',date:'Oct 23 (arrival day)',
+     time:'~6:40pm departure',dur:'~80 min',covered:false,
+     price:'¥3,070 (~$20) adult · ¥1,540 (~$10) child',
+     note:'Buy at NRT airport ticket office on arrival. JR Pass does NOT cover this. Platform 1B at Narita Terminal 1.'},
+    {icon:'🚅',name:'Shinkansen Hikari/Kodama',route:'Tokyo → Odawara (for Hakone)',date:'Oct 28',
+     time:'Depart ~11am',dur:'~35 min',covered:false,
+     price:'¥4,270 (~$28) adult · ¥2,140 (~$14) child',
+     note:'Buy via SmartEX app. Take Kodama or Hikari — all stop at Odawara. Transfer to Hakone Tozan Line at Odawara.'},
+    {icon:'🚅',name:'Shinkansen Hikari',route:'Odawara → Shin-Osaka',date:'Oct 29',
+     time:'Depart ~11am after Hakone morning',dur:'~2h 20m',covered:false,
+     price:'¥13,870 (~$92) adult · ¥6,940 (~$46) child',
+     note:'Buy via SmartEX app. Hikari stops at Odawara — board here after morning ropeway visit. Arrive Shin-Osaka ~1:30pm.'},
+    {icon:'🚌',name:'Highway Bus — Awaji Island',route:'Namba → Nijigen no Mori (Awaji)',date:'Nov 2',
+     time:'Depart early (book first bus)',dur:'~60 min each way',covered:false,
+     price:'¥1,850 (~$12) each way per person',
+     note:'Book via West Japan JR Bus website. Departs Namba OCAT bus terminal. Book Nov 2 round trip in advance.'},
+    {icon:'🚅',name:'Nozomi Shinkansen',route:'Shin-Osaka → Shinagawa (for HND)',date:'Nov 4 (departure day)',
+     time:'Depart ~11:00am',dur:'~2h 20m',covered:false,
+     price:'¥13,870 (~$92) adult · ¥6,940 (~$46) child',
+     note:'Buy via SmartEX app. Nozomi is fastest — arrives Shinagawa ~1:20pm. Transfer to Keikyu Line to HND (~15 min). Arrive HND by 2pm for 6pm AA 26 departure.'},
+    {icon:'🚃',name:'Keikyu Line',route:'Shinagawa → Haneda Airport (HND)',date:'Nov 4',
+     time:'~1:30pm',dur:'~15 min',covered:false,
+     price:'¥330 (~$2.20) adult · ¥170 (~$1.10) child',
+     note:'Use Suica card. Take Keikyu Airport Line from Shinagawa to HND Terminal 3 (International). Super easy.'},
+  ];
 
-  const hotels=[
-    {city:'tokyo', name:'ARiA Stay Nakano',sub:'Nakano, Tokyo (5-min walk to Nakano Broadway)',nights:'Oct 22–28 · 6 nights',note:'Booked ✅. Apartment-style, 2 beds, full kitchen. 5-min walk to Nakano Broadway. 5-min train to Shinjuku. Washing machine in room — essential for carry-on travel.',color:'#2c5f8a'},
-    {city:'hakone',name:'Tōnosawa Ichinoyu Honkan',sub:'Hakone, Kanagawa',nights:'Oct 28–29 · 1 night',note:'Founded 1630. Private family onsen, kaiseki dinner + breakfast included. Request room with outdoor river-view bath.',color:'#5b8c5a'},
-    {city:'osaka', name:'MIMARU Osaka Shinsaibashi',sub:'Namba / Shinsaibashi, Osaka',nights:'Oct 29–Nov 4 · 6 nights',note:'Apartment hotel, 2-min walk to metro, 5-min to Dotonbori. Your Kansai base for day trips.',color:'#8b3a62'},
-    {city:'tokyo', name:'Hotel Near Haneda Airport',sub:'Haneda / Ota-ku, Tokyo',nights:'Nov 3 · 1 night',note:'NOT NEEDED — staying extra night in Osaka. Take Nozomi ~11am Nov 4, arrive HND ~2pm. 4hr buffer before AA 26 6pm departure.',color:'#8b3a62'},
+  TRAINS.forEach(t=>{
+    const tc=document.createElement('div');
+    tc.style.cssText='background:#fff;border:2px solid var(--border);border-radius:12px;padding:11px 12px;margin-bottom:8px;box-shadow:0 2px 10px rgba(13,27,75,.08);';
+    tc.innerHTML=`
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+        <span style="font-size:1.2rem;">${t.icon}</span>
+        <div style="flex:1;">
+          <div style="font-size:.8rem;font-weight:800;color:#1a1f3a;">${t.name}</div>
+          <div style="font-size:.65rem;color:var(--muted);">${t.route}</div>
+        </div>
+        <span style="font-size:.6rem;font-weight:800;background:rgba(255,215,0,.12);color:#8b6914;border:1px solid rgba(255,215,0,.4);padding:2px 7px;border-radius:10px;white-space:nowrap;">${t.date}</span>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:.63rem;color:var(--muted);margin-bottom:5px;">
+        <span>🕐 ${t.time}</span><span>⏱ ${t.dur}</span>
+      </div>
+      <div style="font-size:.72rem;font-weight:700;color:var(--caught);margin-bottom:4px;">${t.price}</div>
+      <div style="font-size:.63rem;color:#555;line-height:1.4;padding-top:5px;border-top:1px solid var(--border);">${t.note}</div>
+    `;
+    wrap.appendChild(tc);
+  });
+
+  // ── SECTION: ACCOMMODATIONS ──────────────────────────────────
+  const asec=document.createElement('div');
+  asec.innerHTML='<div class="sec" style="margin-top:16px;">🏨 ACCOMMODATIONS</div>';
+  wrap.appendChild(asec);
+
+  const STAYS=[
+    {nights:'Oct 21 · 1 night',name:'LAX Area Hotel',sub:'Los Angeles (near airport)',
+     color:'#555',status:'Book Soon',statusColor:'var(--gold)',
+     note:'Pre-flight night before SQ 11 departs Oct 22 at 2:20pm. Any LAX-area hotel — Marriott LAX or similar. ~$120-180.',
+     confirmed:false},
+    {nights:'Oct 22–28 · 6 nights',name:'ARiA Stay Nakano',sub:'Nakano, Tokyo — 5 min to Shinjuku',
+     color:'var(--tokyo)',status:'✓ Booked',statusColor:'var(--caught)',
+     note:'Confirmed booking. Apartment-style, 2 beds, full kitchen, washer. 5-min walk to Nakano Broadway. Check-in Oct 23 evening after NRT arrival.',
+     confirmed:true},
+    {nights:'Oct 28–29 · 1 night',name:'Tōnosawa Ichinoyu Honkan',sub:'Hakone, Kanagawa',
+     color:'var(--hakone)',status:'✓ Booked',statusColor:'var(--caught)',
+     note:'Confirmation: T57CCACF6F6A8. Founded 1630. Private family onsen, kaiseki dinner + breakfast. Check-in 3pm Oct 28.',
+     confirmed:true},
+    {nights:'Nov 3 · 1 night', name:'Conrad Tokyo — Shiodome', sub:'Floors 28-37 · Tokyo Bay + Hamarikyu views',
+     color:'#1a1f3a', note:'Luxury final night. Airport Limousine Bus from hotel door to HND (~40 min, ¥800/~$5.30). Bags already shipped via Takkyubin. Book twin room, high floor, bay view at hilton.com.'},
   ];
 
   hotels.forEach(h=>{
@@ -1896,6 +2141,37 @@ function renderLinks(){
       wrap.appendChild(el);
     });
   });
+
+  // ── TRAIN PASS RECOMMENDATIONS ─────────────────────────
+  const passSec2=document.createElement('div');
+  passSec2.innerHTML='<div class="sec" style="margin-top:16px;">🎫 TRAIN PASS RECOMMENDATIONS</div>';
+  wrap.appendChild(passSec2);
+
+  const passData=[
+    {name:'JR Kansai Wide Area Pass ⭐',price:'¥12,000 (~$80) adult · ¥6,000 (~$40) child · Family ~$200',urgent:true,
+     covers:'All JR trains Kansai: Shinkansen Osaka→Himeji, JR Kyoto/Nara/Kobe trains, Osaka Loop Line',
+     skip:'Non-JR Osaka subways, Kintetsu Line',
+     tip:'Best Kansai pass. Himeji Shinkansen alone (¥2,990) nearly breaks even. Activate Oct 29 at Shin-Osaka.',
+     buy:'Buy online before Japan: jrpass.com or Klook. Or at Shin-Osaka Station on arrival.'},
+    {name:'Osaka Amazing Pass',price:'1-day ¥2,800 (~$19) · 2-day ¥3,600 (~$24) per adult',urgent:false,
+     covers:'Osaka Metro + buses + FREE entry to 40+ attractions incl. Osaka Castle interior + Kaiyukan Aquarium',
+     skip:'JR lines, trips outside Osaka city',
+     tip:'Perfect for Oct 29-30 Osaka days. Castle + Aquarium alone cover the cost. Buy at any Osaka Metro station.',
+     buy:'Osaka Metro station ticket offices or tourist info centers in Osaka.'},
+    {name:'Suica IC Card (Google Wallet)',price:'Load ¥5,000-10,000 (~$33-67) — pay as you go',urgent:true,
+     covers:'All trains not covered by passes, convenience stores, vending machines, restaurants',
+     skip:'Nothing — works everywhere',
+     tip:'Essential for the whole trip. Set up on Google Wallet BEFORE leaving Utah. Load at NRT airport on arrival.',
+     buy:'Google Wallet app — add Suica card before departure from Salt Lake City.'},
+  ];
+
+  passData.forEach(p=>{
+    const pc=document.createElement('div');
+    pc.style.cssText='background:#fff;border:2px solid '+(p.urgent?'rgba(255,215,0,.35)':'var(--border)')+';border-radius:12px;padding:12px;margin-bottom:10px;';
+    pc.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;"><span style="font-size:.8rem;font-weight:900;color:#1a1f3a;">'+p.name+'</span>'+(p.urgent?'<span style="font-size:.58rem;font-weight:900;background:#cc0000;color:#fff;padding:2px 8px;border-radius:10px;">BUY NOW</span>':'')+'</div><div style="font-size:.72rem;font-weight:800;color:#1fa86b;margin-bottom:6px;">'+p.price+'</div><div style="font-size:.64rem;background:#e6f9f0;border-radius:5px;padding:5px 8px;margin-bottom:4px;line-height:1.4;color:#2d5a45;">✅ '+p.covers+'</div><div style="font-size:.64rem;background:rgba(204,0,0,.06);border-radius:5px;padding:5px 8px;margin-bottom:4px;line-height:1.4;color:#8b0000;">❌ '+p.skip+'</div><div style="font-size:.66rem;font-weight:600;color:#1a1f3a;margin-bottom:4px;">💡 '+p.tip+'</div><div style="font-size:.62rem;color:#6b7fc4;padding-top:5px;border-top:1px solid #c8d4f8;">📍 '+p.buy+'</div>';
+    wrap.appendChild(pc);
+  });
+
 }
 
 /* ── ALERTS SCREEN ───────────────────────── */
@@ -2939,6 +3215,183 @@ function renderApps() {
 }
 
 </script>
+<script>
+
+/* ════════════════════════════════════
+   CUSTOMS DUTY CALCULATOR
+════════════════════════════════════ */
+function renderCustoms(){
+  const wrap=document.getElementById('screen-customs');
+  wrap.innerHTML='';
+
+  // Intro banner
+  const intro=document.createElement('div');
+  intro.className='banner blue';
+  intro.innerHTML='<strong>🛃 U.S. Customs Duty Calculator</strong><br>Know your exemption before you shop. Family of 3 = $2,400 duty-free combined.';
+  wrap.appendChild(intro);
+
+  // Bracket info
+  const brackets=document.createElement('div');
+  brackets.className='customs-bracket-info';
+  brackets.innerHTML=`
+    <div style="font-size:.65rem;font-weight:900;color:var(--yellow);margin-bottom:6px;letter-spacing:.08em;text-transform:uppercase;">Your Duty Brackets (Family of 3)</div>
+    <div class="customs-bracket-row"><span>$0 – $2,400</span><span>0% — Duty Free ✅</span></div>
+    <div class="customs-bracket-row"><span>$2,400 – $5,400</span><span>3% Flat Rate</span></div>
+    <div class="customs-bracket-row"><span>Above $5,400</span><span>Item-specific rates (see below)</span></div>
+  `;
+  wrap.appendChild(brackets);
+
+  // Calculator card
+  const card=document.createElement('div');
+  card.className='customs-card';
+  card.innerHTML=`
+    <div class="customs-title">🛃 Customs Duty Calculator</div>
+    <div class="customs-sub">Level up your luggage — know your exemption before you shop</div>
+
+    <label class="customs-label">Travelers (living together, returning together)</label>
+    <input class="customs-input" id="ccTravelers" type="number" min="1" value="3">
+
+    <label class="customs-label">Total value of goods bringing back (USD $)</label>
+    <input class="customs-input" id="ccTotal" type="number" min="0" step="1" placeholder="e.g. 3500">
+
+    <button class="customs-btn" id="ccCalcBtn">⚡ CALCULATE DUTY</button>
+
+    <div id="ccResults" style="display:none;">
+      <div class="customs-result-row exempt">
+        <span class="customs-result-label">Duty-free exemption used</span>
+        <span class="customs-result-val" id="ccExemption"></span>
+      </div>
+      <div class="customs-result-row flat">
+        <span class="customs-result-label">Amount taxed at 3% flat</span>
+        <span class="customs-result-val" id="ccFlatAmt"></span>
+      </div>
+      <div class="customs-result-row flat">
+        <span class="customs-result-label">Flat-rate duty (3%)</span>
+        <span class="customs-result-val" id="ccFlatDuty"></span>
+      </div>
+      <div class="customs-result-row excess" id="ccExcessRow" style="display:none;">
+        <span class="customs-result-label">Above flat-rate bracket ⚠️</span>
+        <span class="customs-result-val" id="ccExcessAmt"></span>
+      </div>
+
+      <div class="customs-cat-panel" id="ccCategoryBreakdown">
+        <div class="customs-cat-title">Excess Amount — By Category</div>
+        <div class="customs-cat-sub">Enter what you bought in each category. Unallocated remainder taxed at the Other rate.</div>
+        <div id="ccCatRows"></div>
+        <div style="display:flex;justify-content:space-between;font-size:.63rem;color:#cfd6ee;margin-top:8px;padding-top:6px;border-top:1px solid rgba(255,255,255,.1);">
+          <span>Allocated</span><span id="ccCatAllocated">$0.00</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:.63rem;color:#cfd6ee;">
+          <span>Unallocated (Other rate)</span><span id="ccCatUnallocated">$0.00</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--yellow);font-weight:800;margin-top:5px;">
+          <span>Estimated excess-bracket duty</span><span id="ccCatDuty">$0.00</span>
+        </div>
+      </div>
+
+      <button class="customs-toggle-btn" id="ccToggleCategoryBtn" style="display:none;">Break down excess by category ▾</button>
+
+      <div class="customs-total">Estimated Duty Owed: <span id="ccTotalDuty"></span></div>
+
+      <div style="font-size:.6rem;color:rgba(255,255,255,.35);text-align:center;margin-top:8px;line-height:1.4;">
+        Estimates only — actual rates depend on item HS codes. CBP officers assign highest-duty items first against your exemption.
+      </div>
+    </div>
+  `;
+  wrap.appendChild(card);
+
+  // ── CALCULATOR LOGIC ──────────────────────────────────────
+  const PER_PERSON_EXEMPTION=800;
+  const PER_PERSON_FLAT=1000;
+  const FLAT_RATE=0.03;
+  const CATS=[
+    {id:'clothing',  label:'Clothing / apparel',         rate:16},
+    {id:'footwear',  label:'Footwear',                   rate:12},
+    {id:'leather',   label:'Leather goods / bags',       rate:10},
+    {id:'electronics',label:'Electronics',               rate:4},
+    {id:'toys',      label:'Toys / games / collectibles',rate:0},
+    {id:'cosmetics', label:'Cosmetics / beauty',         rate:0},
+    {id:'other',     label:'Other / misc',               rate:5},
+  ];
+  const fmt=n=>'$'+n.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+  let excessAmt=0, lastFlatDuty=0;
+
+  // Build category rows
+  const catRowsEl=document.getElementById('ccCatRows');
+  CATS.forEach(cat=>{
+    const row=document.createElement('div');
+    row.className='customs-cat-row';
+    row.innerHTML=`<span class="customs-cat-label">${cat.label}</span>
+      <input type="number" min="0" step="1" placeholder="$" data-cat="${cat.id}" class="ccCatAmount customs-cat-input">
+      <input type="number" min="0" step="0.1" value="${cat.rate}" data-cat="${cat.id}" class="ccCatRate customs-cat-rate">
+      <span class="customs-cat-pct">%</span>`;
+    catRowsEl.appendChild(row);
+  });
+
+  function recalcCats(){
+    const amts=document.querySelectorAll('.ccCatAmount');
+    const rates=document.querySelectorAll('.ccCatRate');
+    let allocated=0,namedDuty=0;
+    amts.forEach((inp,i)=>{
+      const a=Math.max(0,parseFloat(inp.value)||0);
+      const r=Math.max(0,parseFloat(rates[i].value)||0)/100;
+      allocated+=a; namedDuty+=a*r;
+    });
+    allocated=Math.min(allocated,excessAmt);
+    const unalloc=Math.max(0,excessAmt-allocated);
+    const otherRate=Math.max(0,parseFloat(document.querySelector('.ccCatRate[data-cat="other"]').value)||0)/100;
+    const excessDuty=namedDuty+(unalloc*otherRate);
+    document.getElementById('ccCatAllocated').textContent=fmt(allocated);
+    document.getElementById('ccCatUnallocated').textContent=fmt(unalloc);
+    document.getElementById('ccCatDuty').textContent=fmt(excessDuty);
+    return excessDuty;
+  }
+
+  catRowsEl.addEventListener('input',()=>{
+    const ed=recalcCats();
+    document.getElementById('ccTotalDuty').textContent=fmt(lastFlatDuty+ed);
+  });
+
+  document.getElementById('ccToggleCategoryBtn').addEventListener('click',function(){
+    const panel=document.getElementById('ccCategoryBreakdown');
+    const showing=panel.style.display==='block';
+    panel.style.display=showing?'none':'block';
+    this.textContent=showing?'Break down excess by category ▾':'Hide category breakdown ▴';
+    if(!showing){ const ed=recalcCats(); document.getElementById('ccTotalDuty').textContent=fmt(lastFlatDuty+ed); }
+    else{ document.getElementById('ccTotalDuty').textContent=fmt(lastFlatDuty); }
+  });
+
+  document.getElementById('ccCalcBtn').addEventListener('click',function(){
+    const travelers=Math.max(1,parseInt(document.getElementById('ccTravelers').value)||1);
+    const total=Math.max(0,parseFloat(document.getElementById('ccTotal').value)||0);
+    const exemption=travelers*PER_PERSON_EXEMPTION;
+    const flatSize=travelers*PER_PERSON_FLAT;
+    const afterExempt=Math.max(0,total-exemption);
+    const flatAmt=Math.min(afterExempt,flatSize);
+    excessAmt=Math.max(0,afterExempt-flatSize);
+    lastFlatDuty=flatAmt*FLAT_RATE;
+
+    document.getElementById('ccExemption').textContent=fmt(Math.min(total,exemption));
+    document.getElementById('ccFlatAmt').textContent=fmt(flatAmt);
+    document.getElementById('ccFlatDuty').textContent=fmt(lastFlatDuty);
+    document.getElementById('ccExcessAmt').textContent=fmt(excessAmt);
+    document.getElementById('ccExcessRow').style.display=excessAmt>0?'flex':'none';
+
+    const toggleBtn=document.getElementById('ccToggleCategoryBtn');
+    if(excessAmt>0){ toggleBtn.style.display='block'; }
+    else{
+      toggleBtn.style.display='none';
+      document.getElementById('ccCategoryBreakdown').style.display='none';
+      toggleBtn.textContent='Break down excess by category ▾';
+    }
+    document.querySelectorAll('.ccCatAmount').forEach(el=>el.value='');
+    document.getElementById('ccTotalDuty').textContent=fmt(lastFlatDuty);
+    document.getElementById('ccResults').style.display='block';
+    showToast('⚡ Duty calculated!');
+  });
+}
+
+</script>
 </body>
 </html>
 <!-- INJECTED STYLES -->
@@ -3327,6 +3780,122 @@ function renderApps() {
 .kid-emoji { font-size: 1.6rem; }
 .kid-jp { font-size: .78rem; font-weight: 700; color: var(--red); font-family: 'Noto Serif JP', serif; }
 .kid-en { font-size: .58rem; color: var(--muted); margin-top: 1px; }
+
+/* ════════════════════════════════════
+   CUSTOMS DUTY CALCULATOR
+════════════════════════════════════ */
+.customs-card {
+  background: linear-gradient(135deg, #0b1a3a, #132552);
+  border: 2px solid var(--yellow);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 12px;
+  box-shadow: 0 0 20px rgba(255,215,0,.15);
+}
+.customs-title {
+  font-size: 1rem; font-weight: 900;
+  color: var(--yellow); text-align: center;
+  margin-bottom: 4px;
+  text-shadow: 0 0 10px rgba(255,215,0,.4);
+}
+.customs-sub {
+  font-size: .67rem; color: rgba(255,255,255,.5);
+  text-align: center; margin-bottom: 16px;
+}
+.customs-label {
+  font-size: .65rem; font-weight: 700;
+  color: #cfd6ee; margin-bottom: 5px; display: block;
+}
+.customs-input {
+  width: 100%; padding: 10px 12px;
+  border-radius: 8px; border: 1.5px solid var(--yellow);
+  background: #0d1f4a; color: #fff;
+  font-size: .82rem; margin-bottom: 12px;
+  box-sizing: border-box;
+}
+.customs-input:focus { outline: none; border-color: #fff; }
+.customs-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--red), #990000);
+  color: #fff; font-size: .8rem; font-weight: 900;
+  padding: 12px; border-radius: 25px;
+  border: 1.5px solid rgba(255,215,0,.3);
+  letter-spacing: .06em; text-transform: uppercase;
+  box-shadow: 0 4px 16px rgba(204,0,0,.4);
+  margin-bottom: 14px;
+}
+.customs-result-row {
+  display: flex; justify-content: space-between;
+  align-items: center; padding: 9px 12px;
+  border-radius: 8px; margin-bottom: 6px;
+  background: rgba(255,255,255,.05);
+}
+.customs-result-row.exempt { background: rgba(31,168,107,.12); }
+.customs-result-row.flat   { background: rgba(255,215,0,.08); }
+.customs-result-row.excess { background: rgba(204,0,0,.12); }
+.customs-result-label { font-size: .67rem; color: #cfd6ee; }
+.customs-result-val   { font-size: .75rem; font-weight: 800; color: #fff; }
+.customs-total {
+  background: linear-gradient(90deg, var(--yellow), #ffe566);
+  color: var(--ink); border-radius: 10px;
+  padding: 14px; text-align: center;
+  font-weight: 900; font-size: 1rem;
+  margin-top: 10px;
+  box-shadow: 0 0 16px rgba(255,215,0,.3);
+}
+.customs-cat-panel {
+  display: none;
+  background: rgba(13,31,74,.8);
+  border: 1px solid rgba(255,215,0,.3);
+  border-radius: 10px; padding: 12px;
+  margin-bottom: 10px;
+}
+.customs-cat-title {
+  font-size: .7rem; font-weight: 900;
+  color: var(--yellow); margin-bottom: 4px;
+}
+.customs-cat-sub {
+  font-size: .6rem; color: rgba(255,255,255,.4);
+  margin-bottom: 10px; line-height: 1.4;
+}
+.customs-cat-row {
+  display: flex; align-items: center;
+  gap: 6px; margin-bottom: 7px;
+}
+.customs-cat-label {
+  flex: 1; font-size: .63rem; color: #cfd6ee;
+}
+.customs-cat-input {
+  width: 72px; padding: 5px 7px;
+  border-radius: 6px; border: 1px solid rgba(255,215,0,.4);
+  background: #0d1f4a; color: #fff; font-size: .68rem;
+}
+.customs-cat-rate {
+  width: 52px; padding: 5px 7px;
+  border-radius: 6px; border: 1px solid rgba(255,215,0,.4);
+  background: #0d1f4a; color: var(--yellow); font-size: .68rem;
+}
+.customs-cat-pct { font-size: .6rem; color: rgba(255,255,255,.4); }
+.customs-toggle-btn {
+  width: 100%; padding: 9px;
+  border: 1px solid var(--yellow); border-radius: 8px;
+  background: transparent; color: var(--yellow);
+  font-size: .7rem; font-weight: 700; margin-bottom: 10px;
+}
+.customs-bracket-info {
+  background: rgba(255,255,255,.05);
+  border-radius: 10px; padding: 12px;
+  margin-bottom: 12px;
+}
+.customs-bracket-row {
+  display: flex; justify-content: space-between;
+  font-size: .65rem; padding: 4px 0;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  color: #cfd6ee;
+}
+.customs-bracket-row:last-child { border-bottom: none; }
+.customs-bracket-row span:last-child { font-weight: 800; color: var(--yellow); }
+
 </style>
 <script>
 /* ════════════════════════════════════
@@ -3387,6 +3956,17 @@ const QUESTS = [
   {id:'q_pokemon_go', cat:'🗾 Japan Moments', icon:'📱', name:'Catch Japan-Exclusive Pokémon',day:'Any',xp:150,photo:true},
   {id:'q_fuji_photo', cat:'🗾 Japan Moments', icon:'📸', name:'The Perfect Mt. Fuji Photo',day:'Day 7', xp:200, photo:true},
   {id:'q_temple_stamp',cat:'🗾 Japan Moments',icon:'📖', name:'Get a Goshuin Temple Stamp',day:'Any',  xp:100, photo:true},
+  // New additions
+  {id:'q_park_golf',   cat:'🎯 Activities', icon:'⛳', name:'Play Park Golf in Tokyo',      day:'Day 2',  xp:175, photo:true},
+  {id:'q_nijo',        cat:'🏯 Temples & Shrines', icon:'🏯', name:'Nijo Castle Nightingale Floors', day:'Day 11', xp:150, photo:true},
+  {id:'q_himeji',      cat:'🏯 Temples & Shrines', icon:'🏰', name:'Himeji Castle — Best in Japan', day:'Day 13', xp:250, photo:true},
+  {id:'q_sword_master',cat:'🎯 Activities', icon:'⚔️', name:'Train with a Sword Master',    day:'Day 13', xp:300, photo:true},
+  {id:'q_samurai_kyoto',cat:'🎯 Activities', icon:'🥷', name:'Samurai Ninja Museum Kyoto',   day:'Day 13', xp:200, photo:true},
+  {id:'q_nightingale', cat:'🗾 Japan Moments', icon:'🦅', name:'Walk the Nightingale Floors', day:'Day 11', xp:125, photo:false},
+  {id:'q_shuriken',    cat:'🎯 Activities', icon:'🌟', name:'Throw a Shuriken (Ninja Star)', day:'Day 13', xp:150, photo:true},
+  {id:'q_tattoo',      cat:'🗾 Japan Moments', icon:'🌸', name:'Get Cherry Blossom Tattoo in Japan', day:'Day 9',  xp:500, photo:true},
+  {id:'q_conrad',      cat:'🗾 Japan Moments', icon:'🏙️', name:'Stay at Conrad Tokyo — Bay View', day:'Day 13', xp:200, photo:true},
+  {id:'q_himeji_maze', cat:'🏯 Temples & Shrines', icon:'🗝️', name:'Navigate Himeji Castle Maze', day:'Day 13', xp:175, photo:false},
 ];
 
 const RANKS = [
