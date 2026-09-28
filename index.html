@@ -2083,6 +2083,30 @@ function getBookedTicketsForDay(dayNum){
   return result;
 }
 
+/* ── HOTELS (shared by Travel + Edit screens) ── */
+const HOTELS=[
+    {nights:'Oct 21 · 1 night',name:'LAX Area Hotel',sub:'Los Angeles (near airport)',
+     color:'#555',status:'Book Soon',statusColor:'var(--gold)',
+     note:'Pre-flight night before SQ 11 departs Oct 22 at 2:20pm. Any LAX-area hotel — Marriott LAX or similar. ~$120-180.',
+     confirmed:false},
+    {nights:'Oct 22–28 · 6 nights',name:'Yotsuya Apartment (Shinjuku-Gyoenmae)',sub:'Nakano, Tokyo — 5 min to Shinjuku',
+     color:'var(--tokyo)',status:'✓ Booked',statusColor:'var(--caught)',
+     note:'Confirmed booking. Apartment-style, 2 beds, full kitchen, washer. 5-min walk to Nakano Broadway. Check-in Oct 23 evening after NRT arrival.',
+     confirmed:true},
+    {nights:'Oct 28–29 · 1 night',name:'Tōnosawa Ichinoyu Honkan',sub:'Hakone, Kanagawa',
+     color:'var(--hakone)',status:'✓ Booked',statusColor:'var(--caught)',
+     note:'Confirmation: T57CCACF6F6A8. Founded 1630. Private family onsen, kaiseki dinner + breakfast. Check-in 3pm Oct 28.',
+     confirmed:true},
+    {nights:'Oct 29–Nov 3 · 5 nights',name:'Gu’s Tani4 Airbnb',sub:'Tanimachi, Chuo-ku, Osaka — walk to Osaka Castle',
+     color:'var(--osaka)',status:'✓ Booked',statusColor:'var(--caught)',
+     note:'Confirmed via Airbnb. 503 Tanimachi Park Villa, 1-2-12 Izumicho, Chuo-ku. Phone +81 80-6302-5369. 3-min walk to Tanimachi-Yonchome Station.',
+     confirmed:true},
+    {nights:'Nov 3 · 1 night', name:'Conrad Tokyo — Shiodome', sub:'Floors 28-37 · Tokyo Bay + Hamarikyu views',
+     color:'#1a1f3a', note:'Luxury final night. Airport Limousine Bus from hotel door to HND (~40 min, ¥800/~$5.30). Bags already shipped via Takkyubin. Book twin room, high floor, bay view at hilton.com.'},
+  ];
+
+function renderHotels(){ try{ renderFlights(); }catch(e){ console.error(e); } }
+
 /* ── FLIGHTS SCREEN ──────────────────────── */
 function renderFlights(){
   /* renderFlights now renders the full Travel screen */
@@ -2213,24 +2237,7 @@ function renderFlights(){
   asec.innerHTML='<div class="sec" style="margin-top:16px;">🏨 ACCOMMODATIONS</div>';
   wrap.appendChild(asec);
 
-  const STAYS=[
-    {nights:'Oct 21 · 1 night',name:'LAX Area Hotel',sub:'Los Angeles (near airport)',
-     color:'#555',status:'Book Soon',statusColor:'var(--gold)',
-     note:'Pre-flight night before SQ 11 departs Oct 22 at 2:20pm. Any LAX-area hotel — Marriott LAX or similar. ~$120-180.',
-     confirmed:false},
-    {nights:'Oct 22–28 · 6 nights',name:'Yotsuya Apartment (Shinjuku-Gyoenmae)',sub:'Nakano, Tokyo — 5 min to Shinjuku',
-     color:'var(--tokyo)',status:'✓ Booked',statusColor:'var(--caught)',
-     note:'Confirmed booking. Apartment-style, 2 beds, full kitchen, washer. 5-min walk to Nakano Broadway. Check-in Oct 23 evening after NRT arrival.',
-     confirmed:true},
-    {nights:'Oct 28–29 · 1 night',name:'Tōnosawa Ichinoyu Honkan',sub:'Hakone, Kanagawa',
-     color:'var(--hakone)',status:'✓ Booked',statusColor:'var(--caught)',
-     note:'Confirmation: T57CCACF6F6A8. Founded 1630. Private family onsen, kaiseki dinner + breakfast. Check-in 3pm Oct 28.',
-     confirmed:true},
-    {nights:'Nov 3 · 1 night', name:'Conrad Tokyo — Shiodome', sub:'Floors 28-37 · Tokyo Bay + Hamarikyu views',
-     color:'#1a1f3a', note:'Luxury final night. Airport Limousine Bus from hotel door to HND (~40 min, ¥800/~$5.30). Bags already shipped via Takkyubin. Book twin room, high floor, bay view at hilton.com.'},
-  ];
-
-  hotels.forEach(h=>{
+  HOTELS.map((h,i)=>getEffectiveHotel(h,i)).forEach(h=>{
     const card=document.createElement('div'); card.className='hotel-card';
     card.innerHTML=`
       <span class="hotel-nights-badge" style="background:${h.color}">${h.nights}</span>
@@ -3520,19 +3527,9 @@ function renderCustoms(){
   intro.innerHTML='<strong>🛃 U.S. Customs Duty Calculator</strong><br>Know your exemption before you shop. Family of 3 = $2,400 duty-free combined.';
   wrap.appendChild(intro);
 
-  // Live shared ledger link
-  const ledgerLink=document.createElement('a');
-  ledgerLink.href='https://claude.ai/artifact/6RSkmfzog6iUmTr6bH542H';
-  ledgerLink.target='_blank';
-  ledgerLink.rel='noopener';
-  ledgerLink.style.cssText='display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;margin-bottom:14px;border-radius:12px;background:linear-gradient(135deg,#8a95a3,#5c6675);border:1.5px solid #c7d3e0;color:#fff;font-weight:900;font-size:.78rem;letter-spacing:.03em;text-transform:uppercase;box-shadow:0 2px 12px rgba(199,211,224,.35);';
-  ledgerLink.innerHTML='🧾 Open Shared Shopping Ledger&nbsp;↗';
-  wrap.appendChild(ledgerLink);
-
-  const ledgerNote=document.createElement('div');
-  ledgerNote.style.cssText='font-size:.62rem;color:rgba(255,255,255,.5);text-align:center;margin:-8px 0 14px;line-height:1.4;';
-  ledgerNote.textContent='Live-synced with your wife — items added there feed the running duty estimate.';
-  wrap.appendChild(ledgerNote);
+  // In-app shared shopping ledger
+  if(window.FamilySync) wrap.appendChild(FamilySync.buildCard());
+  if(window.Ledger) wrap.appendChild(Ledger.build());
 
   // Bracket info
   const brackets=document.createElement('div');
@@ -4410,6 +4407,7 @@ function toggleQuest(id){
 
   state[id]=!state[id];
   saveQuestState(state);
+  if(window.FamilySync) FamilySync.pushQuest(id, state[id]);
 
   const newXP=getTotalXP();
   const newRank=getRank(newXP);
@@ -4446,6 +4444,7 @@ function updateQuestBadge(){
 function renderAdventure(){
   const wrap=document.getElementById('screen-adventure');
   wrap.innerHTML='';
+  if(window.FamilySync) wrap.appendChild(FamilySync.buildCard());
   const state=loadQuestState();
   const totalXP=getTotalXP();
   const completed=getCompletedCount();
@@ -4770,4 +4769,306 @@ navigate = function(screen){
 document.addEventListener('DOMContentLoaded', ()=>{ updateQuestBadge(); applyTypeTheme('itin'); }, {once:false});
 setTimeout(updateQuestBadge, 500);
 setTimeout(()=>applyTypeTheme('itin'), 100);
+
+/* ════════════════════════════════════
+   FAMILY SYNC — live sharing via Firebase
+   Syncs: quests, Catch bookings, itinerary edits, hotel edits,
+   and the shopping ledger. Each phone taps "Connect" on the Quest
+   tab and enters the same family code.
+════════════════════════════════════ */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCdNA3gqfMsXKE9dQFXNx-YwWgFtPl0hxA",
+  authDomain: "japan-2026-ecfd7.firebaseapp.com",
+  projectId: "japan-2026-ecfd7",
+  storageBucket: "japan-2026-ecfd7.firebasestorage.app",
+  messagingSenderId: "660392767580",
+  appId: "1:660392767580:web:63e002ada9d6404a5bb699"
+};
+
+/* ── SHOPPING LEDGER (in-app, synced) ── */
+const LEDGER_KEY='japan2026_ledger', LEDGER_SET_KEY='japan2026_ledger_settings';
+function loadLedger(){
+  try{ STATE.ledger=JSON.parse(localStorage.getItem(LEDGER_KEY)||'{}'); }catch(e){ STATE.ledger={}; }
+  try{ STATE.ledgerSettings=Object.assign({travelers:3,rate:155,names:''}, JSON.parse(localStorage.getItem(LEDGER_SET_KEY)||'{}')); }
+  catch(e){ STATE.ledgerSettings={travelers:3,rate:155,names:''}; }
+}
+function saveLedger(){ try{ localStorage.setItem(LEDGER_KEY, JSON.stringify(STATE.ledger)); }catch(e){} }
+function saveLedgerSettings(){ try{ localStorage.setItem(LEDGER_SET_KEY, JSON.stringify(STATE.ledgerSettings)); }catch(e){} }
+loadLedger();
+
+window.Ledger=(function(){
+  const CATEGORIES=[
+    {id:'clothing',label:'Clothing / apparel',rate:16},
+    {id:'footwear',label:'Footwear',rate:12},
+    {id:'leather',label:'Leather goods / bags',rate:10},
+    {id:'electronics',label:'Electronics',rate:4},
+    {id:'watches',label:'Watches',rate:6},
+    {id:'toys',label:'Toys / games / cards',rate:0},
+    {id:'cosmetics',label:'Cosmetics / beauty',rate:0},
+    {id:'other',label:'Other / misc',rate:5},
+  ];
+  const COLOR={clothing:'#e3352d',footwear:'#f5a623',leather:'#8e5a3d',electronics:'#4aa3ff',watches:'#c0c8d8',toys:'#7fd97f',cosmetics:'#e07fd9',other:'#aab4d4'};
+  const catLabel=id=>(CATEGORIES.find(c=>c.id===id)||{}).label||id;
+  const catRate=id=>((CATEGORIES.find(c=>c.id===id)||{rate:5}).rate)/100;
+  const fmt=n=>'$'+(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+  const esc=s=>{const d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML;};
+  const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+  const items=()=>Object.entries(STATE.ledger||{}).map(([id,v])=>Object.assign({id},v));
+  const names=()=>(STATE.ledgerSettings.names||'').split(',').map(s=>s.trim()).filter(Boolean);
+
+  function duty(){
+    const trav=Math.max(1,parseInt(STATE.ledgerSettings.travelers)||1);
+    const exTot=trav*800, flatTot=trav*1000;
+    let exLeft=exTot, flatLeft=flatTot, exUsed=0, flatTaxed=0, flatDuty=0, xsTaxed=0, xsDuty=0;
+    items().sort((a,b)=>catRate(b.category)-catRate(a.category)).forEach(i=>{
+      let amt=i.amountUSD||0;
+      const e=Math.min(amt,exLeft); exLeft-=e; amt-=e; exUsed+=e;
+      if(amt>0){ const f=Math.min(amt,flatLeft); flatLeft-=f; amt-=f; flatTaxed+=f; flatDuty+=f*0.03; }
+      if(amt>0){ xsTaxed+=amt; xsDuty+=amt*catRate(i.category); }
+    });
+    return {trav,exTot,flatTot,exUsed,flatTaxed,flatDuty,xsTaxed,xsDuty,total:flatDuty+xsDuty,
+            spent:items().reduce((s,i)=>s+(i.amountUSD||0),0)};
+  }
+
+  function changeSettings(){
+    STATE.ledgerSettings={
+      travelers:Math.max(1,parseInt(document.getElementById('lg-trav').value)||1),
+      rate:parseFloat(document.getElementById('lg-rate').value)||155,
+      names:document.getElementById('lg-names').value||''
+    };
+    saveLedgerSettings(); FamilySync.push('ledgerSettings');
+    renderCustoms();
+  }
+
+  function add(){
+    const name=document.getElementById('lg-name').value.trim();
+    const raw=parseFloat(document.getElementById('lg-amt').value);
+    if(!name||!raw||raw<=0){ showToast('Enter an item name and amount'); return; }
+    const currency=document.getElementById('lg-cur').value;
+    const rate=parseFloat(STATE.ledgerSettings.rate)||155;
+    const id='i'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+    STATE.ledger[id]={
+      name, category:document.getElementById('lg-cat').value, currency, rawAmount:raw,
+      amountUSD: currency==='JPY'? raw/rate : raw,
+      traveler:document.getElementById('lg-who').value,
+      store:document.getElementById('lg-store').value.trim(),
+      date:document.getElementById('lg-date').value||today(),
+      createdAt:Date.now()
+    };
+    saveLedger(); FamilySync.push('ledger');
+    showToast('🧾 Added to ledger');
+    renderCustoms();
+  }
+
+  function remove(id){
+    const it=STATE.ledger[id]; if(!it) return;
+    if(!confirm('Remove "'+it.name+'" from the ledger?')) return;
+    delete STATE.ledger[id];
+    saveLedger(); FamilySync.push('ledger');
+    renderCustoms();
+  }
+
+  function build(){
+    const s=STATE.ledgerSettings, d=duty();
+    const list=items().sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    const byCat={}, byWho={};
+    list.forEach(i=>{ byCat[i.category]=(byCat[i.category]||0)+(i.amountUSD||0); byWho[i.traveler]=(byWho[i.traveler]||0)+(i.amountUSD||0); });
+    const row=(l,v,cls='')=>`<div class="customs-result-row ${cls}"><span class="customs-result-label">${l}</span><span class="customs-result-val">${v}</span></div>`;
+    const el=document.createElement('div');
+    el.className='customs-card';
+    el.innerHTML=`
+      <div class="customs-title">🧾 Shopping Ledger</div>
+      <div class="customs-sub">Shared with your family sync — both phones add and see every purchase</div>
+      <div style="display:flex;gap:8px">
+        <div style="flex:1"><label class="customs-label">Travelers</label><input class="customs-input" id="lg-trav" type="number" min="1" value="${esc(s.travelers)}"></div>
+        <div style="flex:1"><label class="customs-label">¥ per $1</label><input class="customs-input" id="lg-rate" type="number" min="1" step="0.01" value="${esc(s.rate)}"></div>
+      </div>
+      <label class="customs-label">Traveler names (comma-separated)</label>
+      <input class="customs-input" id="lg-names" type="text" placeholder="e.g. Corby, Wife, Son" value="${esc(s.names)}">
+      <div style="border-top:1px solid rgba(255,215,0,.25);margin:4px 0 12px"></div>
+      <label class="customs-label">Item</label>
+      <input class="customs-input" id="lg-name" type="text" placeholder="e.g. Seiko Presage">
+      <div style="display:flex;gap:8px">
+        <div style="flex:2"><label class="customs-label">Amount</label><input class="customs-input" id="lg-amt" type="number" min="0" step="1" inputmode="decimal" placeholder="Amount"></div>
+        <div style="flex:1"><label class="customs-label">Currency</label><select class="customs-input" id="lg-cur"><option value="JPY" selected>¥ JPY</option><option value="USD">$ USD</option></select></div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <div style="flex:1"><label class="customs-label">Category</label><select class="customs-input" id="lg-cat">${CATEGORIES.map(c=>`<option value="${c.id}">${c.label}</option>`).join('')}</select></div>
+        <div style="flex:1"><label class="customs-label">Who</label><select class="customs-input" id="lg-who"><option value="Shared">Shared / Family</option>${names().map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('')}</select></div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <div style="flex:2"><label class="customs-label">Store / city</label><input class="customs-input" id="lg-store" type="text" placeholder="Optional"></div>
+        <div style="flex:1.3"><label class="customs-label">Date</label><input class="customs-input" id="lg-date" type="date" value="${today()}"></div>
+      </div>
+      <button class="customs-btn" onclick="Ledger.add()">+ Add to Ledger</button>
+      ${row('Total logged', fmt(d.spent))}
+      ${Object.entries(byCat).sort((a,b)=>b[1]-a[1]).map(([c,v])=>row(`<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${COLOR[c]||'#aab4d4'};margin-right:6px"></span>${esc(catLabel(c))}`,fmt(v))).join('')}
+      ${Object.keys(byWho).length>1?Object.entries(byWho).sort((a,b)=>b[1]-a[1]).map(([w,v])=>row('👤 '+esc(w),fmt(v))).join(''):''}
+      ${row(`Duty-free ($800 × ${d.trav})`, `${fmt(d.exUsed)} of ${fmt(d.exTot)}`,'exempt')}
+      ${row(`Flat 3% ($1,000 × ${d.trav})`, `${fmt(d.flatTaxed)} → ${fmt(d.flatDuty)}`,'flat')}
+      ${d.xsTaxed>0?row('Above flat bracket', `${fmt(d.xsTaxed)} → ${fmt(d.xsDuty)}`,'excess'):''}
+      <div class="customs-total">Estimated duty: ${fmt(d.total)}</div>
+      <div style="font-size:.7rem;font-weight:800;color:var(--yellow);margin:16px 0 8px">Items (${list.length})</div>
+      ${list.length?list.map(i=>`
+        <div style="display:flex;align-items:center;gap:8px;padding:9px 10px;margin-bottom:6px;border-radius:8px;background:rgba(255,255,255,.05);border-left:4px solid ${COLOR[i.category]||'#aab4d4'}">
+          <div style="flex:1;min-width:0">
+            <div style="font-size:.78rem;font-weight:700;color:#fff">${esc(i.name)}</div>
+            <div style="font-size:.62rem;color:#aab4d4">${esc(catLabel(i.category))} · ${esc(i.traveler)} · ${esc(i.date)}${i.store?' · '+esc(i.store):''}</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:.78rem;font-weight:800;color:#ffe566">${fmt(i.amountUSD)}</div>
+            <div style="font-size:.6rem;color:#aab4d4">${i.currency==='JPY'?'¥'+Math.round(i.rawAmount).toLocaleString():fmt(i.rawAmount)}</div>
+          </div>
+          <button onclick="Ledger.remove('${i.id}')" aria-label="Remove item" style="background:none;border:none;color:#ff6b6b;font-size:1rem;padding:4px 6px;cursor:pointer">✕</button>
+        </div>`).join(''):'<div style="font-size:.7rem;color:#aab4d4;text-align:center;padding:10px">No purchases yet — add your first receipt above.</div>'}
+      <div style="font-size:.6rem;color:rgba(255,255,255,.45);text-align:center;margin-top:10px;line-height:1.4">Duty rates are estimates. Watches and some leather goods vary by material — CBP decides the final amount.</div>
+    `;
+    ['lg-trav','lg-rate','lg-names'].forEach(id=>el.querySelector('#'+id).addEventListener('change',changeSettings));
+    return el;
+  }
+  return {build, add, remove};
+})();
+
+/* ── SYNC ENGINE ── */
+window.FamilySync = (function(){
+  const CODE_KEY='japan2026_sync_code';
+  const SDK='https://www.gstatic.com/firebasejs/10.12.2/';
+  let db=null, col=null, unsubs=[], status='off', pendingRender=false;
+  const MAPS={
+    quests:        {get:()=>loadQuestState(),        set:v=>saveQuestState(v)},
+    tickets:       {get:()=>STATE.tickets||{},       set:v=>{STATE.tickets=v; _saveTickets();}},
+    edits:         {get:()=>STATE.edits||{},         set:v=>{STATE.edits=v; _saveEdits();}},
+    hotels:        {get:()=>STATE.hotelEdits||{},    set:v=>{STATE.hotelEdits=v; _saveHotelEdits();}},
+    ledger:        {get:()=>STATE.ledger||{},        set:v=>{STATE.ledger=v; saveLedger();}},
+    ledgerSettings:{get:()=>STATE.ledgerSettings||{},set:v=>{STATE.ledgerSettings=Object.assign({travelers:3,rate:155,names:''},v); saveLedgerSettings();}},
+  };
+  const base={}, refs={};
+
+  function code(){ try{ return localStorage.getItem(CODE_KEY)||''; }catch(e){ return ''; } }
+  function setStatus(st){ status=st; refreshCard(); }
+  const clean=v=>JSON.parse(JSON.stringify(v===undefined?null:v));
+  const snapshotOf=obj=>{ const o={}; Object.keys(obj).forEach(k=>o[k]=JSON.stringify(obj[k])); return o; };
+
+  function loadScript(src){
+    return new Promise((res,rej)=>{
+      if(document.querySelector(`script[src="${src}"]`)) return res();
+      const el=document.createElement('script'); el.src=src; el.onload=res; el.onerror=rej;
+      document.head.appendChild(el);
+    });
+  }
+
+  // Push local changes for one data set (only changed/removed keys)
+  function push(name){
+    const ref=refs[name]; if(!ref) return;
+    const cur=MAPS[name].get(), prev=base[name]||{}, upd={};
+    Object.keys(cur).forEach(k=>{ const j=JSON.stringify(cur[k]); if(prev[k]!==j) upd[k]=clean(cur[k]); });
+    Object.keys(prev).forEach(k=>{ if(!(k in cur)) upd[k]=firebase.firestore.FieldValue.delete(); });
+    base[name]=snapshotOf(cur);
+    if(Object.keys(upd).length) ref.set(upd,{merge:true}).catch(onErr);
+  }
+
+  function rerender(){
+    const active=document.getElementById('screen-'+STATE.activeScreen);
+    const f=document.activeElement;
+    if(active && f && active.contains(f) && /INPUT|TEXTAREA|SELECT/.test(f.tagName)){ pendingRender=true; return; }
+    pendingRender=false;
+    const fns={itin:'renderItin',flights:'renderFlights',tickets:'renderTickets',edit:'renderEdit',customs:'renderCustoms',adventure:'renderAdventure'};
+    try{ if(STATE.activeScreen!=='itin') renderItin(); }catch(e){}
+    const fn=window[fns[STATE.activeScreen]]; if(typeof fn==='function'){ try{ fn(); }catch(e){ console.error(e); } }
+    try{ updateQuestBadge(); }catch(e){}
+    try{ updateAlertBadge(); }catch(e){}
+  }
+  document.addEventListener('focusout', ()=>setTimeout(()=>{ if(pendingRender) rerender(); }, 150));
+
+  async function start(){
+    if(!FIREBASE_CONFIG){ setStatus('nocfg'); return; }
+    const c=code(); if(!c){ setStatus('off'); return; }
+    setStatus('connecting');
+    try{
+      await loadScript(SDK+'firebase-app-compat.js');
+      await loadScript(SDK+'firebase-firestore-compat.js');
+      if(!firebase.apps.length){
+        firebase.initializeApp(FIREBASE_CONFIG);
+        db=firebase.firestore();
+        try{ await db.enablePersistence({synchronizeTabs:true}); }catch(e){}
+      } else db=firebase.firestore();
+      col=db.collection('trips').doc(c).collection('data');
+      unsubs.forEach(u=>u()); unsubs=[];
+      const live={};
+      Object.keys(MAPS).forEach(name=>{
+        refs[name]=col.doc(name);
+        let first=true;
+        unsubs.push(refs[name].onSnapshot({includeMetadataChanges:true}, snap=>{
+          const remote=snap.exists?snap.data():{};
+          const local=MAPS[name].get();
+          if(first){
+            // Upload anything saved on this phone before sync, that the family log doesn't have yet
+            const missing={};
+            Object.keys(local).forEach(k=>{ if(!(k in remote)) missing[k]=clean(local[k]); });
+            if(Object.keys(missing).length) refs[name].set(missing,{merge:true}).catch(onErr);
+            Object.assign(remote, missing);
+            first=false;
+          }
+          const changed=JSON.stringify(snapshotOf(remote))!==JSON.stringify(snapshotOf(local));
+          base[name]=snapshotOf(remote);
+          if(changed){ MAPS[name].set(remote); rerender(); }
+          live[name]=!snap.metadata.fromCache;
+          setStatus(Object.keys(MAPS).every(n=>live[n]) ? 'live' : 'offline');
+        }, onErr));
+      });
+    }catch(e){ onErr(e); }
+  }
+
+  function onErr(e){ console.error('Family sync error', e); setStatus(navigator.onLine===false?'offline':'error'); }
+
+  function connect(){
+    if(!FIREBASE_CONFIG){ showToast('Add your Firebase config first'); return; }
+    const c=(prompt('Enter your family sync code (same on both phones, at least 16 characters):', code())||'').trim();
+    if(!c) return;
+    if(c.length<16 || /[\/]/.test(c)){ showToast('Code must be 16+ characters, no slashes'); return; }
+    try{ localStorage.setItem(CODE_KEY,c); }catch(e){}
+    start();
+  }
+  function disconnect(){
+    if(!confirm('Stop syncing on this phone? Everything already here stays on the phone.')) return;
+    unsubs.forEach(u=>u()); unsubs=[];
+    Object.keys(refs).forEach(k=>delete refs[k]);
+    try{ localStorage.removeItem(CODE_KEY); }catch(e){}
+    setStatus('off');
+  }
+
+  const LABELS={
+    nocfg:['⚪','Family sync not set up yet','Add the Firebase config to turn on live sharing.'],
+    off:['⚪','Family sync is off','Connect both phones with the same family code to share quests, bookings, plan changes, and the ledger.'],
+    connecting:['🟡','Connecting…','Linking this phone to your family trip.'],
+    live:['🟢','Live — synced with family','Quests, Catch bookings, plan edits, and ledger items update on both phones.'],
+    offline:['🟠','Offline — saved on this phone','Changes will sync automatically when you are back online.'],
+    error:['🔴','Sync problem','Check the family code and your Firebase rules, then reconnect.'],
+  };
+  function buildCard(){
+    const el=document.createElement('div'); el.className='family-sync-card';
+    el.style.cssText='display:flex;align-items:center;gap:10px;padding:10px 12px;margin-bottom:12px;border-radius:12px;background:var(--card-bg);border:1px solid var(--border)';
+    fillCard(el); return el;
+  }
+  function fillCard(el){
+    const [dot,title,sub]=LABELS[status]||LABELS.off;
+    const connected=!!code() && FIREBASE_CONFIG;
+    el.innerHTML=`<span style="font-size:1.1rem">${dot}</span>
+      <div style="flex:1;min-width:0"><div style="font-size:.78rem;font-weight:700;color:var(--ink)">${title}</div>
+      <div style="font-size:.66rem;color:var(--muted);line-height:1.35">${sub}</div></div>
+      ${FIREBASE_CONFIG?`<button style="font-size:.7rem;font-weight:700;padding:7px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card-bg2);color:var(--ink);cursor:pointer" onclick="FamilySync.${connected?'disconnect':'connect'}()">${connected?'Disconnect':'Connect'}</button>`:''}`;
+  }
+  function refreshCard(){ document.querySelectorAll('.family-sync-card').forEach(fillCard); }
+
+  window.addEventListener('online', ()=>{ if(code()&&status!=='live') start(); });
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', start); else start();
+
+  return {push, pushQuest:()=>push('quests'), connect, disconnect, buildCard};
+})();
+
+/* Hook the app's existing save functions so every change also syncs */
+const _saveTickets=saveTickets, _saveEdits=saveEdits, _saveHotelEdits=saveHotelEdits;
+saveTickets=function(){ _saveTickets(); FamilySync.push('tickets'); };
+saveEdits=function(){ _saveEdits(); FamilySync.push('edits'); };
+saveHotelEdits=function(){ _saveHotelEdits(); FamilySync.push('hotels'); };
 </script>
