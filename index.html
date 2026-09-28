@@ -2299,6 +2299,7 @@ function renderTickets(){
 
     items.forEach(item=>{ wrap.appendChild(buildBookableItem(item)); });
   });
+  if(window.CustomCatch) wrap.appendChild(CustomCatch.buildAddPanel());
 }
 
 function buildBookableItem(item){
@@ -2364,6 +2365,7 @@ function buildBookableItem(item){
         </div>
       </div>
       ${isBooked?buildSavedDisplay(item.key,t):''}
+      ${item.custom?`<button onclick="CustomCatch.remove('${item.customId}')" style="margin-top:10px;width:100%;padding:9px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:.72rem;font-weight:700;cursor:pointer">Remove from shopping list</button>`:''}
     </div>
   `;
   return el;
@@ -4929,6 +4931,93 @@ window.Ledger=(function(){
   return {build, add, remove};
 })();
 
+/* ── CUSTOM SHOPPING TARGETS IN CATCH (synced) ── */
+const CUSTOM_CATCH_KEY='japan2026_custom_catch';
+function saveCustomCatch(){ try{ localStorage.setItem(CUSTOM_CATCH_KEY, JSON.stringify(STATE.customCatch||{})); }catch(e){} }
+try{ STATE.customCatch=JSON.parse(localStorage.getItem(CUSTOM_CATCH_KEY)||'{}'); }catch(e){ STATE.customCatch={}; }
+
+window.CustomCatch=(function(){
+  const esc=s=>{const d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML;};
+  let open=false;
+
+  // Keep BOOKABLE_ITEMS in step with the family's custom list
+  function rebuild(){
+    for(let i=BOOKABLE_ITEMS.length-1;i>=0;i--) if(BOOKABLE_ITEMS[i].custom) BOOKABLE_ITEMS.splice(i,1);
+    Object.entries(STATE.customCatch||{}).sort((a,b)=>(a[1].createdAt||0)-(b[1].createdAt||0)).forEach(([id,c])=>{
+      const where=c.where?`<strong>Where:</strong> ${esc(c.where)}<br>`:'';
+      const notes=c.notes?esc(c.notes):'Added by your family.';
+      BOOKABLE_ITEMS.push({
+        key:'custom_'+id, customId:id, custom:true, shop:true, urgency:'shop',
+        name:esc(c.name), day:c.day, icon:c.icon||'⭐',
+        url:'https://maps.google.com/?q='+encodeURIComponent((c.where||c.name)+' Japan'),
+        instructions: where+notes
+      });
+    });
+  }
+
+  function add(){
+    const name=document.getElementById('cc-name').value.trim();
+    if(!name){ showToast('Give the item a name'); return; }
+    const id='c'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+    STATE.customCatch[id]={
+      name, day:parseInt(document.getElementById('cc-day').value)||3,
+      where:document.getElementById('cc-where').value.trim(),
+      notes:document.getElementById('cc-notes').value.trim(),
+      icon:document.getElementById('cc-icon').value,
+      createdAt:Date.now()
+    };
+    saveCustomCatch(); rebuild(); FamilySync.push('customCatch');
+    open=false; showToast('⭐ Added to your shopping list');
+    renderTickets(); renderItin();
+  }
+
+  function remove(id){
+    const c=STATE.customCatch[id]; if(!c) return;
+    if(!confirm('Remove "'+c.name+'" from the shopping list?')) return;
+    delete STATE.customCatch[id];
+    if(STATE.tickets['custom_'+id]){ delete STATE.tickets['custom_'+id]; saveTickets(); }
+    saveCustomCatch(); rebuild(); FamilySync.push('customCatch');
+    renderTickets(); renderItin();
+  }
+
+  function toggle(){ open=!open; renderTickets(); if(open) setTimeout(()=>document.getElementById('cc-name')?.focus(),50); }
+
+  function buildAddPanel(){
+    const el=document.createElement('div');
+    el.style.cssText='margin:10px 0 20px';
+    if(!open){
+      el.innerHTML=`<button onclick="CustomCatch.toggle()" style="width:100%;padding:12px;border-radius:12px;border:2px dashed #a78bfa;background:rgba(167,139,250,.08);color:var(--ink);font-weight:800;font-size:.78rem;cursor:pointer">+ Add something to hunt for</button>`;
+      return el;
+    }
+    const dayOpts=DAYS.filter(d=>!d.travelDay).map(d=>`<option value="${d.day}">${d.date} · ${esc(CITIES[d.city]?.label||'')}</option>`).join('');
+    const icons=['⭐','🃏','⌚','👟','👜','🎒','🎮','🧸','🎁','🍵'];
+    const inp='width:100%;box-sizing:border-box;padding:9px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card-bg2);color:var(--ink);font-size:.8rem;margin-bottom:10px';
+    const lbl='display:block;font-size:.64rem;font-weight:700;color:var(--muted);margin-bottom:4px';
+    el.innerHTML=`
+      <div style="padding:14px;border-radius:12px;background:var(--card-bg);border:2px solid #a78bfa">
+        <div style="font-size:.85rem;font-weight:800;color:var(--ink);margin-bottom:10px">New shopping target</div>
+        <label style="${lbl}" for="cc-name">What are you hunting for?</label>
+        <input id="cc-name" type="text" style="${inp}" placeholder="e.g. Charizard ex SAR, Seiko SARY">
+        <div style="display:flex;gap:8px">
+          <div style="flex:2"><label style="${lbl}" for="cc-day">Which day</label><select id="cc-day" style="${inp}">${dayOpts}</select></div>
+          <div style="flex:1"><label style="${lbl}" for="cc-icon">Icon</label><select id="cc-icon" style="${inp}">${icons.map(i=>`<option>${i}</option>`).join('')}</select></div>
+        </div>
+        <label style="${lbl}" for="cc-where">Where (optional)</label>
+        <input id="cc-where" type="text" style="${inp}" placeholder="e.g. Hareruya 2 Akihabara">
+        <label style="${lbl}" for="cc-notes">Notes (optional)</label>
+        <input id="cc-notes" type="text" style="${inp}" placeholder="Budget, size, color, card number…">
+        <div style="display:flex;gap:8px">
+          <button onclick="CustomCatch.add()" style="flex:2;padding:11px;border-radius:10px;border:none;background:#7c5ce0;color:#fff;font-weight:800;font-size:.78rem;cursor:pointer">Add to Catch</button>
+          <button onclick="CustomCatch.toggle()" style="flex:1;padding:11px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--ink);font-weight:700;font-size:.78rem;cursor:pointer">Cancel</button>
+        </div>
+      </div>`;
+    return el;
+  }
+
+  rebuild();
+  return {rebuild, add, remove, toggle, buildAddPanel};
+})();
+
 /* ── SYNC ENGINE ── */
 window.FamilySync = (function(){
   const CODE_KEY='japan2026_sync_code';
@@ -4941,6 +5030,7 @@ window.FamilySync = (function(){
     hotels:        {get:()=>STATE.hotelEdits||{},    set:v=>{STATE.hotelEdits=v; _saveHotelEdits();}},
     ledger:        {get:()=>STATE.ledger||{},        set:v=>{STATE.ledger=v; saveLedger();}},
     ledgerSettings:{get:()=>STATE.ledgerSettings||{},set:v=>{STATE.ledgerSettings=Object.assign({travelers:3,rate:155,names:''},v); saveLedgerSettings();}},
+    customCatch:   {get:()=>STATE.customCatch||{},   set:v=>{STATE.customCatch=v; saveCustomCatch(); CustomCatch.rebuild();}},
   };
   const base={}, refs={};
 
@@ -4974,6 +5064,7 @@ window.FamilySync = (function(){
     pendingRender=false;
     const fns={itin:'renderItin',flights:'renderFlights',tickets:'renderTickets',edit:'renderEdit',customs:'renderCustoms',adventure:'renderAdventure'};
     try{ if(STATE.activeScreen!=='itin') renderItin(); }catch(e){}
+    try{ if(STATE.activeScreen!=='tickets') renderTickets(); }catch(e){}
     const fn=window[fns[STATE.activeScreen]]; if(typeof fn==='function'){ try{ fn(); }catch(e){ console.error(e); } }
     try{ updateQuestBadge(); }catch(e){}
     try{ updateAlertBadge(); }catch(e){}
