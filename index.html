@@ -1862,18 +1862,24 @@ const FLIGHTS=[
 
 // Items that can have tickets purchased and linked to itinerary days
 const BOOKABLE_ITEMS=[
-  {key:'disneysea',   name:'Tokyo DisneySea',         day:5,  icon:'🏰', url:'https://www.tokyodisneyresort.jp/en/', urgency:'high',
-   instructions:'Book via Tokyo Disney Resort app. Select Oct 26. Halloween event included with standard ticket.'},
+  {key:'disneysea', status:'booked', confirmed:true,
+   time:'Oct 26 — Gates open 8am · Sparkling Jubilee 25th Anniversary + Halloween',
+   confirmation:'Ticket #2102112-621-06567794-0 · 1-Day Passport ×3',
+   name:'Tokyo DisneySea',         day:5,  icon:'🏰', url:'https://www.tokyodisneyresort.jp/en/', urgency:'high',
+   instructions:'BOOKED ✔️. Ticket #2102112-621-06567794-0. 1-Day Passport ×3. Oct 26, gates open 8am. Halloween season + Sparkling Jubilee 25th anniversary. Book Premier Access for Villains Parade in Tokyo Disney Resort app.'},
   {key:'ghibli',      name:'Ghibli Museum',            day:3,  icon:'🎨', url:'https://www.ghibli-museum.jp/en/tickets/', urgency:'high',
    instructions:'Tickets released on the 10th of each month at 10am JST for the following month. Use Lawson Ticket English site. Bring passport to entry.'},
-  {key:'nintendo',    name:'Nintendo Museum',          day:9,  icon:'🎮', url:'https://www.nintendo.com/en-GB/Nintendo-Museum/Tickets/', urgency:'high',
+  {key:'nintendo', status:'booked', confirmed:true, time:'Oct 30 — 3:00pm–3:30pm entry', confirmation:'Purchase #M0715294468',    name:'Nintendo Museum',          day:9,  icon:'🎮', url:'https://www.nintendo.com/en-GB/Nintendo-Museum/Tickets/', urgency:'high',
    instructions:'Monthly lottery — apply at museum-tickets.nintendo.com. Check for cancellations immediately. ¥3,300 (~$22) adult / ¥1,100 (~$7) child.'},
   {key:'samurai',     name:'Samurai Ninja Museum',     day:6,  icon:'⚔️', url:'https://www.samurai-museum.com/en/', urgency:'med',
    instructions:'Book online at samurai-museum.com. Asakusa location. ~90 min experience. Consider the Premium Sword Experience upgrade.'},
   {key:'nijigen',     name:'Nijigen no Mori',          day:10, icon:'🐉', url:'https://nijigennomori.com/en/ticket/', urgency:'med',
    instructions:'Buy attraction tickets online. Book the highway bus (West Japan JR Bus) from Namba separately — ¥1,850 (~$12) one-way.'},
-  {key:'hakone_ryokan', name:'Tōnosawa Ichinoyu Honkan', day:7, icon:'♨️', url:'https://www.ichinoyu.co.jp/english/', urgency:'med',
-   instructions:'Book directly with the ryokan. Request room with private outdoor onsen (Type B or Matsuda). Oct 28 is a Wed — likely available but book soon.'},
+  {key:'hakone_ryokan', status:'booked', confirmed:true,
+   time:'Oct 28–29 — Check-in 3:00pm',
+   confirmation:'T57CCACF6F6A8 · Private family onsen + kaiseki dinner + breakfast',
+   name:'Tōnosawa Ichinoyu Honkan', day:7,  icon:'♨️', url:'https://www.ichinoyu.co.jp/english/', urgency:'med',
+   instructions:'✔️ BOOKED. Confirmation: T57CCACF6F6A8. Check-in Oct 28 3pm. Private family onsen, kaiseki dinner + breakfast. Wear yukata provided. Request room overlooking Hayakawa River.'},
   {key:'smartex',      name:'SmartEX — Book Shinkansen Tickets', day:1, icon:'🚄', url:'https://smart-ex.jp/en/', urgency:'high',
    instructions:'Book all Shinkansen tickets via SmartEX app BEFORE the trip. Register with an international credit card. Key bookings: (1) Tokyo→Odawara Oct 28 ¥4,270/~$28 adult, (2) Odawara→Shin-Osaka Oct 29 ¥13,870/~$92 adult, (3) Shin-Osaka→Tokyo Nov 4 ¥13,870/~$92 adult. Child is half price. Total family ~$585.'},
   {key:'hakone_ropeway', name:'Hakone Free Pass',     day:8,  icon:'🚡', url:'https://www.hakonenavi.jp/international/en/', urgency:'low',
@@ -2405,7 +2411,7 @@ function renderTickets(){
   wrap.appendChild(intro);
 
   // summary row
-  const booked=BOOKABLE_ITEMS.filter(i=>STATE.tickets[i.key]?.confirmation).length;
+  const booked=BOOKABLE_ITEMS.filter(i=>STATE.tickets[i.key]?.confirmation||i.confirmed).length;
   const total=BOOKABLE_ITEMS.length;
   const summary=document.createElement('div');
   summary.style.cssText='display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 2px';
@@ -2423,14 +2429,24 @@ function renderTickets(){
   progWrap.appendChild(progFill); wrap.appendChild(progWrap);
 
   // urgency groups
+  // Show confirmed bookings first in their own section
+  const confirmedItems = BOOKABLE_ITEMS.filter(i => i.confirmed);
+  if(confirmedItems.length){
+    const clbl = document.createElement('div');
+    clbl.style.cssText = 'font-size:.62rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--caught);margin:10px 0 6px;padding-bottom:4px;border-bottom:2px solid var(--caught-bd);display:flex;align-items:center;gap:6px;';
+    clbl.innerHTML = '✅ CONFIRMED BOOKINGS';
+    wrap.appendChild(clbl);
+    confirmedItems.forEach(item => { wrap.appendChild(buildBookableItem(item)); });
+  }
+
   const groups=[
-    {label:'🔴 LEGENDARY — Catch Now!', urgency:'high'},
-    {label:'🟡 RARE — Catch Soon', urgency:'med'},
-    {label:'🟢 COMMON — Catch When Ready', urgency:'low'},
+    {label:'?? LEGENDARY — Catch Now!', urgency:'high'},
+    {label:'?? RARE — Catch Soon', urgency:'med'},
+    {label:'?? COMMON — Catch When Ready', urgency:'low'},
   ];
 
   groups.forEach(grp=>{
-    const items=BOOKABLE_ITEMS.filter(i=>i.urgency===grp.urgency);
+    const items=BOOKABLE_ITEMS.filter(i=>i.urgency===grp.urgency && !i.confirmed);
     if(!items.length) return;
 
     const lbl=document.createElement('div');
@@ -2443,15 +2459,22 @@ function renderTickets(){
 }
 
 function buildBookableItem(item){
+  // Pre-populate STATE from item data if confirmed
+  if(item.confirmed && item.confirmation && !STATE.tickets[item.key]?.confirmation){
+    if(!STATE.tickets[item.key]) STATE.tickets[item.key]={};
+    STATE.tickets[item.key].confirmation = item.confirmation;
+    STATE.tickets[item.key].time = item.time || '';
+    STATE.tickets[item.key].status = 'booked';
+  }
   const t=STATE.tickets[item.key]||{};
-  const isBooked=!!t.confirmation;
+  const isBooked=!!(t.confirmation || item.confirmed);
   const isExpanded=STATE.expandedItems.has(item.key);
 
   const el=document.createElement('div');
   el.className='bookable-item'+(isBooked?' booked':'')+(isExpanded?' expanded':'');
   el.id='bi-'+item.key;
 
-  const statusLabel=isBooked?'Booked':t.status==='pending'?'Pending':'Not booked';
+  const statusLabel=item.confirmed?'✔️ Confirmed':isBooked?'✔️ Booked':t.status==='pending'?'⏳ Pending':'Not booked';
   const statusClass=isBooked?'booked':t.status==='pending'?'pending':'unbooked';
   const dayInfo=DAYS.find(d=>d.day===item.day);
 
