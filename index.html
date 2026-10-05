@@ -1979,6 +1979,13 @@ body[data-role="family"] #nav-tickets,body[data-role="family"] #nav-customs,body
 .lg-rate{width:46px;padding:3px;border:1.5px solid var(--border);border-radius:6px;font-size:.68rem}
 
 .ver-stamp{font-size:.55rem;text-align:center;color:rgba(255,255,255,.45);margin:14px 6px 4px;line-height:1.4}
+
+.drive-card{background:linear-gradient(135deg,rgba(30,47,122,.85),rgba(13,27,75,.9));border:2px solid rgba(255,215,0,.45);border-radius:14px;padding:12px;margin-bottom:12px;color:#fff}
+.drive-h{font-weight:900;font-size:.82rem;color:#ffd700}.drive-h small{font-weight:600;color:rgba(255,255,255,.55);font-size:.58rem;margin-left:4px}
+.drive-sub{font-size:.68rem;color:rgba(255,255,255,.8);line-height:1.45;margin:5px 0 9px}
+.drive-btns{display:flex;gap:8px}.drive-btn{flex:1;text-align:center;font-size:.72rem;font-weight:800;padding:9px;border-radius:20px;border:1.5px solid rgba(255,215,0,.45);background:transparent;color:#ffd700;text-decoration:none}
+.drive-btn.primary{background:linear-gradient(135deg,#cc0000,#990000);color:#fff;border-color:rgba(255,215,0,.35)}
+#drive-embed iframe{width:100%;height:440px;border:0;border-radius:10px;margin-top:10px;background:#fff}.drive-hint{font-size:.58rem;color:rgba(255,255,255,.6);margin-top:6px;line-height:1.4}
 </style>
 
 <!-- Firebase SDK -->
@@ -2474,6 +2481,9 @@ const LINKS=[
     {name:'Booking.com trip',desc:'Yotsuya apartment (check-in instructions)',url:'https://www.booking.com/',urgent:false},
     {name:'Airbnb trip',desc:'Gu’s Tani4 — Osaka (messages with host Ayumi)',url:'https://www.airbnb.com/trips',urgent:false}
   ]},
+  {section:'📸 Photos', items:[
+    {name:'Family photo & video folder',desc:'Google Drive — upload and share trip photos and videos',url:'https://drive.google.com/drive/folders/⟦DRIVE_ID⟧',urgent:false}
+  ]},
   {section:'🛃 Coming home', items:[
     {name:'CBP — Know Before You Go',desc:'Duty-free exemption, alcohol, food and agriculture rules',url:'https://www.cbp.gov/travel/us-citizens/know-before-you-go',urgent:false}
   ]}
@@ -2525,8 +2535,10 @@ const ALERTS=[
   body:'Download Google Maps (Kanto + Kansai) and the Japanese Translate pack. Arrange an eSIM or roaming plan and pack battery banks.'},
  {id:'p_cash',group:'prep',urgent:false,title:'💴 Cash + card plan',
   body:'Japan still uses cash for stalls (Kuromon, Omoide Yokocho, some shrines). 7-Eleven ATMs take US cards. Tell your bank you will be abroad.'},
- {id:'p_firebase',group:'prep',urgent:true,traveler:true,title:'☁️ Finish shared sync: publish the Firestore + Storage rules',
-  body:'The app key is in, but until the rules are published the database refuses writes. Firebase console → project japan-2026-ecfd7 → Build → Firestore Database → Rules tab, paste the rule, Publish; then Build → Storage → Rules tab, paste the Storage rule, Publish. Both rules allow access until Nov 30, 2026 — exact text is in the chat message.'},
+ {id:'p_firebase',group:'prep',urgent:true,traveler:true,title:'☁️ Publish the Firestore rules (makes quests, ledger and notes sync)',
+  body:'Firebase console → project japan-2026-ecfd7 → Firestore → Rules tab → paste the rule from the chat → Publish. Storage is not used, so there is nothing to do there.'},
+ {id:'p_drive',group:'prep',urgent:true,traveler:true,title:'📁 Set the Google Drive folder’s sharing',
+  body:'Open the folder → Share → add Cheryl as Editor, and set General access to “Anyone with the link → Viewer” so family can watch without signing in. Then test the Open folder button on the Photos tab.'},
  {id:'p_yamazaki',group:'prep',urgent:false,key:'yamazaki',title:'🥃 Optional: check Suntory Yamazaki for Nov 1 slots',
   body:'The production tour is lottery-based and 20+ only; the whisky museum needs a reservation. Backup plan: department-store liquor floors, Don Quijote, and airport duty-free (1 liter per adult duty-free).'},
 
@@ -4471,7 +4483,7 @@ function deepReplace(o,map,seen){
 }
 const b64d=b=>Uint8Array.from(atob(b),c=>c.charCodeAt(0));
 
-const AUTH_BLOBS={"v":"ttgZBHrNuvoK3Wtz","traveler":{"salt":"CVIUt3kCkXDFR+cqihzerA==","iv":"ZJezKYsoTjVPmzHH","ct":"ttgZBHrNuv0iOQEvnFycDGFx88ACu1g9zbQgvBVWIPWoB9nrSIl31cxyxdjCUD0RFbFbucvVP71Wj32ZGaxRdgW9LHE2F6eGxX0uZVx/z8+OnJ1vS4VAUnMFW4bAvXPhyQmJIHCtU/M4PszQWVegt/AjA7hALHlplP2WJtubSbmALVJ+f4MAZ3EnXobu/FzW3H5FEITHNgnRFIMUhg3gXeT4NmAF/hXFK0YVW20CrflY1QAKigeYMY7SXz/b63/G92/LCYljaAbCmbDfpekzm5SaFsgP+sqSygfvOegUq5ScKqWqPLvhIOoYmcl/AARR5BhmOSYFmpp4VxiDstjferpnaAUfyLj6VPxKqbCuNnhoQ1uBUa4XhenKe5r+4MHzL7A3B50mgfCorOxkOIVhacW5QCyKM2bw9GLxvfj65RSdh2M6TYOWgGKUiOOlsyY+gYBo8mPDBjA9bYnQYnQnBNgTpbA/ZBjj5cZVIYtI+UVPiGvAGDYb7I7UBgHXowf4a4LqugmMj20+W94gKw5WzZcyoAFaxs0lF7lCgk/vdk5cLu4OHx6JYqjYxbW8oc37senOl8WidDT0Dvu3ChvB1vmSRg4=","iter":150000},"family":{"salt":"dRlIn+5tvdlx7Zh/DO+C3A==","iv":"zSCkVAqOGmHEOlBr","ct":"oK3WtzPDcyaNiKC3QmnzLmHo2L2GQ+nCYjXt5Tt3dZJ48+vy0buIe3Vj8HuuPQ==","iter":150000}};
+const AUTH_BLOBS={"v":"uKZglphnuKpNMohz","traveler":{"salt":"vK+2Ae1j0tr6+PX4/dyV3w==","iv":"vi8hBAwLwDjod46J","ct":"uKZglphnuK7S7+cP3DlekyagjGHBUXTYmGUwhvCIGL3+Xxip2ImlG9P1+SrVEQB2ehsb1qwlPajHGqkjTIsT66qHSy940V5EfFsHcGYUn+j8Ta7Ej/q5Fu3a0SsV8IFJdl3LAHr2v0EGk11damleO+zn4zWFKcapSBseTaPyvYKoBIE7VAJmw8YS4ypShlMNlN6mbWDmhlOZSm9XQmx6rkVFp7j1NFFQHmFkFoh1IvbQx3KeaXBPzRX/tHvCnL6UlKCw99TdVZnMu5a0wFHrGZircp5/WcC/f5lzZpMvNwoPkgZjUs/wzI0qQuGLytUd+7NZ0MhhDhamwJwFO3CYbF3unUQrxScPEERu+BtTKTgwXgUvw1YF0rPbehaqHRpoL1G1qpF7IG7YwcbeipLpkjFhulUVDoGRXoeRjyngcPwxmuUYyFHvTFe8YaulpiUATwG3QgDI1Hxs959D1ALyDGflUxoPZbth3jwwA7aMUNbbSAh29Kv2eaFO0oQdjKXHRklDIEsBhMxLUE9Rhjx2cR9eSMLW1jYU8Genj9UEDBMeG8o5kpbfPU8ZJ7xc8RZdAxxpqmNYDOfVoRMQTh2m0F+FKeO+o/zQK0pXR20LzWK+zWTAwn3KTRwwBoTT73PqHj8CSx7poZb0GrhK5IvbnAeILA==","iter":150000},"family":{"salt":"XiVrwTvQmKPLYx1rNH3d6Q==","iv":"2wjeIsvU9rYDYsCs","ct":"pNMohzMzOFYegiofo228Pkxm1+oG9zLLSntmvcLCnw8nIrrYCY0b9zuqw0kJ5Dr3WqKm4vJkifDI7m6C2m32/NjzM7UDe45q2qbO7nroqOICTQtT+g37fMPmIIY=","iter":150000}};
 const AUTH={
   async derive(pass,saltB64,iter){
     const enc=new TextEncoder();
@@ -4503,7 +4515,7 @@ const AUTH={
     ROLE=role;
     document.body.dataset.role=role;
     const map=secrets||{};
-    [DAYS,ALERTS,BOOKABLE_ITEMS,HOTELS,FLIGHT_CARDS,TRANSPORT,LINKS].forEach(o=>deepReplace(o,map));
+    [DAYS,ALERTS,BOOKABLE_ITEMS,HOTELS,FLIGHT_CARDS,TRANSPORT,LINKS,DRIVE].forEach(o=>deepReplace(o,map));
     const ov=document.getElementById('authOverlay'); if(ov) ov.classList.add('hidden');
     const pill=document.getElementById('rolePill'); if(pill) pill.textContent=role==='family'?'👀 VIEW ONLY':'🧢 TRAVELER';
     if(typeof afterUnlock==='function') afterUnlock();
@@ -5013,6 +5025,21 @@ function renderAdventure(){
 
 
 /* ═══════════ PHOTO & VIDEO GALLERY ═══════════ */
+const DRIVE={id:'⟦DRIVE_ID⟧'};
+function driveReady(){ return !!DRIVE.id&&DRIVE.id.indexOf('⟦')<0&&DRIVE.id!=='🔒'; }
+function driveUrl(){ return 'https://drive.google.com/drive/folders/'+DRIVE.id; }
+function toggleDriveEmbed(){
+  const box=document.getElementById('drive-embed'); if(!box||!driveReady()) return;
+  if(box.innerHTML){ box.innerHTML=''; return; }
+  box.innerHTML='<iframe src="https://drive.google.com/embeddedfolderview?id='+DRIVE.id+'#grid" loading="lazy"></iframe><div class="drive-hint">If it asks you to sign in, the folder’s sharing needs to be “Anyone with the link → Viewer”. Tap Open folder instead.</div>';
+}
+function driveCardHtml(){
+  const ok=driveReady();
+  return '<div class="drive-card"><div class="drive-h">📁 Family Photo & Video Folder <small>Google Drive</small></div>'+
+   '<div class="drive-sub">'+(ROLE==='family'?'Trip photos and videos appear here as they are added.':'Put your best photos and all videos here — family can watch from anywhere. In the Drive app tap + → Upload (Cheryl can add too).')+'</div>'+
+   (ok?'<div class="drive-btns"><a class="drive-btn primary" href="'+driveUrl()+'" target="_blank" rel="noopener">Open folder ↗</a><button class="drive-btn" onclick="toggleDriveEmbed()">Preview here</button></div><div id="drive-embed"></div>':
+       '<div class="drive-sub">Sign in to see the folder link.</div>')+'</div>';
+}
 let REMOTE_MEDIA={};            /* { dayNumber: {items:[{type,url,ts}], note} }  from shared sync */
 function loadLocalGallery(){
   try{
@@ -5057,7 +5084,7 @@ function addGalleryMedia(dayNum){
   const input=document.createElement('input'); input.type='file'; input.accept='image/*,video/*'; input.multiple=true;
   input.onchange=async e=>{
     const files=Array.from(e.target.files||[]); if(!files.length) return;
-    const shared=!!(window.FB&&FB.ready); let ok=0, skipped=0;
+    const shared=!!(window.FB&&FB.ready&&FB.mediaReady); let ok=0, skipped=0;
     for(const f of files){
       try{
         if(f.type.startsWith('video/')){
@@ -5074,7 +5101,7 @@ function addGalleryMedia(dayNum){
       }catch(err){ skipped++; }
     }
     showToast(ok?('📸 '+ok+' saved'+(shared?' & shared':'')):'Nothing was saved');
-    if(skipped&&!shared) setTimeout(()=>showToast('Videos need shared sync — not switched on yet',3000),1800);
+    if(skipped&&!shared) setTimeout(()=>showToast('Videos go in the Drive folder (top of this page)',3500),1800);
     renderGallery();
   };
   input.click();
@@ -5089,7 +5116,7 @@ function deleteRemoteMedia(dayNum,url,e){
   if(e) e.stopPropagation();
   if(!canEdit()){ viewOnlyToast(); return; }
   if(!confirm('Remove this from the shared gallery?')) return;
-  if(window.FB&&FB.ready) FB.removeMedia(dayNum,url);
+  if(window.FB&&FB.ready&&FB.removeMedia) FB.removeMedia(dayNum,url);
 }
 function viewPhoto(src,date,label,type){
   const o=document.createElement('div'); o.className='media-viewer';
@@ -5105,11 +5132,11 @@ function saveGalleryNote(dayNum,text){
 }
 function renderGallery(){
   const wrap=document.getElementById('screen-photos'); wrap.innerHTML='';
-  const shared=!!(window.FB&&FB.ready), g=loadLocalGallery();
+  const shared=!!(window.FB&&FB.ready&&FB.mediaReady), g=loadLocalGallery();
   const hdr=document.createElement('div'); hdr.className='info-banner blue';
-  hdr.innerHTML='<strong>📸 Trip Photo & Video Gallery</strong><br>'+(ROLE==='family'?'Following along: photos and videos appear here as they are shared.':
-    (shared?'Shared sync is ON — what you add is visible to family right away. Videos are supported.':'Photos are saved on this phone. Turn on shared sync (see Alerts) so family can see them and to add videos.'));
+  hdr.innerHTML='<strong>📸 Trip Photo & Video Gallery</strong><br>'+(ROLE==='family'?'Following along: the Drive folder below has the photos and videos.':'Photos you add with ＋ below are saved on this phone, day by day. Use the Drive folder for videos and for sharing with family.');
   wrap.appendChild(hdr);
+  const dv=document.createElement('div'); dv.innerHTML=driveCardHtml(); wrap.appendChild(dv.firstChild);
   const back=document.createElement('button'); back.className='gal-back'; back.textContent='← Back to Quest'; back.onclick=()=>navigate('adventure'); wrap.appendChild(back);
 
   let total=0, withMedia=0;
@@ -5375,10 +5402,15 @@ const firebaseConfig = {
   appId: "1:660392767580:web:63e002ada9d6404a5bb699"
 };
 
+/* Photo/video files live in the shared Google Drive folder, not Firebase Storage (Storage needs a paid plan).
+   Set to true only if Storage is ever enabled. Notes, quests and the ledger use Firestore and do not need it. */
+const ENABLE_PHOTO_STORAGE = false;
+
 if (firebaseConfig.apiKey) {
   try {
-    const app = initializeApp(firebaseConfig), db = getFirestore(app), storage = getStorage(app);
-    const storageAlt = getStorage(app, 'gs://japan-2026-ecfd7.appspot.com');   /* fallback if the project uses the older bucket name */
+    const app = initializeApp(firebaseConfig), db = getFirestore(app);
+    const storage = ENABLE_PHOTO_STORAGE ? getStorage(app) : null;
+    const storageAlt = ENABLE_PHOTO_STORAGE ? getStorage(app, 'gs://japan-2026-ecfd7.appspot.com') : null;
     const FBx = window.FB || (window.FB = {});
     const safe = fn => (...a) => { try { return fn(...a); } catch (e) { console.warn('[sync]', e); } };
     Object.assign(FBx, {
@@ -5392,6 +5424,13 @@ if (firebaseConfig.apiKey) {
       setLedgerSettings: safe(s => setDoc(doc(db, 'trip', 'ledgerSettings'), s)),
       onLedgerSettings: safe(cb => onSnapshot(doc(db, 'trip', 'ledgerSettings'), snap => cb(snap.exists() ? snap.data() : null))),
       /* photos & videos: one document per trip day */
+      async setNote(day, text) {
+        try { const dref = doc(db, 'media', 'day' + day), cur = await getDoc(dref); const d = cur.exists() ? cur.data() : { items: [] }; d.note = text; await setDoc(dref, d); } catch (e) { console.warn(e); }
+      },
+      onMedia: safe(cb => onSnapshot(collection(db, 'media'), snap => { const m = {}; snap.docs.forEach(d => { const n = +d.id.replace('day', ''); if (n) m[n] = d.data(); }); cb(m); }, e => console.warn(e)))
+    });
+    FBx.mediaReady = ENABLE_PHOTO_STORAGE;
+    if (ENABLE_PHOTO_STORAGE) Object.assign(FBx, {
       async uploadMedia(day, blob, type) {
         try {
           const ext = type === 'video' ? ((blob.name || '').split('.').pop() || 'mp4') : 'jpg';
@@ -5408,11 +5447,7 @@ if (firebaseConfig.apiKey) {
       async removeMedia(day, url) {
         try { const dref = doc(db, 'media', 'day' + day), cur = await getDoc(dref); if (!cur.exists()) return;
           const d = cur.data(); d.items = (d.items || []).filter(i => i.url !== url); await setDoc(dref, d); } catch (e) { console.warn(e); }
-      },
-      async setNote(day, text) {
-        try { const dref = doc(db, 'media', 'day' + day), cur = await getDoc(dref); const d = cur.exists() ? cur.data() : { items: [] }; d.note = text; await setDoc(dref, d); } catch (e) { console.warn(e); }
-      },
-      onMedia: safe(cb => onSnapshot(collection(db, 'media'), snap => { const m = {}; snap.docs.forEach(d => { const n = +d.id.replace('day', ''); if (n) m[n] = d.data(); }); cb(m); }, e => console.warn(e)))
+      }
     });
     FBx.ready = true;
     window.dispatchEvent(new Event('fb-ready'));
