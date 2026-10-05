@@ -1364,7 +1364,144 @@ input,textarea{font-family:inherit}
 /* ── WEATHER SCREEN ── */
 #screen-weather { background: linear-gradient(160deg,#0d1b4b 0%,#162259 100%) !important; }
 
+
+/* ════════════════════════════════════
+   POKÉMON TYPE TAB THEMING
+════════════════════════════════════ */
+/* Route — Grass type */
+.app-shell[data-type="grass"] { --sky:#0d2a1a; --card-bg:#102a1c; --border:#2d6b3f; --muted:#7ab88a; }
+.app-shell[data-type="grass"] .bottom-nav { background:linear-gradient(0deg,#0a2015,#0d2a1a); border-top:1px solid #2d6b3f; }
+.app-shell[data-type="grass"] .nav-btn.active .nav-icon { filter:drop-shadow(0 0 6px #4caf50); }
+
+/* Travel — Flying type */
+.app-shell[data-type="flying"] { --sky:#0a1e3a; --card-bg:#0c2240; --border:#2a5fa8; --muted:#7aafe8; }
+.app-shell[data-type="flying"] .bottom-nav { background:linear-gradient(0deg,#081828,#0a1e3a); border-top:1px solid #2a5fa8; }
+.app-shell[data-type="flying"] .nav-btn.active .nav-icon { filter:drop-shadow(0 0 6px #60a0e0); }
+
+/* Catch — Poké Ball (keep existing navy/gold — no override needed) */
+
+/* Food — Fire type */
+.app-shell[data-type="fire"] { --sky:#2a0e00; --card-bg:#311200; --border:#a83a00; --muted:#e07030; }
+.app-shell[data-type="fire"] .bottom-nav { background:linear-gradient(0deg,#1e0900,#2a0e00); border-top:1px solid #a83a00; }
+.app-shell[data-type="fire"] .nav-btn.active .nav-icon { filter:drop-shadow(0 0 6px #ff6020); }
+
+/* Quest — Electric type */
+.app-shell[data-type="electric"] { --sky:#1a1600; --card-bg:#1e1a00; --border:#a89000; --muted:#d4b800; }
+.app-shell[data-type="electric"] .bottom-nav { background:linear-gradient(0deg,#141000,#1a1600); border-top:1px solid #a89000; }
+.app-shell[data-type="electric"] .nav-btn.active .nav-icon { filter:drop-shadow(0 0 6px #ffd700); }
+
+/* Translate — Psychic type */
+.app-shell[data-type="psychic"] { --sky:#1e0a2a; --card-bg:#240d32; --border:#7a3a9a; --muted:#c070e0; }
+.app-shell[data-type="psychic"] .bottom-nav { background:linear-gradient(0deg,#160820,#1e0a2a); border-top:1px solid #7a3a9a; }
+.app-shell[data-type="psychic"] .nav-btn.active .nav-icon { filter:drop-shadow(0 0 6px #c060e0); }
+
+/* Customs — Steel type */
+.app-shell[data-type="steel"] { --sky:#0e1520; --card-bg:#111a26; --border:#3a5070; --muted:#7090b0; }
+.app-shell[data-type="steel"] .bottom-nav { background:linear-gradient(0deg,#090f18,#0e1520); border-top:1px solid #3a5070; }
+.app-shell[data-type="steel"] .nav-btn.active .nav-icon { filter:drop-shadow(0 0 6px #6090c0); }
+
+/* Weather — Water type */
+.app-shell[data-type="water"] { --sky:#001a2e; --card-bg:#002038; --border:#1060a0; --muted:#4090d0; }
+.app-shell[data-type="water"] .bottom-nav { background:linear-gradient(0deg,#001020,#001a2e); border-top:1px solid #1060a0; }
+.app-shell[data-type="water"] .nav-btn.active .nav-icon { filter:drop-shadow(0 0 6px #40a0f0); }
+
+/* Alerts — Ghost type */
+.app-shell[data-type="ghost"] { --sky:#110820; --card-bg:#140a28; --border:#3a2060; --muted:#7050a0; }
+.app-shell[data-type="ghost"] .bottom-nav { background:linear-gradient(0deg,#0a0518,#110820); border-top:1px solid #3a2060; }
+.app-shell[data-type="ghost"] .nav-btn.active .nav-icon { filter:drop-shadow(0 0 6px #8050c0); }
+
+/* Photos — Normal type */
+.app-shell[data-type="normal"] { --sky:#1a1a2a; --card-bg:#1e1e32; --border:#505080; --muted:#9090b0; }
+
 </style>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+  import { getStorage, ref, uploadString, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
+
+  const firebaseConfig = {
+    apiKey: "PASTE_YOUR_API_KEY_HERE" // ← Get from Firebase Console → Project Settings → Your apps,
+    authDomain: "japan-2026-ecfd7.firebaseapp.com",
+    projectId: "japan-2026-ecfd7",
+    storageBucket: "japan-2026-ecfd7.appspot.com",
+    messagingSenderId: "660392767580",
+    appId: "1:660392767580:web:63e002ada9d6404a5bb699"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
+
+  // Expose to global scope for use by non-module scripts
+  window._fbDb = db;
+  window._fbStorage = storage;
+  window._fbDoc = doc;
+  window._fbSetDoc = setDoc;
+  window._fbGetDoc = getDoc;
+  window._fbOnSnapshot = onSnapshot;
+  window._fbCollection = collection;
+  window._fbRef = ref;
+  window._fbUploadString = uploadString;
+  window._fbGetDownloadURL = getDownloadURL;
+  window._firebaseReady = true;
+
+  // ── QUEST SYNC ─────────────────────────────────────────────
+  // Push local quest state to Firestore when changed
+  window.syncQuestsToFirebase = async function(state) {
+    if(!window._fbDb) return;
+    try {
+      await window._fbSetDoc(
+        window._fbDoc(window._fbDb, 'trip', 'quests'),
+        { completions: state, updatedAt: Date.now() }
+      );
+    } catch(e){ console.warn('Quest sync failed:', e); }
+  };
+
+  // Pull quest state from Firestore (for family viewers)
+  window.listenQuestsFromFirebase = function(callback) {
+    if(!window._fbDb) return;
+    return window._fbOnSnapshot(
+      window._fbDoc(window._fbDb, 'trip', 'quests'),
+      (snap) => {
+        if(snap.exists()) callback(snap.data().completions || {});
+      }
+    );
+  };
+
+  // ── PHOTO SYNC ─────────────────────────────────────────────
+  // Upload a photo to Firebase Storage, store URL in Firestore
+  window.syncPhotoToFirebase = async function(dayNum, dataUrl, note) {
+    if(!window._fbDb || !window._fbStorage) return;
+    try {
+      // Upload compressed image
+      const photoRef = window._fbRef(window._fbStorage, `photos/day${dayNum}/${Date.now()}.jpg`);
+      await window._fbUploadString(photoRef, dataUrl, 'data_url');
+      const url = await window._fbGetDownloadURL(photoRef);
+
+      // Store URL reference in Firestore
+      const photosRef = window._fbDoc(window._fbDb, 'trip', `photos_day${dayNum}`);
+      const existing = await window._fbGetDoc(photosRef);
+      const imgs = existing.exists() ? (existing.data().imgs || []) : [];
+      imgs.push({ url, uploadedAt: Date.now() });
+      await window._fbSetDoc(photosRef, { imgs, note: note || '' });
+      return url;
+    } catch(e){ console.warn('Photo sync failed:', e); return null; }
+  };
+
+  // Listen for photo updates (family viewer)
+  window.listenPhotosFromFirebase = function(dayNum, callback) {
+    if(!window._fbDb) return;
+    return window._fbOnSnapshot(
+      window._fbDoc(window._fbDb, 'trip', `photos_day${dayNum}`),
+      (snap) => { if(snap.exists()) callback(snap.data()); }
+    );
+  };
+
+  console.log('✅ Firebase connected: japan-2026-ecfd7');
+</script>
+
 </head>
 <body>
 <div class="app-shell">
@@ -1535,8 +1672,8 @@ const DAYS=[
      note:'Afternoon: iconic scramble crossing, Shibuya 109 (8 floors Japanese fashion), Miyashita Park rooftop.',
      tip:'Shibuya Sky observation deck at sunset is spectacular — book ahead online.'},
     {name:'teamLab Planets Tokyo — Evening',lat:35.6457,lng:139.7953,ticketKey:'teamlab_tokyo',
-     note:'Toyosu, ~30 min from Shibuya. Open until 9pm. Walk barefoot through pools of water with immersive body-scale digital art. Absolutely mind-blowing for kids and adults. From ~$27/¥4,000 per person.',
-     tip:'Book tickets in advance at teamlab.art/e/planets — sells out. Bring a change of socks. Go in the evening when it feels most magical. Allow 1.5 hrs.'}
+     note:'✔️ BOOKED. Entry: Tue Oct 27, 18:00–18:30. 2 adults + 1 child. Inquiry #fcf1d6ac05d549f690. Toyosu — 30 min from Shibuya. Walk barefoot through pools of water with immersive digital art.',
+     tip:'Arrive exactly at 18:00 entry time. Bring a change of socks — you walk through water. Allow 1.5 hrs. Last entry 9pm. Absolutely mind-blowing for kids and adults.'}
   ]},
   // ── DAY 7 — Oct 28 (Wed) — Fuji + Hakone ─────────────────────
   {day:7,date:'Oct 28',dateObj:'2026-10-28',city:'hakone',label:'Mt. Fuji + Kawaguchiko → Hakone',
@@ -1554,7 +1691,7 @@ const DAYS=[
      note:'3-min ropeway up Kachi Kachi Mountain. Panoramic Fuji and lake views. ¥900/~$6 adults, ¥450/~$3 kids.',
      tip:'Tanuki (raccoon dog) themed station at the top — great photo stop. Your son will love the cable car.'},
     {name:'Tonosawa Ichinoyu Honkan — Check In',lat:35.2332,lng:139.0934,ticketKey:'hakone_ryokan',
-     note:'Confirmation: T57CCACF6F6A8. Train/bus from Kawaguchiko to Hakone-Yumoto (~1.5 hrs). Check in from 3pm. Private family onsen, kaiseki dinner + breakfast.',
+     note:'✔️ Confirmation: T57CCACF6F6A8. Check-in from 3:00pm Oct 28. Train/bus from Kawaguchiko to Hakone-Yumoto (~1.5 hrs). Private family onsen, kaiseki dinner + breakfast.',
      tip:'Request room with private outdoor onsen overlooking the Hayakawa River. Wear yukata provided — walk to outdoor bath before dinner.'}
   ]},
   // ── DAY 8 — Oct 29 (Thu) — Arrive Osaka ──────────────────────
@@ -1586,7 +1723,7 @@ const DAYS=[
      note:'20 min by train. Japan’s Kitchen — fresh oysters, wagyu beef skewers, takoyaki, sashimi. Market lunch 12–1pm.',
      tip:'Bring cash. Try the giant fresh oysters and wagyu skewers. Covered market — great even if it rains.'},
     {name:'Nintendo Museum (Uji) — Afternoon',lat:34.8954,lng:135.7971,ticketKey:'nintendo_museum',
-     note:'✔️ BOOKED. Uji City ~50 min from Osaka. Interactive Nintendo history — playable exhibits from every era. Allow 2–3 hrs.',
+     note:'✔️ BOOKED. Entry: Fri Oct 30, 3:00pm–3:30pm. Purchase #M0715294468. Uji City ~50 min from Osaka. Interactive Nintendo history — playable exhibits from every Nintendo era.',
      tip:'Train: Namba → Kintetsu Kyoto Line → Kintetsu Kokuzou-mae. Your son experiences 50 years of Nintendo hands-on.'},
     {name:'Dotonbori — Low-Key Evening',lat:34.6687,lng:135.5012,
      note:'Back in Osaka by evening. Easy Dotonbori walk — takoyaki, pork buns, browse. Early night before tattoo tomorrow.',
@@ -1784,7 +1921,7 @@ const BOOKABLE_ITEMS=[
    instructions:'Book at cookly.me — search Handmade Chopsticks Workshop Osaka. $32/person, 1 hour, groups 1-4. Gareria Akka 3F, 1-16-20 Higashishinsaibashi, Chuo-ku — 5-min walk from Shinsaibashi Station. Available 10am-4pm daily, English instructor. Free cancellation 48hrs before. Book the 10am slot on Oct 30.'},
   {key:'kimono', name:'Kimono Wearing — Arashiyama', day:11, icon:'??', url:'https://www.yumeyakata.com/en/arashiyama/', urgency:'med',
    instructions:'Book at Yumeyakata Arashiyama or search Kimono rental Arashiyama on Klook. ~¥3,000-5,000/~$20-33 per person including dressing. Staff dress you in ~20 min. Walk Bamboo Forest + Tenryu-ji in full kimono. Return by 5-6pm. Kids kimono available for your son. Book in advance — popular with tourists.'},
-  {key:'teamlab_tokyo', name:'teamLab Planets Tokyo',              day:6,  icon:'??', url:'https://teamlab.art/e/planets/', urgency:'med',
+  {key:'teamlab_tokyo', status:'booked', confirmed:true, name:'teamLab Planets Tokyo',              day:6,  icon:'??', url:'https://teamlab.art/e/planets/', urgency:'med',
    instructions:'Book in advance at teamlab.art/e/planets — sells out fast. From ~¥4,000/~$27 per person. Walk barefoot through pools of water with body-immersive digital art. 4 indoor + 2 outdoor spaces. Toyosu — 30 min from Yotsuya. Allow 1.5 hrs. Evening visit (after 6pm) is most magical.'},
   {key:'teamlab_osaka', name:'teamLab Botanical Garden Osaka',     day:11, icon:'??', url:'https://teamlab.art/e/botanicalgarden/', urgency:'med',
    instructions:'Book at teamlab.art/e/botanicalgarden — tickets only sold online. ~¥1,800/~$12 per person. Open Oct 28–Nov 11: 6pm–10:30pm (last entry 9:30pm). Outdoor nighttime art museum at Nagai Botanical Garden. Take Midosuji Line to Nagai Station from Osaka Namba (10 min walk to garden).'},
@@ -1802,7 +1939,7 @@ const BOOKABLE_ITEMS=[
    instructions:'¥1,000 (~$6.70) adults, ¥350 (~$2.30) kids. UNESCO World Heritage. Famous squeaky nightingale floors designed to detect ninja assassins. Hidden rooms, trap doors, stunning interior. 15 min from Kinkakuji. Buy tickets online to skip queues.'},
   {key:'himeji',       name:'Himeji Castle',                  day:13, icon:'🏰', url:'https://www.himejicastle.jp/en/', urgency:'med',
    instructions:'UNESCO World Heritage — best preserved feudal castle in Japan. 35 min from Shin-Osaka by Shinkansen (~¥2,990/~$20 adult each way). Open 9am. ¥1,000 (~$6.70) adults, ¥300 (~$2) kids. Take early Shinkansen (~8am) to arrive at opening. Allow 2 hrs, then head to Kobe.'},
-  {key:'tattoo', status:'booked', time:'Oct 31 at 11:00am', name:'Good Times Ink — Cherry Blossom Tattoo 🌸', day:9, icon:'🌸', url:'https://goodtimesink.jp/en/', urgency:'med',
+  {key:'tattoo', status:'booked', confirmed:true, time:'Oct 31 at 11:00am', name:'Good Times Ink — Cherry Blossom Tattoo 🌸', day:9, icon:'🌸', url:'https://goodtimesink.jp/en/', urgency:'med',
    instructions:'Book via goodtimesink.jp/en contact form — English supported. Located in Americamura, Nishi Shinsaibashi 2-12-14, Ocean Drive 4F, Osaka. Open noon-7pm, closed Tuesdays. Cherry blossom fine line tattoo — bring a reference image. Small piece (coin to business card size) runs ¥15,000-25,000 (~$100-167). Contact via LINE app. Book at least 2 weeks in advance.'},
   {key:'sword_master', name:'Samurai Sword Master Training',   day:13, icon:'⚔️', url:'https://www.klook.com/en-US/activity/osaka-samurai-experience/', urgency:'med',
    instructions:'Private samurai sword training with a master instructor. Real katana technique, one-on-one instruction, photos in armor. Book via Klook or Viator — search Osaka Samurai Experience. ~¥8,000 (~$53) adult, ¥5,000 (~$33) child. Family private session available. Book well in advance.'},
@@ -2090,6 +2227,18 @@ function renderFlights(){
   wrap.innerHTML='';
 
   // ── SECTION: FLIGHTS ────────────────────────────────────────
+  // ── INTERACTIVE TRAVEL MAP ──────────────────────────────────
+  const mapSec=document.createElement('div');
+  mapSec.innerHTML='<div class="sec">🗺️ TRIP MAP</div>';
+  wrap.appendChild(mapSec);
+
+  const mapCard=document.createElement('div');
+  mapCard.style.cssText='background:#0a1540;border:2px solid rgba(255,215,0,.3);border-radius:14px;overflow:hidden;margin-bottom:14px;';
+  mapCard.id='travel-map-container';
+  wrap.appendChild(mapCard);
+  // Render map after DOM settles
+  setTimeout(()=>renderTravelMap(), 100);
+
   const fsec=document.createElement('div');
   fsec.innerHTML='<div class="sec">✈️ FLIGHTS</div>';
   wrap.appendChild(fsec);
@@ -3927,6 +4076,367 @@ async function loadWeatherForCity(cityKey, wrap){
 }
 
 </script>
+<script>
+/* ════════════════════════════════════
+   TRAVEL TAB INTERACTIVE MAP
+   Shows all booked + planned locations
+   Confirmed = bold gold marker
+   Planned = standard blue marker
+════════════════════════════════════ */
+
+const TRAVEL_LOCATIONS = [
+  // ── FLIGHTS ──────────────────────────────────────
+  {name:'Salt Lake City (SLC)',      lat:40.7884,  lng:-111.9778, type:'flight',   confirmed:true,  note:'Depart Oct 21, Flight #3618 → LAX'},
+  {name:'Los Angeles (LAX)',         lat:33.9425,  lng:-118.4081, type:'flight',   confirmed:true,  note:'SQ 11 departs 2:00pm Oct 22 → NRT'},
+  {name:'Tokyo Narita (NRT)',        lat:35.7720,  lng:140.3929,  type:'flight',   confirmed:true,  note:'Arrive Oct 23 5:50pm · DMWBR3'},
+  {name:'Tokyo Haneda (HND)',        lat:35.5494,  lng:139.7798,  type:'flight',   confirmed:true,  note:'AA 26 departs 6:00pm Nov 4 → LAX'},
+  // ── ACCOMMODATIONS ───────────────────────────────
+  {name:'Yotsuya Apartment (Tokyo)', lat:35.6864,  lng:139.7190,  type:'hotel',    confirmed:true,  note:'✅ Oct 23–28 · Booking #6916262765 · Check-in 4–5pm'},
+  {name:'Tōnosawa Ichinoyu Honkan', lat:35.2332,  lng:139.0934,  type:'hotel',    confirmed:true,  note:'✅ Oct 28–29 · Confirmation T57CCACF6F6A8 · Check-in 3pm'},
+  {name:"Gu's Tani4 Airbnb (Osaka)",lat:34.6873,  lng:135.5262,  type:'hotel',    confirmed:true,  note:'✅ Oct 29–Nov 3 · Check-in 3pm · Host: Ayumi'},
+  {name:'Conrad Tokyo Shiodome',     lat:35.6615,  lng:139.7590,  type:'hotel',    confirmed:false, note:'⚠ Book Now · Nov 3 night · Floors 28–37 · Bay view'},
+  // ── KEY ATTRACTIONS ──────────────────────────────
+  {name:'Tokyo DisneySea',           lat:35.6267,  lng:139.8851,  type:'ticket',   confirmed:true,  note:'✅ Oct 26 · 1-Day Passport ×3 · #2102112-621-06567794-0'},
+  {name:'Nintendo Museum (Uji)',     lat:34.8954,  lng:135.7971,  type:'ticket',   confirmed:true,  note:'✅ Oct 30 · 3:00–3:30pm entry · #M0715294468'},
+  {name:'teamLab Planets Tokyo',     lat:35.6457,  lng:139.7953,  type:'ticket',   confirmed:true,  note:'✅ Oct 27 · 18:00–18:30 entry · #fcf1d6ac05d549f690'},
+  {name:'Good Times Ink (Tattoo)',   lat:34.6694,  lng:135.4993,  type:'ticket',   confirmed:true,  note:'✅ Oct 31 · 11:00am · Corby: Cherry Blossom 🌸 · Cheryl: Tiger 🐯'},
+  {name:'Godzilla / Nijigen no Mori',lat:34.5752,  lng:135.0008,  type:'activity', confirmed:false, note:'Nov 2 · Book at ticket.nijigennomori.com'},
+  {name:'Chureito Pagoda',           lat:35.4972,  lng:138.7918,  type:'activity', confirmed:false, note:'Oct 28 · Iconic Fuji + pagoda photo spot'},
+  {name:'Lake Kawaguchiko',          lat:35.5116,  lng:138.7573,  type:'activity', confirmed:false, note:'Oct 28 · Fuji reflection + lakeside walk'},
+  {name:'Fushimi Inari Taisha',      lat:34.9677,  lng:135.7792,  type:'activity', confirmed:false, note:'Nov 1 · 6am dawn visit'},
+  {name:'Arashiyama Bamboo Forest',  lat:35.0168,  lng:135.6713,  type:'activity', confirmed:false, note:'Nov 1 · Kimono walk'},
+  {name:'Yamazaki Distillery',       lat:34.8929,  lng:135.6747,  type:'activity', confirmed:false, note:'Nov 1 · Book at suntory.com'},
+  {name:'Himeji Castle',             lat:34.8394,  lng:134.6939,  type:'activity', confirmed:false, note:'Nov 3 · UNESCO Heritage'},
+  {name:'Todai-ji Temple (Nara)',    lat:34.6890,  lng:135.8398,  type:'activity', confirmed:false, note:'Nov 2 · Giant Buddha + deer'},
+  {name:'Senso-ji Temple',           lat:35.7148,  lng:139.7967,  type:'activity', confirmed:false, note:'Oct 27 · Asakusa'},
+  {name:'CAPPINESS Oshiage',         lat:35.7101,  lng:139.8044,  type:'activity', confirmed:false, note:'Oct 25 · Book at tablecheck.com'},
+];
+
+const MAP_TYPE_COLORS = {
+  flight:   '#6366f1',
+  hotel:    '#ffd700',
+  ticket:   '#22c55e',
+  activity: '#60a5fa',
+};
+
+function renderTravelMap(){
+  const mapContainer = document.getElementById('travel-map-container');
+  if(!mapContainer) return;
+
+  // Clear existing map
+  mapContainer.innerHTML = '';
+
+  // Legend
+  const legend = document.createElement('div');
+  legend.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;padding:8px 10px;background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,215,0,.15);';
+  legend.innerHTML = `
+    <span style="font-size:.6rem;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;width:100%;margin-bottom:2px;">Map Legend</span>
+    <span style="font-size:.62rem;color:#6366f1;">● Flights</span>
+    <span style="font-size:.62rem;color:#ffd700;">● Hotels</span>
+    <span style="font-size:.62rem;color:#22c55e;">● Booked Tickets</span>
+    <span style="font-size:.62rem;color:#60a5fa;">● Activities</span>
+    <span style="font-size:.62rem;font-weight:900;color:var(--yellow);">★ = Confirmed</span>
+  `;
+  mapContainer.appendChild(legend);
+
+  // Map div
+  const mapDiv = document.createElement('div');
+  mapDiv.id = 'leaflet-travel-map';
+  mapDiv.style.cssText = 'height:340px;width:100%;z-index:1;';
+  mapContainer.appendChild(mapDiv);
+
+  // Init Leaflet
+  if(window._travelMap){ window._travelMap.remove(); window._travelMap = null; }
+
+  const map = L.map('leaflet-travel-map', {
+    center:[36.2048,138.2529],
+    zoom:5,
+    zoomControl:true,
+    scrollWheelZoom:false,
+  });
+  window._travelMap = map;
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'© OpenStreetMap',
+    maxZoom:18,
+  }).addTo(map);
+
+  // Add markers
+  TRAVEL_LOCATIONS.forEach(loc => {
+    const color = MAP_TYPE_COLORS[loc.type] || '#60a5fa';
+    const size  = loc.confirmed ? 14 : 10;
+    const star  = loc.confirmed ? '★' : '●';
+    const fw    = loc.confirmed ? 900 : 400;
+
+    const icon = L.divIcon({
+      html: `<div style="
+        background:${color};
+        color:#fff;
+        border:${loc.confirmed?'2.5px solid #ffd700':'1.5px solid rgba(255,255,255,.4)'};
+        border-radius:50%;
+        width:${size}px;height:${size}px;
+        display:flex;align-items:center;justify-content:center;
+        font-size:${size*0.55}px;font-weight:${fw};
+        box-shadow:${loc.confirmed?'0 0 8px rgba(255,215,0,.6)':'0 1px 4px rgba(0,0,0,.3)'};
+      ">${star}</div>`,
+      className:'',
+      iconSize:[size,size],
+      iconAnchor:[size/2,size/2],
+    });
+
+    const marker = L.marker([loc.lat,loc.lng],{icon}).addTo(map);
+    marker.bindPopup(`
+      <div style="min-width:160px;padding:4px;">
+        <div style="font-weight:${loc.confirmed?900:700};font-size:.82rem;color:${loc.confirmed?'#1a5c2a':'#1a1f3a'};margin-bottom:3px;">
+          ${loc.confirmed?'✅ ':''}${loc.name}
+        </div>
+        <div style="font-size:.68rem;color:#4a5280;line-height:1.4;">${loc.note}</div>
+      </div>
+    `,{maxWidth:220});
+  });
+
+  // Confirmed locations list below map
+  const confirmedList = document.createElement('div');
+  confirmedList.style.cssText = 'padding:10px 12px;';
+  confirmedList.innerHTML = '<div style="font-size:.6rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--yellow);margin-bottom:8px;">✅ Confirmed Bookings</div>';
+
+  TRAVEL_LOCATIONS.filter(l=>l.confirmed).forEach(loc=>{
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,215,0,.1);cursor:pointer;';
+    row.innerHTML = `
+      <span style="width:10px;height:10px;border-radius:50%;background:${MAP_TYPE_COLORS[loc.type]};flex-shrink:0;border:1.5px solid #ffd700;box-shadow:0 0 6px rgba(255,215,0,.4);"></span>
+      <div style="flex:1;">
+        <div style="font-size:.72rem;font-weight:900;color:#fff;">${loc.name}</div>
+        <div style="font-size:.62rem;color:rgba(255,255,255,.5);">${loc.note}</div>
+      </div>
+    `;
+    row.onclick = () => {
+      map.flyTo([loc.lat,loc.lng],11,{duration:1});
+    };
+    confirmedList.appendChild(row);
+  });
+
+  mapContainer.appendChild(confirmedList);
+}
+
+/* ════════════════════════════════════
+   SHARED PHOTO/VIDEO GALLERY
+   - Upload photos per day from device camera/gallery
+   - Stored in localStorage (device-local)
+   - Family share: generates shareable link with
+     photos encoded in URL (small) or shows QR
+   - Video: links only (too large for localStorage)
+════════════════════════════════════ */
+
+function loadGalleryPhotos(){
+  try{ return JSON.parse(localStorage.getItem('japan2026_gallery')||'{}'); }
+  catch(e){ return {}; }
+}
+function saveGalleryPhotos(data){
+  try{ localStorage.setItem('japan2026_gallery', JSON.stringify(data)); }
+  catch(e){ showToast('Storage full — remove some photos'); }
+}
+
+function renderGallery(){
+  const wrap = document.getElementById('screen-photos');
+  wrap.innerHTML = '';
+
+  // Header
+  const hdr = document.createElement('div');
+  hdr.className = 'banner blue';
+  hdr.innerHTML = '<strong>📸 Trip Photo Gallery</strong><br>Add photos to each day. Tap any photo to view full size. Family can see your trip as it happens!';
+  wrap.appendChild(hdr);
+
+  // Back button
+  const back = document.createElement('button');
+  back.style.cssText = 'width:100%;background:rgba(255,215,0,.1);border:1.5px solid rgba(255,215,0,.3);border-radius:10px;padding:8px;font-size:.72rem;font-weight:800;color:var(--yellow);margin-bottom:14px;';
+  back.innerHTML = '← Back to Quest';
+  back.onclick = () => navigate('adventure');
+  wrap.appendChild(back);
+
+  const photos = loadGalleryPhotos();
+  const totalPhotos = Object.values(photos).reduce((sum,d)=>sum+(d.imgs||[]).length,0);
+
+  // Stats bar
+  const stats = document.createElement('div');
+  stats.style.cssText = 'display:flex;gap:10px;margin-bottom:14px;';
+  stats.innerHTML = `
+    <div style="flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,215,0,.2);border-radius:10px;padding:10px;text-align:center;">
+      <div style="font-size:1.4rem;font-weight:900;color:var(--yellow);">${totalPhotos}</div>
+      <div style="font-size:.6rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;">Photos Saved</div>
+    </div>
+    <div style="flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,215,0,.2);border-radius:10px;padding:10px;text-align:center;">
+      <div style="font-size:1.4rem;font-weight:900;color:var(--yellow);">${Object.keys(photos).length}</div>
+      <div style="font-size:.6rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;">Days Covered</div>
+    </div>
+    <div style="flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,215,0,.2);border-radius:10px;padding:10px;text-align:center;">
+      <div style="font-size:1.4rem;font-weight:900;color:var(--yellow);">14</div>
+      <div style="font-size:.6rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;">Trip Days</div>
+    </div>
+  `;
+  wrap.appendChild(stats);
+
+  // Day sections
+  DAYS.forEach(day=>{
+    const dayData = photos[day.day]||{imgs:[],note:''};
+    const color = CITIES[day.city].color;
+    const hasPhotos = (dayData.imgs||[]).length > 0;
+
+    const section = document.createElement('div');
+    section.style.cssText = 'margin-bottom:16px;';
+
+    // Day header
+    const dayHdr = document.createElement('div');
+    dayHdr.style.cssText = `display:flex;align-items:center;gap:8px;margin-bottom:8px;padding:8px 10px;background:linear-gradient(135deg,rgba(255,255,255,.06),transparent);border-left:3px solid ${color};border-radius:0 8px 8px 0;`;
+    dayHdr.innerHTML = `
+      <span style="font-size:.6rem;font-weight:900;background:${color};color:#fff;border-radius:6px;padding:2px 8px;">Day ${day.day}</span>
+      <div style="flex:1;">
+        <div style="font-size:.74rem;font-weight:700;color:#fff;">${day.date} — ${day.label}</div>
+        <div style="font-size:.6rem;color:rgba(255,255,255,.4);">${hasPhotos?(dayData.imgs.length)+' photo'+(dayData.imgs.length!==1?'s':''):'No photos yet'}</div>
+      </div>
+    `;
+    section.appendChild(dayHdr);
+
+    // Photo grid
+    const grid = document.createElement('div');
+    grid.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:6px;';
+
+    (dayData.imgs||[]).forEach((dataUrl,idx)=>{
+      const thumb = document.createElement('div');
+      thumb.style.cssText = 'aspect-ratio:1;border-radius:8px;overflow:hidden;position:relative;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);cursor:pointer;';
+      thumb.innerHTML = `<img src="${dataUrl}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+        <div onclick="deleteGalleryPhoto(${day.day},${idx},event)" style="position:absolute;top:3px;right:3px;background:rgba(204,0,0,.85);color:#fff;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:.6rem;cursor:pointer;">✕</div>`;
+      thumb.onclick = (e) => { if(!e.target.textContent.includes('✕')) viewPhoto(dataUrl, day.date, day.label); };
+      grid.appendChild(thumb);
+    });
+
+    // Add photo button
+    const addBtn = document.createElement('div');
+    addBtn.style.cssText = 'aspect-ratio:1;border-radius:8px;border:2px dashed rgba(255,215,0,.3);background:rgba(255,215,0,.04);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;';
+    addBtn.innerHTML = '<span style="font-size:1.4rem;">📷</span><span style="font-size:.52rem;color:rgba(255,255,255,.35);margin-top:2px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;">Add</span>';
+    addBtn.onclick = () => addGalleryPhoto(day.day);
+    grid.appendChild(addBtn);
+    section.appendChild(grid);
+
+    // Memory note
+    const note = document.createElement('textarea');
+    note.style.cssText = 'width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,215,0,.2);border-radius:6px;padding:6px 8px;font-size:.68rem;color:rgba(255,255,255,.7);resize:none;box-sizing:border-box;';
+    note.placeholder = `Memory note for Day ${day.day}...`;
+    note.rows = 2;
+    note.value = dayData.note||'';
+    note.onchange = () => {
+      const p = loadGalleryPhotos();
+      if(!p[day.day]) p[day.day]={imgs:[]};
+      p[day.day].note = note.value;
+      saveGalleryPhotos(p);
+    };
+    section.appendChild(note);
+    wrap.appendChild(section);
+  });
+}
+
+function addGalleryPhoto(dayNum){
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.multiple = true;
+  input.onchange = (e) => {
+    const files = Array.from(e.target.files||[]);
+    if(!files.length) return;
+    let loaded = 0;
+    files.forEach(file => {
+      // Compress to ~400px wide for storage
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const maxW = 600;
+          const scale = Math.min(1, maxW / img.width);
+          canvas.width = img.width * scale;
+          canvas.height = img.height * scale;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const compressed = canvas.toDataURL('image/jpeg', 0.7);
+
+          const photos = loadGalleryPhotos();
+          if(!photos[dayNum]) photos[dayNum]={imgs:[],note:''};
+          photos[dayNum].imgs.push(compressed);
+          saveGalleryPhotos(photos);
+          // Sync to Firebase Storage
+          if(window.syncPhotoToFirebase){
+            window.syncPhotoToFirebase(dayNum, compressed, photos[dayNum].note||'')
+              .then(url=>{ if(url) console.log('Photo synced to Firebase'); });
+          }
+          loaded++;
+          if(loaded === files.length){
+            showToast(`📸 ${loaded} photo${loaded>1?'s':''} saved!`);
+            renderGallery();
+          }
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+  input.click();
+}
+
+function deleteGalleryPhoto(dayNum, idx, e){
+  e.stopPropagation();
+  if(!confirm('Delete this photo?')) return;
+  const photos = loadGalleryPhotos();
+  if(photos[dayNum]?.imgs) photos[dayNum].imgs.splice(idx,1);
+  saveGalleryPhotos(photos);
+  showToast('Photo removed');
+  renderGallery();
+}
+
+function viewPhoto(dataUrl, date, label){
+  // Full screen overlay
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;';
+  overlay.innerHTML = `
+    <div style="font-size:.7rem;color:rgba(255,255,255,.5);margin-bottom:10px;">${date} — ${label}</div>
+    <img src="${dataUrl}" style="max-width:100%;max-height:80vh;object-fit:contain;border-radius:8px;">
+    <button onclick="this.parentElement.remove()" style="margin-top:16px;background:rgba(255,255,255,.15);color:#fff;font-size:.75rem;font-weight:700;padding:8px 24px;border-radius:20px;border:1px solid rgba(255,255,255,.3);">✕ Close</button>
+  `;
+  overlay.onclick = (e) => { if(e.target===overlay) overlay.remove(); };
+  document.body.appendChild(overlay);
+}
+
+</script>
+<script>
+
+/* ── POKÉMON TYPE TAB THEMING ── */
+const TAB_TYPES = {
+  itin:      'grass',
+  flights:   'flying',
+  tickets:   null,      // keep default navy/gold
+  food:      'fire',
+  adventure: 'electric',
+  translate: 'psychic',
+  customs:   'steel',
+  weather:   'water',
+  alerts:    'ghost',
+  photos:    'normal',
+};
+
+function applyTypeTheme(screen) {
+  const shell = document.querySelector('.app-shell') || document.body;
+  const type = TAB_TYPES[screen] || null;
+  if(type) shell.dataset.type = type;
+  else delete shell.dataset.type;
+}
+
+// Wrap navigate to apply theming
+const _navigateBeforeTheme = navigate;
+navigate = function(screen) {
+  _navigateBeforeTheme(screen);
+  applyTypeTheme(screen);
+};
+
+</script>
 </body>
 </html>
 <!-- INJECTED STYLES -->
@@ -4627,6 +5137,8 @@ function loadQuestState(){
 }
 function saveQuestState(state){
   try{ localStorage.setItem('japan2026_quests', JSON.stringify(state)); }catch(e){}
+  // Sync to Firebase for family viewers
+  if(window.syncQuestsToFirebase) window.syncQuestsToFirebase(state);
 }
 function getTotalXP(){
   const state=loadQuestState();
@@ -4758,67 +5270,6 @@ function savePhotos(photos){
   try{ localStorage.setItem('japan2026_photos', JSON.stringify(photos)); }catch(e){}
 }
 
-function renderPhotos(){
-  const wrap=document.getElementById('screen-photos');
-  wrap.innerHTML='';
-
-  const banner=document.createElement('div');
-  banner.className='banner blue';
-  banner.innerHTML='<strong>📸 Photo Journal</strong><br>Tap the + to add photos from your camera or gallery for each day. Photos are saved on your device.';
-  wrap.appendChild(banner);
-
-  const backBtn=document.createElement('button');
-  backBtn.style.cssText='width:100%;background:rgba(255,215,0,.1);border:1.5px solid rgba(255,215,0,.3);border-radius:10px;padding:8px;font-size:.72rem;font-weight:800;color:var(--yellow);margin-bottom:14px;';
-  backBtn.innerHTML='← Back to Quest';
-  backBtn.onclick=()=>navigate('adventure');
-  wrap.appendChild(backBtn);
-
-  const photos=loadPhotos();
-
-  DAYS.forEach(day=>{
-    const dayPhotos=photos[day.day]||{imgs:[],note:''};
-    const color=CITIES[day.city].color;
-
-    const hdr=document.createElement('div');
-    hdr.className='photos-day-header';
-    hdr.innerHTML=`<span style="background:${color};color:#fff;border-radius:6px;padding:2px 8px;font-size:.6rem;">Day ${day.day}</span> ${day.date} — ${day.label}`;
-    wrap.appendChild(hdr);
-
-    const grid=document.createElement('div');
-    grid.className='photo-grid';
-    grid.id=`photo-grid-${day.day}`;
-
-    // Existing photos
-    (dayPhotos.imgs||[]).forEach((dataUrl,idx)=>{
-      const thumb=document.createElement('div');
-      thumb.className='photo-thumb';
-      thumb.innerHTML=`<img src="${dataUrl}" alt="Day ${day.day} photo"><div class="photo-del" onclick="deletePhoto(${day.day},${idx})">✕</div>`;
-      grid.appendChild(thumb);
-    });
-
-    // Add button
-    const addBtn=document.createElement('div');
-    addBtn.className='photo-add-btn';
-    addBtn.innerHTML='📷<span>Add Photo</span>';
-    addBtn.onclick=()=>addPhoto(day.day);
-    grid.appendChild(addBtn);
-    wrap.appendChild(grid);
-
-    // Memory note
-    const note=document.createElement('textarea');
-    note.className='photo-memory-note';
-    note.placeholder=`Add a memory note for Day ${day.day}...`;
-    note.rows=2;
-    note.value=dayPhotos.note||'';
-    note.onchange=()=>{
-      const p=loadPhotos();
-      if(!p[day.day]) p[day.day]={imgs:[]};
-      p[day.day].note=note.value;
-      savePhotos(p);
-    };
-    wrap.appendChild(note);
-  });
-}
 
 function addPhoto(dayNum){
   const input=document.createElement('input');
