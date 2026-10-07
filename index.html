@@ -2080,6 +2080,9 @@ body[data-role="family"] #nav-tickets,body[data-role="family"] #nav-customs,body
   </nav>
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
+<script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js"></script>
 <script>
 /* ═══════════════════════════════════════════
    JAPAN 2026 — TRIP DATA
@@ -2257,7 +2260,7 @@ const DAYS=[
   ]},
 
   /* ── DAY 10 · Sat Oct 31 ── */
-  {day:10,date:'Oct 31',dateObj:'2026-10-31',city:'osaka',label:'Tattoo day 🌸🐯 · Halloween night',
+  {day:10,date:'Oct 31',dateObj:'2026-10-31',city:'osaka',label:'Tattoo day 🌸🐯 · Osaka GLOW · Halloween night',
    banner:'🌸🐯 <strong>Both tattoo sessions start at 11:00am.</strong> Plan around the longer piece and keep the afternoon open.',
    stops:[
     {name:'Good Times Ink — 11:00am · Corby 🌸 + Cheryl 🐯',lat:34.6722,lng:135.4985,ticketKey:'tattoo',
@@ -2269,9 +2272,12 @@ const DAYS=[
     {name:'Aftercare + rest',lat:34.6800,lng:135.5185,
      note:'Keep the wrap on as the artist instructs; no soaking, pools or hot springs while it heals; keep it out of the sun and away from tight sleeves.',
      tip:'Ask for the aftercare instructions in English before you leave the shop.'},
-    {name:'Dotonbori Halloween night 🎃 (optional)',lat:34.6687,lng:135.5013,
-     note:'Costumes everywhere on Dotonbori Bridge and in Americamura after dark. It gets very crowded — keep your son close and protect fresh tattoos from bumps.',
-     tip:'Dinner first, home by ~9:30pm. Tomorrow starts early.'}
+    {name:'Osaka GLOW — glow-in-the-dark dance show (evening)',lat:34.7055,lng:135.4983,ticketKey:'osaka_glow',
+     note:'A show in a completely dark venue where dancers in glowing EL-wire costumes perform; you also build your own glow wand. About 90–100 minutes. Near Umeda / Shin-Osaka — from the apartment it is the Tanimachi Line to Higashi-Umeda (the pin is approximate; use the address on your ticket). Stage Experience tickets (ages 8+) let your son wear a glowing costume and dance on stage; younger kids and anyone who prefers to watch use Standard/Premium tickets. I could not see Oct 31 showtimes — check osakaglow.jp or Viator/GetYourGuide.',
+     tip:'NOT BOOKED YET. Free cancellation closes 24 hours before, and the tattoos may run long — choose the latest evening slot offered. With fresh tattoos, skip the Stage Experience costume for the adults and let your son do the stage.'},
+    {name:'Dotonbori Halloween night 🎃 (optional, if energy allows)',lat:34.6687,lng:135.5013,
+     note:'Costumes everywhere on Dotonbori Bridge and in Americamura after dark. It gets very crowded — keep your son close and protect fresh tattoos from bumps. After the GLOW show it is a short ride south, or skip it and head home.',
+     tip:'Dinner somewhere easy, and aim to be home by ~9:30–10pm. Tomorrow starts around 7am.'}
   ]},
 
   /* ── DAY 11 · Sun Nov 1 ── */
@@ -2473,6 +2479,7 @@ const LINKS=[
     {name:'Nijigen no Mori (Godzilla)',desc:'Nov 2 — tickets + bus',url:'https://ticket.nijigennomori.com/en/',urgent:true},
     {name:'Himeji Castle',desc:'Nov 3 — hours and tickets',url:'https://www.himejicastle.jp/en/',urgent:false},
     {name:'Suntory Yamazaki',desc:'Optional — museum reservation',url:'https://www.suntory.com/factory/yamazaki/',urgent:false},
+ {name:'Osaka GLOW',desc:'Oct 31 evening — glow-in-the-dark dance show (not booked yet)',url:'https://osakaglow.jp/',urgent:true},
     {name:'Good Times Ink',desc:'Booked: Oct 31, 11:00am',url:'https://goodtimesink.jp/',urgent:false}
   ]},
   {section:'🏨 Stays', items:[
@@ -2493,6 +2500,8 @@ const ALERTS=[
  /* ── BOOK / ARRANGE NOW ── */
  {id:'a_conrad',group:'now',urgent:false,key:'hotel_conrad',title:'🏨 Conrad Tokyo — Nov 3–4 booked ✔',
   body:'Hilton confirmation ⟦CONRAD_BK⟧. Ask for a high floor, and plan the taxi (~¥8,000–10,000) or Monorail from Hamamatsucho for Nov 4.'},
+ {id:'a_glow',group:'now',urgent:true,key:'osaka_glow',title:'✨ Book Osaka GLOW — Halloween, Sat Oct 31 evening',
+  body:'osakaglow.jp or Viator / GetYourGuide. About 90–100 min; Stage Experience tickets are for ages 8+ (your son qualifies). Check the Oct 31 showtimes — pick the latest evening slot because cancellation closes 24 hours before and the tattoos may run long. Adults with fresh tattoos can watch instead of wearing the stage costume.'},
  {id:'a_cappiness',group:'now',urgent:true,key:'cappiness',title:'🦫 Book CAPPINESS — Sun Oct 25, 10:00am',
   body:'tablecheck.com (search “CAPPINESS OSHIAGE”). ¥4,000 per person, card charged at booking. Ages 5+; ages 5–12 need an adult.'},
  {id:'a_chopsticks',group:'now',urgent:true,key:'chopsticks',title:'✂️ Book chopstick making — Fri Oct 30, 10:00am',
@@ -2653,10 +2662,7 @@ function toggleDay(dayNum, card){
 function initMap(){
   if(STATE.map) return;
   STATE.map=L.map('map',{zoomControl:true}).setView([35.6,137.2],6);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
-    attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">Carto</a>',
-    subdomains:'abcd', maxZoom:19,
-  }).addTo(STATE.map);
+  addBaseMap(STATE.map);
   buildMapMarkers();
   buildMapFilters();
 }
@@ -4327,7 +4333,7 @@ const TRANSPORT=[
  {date:'Oct 29',icon:'🚇',name:'Osaka Metro · teamLab Nagai (optional)',route:'Tanimachi → Tennoji → Nagai',when:'~6:15pm',dur:'~25 min',adult:700,approx:true,pay:'IC card',note:'Round trip estimate.'},
  {date:'Oct 30',icon:'🚇',name:'Osaka Metro · Shinsaibashi + Kuromon',route:'Tanimachi 4 → Shinsaibashi → Nippombashi',when:'morning',dur:'',adult:800,approx:true,pay:'IC card',note:''},
  {date:'Oct 30',icon:'🚃',name:'JR to the Nintendo Museum (round trip)',route:'Osaka → Kyoto → JR Ogura',when:'12:45pm out · ~5:45pm back',dur:'~1h15 each way',adult:1780,approx:true,pay:'IC card',jrWest:true,note:'About ¥580 (Osaka→Kyoto) + ¥310 (Kyoto→Ogura) each way.'},
- {date:'Oct 31',icon:'🚇',name:'Osaka Metro · tattoos + Dotonbori',route:'Tanimachi ↔ Namba/Shinsaibashi',when:'',dur:'',adult:700,approx:true,pay:'IC card',note:''},
+ {date:'Oct 31',icon:'🚇',name:'Osaka Metro · tattoos, Osaka GLOW, Dotonbori',route:'Tanimachi ↔ Namba/Shinsaibashi',when:'',dur:'',adult:700,approx:true,pay:'IC card',note:''},
  {date:'Nov 1',icon:'🚃',name:'Keihan to Fushimi-Inari',route:'Tanimachi → Tenma-bashi → Keihan → Fushimi-Inari',when:'~7:00am',dur:'~1 hr',adult:660,approx:true,pay:'IC card',note:'Not a JR line.'},
  {date:'Nov 1',icon:'🚃',name:'JR · Inari → Arashiyama → Osaka',route:'Fushimi-Inari → Kyoto → Saga-Arashiyama → Kyoto → Osaka',when:'',dur:'',adult:1210,approx:true,pay:'IC card',jrWest:true,note:'Estimate of the JR legs of the day.'},
  {date:'Nov 2',icon:'🚃',name:'Kintetsu to Nara (round trip)',route:'Osaka-Uehommachi ↔ Kintetsu-Nara',when:'~7:15am out',dur:'~35 min each way',adult:1150,approx:true,pay:'IC card',note:'Not a JR line.'},
@@ -4408,6 +4414,8 @@ const BOOKABLE_EXTRA=[
  {key:'flight_lax_slc',dayLabel:'Day 14 · Wed Nov 4',name:'LAX → SLC · Flight #4752',icon:'✈️',url:'https://www.delta.com/',urgency:'high',confirmed:true,timeLabel:'Wed Nov 4 · 5:05pm → 7:59pm',confirmation:'Flight #4752',instructions:'CONFIRMED ✔'},
  {key:'tokyo_apt',name:'Yotsuya apartment — Tokyo',icon:'🏠',url:'https://www.booking.com/',urgency:'high',confirmed:true,timeLabel:'Fri Oct 23 → Wed Oct 28 · check-in window 4–5pm',confirmation:'Booking.com #⟦TOKYO_BK⟧',
   instructions:'BOOKED ✔ Door-code entry (see the Booking.com check-in instructions). You arrive ~9pm — tell the host. Address: ⟦TOKYO_ADDR⟧.'},
+ {key:'osaka_glow',name:'Osaka GLOW — glow-in-the-dark show',icon:'✨',url:'https://osakaglow.jp/',urgency:'high',timeLabel:'Sat Oct 31 · evening (pick a slot)',
+  instructions:'A glow-in-the-dark dance performance and hands-on experience in a fully dark venue, about 90–100 minutes, near Umeda / Shin-Osaka. Build a glowing wand, watch dancers in EL-wire costumes; Stage Experience tickets (age 8+, which your son meets) let you wear a costume and perform. Roughly $53–65 per adult on Viator/GetYourGuide (child price not checked). Free cancellation until 24 hours before. It opens October 2026, so Oct 31 showtimes were not visible to me — check osakaglow.jp or the ticket sites and choose the latest slot, since the tattoos may run long.'},
  {key:'hotel_lax',dayLabel:'Night before Day 1 · Wed Oct 21',name:'Hilton Los Angeles Airport',icon:'🏨',url:'https://www.hilton.com/en/hilton-honors/',urgency:'high',confirmed:true,timeLabel:'Wed Oct 21 → Thu Oct 22 · 1 night',confirmation:'Hilton #⟦HILTON_LAX_BK⟧ · 54,000 points',
   instructions:'BOOKED ✔ Paid with 54,000 Hilton Honors points. Check-out Oct 22; leave for LAX by ~10:30am for the 2:00pm SQ 11 departure. Ask the front desk about the airport shuttle.'},
  {key:'hotel_conrad',name:'Conrad Tokyo — Nov 3',icon:'🏨',url:'https://www.hilton.com/en/hilton-honors/',urgency:'high',confirmed:true,timeLabel:'Tue Nov 3 → Wed Nov 4 · 1 night',confirmation:'Hilton #⟦CONRAD_BK⟧ (stay pending)',
@@ -4439,6 +4447,7 @@ const QUEST_PATCH={
  q_tattoo:{day:'Day 10'},q_teamlab_osaka:{day:'Day 8'},q_round1:{day:'Day 12'},q_yamazaki:{day:'Bonus'},q_stamp_rally:{day:'Bonus'},q_fushimi_hike:{day:'Bonus'}
 };
 const QUEST_EXTRA=[
+ {id:'q_glow',cat:'🗾 Japan Moments',icon:'✨',name:'Dance in the dark at Osaka GLOW',day:'Day 10',xp:200,photo:true},
  {id:'q_nex',cat:'🗾 Japan Moments',icon:'🚆',name:'Ride the Narita Express',day:'Day 2',xp:75,photo:true},
  {id:'q_shinkansen',cat:'🗾 Japan Moments',icon:'🚅',name:'Ride the Shinkansen (bullet train)',day:'Day 8',xp:100,photo:true},
  {id:'q_hamarikyu',cat:'🌿 Parks & Nature',icon:'🍵',name:'Hamarikyu Gardens at the Conrad',day:'Day 14',xp:100,photo:true}
@@ -4584,6 +4593,26 @@ QUESTS.forEach(q=>{ const p=QUEST_PATCH[q.id]; if(p) Object.assign(q,p); });
 QUEST_EXTRA.forEach(q=>{ if(!QUESTS.find(x=>x.id===q.id)) QUESTS.push(q); });
 /* the day an item shows on always comes from where it sits in the itinerary */
 BOOKABLE_ITEMS.forEach(i=>{ const d=dayOfKey(i.key); if(d) i.day=d; else if(!i.alias) i.day=null; });
+
+
+/* ═══════════ BASE MAP — keyless OpenFreeMap: English name first, Japanese name underneath ═══════════ */
+const OFM_STYLE='https://tiles.openfreemap.org/styles/liberty';
+const OFM_ATTR='<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> © <a href="https://openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
+function webglOK(){ try{ const c=document.createElement('canvas'); return !!(c.getContext('webgl2')||c.getContext('webgl')); }catch(e){ return false; } }
+function addBaseMap(map){
+  const raster=()=>{ const t=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri',maxZoom:19}); t.addTo(map); return t; };
+  if(!(window.maplibregl&&L.maplibreGL&&webglOK())) return raster();
+  let gl, styleOk=false;
+  try{
+    gl=L.maplibreGL({style:OFM_STYLE});
+    gl.addTo(map);
+    try{ gl.getMaplibreMap().on('styledata',()=>{ styleOk=true; }); }catch(e){ styleOk=true; }
+  }catch(e){ return raster(); }
+  if(map.attributionControl) map.attributionControl.addAttribution(OFM_ATTR);
+  /* if the vector style never loads (blocked network), swap to plain raster tiles */
+  setTimeout(()=>{ try{ if(!styleOk&&!map._baseFellBack){ map._baseFellBack=true; map.removeLayer(gl); raster(); } }catch(e){} },9000);
+  return gl;
+}
 
 
 /* ═══════════ ROUTE · CATCH · ALERTS ═══════════ */
@@ -4855,7 +4884,7 @@ function renderTravelMap(){
   try{
     if(window._travelMap){ window._travelMap.remove(); window._travelMap=null; }
     map=L.map(mapDiv,{center:[35.4,137.5],zoom:6,scrollWheelZoom:false}); window._travelMap=map;
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:18}).addTo(map);
+    addBaseMap(map);
     layer=L.layerGroup().addTo(map);
     setTimeout(()=>{ try{ map.invalidateSize(); }catch(e){} },250);
   }catch(e){ map=null; }
