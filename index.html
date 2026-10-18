@@ -1991,6 +1991,25 @@ body[data-role="family"] #nav-tickets,body[data-role="family"] #nav-customs,body
 <!-- Firebase SDK -->
 
 
+<style>
+.bk-card,.st-card{background:linear-gradient(135deg,rgba(30,47,122,.85),rgba(13,27,75,.92));border:2px solid rgba(255,215,0,.4);border-radius:14px;padding:12px;margin:12px 0;color:#fff}
+.bk-h,.st-h{font-weight:900;font-size:.82rem;color:#ffd700}.bk-h small{font-weight:600;color:rgba(255,255,255,.55);font-size:.58rem;margin-left:4px}
+.bk-sub,.st-sub{font-size:.66rem;color:rgba(255,255,255,.8);line-height:1.45;margin:5px 0 8px}
+.bk-warn{font-size:.62rem;color:#ffe566;background:rgba(255,215,0,.1);border-radius:8px;padding:6px 8px;margin-bottom:8px;line-height:1.4}
+.bk-chk{display:flex;gap:6px;align-items:center;font-size:.64rem;color:rgba(255,255,255,.85);margin-bottom:8px}
+.bk-btns{display:flex;gap:8px;margin-bottom:8px}
+.bk-btn{flex:1;font-size:.7rem;font-weight:800;padding:9px;border-radius:20px;border:1.5px solid rgba(255,215,0,.45);background:transparent;color:#ffd700}
+.bk-btn.primary{background:linear-gradient(135deg,#cc0000,#990000);color:#fff}
+.bk-last{font-size:.6rem;color:rgba(255,255,255,.6);text-align:center}
+.st-stats{display:flex;gap:6px;margin:6px 0}.st-stats div{flex:1;background:rgba(255,255,255,.08);border-radius:10px;padding:7px 4px;text-align:center}
+.st-stats b{display:block;font-size:.95rem;color:#ffd700}.st-stats span{font-size:.54rem;color:rgba(255,255,255,.65)}
+.st-bar{height:8px;background:rgba(255,255,255,.15);border-radius:6px;overflow:hidden}.st-bar div{height:100%;background:linear-gradient(90deg,#1fa86b,#ffd700)}
+.st-next{font-size:.6rem;color:rgba(255,255,255,.7);margin:4px 0 6px;text-align:center}
+.st-person{display:flex;justify-content:space-around;font-size:.62rem;color:rgba(255,255,255,.75);margin-bottom:8px}.st-person b{color:#fff}
+.st-in{width:100%;box-sizing:border-box;background:rgba(255,255,255,.95);color:#0d1b4b;border:0;border-radius:8px;padding:8px;font-size:.78rem;margin-bottom:6px}
+.st-row{display:flex;gap:6px}.st-row label{flex:1;font-size:.58rem;color:rgba(255,255,255,.75);font-weight:700}
+.st-save{width:100%;margin-top:4px;background:linear-gradient(135deg,#cc0000,#990000);color:#fff;font-weight:800;font-size:.74rem;padding:10px;border-radius:20px;border:1.5px solid rgba(255,215,0,.35)}
+</style>
 </head>
 <body>
 <div id="authOverlay">
@@ -3509,6 +3528,88 @@ const FOOD_DATA = {
 };
 
 /* ── RENDER FOOD SCREEN ── */
+/* ── Added Oct 17: more food, arcade and adventure picks. Hours/prices are from public listings — confirm in Maps before you go. ── */
+(function(){
+  const F=(icon,name,area,price,pc,tags,desc,tip,q)=>({icon,name,area,price,priceClass:pc,tags,desc,tip,maps:'https://maps.google.com/?q='+encodeURIComponent(q)});
+  const T=FOOD_DATA.tokyo.categories, O=FOOD_DATA.osaka.categories;
+  T.push({cat:'🍢 Near Your Yotsuya Apartment',items:[
+    F('🐔','Yakitori Arakiyama Yotsuya','Yotsuya','Check menu','price-mid',['Yakitori','Dinner from 5pm','Weekday lunch'],
+      'Grilled-skewer spot in Yotsuya. Listed as open for dinner 5:00–11:00pm, with lunch on weekdays. Easy, low-effort dinner close to the apartment.',
+      'Point at the skewers you want and order a few at a time. Tell them about allergies up front.','Yakitori Arakiyama Yotsuya Tokyo'),
+    F('🥩','Shabu Zen Yotsuya','Yotsuya','Check menu','price-mid',['Shabu-shabu','Sukiyaki','English-speaking staff'],
+      'Shabu-shabu and sukiyaki restaurant. Listed as having English-speaking staff, which makes it an easy sit-down family dinner. Cooking the meat in the pot is fun for an 8-year-old.',
+      'Good for a slower evening after a big walking day. Look at the menu in Maps first to pick a price level.','Shabu Zen Yotsuya Tokyo'),
+    F('🍲','Ajiyushin Nakaya','Yotsuya','Check menu','price-mid',['Soba','Tempura','English menu','No credit cards'],
+      'Soba and tempura place with an English menu. Listed as not taking credit cards, and lunch is limited to the lunch menu.',
+      'Bring cash. A calm, quick lunch option before a day out.','Ajiyushin Nakaya Yotsuya Tokyo')
+  ]});
+  T.push({cat:'🎮 Arcades & Game Centers — Tokyo',items:[
+    F('🕹️','Taito Station Akihabara','Akihabara','Pay per game','price-cheap',['Arcade','Claw machines','Fits Oct 25'],
+      'Big multi-floor Taito arcade right in Akihabara. Listed hours 10:00am–11:30pm. Fits the Sunday Akihabara day.',
+      'Change ¥100 coins at the machines. Prize machines are the easy win for kids.','Taito Station Akihabara'),
+    F('🎯','GiGO Akihabara','Akihabara','Pay per game','price-cheap',['Arcade','Claw machines','Fits Oct 25'],
+      'Another large Akihabara game center. Listed hours 10:00am–11:30pm. Good to compare with Taito Station and pick the one your son likes more.',
+      'Walk through both and play where the crowd is. Bring cash for coins.','GiGO Akihabara'),
+    F('👾','Mikado Game Center Takadanobaba','Takadanobaba','Pay per game','price-cheap',['Retro arcade','Classic cabinets'],
+      'Retro arcade known for classic cabinets. Listed hours 10:00am–midnight. Takadanobaba is on the Yamanote line, an easy side trip from Shinjuku.',
+      'Natsuge Museum is nearby (retro games, listed 12pm–11:30pm weekdays and 10am–11:30pm weekends).','Mikado Game Center Takadanobaba'),
+    F('🎳','Round One Ikebukuro','Ikebukuro','Time-based pass','price-mid',['Arcade','Bowling','Karaoke','24 hours'],
+      'Multi-entertainment building: arcade, claw machines, bowling, karaoke, billiards, darts and table tennis. Listed as open 24 hours. Good rainy-day or jet-lag-night plan.',
+      'Pricing is by time, so decide how long you want before you start.','Round One Ikebukuro'),
+    F('🎢','Tokyo Joypolis','Odaiba','Check tickets','price-mid',['Indoor park','Coasters','VR'],
+      'Indoor amusement park with roller coasters, arcade games and VR. Listed hours 11am–7pm weekdays and 10am–8pm weekends. Check height limits before you go.',
+      'Pair it with an Odaiba afternoon. Only worth a slot if a day opens up.','Tokyo Joypolis Odaiba')
+  ]});
+  O.push({cat:'🥩 Tennoji · Shinsekai · Tsuruhashi',items:[
+    F('🍢','Yaekatsu Kushikatsu (Shinsekai)','Shinsekai','Check menu','price-mid',['Kushikatsu','Counter only','Often a line'],
+      'Classic Shinsekai kushikatsu, also known for doteyaki (miso-stewed beef tendon or offal). Counter seating only and often a long line.',
+      'Rule of the street: one dip in the shared sauce, no double dipping. Go early to beat the line.','Yaekatsu Shinsekai Osaka'),
+    F('🍢','Kushinobo Tennoji Mio','Tennoji','Check menu','price-mid',['Kushikatsu','Kids menu','Omakase set'],
+      'Kushikatsu with a kids menu, about a 1-minute walk from Tennoji Station. The omakase set is about 15 skewers chosen for you.',
+      'The easiest kushikatsu option with a child.','Kushinobo Tennoji Mio Osaka'),
+    F('🥞','Tsuruhashi Fugetsu (Abenobashi)','Tennoji','Check menu','price-mid',['Okonomiyaki','Near Tennoji Station'],
+      'Okonomiyaki chain with the Fugetsu Special (pork, beef, squid, shrimp) and a beef tendon and green onion version. About a 3-minute walk from Tennoji Station.',
+      'Okonomiyaki is cooked at your table or served hot off the grill, a good first pick for a picky eater.','Tsuruhashi Fugetsu Abenobashi Osaka'),
+    F('🥩','Yakiniku Manno Tennoji','Tennoji','Check menu','price-mid',['Yakiniku','Set meals'],
+      'Yakiniku with Standard, Special and Premium set meals that include salad and soup. Tsuruhashi is Osaka’s well-known yakiniku district if you want a livelier street.',
+      'Sets are easier than ordering by the piece.','Yakiniku Manno Tennoji Osaka'),
+    F('🍜','Udon-bo','Osaka','Check menu','price-cheap',['Udon','Michelin Bib Gourmand','Only 20 seats'],
+      'Michelin Bib Gourmand udon shop known for kitsune udon. Only 20 seats, though the line moves fast.',
+      'A family of three should be fine. Go at an off-peak hour.','Udon-bo Osaka')
+  ]});
+  O.push({cat:'🎮 Arcades & Active Play — Osaka',items:[
+    F('🎯','GiGO Namba-Avion','Namba','Pay per game','price-cheap',['Arcade','Claw machines','Near Dotonbori'],
+      'Large arcade in Namba. Listed hours 9:00am–11:30pm. Close to Dotonbori, so it fits a night out.',
+      'Easy add-on after dinner.','GiGO Namba Avion Osaka'),
+    F('🕹️','Nipponbashi Arcades (Taito Station + Namco)','Nipponbashi / Den Den Town','Pay per game','price-cheap',['Arcade','Den Den Town'],
+      'Taito Station Osaka-Nipponbashi and Namco Osaka Nippombashi are both listed as open 10:00am–midnight. Pair with Den Den Town shopping.',
+      'Check the upper floors of Den Den Town shops for retro game and figure stores.','Taito Station Osaka Nipponbashi'),
+    F('👾','Royal Game Center (Umeda)','Umeda','Pay per game','price-cheap',['Retro arcade','Classic cabinets'],
+      'Retro arcade in Umeda. Listed hours 9am–11pm Monday–Saturday and 10am–8pm Sunday.',
+      'Only worth it if you are already in Umeda.','Royal Game Center Umeda Osaka'),
+    F('⚽','Spo-Cha / Round1 Sennichimae','Namba','Time-based pass','price-mid',['Batting cages','Trampolines','Roller skating','Go-karts'],
+      'Indoor sports complex with batting cages, trampolines, roller skating, ball pits and go-karts. A good way to burn off energy.',
+      'Best for your son. Pick this for the optional Round1 slot.','Round1 Sennichimae Osaka')
+  ]});
+  O.push({cat:'🧗 Adventures & Kid Stuff — Osaka',items:[
+    F('🐋','Osaka Aquarium Kaiyukan + Tempozan Ferris Wheel','Osakako / Tempozan','~¥1,400 child · ¥2,700 adult','price-mid',['Whale sharks','Ferris wheel ¥900'],
+      'Five-floor aquarium with whale sharks, otters, penguins and jellyfish. Ticket prices listed: ages 7–15 ¥1,400, 16+ ¥2,700. The Tempozan Ferris wheel next door is listed at ¥900 for ages 3+.',
+      'Check current prices and hours before you go. Allow a half day.','Osaka Aquarium Kaiyukan'),
+    F('🍜','Cup Noodles Museum Ikeda','Ikeda','Museum free · ¥500 per cup','price-cheap',['Make your own cup','Hands-on'],
+      'Instant ramen history museum. The museum is listed as free, and My CUPNOODLES Factory is ¥500 per cup. The Chicken Ramen Factory is listed for ages 6 and up.',
+      'Check whether you need to reserve the Chicken Ramen Factory slot.','Cup Noodles Museum Osaka Ikeda'),
+    F('🌆','Abeno Harukas 300','Tennoji','Child ¥700 · adult ¥1,800','price-mid',['60th floor view','Pairs with Shinsekai'],
+      'Observation deck on the 60th floor, 300 m up. Listed prices: elementary ¥700, adult ¥1,800. A free 16th-floor deck is also listed.',
+      'Combine with Tennoji and Shinsekai food for one neat afternoon.','Abeno Harukas 300 Osaka'),
+    F('🦜','Nifrel (EXPOCITY)','Suita','Child ¥1,100 · adult ¥2,200','price-mid',['Interactive aquarium','Free-roaming animals'],
+      'Interactive aquarium-zoo with free-roaming birds and ring-tailed lemurs. Listed prices: ages 7–15 ¥1,100, 16+ ¥2,200.',
+      'Only if you have a free afternoon. It is out in Suita.','Nifrel EXPOCITY Suita'),
+    F('🧱','Kids Plaza Osaka','Ogimachi','Child ¥800 · adult ¥1,400','price-mid',['Children’s museum','Hands-on play'],
+      'Four-floor children’s museum with a bubble zone, pump playground and mini-town. It leans toward younger kids, so it is a backup rather than a priority.',
+      'Probably skip unless it rains.','Kids Plaza Osaka')
+  ]});
+})();
+
 function renderFood() {
   const wrap = document.getElementById('screen-food');
   wrap.innerHTML = '';
@@ -5414,6 +5515,190 @@ window.addEventListener('fb-ready',()=>{
 loadLedger();
 AUTH.init();
 
+</script>
+<script>
+/* ═══════════ BACKUP / IMPORT  +  STEP LOG (added Oct 17) ═══════════ */
+const BACKUP_KEYS=['japan2026_tickets','japan2026_quests','japan2026_gallery','japan2026_photos','japan2026_ledger','japan2026_todo','japan2026_edits','japan2026_hotels','japan2026_steps'];
+const STEPS_KEY='japan2026_steps', LASTBK_KEY='japan2026_lastbackup';
+const STEP_PEOPLE=[['corby','Corby'],['cheryl','Cheryl'],['son','Son']];
+const TRIP_DATES=(function(){ const a=[]; for(let i=0;i<14;i++){ const d=new Date(Date.UTC(2026,9,22+i)); a.push(d.toISOString().slice(0,10)); } return a; })();
+function tripDateLabel(iso){ const d=new Date(iso+'T12:00:00Z'); return 'Day '+(TRIP_DATES.indexOf(iso)+1)+' · '+d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',timeZone:'UTC'}); }
+function bkRead(k){ try{ const r=localStorage.getItem(k); return r?JSON.parse(r):null; }catch(e){ return null; } }
+function bkWrite(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+
+function buildBackup(includePhotos){
+  const data={};
+  BACKUP_KEYS.forEach(k=>{
+    let v=bkRead(k); if(v==null) return;
+    if(!includePhotos&&(k==='japan2026_gallery'||k==='japan2026_photos')){
+      const slim={}; Object.keys(v).forEach(d=>{ slim[d]={imgs:[],note:(v[d]&&v[d].note)||''}; }); v=slim;
+    }
+    data[k]=v;
+  });
+  return {app:'japan2026-backup',format:1,exported:new Date().toISOString(),includesPhotos:!!includePhotos,data};
+}
+function backupFileName(){ return 'japan2026-backup-'+new Date().toISOString().slice(0,10)+'.json'; }
+function markBackupDone(){ try{ localStorage.setItem(LASTBK_KEY,new Date().toISOString()); }catch(e){} refreshBackupCard(); }
+function exportBackup(){
+  if(!canEdit()){ viewOnlyToast(); return; }
+  const inc=!!(document.getElementById('bk-photos')||{}).checked;
+  const text=JSON.stringify(buildBackup(inc),null,1), blob=new Blob([text],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=backupFileName();
+  document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },1500);
+  markBackupDone(); showToast('💾 Backup saved ('+Math.round(text.length/1024)+' KB)');
+}
+async function shareBackup(){
+  if(!canEdit()){ viewOnlyToast(); return; }
+  const inc=!!(document.getElementById('bk-photos')||{}).checked;
+  const text=JSON.stringify(buildBackup(inc)), file=new File([text],backupFileName(),{type:'application/json'});
+  try{
+    if(navigator.canShare&&navigator.canShare({files:[file]})){ await navigator.share({files:[file],title:'Japan 2026 backup'}); markBackupDone(); return; }
+  }catch(e){ if(e&&e.name==='AbortError') return; }
+  exportBackup();
+}
+function mergeObjKeepLocal(local,imp){ const out=Object.assign({},local||{}); Object.keys(imp||{}).forEach(k=>{ if(!(k in out)||out[k]==null||out[k]==='') out[k]=imp[k]; }); return out; }
+function mergeBackup(payload){
+  const d=payload.data||{}, rep={tickets:0,quests:0,ledger:0,photos:0,todo:0,steps:0,other:0};
+  /* tickets: this phone's entries win, the backup only fills gaps */
+  if(d.japan2026_tickets){ const l=bkRead('japan2026_tickets')||{}, m=mergeObjKeepLocal(l,d.japan2026_tickets); rep.tickets=Object.keys(m).length-Object.keys(l).length; bkWrite('japan2026_tickets',m); }
+  if(d.japan2026_quests){ const l=bkRead('japan2026_quests')||{}, m=Object.assign({},l); Object.keys(d.japan2026_quests).forEach(k=>{ if(d.japan2026_quests[k]&&!m[k]){ m[k]=true; rep.quests++; } }); bkWrite('japan2026_quests',m); }
+  if(d.japan2026_todo){ const l=bkRead('japan2026_todo')||{}, m=Object.assign({},l); Object.keys(d.japan2026_todo).forEach(k=>{ if(d.japan2026_todo[k]&&!m[k]){ m[k]=true; rep.todo++; } }); bkWrite('japan2026_todo',m); }
+  if(d.japan2026_ledger&&d.japan2026_ledger.items){
+    const l=bkRead('japan2026_ledger')||{items:[],settings:{}}, ids=new Set((l.items||[]).map(i=>i.id)), add=d.japan2026_ledger.items.filter(i=>i&&!ids.has(i.id));
+    rep.ledger=add.length; bkWrite('japan2026_ledger',{items:(l.items||[]).concat(add),settings:Object.keys(l.settings||{}).length?l.settings:(d.japan2026_ledger.settings||{})});
+  }
+  ['japan2026_gallery','japan2026_photos'].forEach(k=>{
+    if(!d[k]) return; const l=bkRead(k)||{}, m=Object.assign({},l);
+    Object.keys(d[k]).forEach(day=>{ const a=m[day]||{imgs:[],note:''}, b=d[k][day]||{};
+      const imgs=(a.imgs||[]).slice(); (b.imgs||[]).forEach(u=>{ if(!imgs.includes(u)){ imgs.push(u); rep.photos++; } });
+      m[day]={imgs,note:a.note||b.note||''}; });
+    bkWrite(k,m);
+  });
+  if(d.japan2026_steps){ const l=bkRead(STEPS_KEY)||{}, m=JSON.parse(JSON.stringify(l));
+    Object.keys(d.japan2026_steps).forEach(dt=>{ m[dt]=m[dt]||{}; Object.keys(d.japan2026_steps[dt]||{}).forEach(p=>{ const v=+d.japan2026_steps[dt][p]||0; if(v>(+m[dt][p]||0)){ m[dt][p]=v; rep.steps++; } }); });
+    bkWrite(STEPS_KEY,m); }
+  /* edits / hotels: only restore if this phone has none (avoids mixing old position-based edits into a newer itinerary) */
+  ['japan2026_edits','japan2026_hotels'].forEach(k=>{ if(d[k]&&bkRead(k)==null){ bkWrite(k,d[k]); rep.other++; } });
+  return rep;
+}
+function importBackup(file){
+  if(!canEdit()){ viewOnlyToast(); return; }
+  if(!file) return;
+  const fr=new FileReader();
+  fr.onerror=()=>showToast('Could not read that file');
+  fr.onload=()=>{
+    let payload; try{ payload=JSON.parse(fr.result); }catch(e){ alert('That file is not a valid backup (it could not be read).'); return; }
+    if(!payload||payload.app!=='japan2026-backup'||!payload.data||typeof payload.data!=='object'){ alert('That does not look like a Japan 2026 backup file.'); return; }
+    const d=payload.data, n=o=>o?Object.keys(o).length:0;
+    const msg='Restore from backup made '+new Date(payload.exported).toLocaleString()+'?\n\n'+
+      '• '+n(d.japan2026_tickets)+' booking entries\n• '+Object.keys(d.japan2026_quests||{}).filter(k=>d.japan2026_quests[k]).length+' caught quests\n• '+((d.japan2026_ledger&&d.japan2026_ledger.items)||[]).length+' ledger items\n• '+n(d.japan2026_steps)+' step-log days\n• photos: '+(payload.includesPhotos?'included':'not included')+
+      '\n\nNothing on this phone is deleted. Items already here are kept; the backup only adds what is missing.';
+    if(!confirm(msg)) return;
+    const rep=mergeBackup(payload);
+    try{ if(window.FB&&FB.ready) FB.setQuests(bkRead('japan2026_quests')||{}); }catch(e){}
+    showToast('✅ Restored — added '+(rep.tickets+rep.quests+rep.ledger+rep.photos+rep.todo+rep.steps+rep.other)+' items. Reloading…');
+    setTimeout(()=>location.reload(),1400);
+  };
+  fr.readAsText(file);
+}
+function lastBackupText(){ const t=localStorage.getItem(LASTBK_KEY); if(!t) return 'No backup yet — make one before you fly.'; const d=new Date(t), days=Math.floor((Date.now()-d)/864e5); return 'Last backup: '+d.toLocaleString()+(days>=3?' ('+days+' days ago)':''); }
+function refreshBackupCard(){ const el=document.getElementById('bk-last'); if(el) el.textContent=lastBackupText(); }
+function backupCardEl(){
+  const c=document.createElement('div'); c.className='bk-card'; c.id='bk-card';
+  c.innerHTML='<div class="bk-h">💾 Backup & Restore <small>this phone only</small></div>'+
+    '<div class="bk-sub">Saves your Catch bookings, quests, spend ledger, step log, to-dos and photo notes into one file. Keep a copy in Google Drive or email it to yourself. Restoring only adds what is missing — it never deletes.</div>'+
+    '<div class="bk-warn">⚠️ Booking numbers you typed into Catch are saved as plain text in this file. Keep it private.</div>'+
+    '<label class="bk-chk"><input type="checkbox" id="bk-photos"> Include photos taken in the app (makes the file bigger)</label>'+
+    '<div class="bk-btns"><button class="bk-btn primary" onclick="shareBackup()">Save / Share backup</button><button class="bk-btn" onclick="exportBackup()">Download file</button></div>'+
+    '<div class="bk-btns"><button class="bk-btn" onclick="document.getElementById(\'bk-file\').click()">Restore from file…</button></div>'+
+    '<input type="file" id="bk-file" accept="application/json,.json" style="display:none" onchange="importBackup(this.files[0]);this.value=\'\'">'+
+    '<div class="bk-last" id="bk-last"></div>';
+  setTimeout(refreshBackupCard,0);
+  return c;
+}
+const __renderItinBase=renderItin;
+renderItin=function(){
+  __renderItinBase.apply(this,arguments);
+  try{
+    if(!canEdit()) return;
+    const wrap=document.getElementById('screen-itin'); if(!wrap||wrap.querySelector('#bk-card')) return;
+    const stamp=wrap.querySelector('.ver-stamp'), card=backupCardEl();
+    if(stamp) wrap.insertBefore(card,stamp); else wrap.appendChild(card);
+    if(stamp&&stamp.textContent.indexOf('Build')<0) stamp.textContent+=' · Build Oct 17';
+  }catch(e){ console.warn(e); }
+};
+
+/* ── Step log ── */
+const STEP_QUESTS=[
+  {id:'q_steps_100k',cat:'👟 Step Goals',icon:'👟',name:'Family walks 100,000 steps together',day:'',xp:150},
+  {id:'q_steps_200k',cat:'👟 Step Goals',icon:'👟',name:'Family walks 200,000 steps together',day:'',xp:250},
+  {id:'q_steps_300k',cat:'👟 Step Goals',icon:'🥾',name:'Family walks 300,000 steps together',day:'',xp:350},
+  {id:'q_steps_400k',cat:'👟 Step Goals',icon:'🥾',name:'Family walks 400,000 steps together',day:'',xp:450},
+  {id:'q_steps_500k',cat:'👟 Step Goals',icon:'🏅',name:'Family walks 500,000 steps together',day:'',xp:600},
+  {id:'q_walk_20k',  cat:'👟 Step Goals',icon:'🔥',name:'Big Walk Day — one person hits 20,000 steps',day:'',xp:200},
+  {id:'q_walk_all10k',cat:'👟 Step Goals',icon:'👨‍👩‍👦',name:'Team Day — all three reach 10,000 steps on the same day',day:'',xp:250}
+];
+STEP_QUESTS.forEach(q=>{ if(!QUESTS.find(x=>x.id===q.id)) QUESTS.push(q); });
+const STEP_MILESTONES=[100000,200000,300000,400000,500000];
+function loadSteps(){ const s=bkRead(STEPS_KEY); return (s&&typeof s==='object')?s:{}; }
+function stepTotals(){
+  const s=loadSteps(), per={corby:0,cheryl:0,son:0}; let fam=0,days=0,best=0,allTen=false;
+  Object.keys(s).forEach(dt=>{ let day=0,hit=0; STEP_PEOPLE.forEach(([id])=>{ const v=+(s[dt]||{})[id]||0; per[id]+=v; day+=v; if(v>=10000) hit++; if(v>best) best=v; });
+    if(day>0){ fam+=day; days++; } if(hit===3) allTen=true; });
+  return {per,fam,days,best,allTen,avg:days?Math.round(fam/days):0};
+}
+function checkStepQuests(){
+  if(!canEdit()) return;
+  const t=stepTotals(), want=[];
+  STEP_MILESTONES.forEach(m=>{ if(t.fam>=m) want.push('q_steps_'+(m/1000)+'k'); });
+  if(t.best>=20000) want.push('q_walk_20k'); if(t.allTen) want.push('q_walk_all10k');
+  const state=loadQuestState(), fresh=want.filter(id=>!state[id]); if(!fresh.length) return;
+  const prev=getRank(getTotalXP()); fresh.forEach(id=>{ state[id]=true; }); saveQuestState(state);
+  const now=getRank(getTotalXP()), first=QUESTS.find(q=>q.id===fresh[0]);
+  if(now.name!==prev.name) showLevelUp(now.name); else showToast('👟 Step goal unlocked — '+(first?first.name:'')+'!');
+  updateQuestBadge(); if(STATE.activeScreen==='adventure') renderAdventure();
+}
+function saveStepsFor(){
+  if(!canEdit()){ viewOnlyToast(); return; }
+  const dt=document.getElementById('st-date').value, s=loadSteps(); s[dt]=s[dt]||{};
+  STEP_PEOPLE.forEach(([id])=>{ const raw=document.getElementById('st-'+id).value.trim(); if(raw===''){ delete s[dt][id]; return; }
+    const v=Math.max(0,Math.min(99999,Math.round(+raw.replace(/,/g,'')||0))); s[dt][id]=v; });
+  if(!Object.keys(s[dt]).length) delete s[dt];
+  bkWrite(STEPS_KEY,s); showToast('👟 Steps saved'); renderAdventure(); checkStepQuests();
+}
+function fillStepInputs(){
+  const dt=document.getElementById('st-date').value, s=loadSteps()[dt]||{};
+  STEP_PEOPLE.forEach(([id])=>{ document.getElementById('st-'+id).value=s[id]!=null?s[id]:''; });
+}
+function stepsCardEl(){
+  const t=stepTotals(), next=STEP_MILESTONES.find(m=>t.fam<m), prevM=STEP_MILESTONES.filter(m=>m<=t.fam).pop()||0;
+  const pct=next?Math.round((t.fam-prevM)/(next-prevM)*100):100, today=new Date().toISOString().slice(0,10);
+  const sel=(window.__stDate&&TRIP_DATES.includes(window.__stDate))?window.__stDate:TRIP_DATES.includes(today)?today:(TRIP_DATES.find(d=>!(loadSteps()[d]))||TRIP_DATES[0]);
+  const c=document.createElement('div'); c.className='st-card';
+  c.innerHTML='<div class="st-h">👟 Family Step Counter</div>'+
+    '<div class="st-sub">Open Samsung Health each night, read the day’s step count for each person, and type it here. (Samsung Health can’t send steps to a web app by itself.) Reaching goals unlocks Quest XP.</div>'+
+    '<div class="st-stats"><div><b>'+t.fam.toLocaleString()+'</b><span>Family steps</span></div><div><b>'+t.avg.toLocaleString()+'</b><span>Avg per day</span></div><div><b>'+(t.fam*0.0004|0).toLocaleString()+'</b><span>≈ miles walked</span></div></div>'+
+    '<div class="st-bar"><div style="width:'+pct+'%"></div></div><div class="st-next">'+(next?(next-t.fam).toLocaleString()+' steps to the '+(next/1000)+'k goal':'All step goals reached! 🏅')+'</div>'+
+    '<div class="st-person">'+STEP_PEOPLE.map(([id,n])=>'<span>'+n+' <b>'+t.per[id].toLocaleString()+'</b></span>').join('')+'</div>'+
+    '<select id="st-date" class="st-in" onchange="window.__stDate=this.value;fillStepInputs()">'+TRIP_DATES.map(d=>'<option value="'+d+'"'+(d===sel?' selected':'')+'>'+tripDateLabel(d)+'</option>').join('')+'</select>'+
+    '<div class="st-row">'+STEP_PEOPLE.map(([id,n])=>'<label>'+n+'<input id="st-'+id+'" class="st-in" type="number" inputmode="numeric" min="0" max="99999" placeholder="steps"></label>').join('')+'</div>'+
+    '<button class="st-save" onclick="saveStepsFor()">Save steps for this day</button>';
+  setTimeout(fillStepInputs,0);
+  return c;
+}
+const __renderAdvBase=renderAdventure;
+renderAdventure=function(){
+  __renderAdvBase.apply(this,arguments);
+  try{
+    if(!canEdit()) return;
+    const wrap=document.getElementById('screen-adventure'); if(!wrap||wrap.querySelector('.st-card')) return;
+    const first=wrap.firstElementChild, card=stepsCardEl();
+    if(first&&first.nextSibling) wrap.insertBefore(card,first.nextSibling); else wrap.appendChild(card);
+  }catch(e){ console.warn(e); }
+};
+
+/* run once so goals already earned unlock */
+try{ checkStepQuests(); }catch(e){}
 </script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
