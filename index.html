@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Japan 2026">
+<meta name="apple-mobile-web-app-title" content="Japan 2027">
 <meta name="theme-color" content="#cc0000">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -13,7 +13,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <!-- BUILD: 20260828-051305 -->
-<title>Japan 2026 — Kellys in Japan v20260828-051305</title>
+<title>Japan 2027 — Kellys in Japan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
@@ -2009,13 +2009,52 @@ body[data-role="family"] #nav-tickets,body[data-role="family"] #nav-customs,body
 .st-in{width:100%;box-sizing:border-box;background:rgba(255,255,255,.95);color:#0d1b4b;border:0;border-radius:8px;padding:8px;font-size:.78rem;margin-bottom:6px}
 .st-row{display:flex;gap:6px}.st-row label{flex:1;font-size:.58rem;color:rgba(255,255,255,.75);font-weight:700}
 .st-save{width:100%;margin-top:4px;background:linear-gradient(135deg,#cc0000,#990000);color:#fff;font-weight:800;font-size:.74rem;padding:10px;border-radius:20px;border:1.5px solid rgba(255,215,0,.35)}
+/* ── Pokémon layer ── */
+.now-card{background:linear-gradient(135deg,#cc0000,#7a0000);border:2px solid rgba(255,215,0,.5);border-radius:14px;padding:12px;margin:0 0 12px;color:#fff}
+.now-h{font-weight:900;font-size:.8rem;color:#ffd700}.now-h small{font-weight:600;color:rgba(255,255,255,.7);font-size:.6rem;margin-left:6px}
+.now-lbl{font-size:.66rem;color:rgba(255,255,255,.85);margin:3px 0 8px}.now-big{font-size:1.15rem;font-weight:900;margin:6px 0}.now-sub{font-size:.68rem;line-height:1.45;color:rgba(255,255,255,.88)}
+.now-next{background:rgba(0,0,0,.28);border-radius:10px;padding:9px 10px;font-weight:800;font-size:.84rem;line-height:1.3}.now-next span{display:block;font-size:.54rem;letter-spacing:.08em;color:#ffd700;margin-bottom:2px}
+.now-note{font-size:.64rem;line-height:1.45;color:rgba(255,255,255,.88);margin:7px 2px}.now-btns{display:flex;gap:8px;margin-top:8px}
+.now-btns .drive-btn{flex:1;text-align:center;background:rgba(0,0,0,.25);border-color:rgba(255,215,0,.5);color:#ffd700;font-family:inherit;cursor:pointer}.now-btns .drive-btn.primary{background:#ffd700;color:#7a0000}
+.now-list{margin-top:8px;font-size:.66rem}.now-list summary{cursor:pointer;color:#ffd700;font-weight:700}
+.now-row,.res-t{display:flex;gap:8px;align-items:center;padding:6px 2px;font-size:.68rem;line-height:1.35;cursor:pointer}.now-row.done span:last-child,.res-t.done span:last-child{text-decoration:line-through;opacity:.6}
+.res-c{flex:none;width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,215,0,.7);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#0d1b4b;background:transparent}.done .res-c{background:#ffd700}
+.lug-row{border-top:1px solid rgba(255,255,255,.15);padding-top:8px;margin-top:8px}.lug-l{font-weight:800;font-size:.72rem}.lug-w{font-size:.62rem;color:rgba(255,255,255,.75);line-height:1.4;margin:2px 0 6px}
+.buddy-card,.res-card,.badge-case{background:linear-gradient(135deg,rgba(30,47,122,.85),rgba(13,27,75,.92));border:2px solid rgba(255,215,0,.4);border-radius:14px;padding:12px;margin:0 0 12px;color:#fff}
+.bd-h,.res-h,.bc-h{font-weight:900;font-size:.82rem;color:#ffd700}.res-h small,.bc-h small{font-weight:600;color:rgba(255,255,255,.55);font-size:.56rem;margin-left:5px}
+.bd-sub{font-size:.66rem;color:rgba(255,255,255,.8);line-height:1.4}.bd-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.bd-pick{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,215,0,.35);border-radius:12px;padding:8px 2px;color:#fff;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:inherit}.bd-pick span{font-size:1.7rem}.bd-pick b{font-size:.62rem}
+.bd-top{display:flex;gap:12px;align-items:center;margin-bottom:8px}.bd-emoji{font-size:3rem;animation:bdBob 1.8s ease-in-out infinite}.bd-name{font-weight:900;font-size:1rem;color:#ffd700}
+.bd-change{display:block;margin:4px auto 0;background:none;border:0;color:rgba(255,255,255,.55);font-size:.58rem;text-decoration:underline;font-family:inherit}
+@keyframes bdBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.bc-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.bc-b{text-align:center;background:rgba(255,255,255,.06);border-radius:12px;padding:8px 2px;opacity:.55;filter:grayscale(1)}.bc-b.got{opacity:1;filter:none;background:rgba(255,215,0,.15);box-shadow:0 0 0 1.5px rgba(255,215,0,.6)}
+.bc-i{font-size:1.6rem}.bc-n{font-size:.6rem;font-weight:800}.bc-p{font-size:.56rem;color:#ffd700}
+.dex-launch{width:100%;display:flex;flex-direction:column;align-items:center;gap:2px;background:linear-gradient(135deg,#1e2f7a,#162259);color:#fff;border:1.5px solid rgba(255,215,0,.45);border-radius:14px;padding:12px;margin:0 0 12px;font-size:.8rem;font-family:inherit}.dex-launch b{color:#ffd700}.dex-launch span{font-size:.6rem;color:rgba(255,255,255,.7)}
+.dex-ov{position:fixed;inset:0;z-index:9000;background:#0d1b4b;color:#fff;overflow-y:auto;padding:14px 14px 40px}
+.dex-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.dex-t{font-weight:900;font-size:1.05rem;color:#ffd700}.dex-s{font-size:.66rem;color:rgba(255,255,255,.7)}
+.dex-x{background:rgba(255,255,255,.12);color:#fff;border:0;border-radius:50%;width:34px;height:34px;font-size:1rem}.dex-row{display:flex;gap:8px;align-items:center;margin-bottom:6px}.dex-row .bk-btn{flex:1}
+.dex-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}.dex-c{background:rgba(255,255,255,.07);border-radius:12px;padding:8px;text-align:center}.dex-c.shiny{box-shadow:0 0 0 2px #ffd700,0 0 14px rgba(255,215,0,.45)}
+.dex-c img{width:100%;height:110px;object-fit:cover;border-radius:8px}.dex-em{font-size:2.4rem;height:110px;display:flex;align-items:center;justify-content:center}.dex-n{font-size:.56rem;color:#ffd700;margin-top:4px}.dex-nm{font-weight:800;font-size:.74rem}.dex-no{font-size:.58rem;color:rgba(255,255,255,.65)}
+.snd-btn{position:fixed;right:12px;bottom:78px;z-index:50;width:38px;height:38px;border-radius:50%;border:1.5px solid rgba(255,215,0,.5);background:rgba(13,27,75,.9);font-size:1rem}
+.staff-sec{background:linear-gradient(135deg,rgba(204,0,0,.18),rgba(13,27,75,.5));border:2px solid rgba(204,0,0,.45);border-radius:14px;padding:12px;margin-bottom:12px}
+.staff-h{font-size:.68rem;font-weight:800;color:#ffd700;margin:10px 0 6px}.staff-grid{display:flex;flex-wrap:wrap;gap:6px}.staff-grid.one{flex-direction:column}
+.staff-chip{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,215,0,.35);color:#fff;border-radius:18px;padding:7px 11px;font-size:.66rem;font-weight:700;text-align:left;font-family:inherit}.staff-chip.on{background:#ffd700;color:#0d1b4b}
+.staff-ov{position:fixed;inset:0;z-index:9500;background:#fff;color:#111;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px;gap:14px}
+.staff-jp{font-size:2.1rem;font-weight:900;line-height:1.35}.staff-en{font-size:.95rem;color:#444}.staff-x{font-size:1.15rem;font-weight:800;white-space:pre-line;background:#f3f3f3;border-radius:12px;padding:12px;width:100%;box-sizing:border-box}
+.staff-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.staff-btns .drive-btn{background:#0d1b4b;color:#fff;border-color:#0d1b4b;padding:10px 14px;flex:none;font-family:inherit}.staff-btns .drive-btn.primary{background:#cc0000;border-color:#cc0000}.staff-hint{font-size:.6rem;color:#888}
+.ball-fx{position:fixed;inset:0;z-index:9800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;pointer-events:none;background:rgba(13,27,75,.55);animation:ballBg 1.8s ease both}
+.ball{width:84px;height:84px;border-radius:50%;background:linear-gradient(#e53935 0 46%,#222 46% 54%,#fff 54%);border:4px solid #222;position:relative;animation:ballShake 1.2s ease-in-out both}.ball i{position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px;border-radius:50%;background:#fff;border:4px solid #222}
+.ball-msg{font-weight:900;font-size:1.05rem;color:#ffd700;text-shadow:0 2px 6px #000;opacity:0;animation:ballMsg 1.8s ease both;text-align:center;padding:0 20px}.ball-fx.shiny .ball{filter:drop-shadow(0 0 14px #ffd700)}
+@keyframes ballShake{0%{transform:translateY(-120px) rotate(0)}25%{transform:translateY(0) rotate(0)}40%{transform:rotate(-24deg)}55%{transform:rotate(22deg)}70%{transform:rotate(-14deg)}85%,100%{transform:rotate(0) scale(1.08)}}
+@keyframes ballMsg{0%,62%{opacity:0;transform:scale(.6)}78%{opacity:1;transform:scale(1.15)}100%{opacity:1;transform:scale(1)}}
+@keyframes ballBg{0%{opacity:0}10%,86%{opacity:1}100%{opacity:0}}
 </style>
 </head>
 <body>
 <div id="authOverlay">
   <div class="auth-card">
     <div class="auth-ball"></div>
-    <div class="auth-title">JAPAN 2026</div>
+    <div class="auth-title">JAPAN 2027</div>
     <div class="auth-sub">Trainer login — enter the family passcode.<br>(Traveler passcode = full access · Family passcode = view only)</div>
     <input id="authPass" class="auth-input" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Passcode" onkeydown="if(event.key==='Enter')submitLogin()">
     <div class="auth-row"><label><input id="authRemember" type="checkbox" checked> Remember this device</label><button class="auth-link" onclick="toggleAuthPass()">Show</button></div>
@@ -2029,7 +2068,7 @@ body[data-role="family"] #nav-tickets,body[data-role="family"] #nav-customs,body
   <header class="app-header">
     <div class="app-header-title">
       <div class="pokeball-icon"></div>
-      <h1>JAPAN 2026</h1>
+      <h1>JAPAN 2027</h1>
       <span class="jp">日本旅行</span>
     </div>
     <div class="app-header-meta">OCT 22 – NOV 4<br>TRAINER PARTY: 3 <span id="rolePill" class="role-pill"></span></div>
@@ -2119,85 +2158,69 @@ const CITIES={
 
 // Each stop has an optional `ticketKey` matching a BOOKABLE_ITEMS key
 const DAYS=[
-  /* ── DAY 1 · Thu Oct 22 ── */
-  {day:1,date:'Oct 22',dateObj:'2026-10-22',city:'tokyo',label:'Travel day ✈️ SLC → LAX → Tokyo',travelDay:true,
-   banner:'✈️ <strong>SQ 11 departs LAX 2:00pm</strong> · 11h 50m · crosses the date line · lands Narita <strong>Fri Oct 23, 5:50pm</strong>',
+  /* ── DAY 1 · Fri Mar 26 ── */
+  {day:1,date:'Mar 26',dateObj:'2027-03-26',city:'tokyo',label:'Travel day ✈️ Salt Lake City → Tokyo',travelDay:true,
+   banner:'✈️ <strong>Flights are not booked yet.</strong> Leaving Fri Mar 26 means you cross the date line and land at Narita on <strong>Sat Mar 27</strong>. The times below fill in once you book.',
    stops:[
-    {name:'Wed Oct 21 (night before): SLC → LAX · Flight #3618',lat:40.7884,lng:-111.9778,ticketKey:'flight_slc_lax',
-     note:'Departs SLC 6:35pm → lands LAX 7:30pm. You sleep at the Hilton Los Angeles Airport tonight (next stop).',
-     tip:'Check in online and be at SLC by ~4:30pm. Tonight: download offline Google Maps (Kanto + Kansai) and the Japanese Translate pack, charge the battery packs.'},
-    {name:'Night of Oct 21: Hilton Los Angeles Airport',lat:33.9453,lng:-118.3924,ticketKey:'hotel_lax',
-     note:'Booked: Oct 21–22 (1 night) · Hilton confirmation ⟦HILTON_LAX_BK⟧ · paid with 54,000 Hilton points. Check-out is Oct 22 and your flight leaves at 2:00pm.',
-     tip:'Ask the front desk about the airport shuttle times for Oct 22 and plan to leave the hotel by ~10:30am.'},
-    {name:'Thu Oct 22: LAX → Tokyo Narita · SQ 11 (Singapore Airlines)',lat:33.9425,lng:-118.4081,ticketKey:'flight_lax_nrt',
-     note:'Departs LAX 2:00pm (the airline moved it from 2:20pm) · 11h 50m · lands NRT Fri Oct 23 at 5:50pm. Booking ref ⟦PNR_SQ⟧.',
-     tip:'Leave the hotel by ~10:30am for a 2:00pm international departure. Register all three of you on Visit Japan Web before you land — the QR codes speed up immigration and customs.'}
+    {name:'SLC → Tokyo Narita (one stop)',lat:40.7884,lng:-111.9778,ticketKey:'flight_out',
+     note:'No nonstop flights run from Salt Lake City to Tokyo, so plan on a connection (Seattle, San Francisco, Los Angeles and others are common) and a 14–18 hour journey. Book it on the Travel tab’s flight card and “catch” it here when you do.',
+     tip:'Register all three of you on Visit Japan Web a few days before you fly — the QR codes speed up immigration and customs. Download offline Google Maps (Kanto + Kansai) and the Japanese Translate pack the night before, and charge the battery packs.'}
   ]},
 
-  /* ── DAY 2 · Fri Oct 23 ── */
-  {day:2,date:'Oct 23',dateObj:'2026-10-23',city:'tokyo',label:'Land in Tokyo · easy night',
+  /* ── DAY 2 · Sat Mar 27 ── */
+  {day:2,date:'Mar 27',dateObj:'2027-03-27',city:'tokyo',label:'Land in Tokyo · easy night',
+   banner:'🌸 Early estimates put Tokyo’s full bloom around <strong>Mar 28–Apr 3</strong>, so you should land right as the trees open or peak. Official forecasts start in December and firm up in March.',
    stops:[
-    {name:'Narita Airport (NRT) — land 5:50pm',lat:35.7720,lng:140.3929,
-     note:'Immigration + baggage usually takes 60–90 min. Then buy Narita Express (N’EX) seats at the JR East Travel Service Center: ¥3,330 adult, about half for your son (ages 6–11).',
-     tip:'Pick up your IC cards here first (see the Travel tab — a US-bought Android phone usually cannot hold Suica). N’EX runs direct to Shinjuku in ~80–90 min, the easiest option with luggage.'},
-    {name:'N’EX → Shinjuku → Shinjuku-gyoemmae',lat:35.6896,lng:139.7006,
-     note:'At Shinjuku switch to the Tokyo Metro Marunouchi Line (2 stops to Shinjuku-gyoemmae, ~5 min), then a 5-minute walk. Expect to reach the apartment around 9:00–9:30pm.',
-     tip:'Follow the signs for “Marunouchi Line” from the JR gates. Keep a konbini snack handy for the train.'},
-    {name:'Apartment check-in — Yotsuya',lat:35.6866,lng:139.7195,ticketKey:'tokyo_apt',
-     note:'Address: ⟦TOKYO_ADDR⟧ · Booking # ⟦TOKYO_BK⟧. Self check-in with a door code (lift the smart-lock cover → enter the code → lower the cover → turn the knob left). The listing’s check-in window is 4–5pm, so tell the host you will arrive around 9pm.',
-     tip:'Konbini dinner (7-Eleven / FamilyMart about a minute away). Nothing else tonight — tomorrow is your first real Japan day.'}
+    {name:'Narita Airport (NRT) — land',lat:35.7720,lng:140.3929,
+     note:'Immigration + baggage usually takes 60–90 min. Then buy Narita Express (N’EX) seats at the JR East Travel Service Center: about ¥3,300 adult (confirm the current fare), roughly half for your son (ages 6–11).',
+     tip:'Pick up your IC cards here first (see the Travel tab — a US-bought Android phone usually cannot hold Suica). N’EX runs direct to Shinjuku in ~80–90 min, the easiest option with luggage. If you end up landing at Haneda instead, swap this for the Keikyu line or the Tokyo Monorail.'},
+    {name:'N’EX → Shinjuku → Tokyo apartment',lat:35.6896,lng:139.7006,
+     note:'The easiest area is the same one you had before: Shinjuku-gyoemmae or Yotsuya, two stops on the Marunouchi Line from Shinjuku. Add the exact address on the Travel tab once you book.',
+     tip:'Tell the host your real arrival time, and screenshot the self-check-in instructions for offline use.'},
+    {name:'Apartment check-in + konbini dinner',lat:35.6866,lng:139.7195,ticketKey:'tokyo_apt',
+     note:'Not booked yet. Look for an apartment near a Marunouchi Line station (5 nights, Mar 27–Apr 1).',
+     tip:'Nothing else tonight — tomorrow is your first real Japan day.'}
   ]},
 
-  /* ── DAY 3 · Sat Oct 24 ── */
-  {day:3,date:'Oct 24',dateObj:'2026-10-24',city:'tokyo',label:'Disc golf · Nakano · Shinjuku',
-   stops:[
-    {name:'Disc golf — Showa Kinen Park (Tachikawa)',lat:35.7118,lng:139.3936,ticketKey:'disc_golf',
-     note:'About 50 min from the apartment: Marunouchi Line to Shinjuku → JR Chuo Line Rapid to Tachikawa (~35 min) → one stop on the Ome Line to Nishi-Tachikawa. 18-hole course inside the park (bamboo grove on the front nine). Park entry is about ¥450 for adults.',
-     tip:'Bring your own discs and aim to tee off around 9:30am. If jet lag wins, skip it and start at Nakano — nothing here is booked.'},
-    {name:'Nakano Broadway + lunch',lat:35.7086,lng:139.6661,
-     note:'Back toward town on the Chuo Line (~35–40 min). Pokémon, anime and vintage-toy shops (Mandarake units) on the upper floors; lunch in the Sun Mall arcade outside.',
-     tip:'Most shops open around 12:00. Plan 1.5–2 hours.'},
-    {name:'Shinjuku shopping',lat:35.6896,lng:139.7006,
-     note:'Nakano → Shinjuku is ~8 min. Uniqlo, GU, Lumine and Takashimaya; Don Quijote for souvenirs. Tax-free shopping with your passport on purchases over ¥5,000 (before tax).',
-     tip:'Heattech layers for the cold Fuji/Hakone morning are cheap here.'},
-    {name:'Dinner — Omoide Yokocho (or Fuunji tsukemen)',lat:35.6916,lng:139.6994,
-     note:'Memory Lane yakitori alley — tiny smoky stalls, mostly cash. For something calmer, Fuunji (tsukemen) is nearby.',
-     tip:'Go before 7pm if you want seats together.'}
-  ]},
-
-  /* ── DAY 4 · Sun Oct 25 ── */
-  {day:4,date:'Oct 25',dateObj:'2026-10-25',city:'tokyo',label:'Capybaras · Pokémon Center · Akihabara',
+  /* ── DAY 3 · Sun Mar 28 ── */
+  {day:3,date:'Mar 28',dateObj:'2027-03-28',city:'tokyo',label:'Capybaras · Pokémon Center · Akihabara',
    stops:[
     {name:'CAPPINESS Oshiage — capybara café, 10:00am',lat:35.7120,lng:139.8115,ticketKey:'cappiness',
-     note:'¥4,000 per person, card charged at booking. JU Skytower Mukojima 5F, 200 m from Tokyo Skytree Station. From the apartment: Marunouchi → Otemachi → Hanzomon Line to Oshiage (~35 min). Ages 5+ welcome (5–12 with an adult). Book at tablecheck.com.',
+     note:'¥4,000 per person, card charged at booking. JU Skytower Mukojima 5F, 200 m from Tokyo Skytree Station. From Shinjuku-gyoemmae: Marunouchi → Otemachi → Hanzomon Line to Oshiage (~35 min). Ages 5+ welcome (5–12 with an adult). Book at tablecheck.com.',
      tip:'NOT BOOKED YET — it is a timed slot. Pick 10:00am so the rest of the day is not squeezed.'},
+    {name:'Sumida Park — late cherry blossoms (optional)',lat:35.7137,lng:139.8044,
+     note:'About a 15-minute walk from Oshiage, with the Skytree behind the trees. If the season runs late there will still be blossoms; if not, expect petals on the river.',
+     tip:'Weekend afternoons get crowded — go right after the café.'},
     {name:'Pokémon Center Tokyo DX (Nihombashi)',lat:35.6816,lng:139.7738,ticketKey:'pokemon_center_dx',
-     note:'Hanzomon Line Oshiage → Mitsukoshimae (~12 min). Walk-in. The Tokyo-exclusive merch is here, in the Takashimaya building — not in Akihabara.',
+     note:'Hanzomon Line Oshiage → Mitsukoshimae (~12 min). Walk-in. The Tokyo-exclusive merch is here, in the Takashimaya building — not in Akihabara. For authentic cards, buy sealed packs here or from established chains.',
      tip:'Optional: ask at the Nihombashi info counters whether the Chuo City stamp rally is running.'},
     {name:'Akihabara — Super Potato · Mandarake · Yodobashi',lat:35.6984,lng:139.7731,
      note:'~15 min from Nihombashi. On Sundays the main street closes to cars in the afternoon (usually ~1–5pm). Super Potato (retro games, from 11am), Mandarake Complex (from noon), Yodobashi Akiba (tax-free with passport).',
      tip:'Pick two or three shops, not all of them, if energy fades.'},
     {name:'Dinner — ramen near Akihabara',lat:35.6982,lng:139.7710,
      note:'Plenty of ramen shops around the station; solo-booth chains are fun for kids.',
-     tip:'Home by ~8:30pm — DisneySea tomorrow means a 6:30am start.'}
+     tip:'Home by ~8:30pm.'}
   ]},
 
-  /* ── DAY 5 · Mon Oct 26 ── */
-  {day:5,date:'Oct 26',dateObj:'2026-10-26',city:'tokyo',label:'Tokyo DisneySea 🎃',
+  /* ── DAY 4 · Mon Mar 29 ── */
+  {day:4,date:'Mar 29',dateObj:'2027-03-29',city:'tokyo',label:'Disc golf · Nakano · Shinjuku · teamLab',
    stops:[
-    {name:'To DisneySea — leave by ~6:30am',lat:35.6812,lng:139.7671,
-     note:'Marunouchi Line from Shinjuku-gyoemmae to Tokyo Station (~20 min) → JR Keiyo Line to Maihama (~15 min; the Keiyo platforms are a long walk, ~10 min) → Disney Resort Line to Tokyo DisneySea Station (~10 min, ~¥260). Door to door about 75 min.',
-     tip:'Check today’s opening time in the Tokyo Disney Resort app tonight and aim to be at the gate about 45 minutes before.'},
-    {name:'Tokyo DisneySea — full day',lat:35.6267,lng:139.8851,ticketKey:'disneysea',
-     note:'Your 3 × 1-Day Passports for Mon Oct 26. Tickets live in the Tokyo Disney Resort app — QR codes appear when ready; the app asks you not to show the screen to anyone but a Cast Member. Check the day’s Halloween shows and the app’s Standby Pass / Premier Access options in the morning.',
-     tip:'Make sure all three tickets are visible on the phone(s) you carry. Costumes are allowed for kids.'},
-    {name:'Home from the park',lat:35.6866,lng:139.7195,
-     note:'Leave after the evening show; the reverse route takes ~75 min. Trains run late, but the platforms peak right after the fireworks.',
-     tip:'Grab konbini breakfast for tomorrow on the way back.'}
+    {name:'Disc golf — Showa Kinen Park (Tachikawa)',lat:35.7118,lng:139.3936,ticketKey:'disc_golf',
+     note:'About 50 min from the apartment: Marunouchi Line to Shinjuku → JR Chuo Line Rapid to Tachikawa (~35 min) → one stop on the Ome Line to Nishi-Tachikawa. 18-hole course inside the park (bamboo grove on the front nine). Park entry is about ¥450 for adults. The park usually has cherry trees and spring flowers in April, so it is a nice spot even if the blossoms are past peak.',
+     tip:'Bring your own discs and aim to tee off around 9:30am. Check the park’s calendar for closure days before you go. If jet lag wins, skip it and start at Nakano.'},
+    {name:'Nakano Broadway + lunch',lat:35.7086,lng:139.6661,
+     note:'Back toward town on the Chuo Line (~35–40 min). Pokémon, anime and vintage-toy shops (Mandarake units) on the upper floors; lunch in the Sun Mall arcade outside.',
+     tip:'Most shops open around 12:00. Plan 1.5–2 hours.'},
+    {name:'Shinjuku shopping',lat:35.6896,lng:139.7006,
+     note:'Nakano → Shinjuku is ~8 min. Uniqlo, GU, Lumine and Takashimaya; Don Quijote for souvenirs. Tax-free shopping with your passport on purchases over ¥5,000 (before tax).',
+     tip:'Sneakers (Nike, Puma) and clothing are easy here — keep passports on you for the tax-free counters.'},
+    {name:'teamLab Planets TOKYO — evening entry',lat:35.6491,lng:139.7895,ticketKey:'teamlab_tokyo',
+     note:'Not booked yet — pick an admission window around 6:00–6:30pm. From Shinjuku: Yurakucho/Fukutoshin Line to Toyosu or Shin-Toyosu (~35–40 min), then a ~6-minute walk. About 2 adults + 1 child.',
+     tip:'Arrive ~15 minutes early. You walk barefoot through water — wear shorts or pants that roll above the knee. Dinner afterward at LaLaport Toyosu.'}
   ]},
 
-  /* ── DAY 6 · Tue Oct 27 ── */
-  {day:6,date:'Oct 27',dateObj:'2026-10-27',city:'tokyo',label:'Asakusa · Samurai · Shibuya · teamLab',
+  /* ── DAY 5 · Tue Mar 30 ── */
+  {day:5,date:'Mar 30',dateObj:'2027-03-30',city:'tokyo',label:'Asakusa · Samurai · Shibuya · Anniversary night 💍',
    stops:[
     {name:'Senso-ji + Nakamise (and a goshuin stamp)',lat:35.7148,lng:139.7967,
      note:'Ginza Line to Asakusa (~35 min), arrive ~9:00am. Free. Pick up a goshuincho (stamp book, ~¥1,500) and the first temple stamp at the stamp office.',
@@ -2207,60 +2230,76 @@ const DAYS=[
      tip:'NOT BOOKED YET. Kid-friendly; check the tour language for the slot you pick.'},
     {name:'Lunch + Shibuya',lat:35.6580,lng:139.7016,
      note:'Ginza Line direct to Shibuya (~35 min). Scramble Crossing, Shibuya 109, Miyashita Park. Optional Shibuya Sky (book ahead): the ~3:30pm slot fits.',
-     tip:'Be on the train to Toyosu by 5:00pm.'},
-    {name:'teamLab Planets TOKYO — entry 6:00–6:30pm',lat:35.6491,lng:139.7895,ticketKey:'teamlab_tokyo',
-     note:'Booked: Tue Oct 27, admission window 18:00–18:30 · 2 adults + 1 child · ref ⟦TEAMLAB_TK⟧. From Shibuya: Fukutoshin/Yurakucho Line to Toyosu or Shin-Toyosu (~35–40 min), then a ~6-minute walk.',
-     tip:'Arrive ~5:45pm. You walk barefoot through water — wear shorts or pants that roll above the knee. Dinner afterward at LaLaport Toyosu.'}
+     tip:'Shibuya Sky’s sunset slots book out, so reserve early if you want one tonight.'},
+    {name:'💍 Anniversary night — sitter at the apartment',lat:35.6580,lng:139.7016,ticketKey:'sitter',
+     note:'Your 14th anniversary. Have an English-speaking sitter at the apartment around 5:30–10:30pm while you two have dinner in Shibuya or Shinjuku (Shibuya Sky at sunset is an option). Your son eats first and has a quiet game or origami night.',
+     tip:'NOT BOOKED YET. Book the sitter weeks ahead, do a video call so your son meets them, and ask your host whether a sitter may come in.'}
   ]},
 
-  /* ── DAY 7 · Wed Oct 28 ── */
-  {day:7,date:'Oct 28',dateObj:'2026-10-28',city:'hakone',label:'Fuji · Chureito → Hakone ryokan',
-   banner:'🚌 <strong>Longest transit day</strong> (about 7 hours on buses and trains). Realistic ryokan arrival is <strong>5:30–6pm</strong> — message them your ETA.',
+  /* ── DAY 6 · Wed Mar 31 ── */
+  {day:6,date:'Mar 31',dateObj:'2027-03-31',city:'tokyo',label:'Blossoms · Shinjuku Gyoen · Harajuku · Meguro River',
+   banner:'🌸 <strong>Your flexible blossom day.</strong> This is the heart of Tokyo’s expected peak (Mar 28–Apr 3). If the trees run early or late you still get blossoms or petal-covered canals.',
+   stops:[
+    {name:'Shinjuku Gyoen (opens 9:00am)',lat:35.6852,lng:139.7100,ticketKey:'shinjuku_gyoen',
+     note:'A 5–10 minute walk from Shinjuku-gyoemmae. About ¥500 per adult; children are free or cheap — confirm at the gate. It is quieter than Ueno, with many cherry varieties that bloom later than the main ones. Weekends and holidays in March–April can require advance registration, and the garden is normally closed Mondays — today is a Wednesday, so it should be fine. Confirm on the official site.',
+     tip:'Bring a picnic from the konbini or a bakery — this is your hanami. Arrive early for the best light.'},
+    {name:'Meiji Jingu + Harajuku (Takeshita Street)',lat:35.6764,lng:139.6993,
+     note:'JR Shinjuku → Harajuku (~5 min). Walk the forested path to Meiji Jingu, then Takeshita Street and the Omotesando side streets for sneakers and Japanese brands.',
+     tip:'Add a goshuin stamp if the shrine office is open.'},
+    {name:'Meguro River (Nakameguro) — evening',lat:35.6440,lng:139.6988,
+     note:'Harajuku → Shibuya → Toyoko Line to Nakameguro (~15 min total). Cafés and shops line the canal; when petals fall they float on the water. Calmer on weeknights.',
+     tip:'Dinner in Nakameguro or back at Shibuya. Alternative if everyone is tired: Kichijoji (Inokashira Park + Harmonica Yokocho).'}
+  ]},
+
+  /* ── DAY 7 · Thu Apr 1 ── */
+  {day:7,date:'Apr 1',dateObj:'2027-04-01',city:'hakone',label:'Fuji · Chureito → Hakone ryokan',
+   banner:'🚌 <strong>Longest transit day</strong> (about 7 hours on buses and trains). Realistic ryokan arrival is <strong>5:30–6pm</strong> — message them your ETA. Chureito’s cherry trees usually bloom in the first half of April, so this is the best-timed blossom stop of the trip.',
    stops:[
     {name:'~6:30am: send the big bags on to Osaka (Yamato)',lat:35.6866,lng:139.7195,ticketKey:'yamato_osaka',
-     note:'Pack a small overnight bag for Hakone and ship the large suitcases to the Osaka Airbnb (⟦OSAKA_ADDR⟧). Drop them at the 7-Eleven/FamilyMart by the apartment and choose delivery for Thu Oct 29 in the 16:00–18:00 or 18:00–20:00 slot. Message the host (Ayumi) first to confirm she is fine with a parcel arriving.',
-     tip:'Tokyo → Osaka is normally next-day. Keep the receipt/tracking number. Pack tonight, right after teamLab.'},
+     note:'Pack a small overnight bag for Hakone and ship the large suitcases to the Osaka apartment. Drop them at the 7-Eleven/FamilyMart by the apartment and choose delivery for Fri Apr 2 in the 16:00–18:00 or 18:00–20:00 slot. Message the Osaka host first to confirm a parcel can arrive.',
+     tip:'Tokyo → Osaka is normally next-day. Keep the receipt/tracking number. Pack the night before, right after the Meguro River.'},
     {name:'Shinjuku → Kawaguchiko by highway bus (~7:30am)',lat:35.6877,lng:139.7009,ticketKey:'fuji_bus',
      note:'Busta Shinjuku (Shinjuku Expressway Bus Terminal, above Shinjuku Station). About 1h45–2h, roughly ¥2,000–2,300 per adult, half price for your son. Reserve seats online or at the terminal.',
-     tip:'No transfers, and kids can nap. Reserve no later than the night before.'},
+     tip:'No transfers, and kids can nap. Reserve no later than the night before — April is busy.'},
     {name:'Chureito Pagoda (Arakurayama Sengen Park)',lat:35.5013,lng:138.8014,
-     note:'From Kawaguchiko Station take the Fujikyu line to Shimoyoshida (~20 min), then a 10–15 minute walk and about 400 steps. Go late morning for the classic pagoda + Fuji photo. Autumn color is only starting in late October.',
-     tip:'Fuji hides in cloud by afternoon, so do this first. Bring water.'},
+     note:'From Kawaguchiko Station take the Fujikyu line to Shimoyoshida (~20 min), then a 10–15 minute walk and about 400 steps. Go late morning for the classic pagoda + Fuji + cherry-blossom photo, if the trees are in bloom.',
+     tip:'Fuji hides in cloud by afternoon, so do this first. Bring water. Check the bloom status on a webcam or local report a few days before.'},
     {name:'Lake Kawaguchiko — lunch + flat lakeside walk',lat:35.5116,lng:138.7573,
-     note:'Back at Kawaguchiko around 12:15: hoto noodle lunch, then an easy lakeside walk (the Oishi Park side has the best Fuji reflection).',
+     note:'Back at Kawaguchiko around 12:15: hoto noodle lunch, then an easy lakeside walk (the Oishi Park side has the best Fuji reflection). The lake often has a cherry-blossom festival in early–mid April; check dates closer to the trip.',
      tip:'Leave the lake by ~1:45pm. The ropeway is only for a day you are running ahead.'},
     {name:'Kawaguchiko → Gotemba → Hakone → Tōnosawa',lat:35.2564,lng:139.1556,
      note:'Fujikyu bus to Gotemba (60–90 min, about ¥1,750) → Hakone Tozan bus to Sengoku (~30 min) → local bus to Hakone-Yumoto, then the Tozan Railway to Tōnosawa. Plan on about 3–3.5 hours; departures are limited.',
      tip:'Choose your bus from the Fujikyu timetable before you leave the lake. If you run late, a taxi from Hakone-Yumoto to the ryokan is short.'},
     {name:'Tōnosawa Ichinoyu Honkan — check in',lat:35.2332,lng:139.0934,ticketKey:'hakone_ryokan',
-     note:'Booked: Oct 28–29 · confirmation ⟦RYOKAN_BK⟧ · private family onsen, kaiseki dinner + breakfast. Check-in is from 3:00pm; you will arrive ~5:30–6pm, so tell them your ETA and dinner time.',
-     tip:'Wear the yukata and do the private bath before dinner.'}
+     note:'Not booked yet — this was your ryokan before; ask whether they can move your reservation to Apr 1–2. Private family onsen, kaiseki dinner + breakfast. Check-in is from 3:00pm; you will arrive ~5:30–6pm, so tell them your ETA and dinner time.',
+     tip:'Wear the yukata and do the private bath before dinner — this is why the tattoos come later in Osaka.'}
   ]},
 
-  /* ── DAY 8 · Thu Oct 29 ── */
-  {day:8,date:'Oct 29',dateObj:'2026-10-29',city:'osaka',label:'Hakone → Osaka · teamLab night',
-   banner:'🚄 Shinkansen day — keep it easy. Your big bags should be arriving at the Airbnb this evening (Yamato).',
+  /* ── DAY 8 · Fri Apr 2 ── */
+  {day:8,date:'Apr 2',dateObj:'2027-04-02',city:'osaka',label:'Hakone → Osaka · easy evening',
+   banner:'🚄 Shinkansen day — keep it easy. Your big bags should be arriving at the Osaka apartment this evening (Yamato).',
    stops:[
     {name:'Ryokan breakfast + checkout',lat:35.2332,lng:139.0934,
      note:'Slow morning: breakfast, a last soak. Check out around 10:00–10:30.',
      tip:'Ask the ryokan to call a taxi to Hakone-Yumoto if the bus is packed.'},
-    {name:'Tōnosawa → Odawara → Shinkansen to Shin-Osaka',lat:35.2564,lng:139.1556,ticketKey:'smartex_oct29',
+    {name:'Tōnosawa → Odawara → Shinkansen to Shin-Osaka',lat:35.2564,lng:139.1556,ticketKey:'smartex_apr9',
      note:'Hakone Tozan Railway to Odawara (~30–35 min via Hakone-Yumoto), then a Shinkansen to Shin-Osaka (2.5–3 hrs including the connection; roughly ¥13,500+ per adult, half for your son). SmartEX lists the connecting options.',
-     tip:'Book reserved seats in SmartEX ahead of time (sales open one month before).'},
-    {name:'Check in — Gu’s Tani4 (Osaka Airbnb)',lat:34.6800,lng:135.5185,ticketKey:'osaka_hotel',
-     note:'Shin-Osaka → Midosuji Line to Umeda → Tanimachi Line to Tanimachi 4-chome (~35 min), then a 3-minute walk. Check-in from 3:00pm. ⟦OSAKA_ADDR⟧ · host Ayumi ⟦OSAKA_TEL⟧.',
+     tip:'Book reserved seats in SmartEX as soon as sales open (one month before). Expect fuller trains in cherry-blossom season.'},
+    {name:'Check in — Osaka apartment',lat:34.6800,lng:135.5185,ticketKey:'osaka_hotel',
+     note:'Not booked yet. Your last stay was Gu’s Tani4 near Tanimachi 4-chome Station (walkable to Osaka Castle); ask the host if Apr 2–7 is open, or look at similar apartments near Tanimachi 4-chome or Namba. Check-in is usually from 3:00pm.',
      tip:'Your shipped bags should arrive in the 16:00–20:00 window.'},
-    {name:'teamLab Botanical Garden Osaka — evening (optional)',lat:34.6056,lng:135.5184,ticketKey:'teamlab_osaka',
-     note:'Open Oct 28–Nov 11, 6:00–10:30pm (last entry 9:30pm), tickets online only (about ¥1,800). Nagai Botanical Garden: Tanimachi Line to Tennoji → Midosuji Line to Nagai (~25 min) + a 10-minute walk. A ~7:00pm entry works.',
-     tip:'If everyone is wiped out, move it to Nov 2 evening (open through Nov 11) or skip it. Dinner at Tennoji or Nagai.'}
+    {name:'Easy dinner — Dotonbori or Shinsaibashi (optional)',lat:34.6687,lng:135.5013,
+     note:'Takoyaki and street food on Dotonbori, or the covered Shinsaibashi arcade. Early night — the next morning starts at the castle.',
+     tip:'Keep the first evening short after the Shinkansen.'}
   ]},
 
-  /* ── DAY 9 · Fri Oct 30 ── */
-  {day:9,date:'Oct 30',dateObj:'2026-10-30',city:'osaka',label:'Castle · chopsticks · Nintendo Museum',
+  /* ── DAY 9 · Sat Apr 3 ── */
+  {day:9,date:'Apr 3',dateObj:'2027-04-03',city:'osaka',label:'Castle · chopsticks · Nintendo Museum',
+   banner:'🌸 Osaka’s early estimate for full bloom is around <strong>Apr 1–5</strong>, so Osaka Castle Park should be at or near peak.',
    stops:[
-    {name:'Osaka Castle Park walk (8:30am)',lat:34.6873,lng:135.5262,
-     note:'About 10 minutes from the apartment. The moat, stone walls and the keep from outside are free; the interior museum is paid and optional.',
-     tip:'Be back at the subway by ~9:30am.'},
+    {name:'Osaka Castle Park walk (8:30am)',lat:34.6873,lng:135.5262,ticketKey:'osaka_castle_park',
+     note:'About 10 minutes from the Tanimachi-area apartment. The moat, stone walls and the keep from outside are free; the interior museum is paid and optional. Nishinomaru Garden (paid) has the classic keep-and-blossom view if the trees are blooming.',
+     tip:'Be back at the subway by ~9:30am. Saturday crowds start early in blossom season.'},
     {name:'Chopstick-making workshop — 10:00am',lat:34.6738,lng:135.5065,ticketKey:'chopsticks',
      note:'Gareria Akka 3F, 1-16-20 Higashishinsaibashi · 5 min from Shinsaibashi Station · $32 per person · 1 hour · English. Book the 10:00am slot at cookly.me (free cancellation 48 hrs before).',
      tip:'NOT BOOKED YET. About 20 minutes by subway from Tanimachi 4-chome — leave by 9:30.'},
@@ -2271,19 +2310,19 @@ const DAYS=[
      note:'Plan ~1h15: subway to Osaka/Umeda → JR Special Rapid to Kyoto (~30 min, ¥580) → JR Nara Line to JR Ogura (~25 min, ¥310) + an 8-minute walk. From the Kintetsu Ogura east exit it is 5 minutes.',
      tip:'Aim to be at the museum by ~2:45pm.'},
     {name:'Nintendo Museum — entry 3:00–3:30pm',lat:34.8870,lng:135.8000,ticketKey:'nintendo',
-     note:'Booked: Fri Oct 30 · purchase # ⟦NINTENDO_TK⟧ · Uji, open 10am–7pm. Plan 2–3 hours. Lockers on site.',
-     tip:'Bring the confirmation email. Back in Osaka around 7:30pm.'},
+     note:'Not booked yet. Tickets are sold by lottery: entries open three months before your visit month (so in January for April), results arrive on the 1st of the following month, and payment is due by the 7th by credit card. The museum is closed Tuesdays, so Saturday works. Plan 2–3 hours.',
+     tip:'Mark early January in your calendar. If you miss the lottery, cancellation tickets are released later on a first-come basis.'},
     {name:'Easy dinner near the apartment',lat:34.6800,lng:135.5185,
-     note:'Tennoji, Umeda or a Tanimachi izakaya. Early night — tattoos tomorrow at 11am.',
+     note:'Tennoji, Umeda or a Tanimachi izakaya. Early night — tattoos tomorrow.',
      tip:'Skip alcohol the night before a tattoo.'}
   ]},
 
-  /* ── DAY 10 · Sat Oct 31 ── */
-  {day:10,date:'Oct 31',dateObj:'2026-10-31',city:'osaka',label:'Tattoo day 🌸🐯 · Osaka GLOW · Halloween night',
-   banner:'🌸🐯 <strong>Both tattoo sessions start at 11:00am.</strong> Plan around the longer piece and keep the afternoon open.',
+  /* ── DAY 10 · Sun Apr 4 ── */
+  {day:10,date:'Apr 4',dateObj:'2027-04-04',city:'osaka',label:'Tattoo day 🌸🐯 · blossoms · Osaka GLOW',
+   banner:'🌸🐯 <strong>Tattoo date is a proposal.</strong> Your original booking was for a different date, so ask Alex at Good Times Ink whether Sun Apr 4 around 11:00am is open. The studio is normally closed Tuesdays.',
    stops:[
-    {name:'Good Times Ink — 11:00am · Corby 🌸 + Cheryl 🐯',lat:34.6722,lng:135.4985,ticketKey:'tattoo',
-     note:'Confirmed for Oct 31 at 11:00am · Ocean Drive 4F, 2-12-14 Nishishinsaibashi, Chuo-ku (Americamura) · contact: Alex, shop manager · +81-6-6212-0175. Corby: cherry-blossom flowers. Cheryl: tiger. Deposits are non-refundable.',
+    {name:'Good Times Ink — proposed 11:00am · Corby 🌸 + Cheryl 🐯',lat:34.6722,lng:135.4985,ticketKey:'tattoo',
+     note:'Ocean Drive 4F, 2-12-14 Nishishinsaibashi, Chuo-ku (Americamura) · contact: Alex, shop manager · +81-6-6212-0175 · support@goodtimesink.jp. Corby: cherry-blossom flowers. Cheryl: tiger. Your earlier deposits were non-refundable, so ask whether they can be moved to the new date.',
      tip:'Ask on arrival how long each piece will take and whether your son may wait in the studio (many Japanese studios restrict children). Eat first, bring water. Leave Tanimachi by ~10:15am.'},
     {name:'Plan for your son during the session',lat:34.6722,lng:135.4985,
      note:'If he cannot stay in the studio: take turns, or use the neighborhood — Americamura Triangle Park, the Shinsaibashi-suji arcade, or Round1 Sennichimae (arcade, bowling) about 10 minutes away.',
@@ -2291,20 +2330,21 @@ const DAYS=[
     {name:'Aftercare + rest',lat:34.6800,lng:135.5185,
      note:'Keep the wrap on as the artist instructs; no soaking, pools or hot springs while it heals; keep it out of the sun and away from tight sleeves.',
      tip:'Ask for the aftercare instructions in English before you leave the shop.'},
-    {name:'Osaka GLOW — glow-in-the-dark dance show (evening)',lat:34.7055,lng:135.4983,ticketKey:'osaka_glow',
-     note:'A show in a completely dark venue where dancers in glowing EL-wire costumes perform; you also build your own glow wand. About 90–100 minutes. Near Umeda / Shin-Osaka — from the apartment it is the Tanimachi Line to Higashi-Umeda (the pin is approximate; use the address on your ticket). Stage Experience tickets (ages 8+) let your son wear a glowing costume and dance on stage; younger kids and anyone who prefers to watch use Standard/Premium tickets. I could not see Oct 31 showtimes — check osakaglow.jp or Viator/GetYourGuide.',
-     tip:'NOT BOOKED YET. Free cancellation closes 24 hours before, and the tattoos may run long — choose the latest evening slot offered. With fresh tattoos, skip the Stage Experience costume for the adults and let your son do the stage.'},
-    {name:'Dotonbori Halloween night 🎃 (optional, if energy allows)',lat:34.6687,lng:135.5013,
-     note:'Costumes everywhere on Dotonbori Bridge and in Americamura after dark. It gets very crowded — keep your son close and protect fresh tattoos from bumps. After the GLOW show it is a short ride south, or skip it and head home.',
-     tip:'Dinner somewhere easy, and aim to be home by ~9:30–10pm. Tomorrow starts around 7am.'}
+    {name:'Mint Bureau Cherry Blossom Passage (optional, if it is open)',lat:34.6981,lng:135.5278,ticketKey:'mint_bureau',
+     note:'The Osaka Mint’s riverside path of late-blooming cherry trees opens for about a week each spring. It ran Apr 2–8 in 2026; the 2027 dates are usually announced in March, and advance online registration is required.',
+     tip:'Check osaka-info.jp in March. If your dates line up, it is a gentle, mostly flat walk — good after a tattoo session.'},
+    {name:'Osaka GLOW — glow-in-the-dark dance show (optional evening)',lat:34.7055,lng:135.4983,ticketKey:'osaka_glow',
+     note:'A show in a completely dark venue where dancers in glowing EL-wire costumes perform; you also build your own glow wand. About 90–100 minutes. Stage Experience tickets (ages 8+) let your son dance on stage. I could not confirm that it is still running in April 2027 — check osakaglow.jp or Viator/GetYourGuide for Apr 4 showtimes.',
+     tip:'Choose the latest evening slot offered. With fresh tattoos, skip the Stage Experience costume for the adults.'}
   ]},
 
-  /* ── DAY 11 · Sun Nov 1 ── */
-  {day:11,date:'Nov 1',dateObj:'2026-11-01',city:'kyoto',label:'Fushimi Inari · Arashiyama kimono',
+  /* ── DAY 11 · Mon Apr 5 ── */
+  {day:11,date:'Apr 5',dateObj:'2027-04-05',city:'kyoto',label:'Fushimi Inari · Arashiyama kimono',
+   banner:'🌸 Kyoto’s early estimate for full bloom is about Apr 1–6, so the main trees should be at or near peak. Later varieties at Ninna-ji bloom around mid-April, so they may be just starting.',
    stops:[
     {name:'Fushimi Inari Taisha (arrive ~8:00am)',lat:34.9671,lng:135.7727,
      note:'Tanimachi Line to Tenma-bashi → Keihan Main Line to Fushimi-Inari (about 1 hour door to door). Free. The climb to the Yotsutsuji viewpoint takes 40–60 minutes and is plenty; fox statues are everywhere.',
-     tip:'Wear shoes with grip and leave by ~9:30am.'},
+     tip:'Wear shoes with grip and leave by ~9:30am. If your tattoo is only a day old, skip the climb and keep it out of sweat and sun.'},
     {name:'Kimono rental — Arashiyama (~11:00am)',lat:35.0094,lng:135.6668,ticketKey:'kimono',
      note:'JR from Inari → Kyoto → Saga-Arashiyama (~35–40 min). Book a rental shop near Saga-Arashiyama/Randen Arashiyama: roughly ¥3,000–5,000 per person with dressing; kids’ kimono available. Dressing takes ~30 minutes; return by 4–5pm.',
      tip:'NOT BOOKED YET. Ask the shop about wearing a kimono over fresh tattoos — loose sleeves are fine, but avoid tight wraps rubbing new work.'},
@@ -2315,25 +2355,25 @@ const DAYS=[
      note:'Kyoto’s 400 m covered food market. Many stalls close around 5–6pm.',
      tip:'Skip it if everyone is tired — home by 6pm is a good day.'},
     {name:'Optional: Yamazaki Whisky Museum — only with a reservation',lat:34.8908,lng:135.6743,ticketKey:'yamazaki',
-     note:'Suntory Yamazaki sits between Kyoto and Osaka (10 minutes on foot from JR Yamazaki). Reservation required; open 10:00–16:45 (last entry 16:30). The paid production tour is lottery-based and 20+ only, so your son cannot join it; tasting is adults-only.',
+     note:'Suntory Yamazaki sits between Kyoto and Osaka (10 minutes on foot from JR Yamazaki). Reservation required; open 10:00–16:45 (last entry 16:30). The paid production tour is lottery-based and 20+ only, so your son cannot join; tasting is adults-only.',
      tip:'If you cannot get a slot, buy Japanese whisky at a department store, Don Quijote or the airport instead.'}
   ]},
 
-  /* ── DAY 12 · Mon Nov 2 ── */
-  {day:12,date:'Nov 2',dateObj:'2026-11-02',city:'nara',label:'Nara deer · Godzilla zipline 🦖',
-   banner:'📦 <strong>Ship the big bags to Haneda today</strong> — Yamato’s airport service needs the bags sent at least 2 days before departure.',
+  /* ── DAY 12 · Tue Apr 6 ── */
+  {day:12,date:'Apr 6',dateObj:'2027-04-06',city:'nara',label:'Nara deer · Godzilla zipline 🦖',
+   banner:'📦 <strong>Ship the big bags to your Tokyo hotel today</strong> so they are waiting when you arrive on Apr 7. Ask the hotel first whether it accepts parcels.',
    stops:[
-    {name:'Ship big bags to Haneda (before you leave)',lat:34.6800,lng:135.5185,ticketKey:'yamato_hnd',
-     note:'Pack on Nov 1 night and drop the bags at the 7-Eleven/FamilyMart on your way out. Use the Airport TA-Q-BIN option and write on the slip: Haneda Airport Terminal 3 · flight AA 26 · Nov 4 · 6:00pm. Pick-up is at the Yamato counter on the T3 3F departure lobby, available from 3 hours before departure.',
-     tip:'Ask at drop-off whether it will arrive for Nov 4. Keep a small bag with clothes for Nov 2 night (Osaka) and Nov 3 night (Tokyo).'},
+    {name:'Ship big bags to the Tokyo hotel (before you leave)',lat:34.6800,lng:135.5185,ticketKey:'yamato_tokyo',
+     note:'Pack on Apr 5 night and drop the bags at the 7-Eleven/FamilyMart on your way out. Use the standard TA-Q-BIN service to the Tokyo hotel (write the guest name and check-in date on the slip) with delivery for Wed Apr 7. Keep a small bag with clothes for Apr 6 night (Osaka).',
+     tip:'Ask at drop-off whether it will arrive for Apr 7, and keep the receipt.'},
     {name:'Nara — Tōdai-ji + deer park (8:00–9:15am)',lat:34.6890,lng:135.8398,
-     note:'Tanimachi 9-chome connects to Kintetsu Osaka-Uehommachi → Kintetsu-Nara (~35 min). Tōdai-ji’s Great Buddha Hall opens ~8:00am in November (¥800 adult / ¥400 child). Deer crackers ¥200 — bow to a deer and it bows back.',
-     tip:'Leave Nara by 9:15am to stay on schedule.'},
+     note:'Tanimachi 9-chome connects to Kintetsu Osaka-Uehommachi → Kintetsu-Nara (~35 min). Tōdai-ji’s Great Buddha Hall usually opens around 7:30am in April (about ¥800 adult / ¥400 child). Deer crackers ¥200 — bow to a deer and it bows back.',
+     tip:'Leave Nara by 9:15am to stay on schedule. Keep any snacks out of sight until you are ready to feed the deer.'},
     {name:'Bus to Nijigen no Mori (Awaji Island)',lat:34.5752,lng:135.0008,
      note:'Check the current timetable and book the bus first, then work back. Roughly 60 minutes from Osaka–Namba (OCAT) to Awaji IC plus the park’s free shuttle. Kobe-Sannomiya → Awaji is a frequent alternative (~¥950).',
      tip:'Buy the bus + Godzilla combo ticket online ahead of time.'},
     {name:'Godzilla Interception Operation 🦖',lat:34.5752,lng:135.0008,ticketKey:'nijigen',
-     note:'Zipline into Godzilla’s mouth (inner course, 162 m) or alongside it (outer course, 152 m), plus the shooting game and the Godzilla Museum — about 1.5–2 hours. Adults ~¥3,800, kids ~¥2,200. Minimum height 120 cm and weight 25–110 kg; no photos on the zipline.',
+     note:'Zipline into Godzilla’s mouth (inner course, 162 m) or alongside it (outer course, 152 m), plus the shooting game and the Godzilla Museum — about 1.5–2 hours. Adults ~¥3,800, kids ~¥2,200. Minimum height 120 cm and weight 25–110 kg; no photos on the zipline. If your tattoos are only two days old, check with the artist before wearing a harness.',
      tip:'Measure your son before you go. Lunch at the park has a Godzilla-themed menu.'},
     {name:'Back to Osaka (~3:30–4:00pm)',lat:34.6937,lng:135.5023,
      note:'Take an early-afternoon bus back; the evening is free.',
@@ -2343,43 +2383,76 @@ const DAYS=[
      tip:'Early night: tomorrow is a long Shinkansen day.'}
   ]},
 
-  /* ── DAY 13 · Tue Nov 3 ── */
-  {day:13,date:'Nov 3',dateObj:'2026-11-03',city:'kobe',label:'Himeji · Kobe · Shinkansen to Tokyo',
-   banner:'🚄 Check out of the Airbnb by 10:00am (you will leave earlier). Overnight bags only — the big bags are already headed to Haneda.',
+  /* ── DAY 13 · Wed Apr 7 ── */
+  {day:13,date:'Apr 7',dateObj:'2027-04-07',city:'kobe',label:'Himeji · Kobe · Shinkansen to Tokyo',
+   banner:'🚄 Check out of the apartment by the host’s time (you will leave early). Overnight bags only — the big bags are already headed to the Tokyo hotel.',
    stops:[
     {name:'Himeji Castle (opens 9:00am)',lat:34.8394,lng:134.6939,ticketKey:'himeji',
-     note:'Leave Tanimachi ~7:15am. Shin-Osaka → Himeji by Shinkansen takes ~35–40 min; the JR Special Rapid from Osaka takes ~1 hr (¥1,520). Adults ¥2,500 (non-resident price since March 2026); children reportedly free — confirm at the ticket gate. About a 20-minute walk from the station; allow ~2 hours inside.',
+     note:'Leave Tanimachi ~7:15am. Shin-Osaka → Himeji by Shinkansen takes ~35–40 min; the JR Special Rapid from Osaka takes ~1 hr (¥1,520). Adults ¥2,500 (non-resident price since March 2026); children reportedly free — confirm at the ticket gate. About a 20-minute walk from the station; allow ~2 hours inside. Himeji’s trees usually bloom in the first half of April, so you may see late blossoms around the castle.',
      tip:'You carry your shoes inside the castle, so bring a bag.'},
     {name:'Kobe beef lunch (reserve ~12:30pm)',lat:34.6937,lng:135.1956,ticketKey:'kobe_lunch',
      note:'JR Himeji → Sannomiya (~40 min). Kobe beef lunches run from ~¥4,000 for sets/bowls to ¥10,000+ for steaks. Reserve ahead; many restaurants have English booking pages.',
      tip:'NOT BOOKED YET. Ask for child portions or share a steak.'},
-    {name:'Kobe → Shin-Osaka → Shinkansen to Shinagawa',lat:34.7334,lng:135.5000,ticketKey:'smartex_nov3',
+    {name:'Kobe → Shin-Osaka → Shinkansen to Shinagawa',lat:34.7334,lng:135.5000,ticketKey:'smartex_apr14',
      note:'JR Sannomiya → Shin-Osaka (~25 min), then a Nozomi to Shinagawa (~2h20, roughly ¥14,700 per adult). Aim for a ~3:30–4:00pm departure to reach Tokyo around 6:30pm. Reserve seats in SmartEX.',
      tip:'NOT BOOKED YET. Overnight bags only today.'},
-    {name:'Conrad Tokyo — check in',lat:35.6615,lng:139.7590,ticketKey:'hotel_conrad',
-     note:'Shinagawa → Shimbashi (JR, ~8 min), then about a 10-minute walk. Booked: Hilton confirmation ⟦CONRAD_BK⟧ · Nov 3–4 (1 night) · stay shows as pending until you check out. Floors 28–37 with Tokyo Bay and Hamarikyu Gardens views.',
-     tip:'Ask for a high floor if you have not already, and ask the front desk to arrange a taxi to Haneda for tomorrow — there is no direct airport bus from here.'}
+    {name:'Conrad Tokyo — check in (final 3 nights)',lat:35.6615,lng:139.7590,ticketKey:'hotel_conrad',
+     note:'Shinagawa → Shimbashi (JR, ~8 min), then about a 10-minute walk. Not booked yet — Conrad was your earlier hotel (floors 28–37, Tokyo Bay and Hamarikyu Gardens views); if you use Hilton points, check award availability for Apr 7–10.',
+     tip:'Ask for a high floor, and ask the front desk to confirm your parcel arrived from Osaka.'}
   ]},
 
-  /* ── DAY 14 · Wed Nov 4 ── */
-  {day:14,date:'Nov 4',dateObj:'2026-11-04',city:'tokyo',label:'Conrad → Haneda → home ✈️',travelDay:true,
-   banner:'✈️ <strong>AA 26 departs Haneda T3 at 6:00pm</strong> · lands LAX 10:55am the same day · LAX → SLC #4752 departs 5:05pm',
+  /* ── DAY 14 · Thu Apr 8 ── */
+  {day:14,date:'Apr 8',dateObj:'2027-04-08',city:'tokyo',label:'Tokyo DisneySea 🏰',
+   banner:'🏰 Early crowd forecasts rate <strong>Thu Apr 8 as the quietest day of your whole window</strong> (about 41%). Apr 9 is next at ~53%. These are rough, so check again closer to the trip.',
    stops:[
-    {name:'Conrad morning — Hamarikyu Gardens (optional)',lat:35.6597,lng:139.7632,
-     note:'Slow breakfast, then Hamarikyu Gardens (about a 10-minute walk, opens 9:00am, small admission) or souvenir shopping in Ginza.',
-     tip:'Check out by 11:00 and be on the road by ~12:30–1:00pm.'},
-    {name:'Conrad → Haneda Terminal 3',lat:35.5494,lng:139.7798,
-     note:'No direct airport bus from the Conrad. Taxi: about ¥8,000–10,000 and 20–30 min. Or JR Shimbashi → Hamamatsucho (one stop), then the Tokyo Monorail to Haneda Airport Terminal 3 (~15–20 min, roughly ¥500 per adult).',
-     tip:'Aim to reach T3 by ~2:30pm. With luggage, ask the hotel to call a taxi.'},
-    {name:'Collect the shipped bags at the Yamato counter',lat:35.5494,lng:139.7798,ticketKey:'yamato_hnd',
-     note:'Haneda T3, 3F departure lobby (Yamato counter near check-in counter A). Pickup opens 3 hours before departure — 3:00pm for a 6:00pm flight. Bring the receipt/slip and your passport.',
-     tip:'Then go straight to the American Airlines counters.'},
-    {name:'AA 26 · HND → LAX',lat:35.5494,lng:139.7798,ticketKey:'flight_hnd_lax',
-     note:'Departs 6:00pm (economy, dinner + snack). Check-in counters typically close ~60 min before departure. Food: Edo Market on T3 4F; the duty-free is excellent.',
+    {name:'To DisneySea — leave by ~6:45am',lat:35.6812,lng:139.7671,
+     note:'JR Shimbashi → Tokyo (~4 min) → JR Keiyo Line to Maihama (~15 min; the Keiyo platforms are a long walk, ~10 min) → Disney Resort Line to Tokyo DisneySea Station (~10 min, ~¥260). Door to door roughly an hour from the Conrad.',
+     tip:'Check today’s opening time in the Tokyo Disney Resort app tonight and aim to be at the gate about 45 minutes before.'},
+    {name:'Tokyo DisneySea — full day',lat:35.6267,lng:139.8851,ticketKey:'disneysea',
+     note:'Your 3 × 1-Day Passports were bought for the original October date. You told me the date can be moved — do it once your dates are firm, and confirm the rules and any fare difference on the official Tokyo Disney Resort ticket page. Tickets live in the Tokyo Disney Resort app once valid; spring may bring special events, but the schedule was not confirmed when I checked.',
+     tip:'Make sure all three tickets are visible on the phone(s) you carry. Check the day’s Standby Pass / Premier Access options in the morning.'},
+    {name:'Back to the hotel',lat:35.6615,lng:139.7590,
+     note:'Leave after the evening show; trains run late, but the platforms peak right after the fireworks.',
+     tip:'Grab konbini breakfast for tomorrow on the way back.'}
+  ]},
+
+  /* ── DAY 15 · Fri Apr 9 ── */
+  {day:15,date:'Apr 9',dateObj:'2027-04-09',city:'tokyo',label:'Last Tokyo day · Hamarikyu · Tsukiji · shopping',
+   banner:'🛍️ Your flexible shopping day: sneakers, a Seiko watch (~$500 budget), authentic Pokémon cards and Loungefly/purse stops all fit here. Tax-free counters need your passport.',
+   stops:[
+    {name:'Hamarikyu Gardens (opens 9:00am)',lat:35.6597,lng:139.7632,ticketKey:'hamarikyu',
+     note:'About a 10-minute walk from the Conrad. A small admission fee. The garden usually has spring flowers (rapeseed/nanohana fields and later cherry varieties); confirm what is blooming closer to the date.',
+     tip:'Slow breakfast first. The teahouse by the pond is a nice rest for kids.'},
+    {name:'Tsukiji Outer Market lunch',lat:35.6655,lng:139.7707,
+     note:'A 15-minute walk from the Conrad. Tamagoyaki, seafood bowls and street snacks; many stalls are cash-friendly and close by early afternoon.',
+     tip:'Go before 1pm for the most choice.'},
+    {name:'Ginza — watches, department stores, tax-free shopping',lat:35.6717,lng:139.7650,
+     note:'Ginza has the Seiko flagship stores and the big department stores, with tax-free counters. Compare prices on your shortlist before buying, and keep receipts for the Customs tab.',
+     tip:'Buy the watch and any alcohol last, so you carry them the shortest time. Check opening hours on the day.'},
+    {name:'Optional: Kichijoji or Shimokitazawa (vintage, sneakers, Inokashira Park)',lat:35.7030,lng:139.5798,
+     note:'Kichijoji has Inokashira Park (rowboats and late petals), Sunroad shopping and Harmonica Yokocho for snacks. Shimokitazawa is the vintage and sneaker neighborhood. Pick one, not both.',
+     tip:'If energy is low, stay in Ginza and call it a day.'},
+    {name:'Pack for the flight',lat:35.6615,lng:139.7590,
+     note:'Weigh the bags, put liquids and whisky in checked luggage, and keep passports, medicines and phone chargers in your carry-ons.',
+     tip:'Leave a clean outfit out for the long travel day.'}
+  ]},
+
+  /* ── DAY 16 · Sat Apr 10 ── */
+  {day:16,date:'Apr 10',dateObj:'2027-04-10',city:'tokyo',label:'Conrad → Haneda → home ✈️',travelDay:true,
+   banner:'✈️ <strong>Return flights are not booked yet.</strong> Flying Sat Apr 10 from Haneda (HND) gets you back to Salt Lake City the same calendar day after the date-line crossing. Times fill in once you book.',
+   stops:[
+    {name:'Conrad morning — last souvenirs',lat:35.6597,lng:139.7632,
+     note:'Slow breakfast, then last-minute souvenirs in Ginza or at the hotel.',
+     tip:'Check out and be on the road about 3 hours before your flight.'},
+    {name:'Conrad → Haneda',lat:35.5494,lng:139.7798,
+     note:'No direct airport bus from the Conrad. Taxi: about ¥8,000–10,000 and 20–30 min. Or JR Shimbashi → Hamamatsucho (one stop), then the Tokyo Monorail to Haneda (~15–20 min, roughly ¥500 per adult). Check which terminal your airline uses.',
+     tip:'With luggage, ask the hotel to call a taxi.'},
+    {name:'Flight: Tokyo Haneda → (hub) → Salt Lake City',lat:35.5494,lng:139.7798,ticketKey:'flight_back',
+     note:'Plan for one connection on the US side and a long travel day. Check in online and be at the airport about 3 hours before an international departure.',
      tip:'Alcohol: 1 liter per adult (21+) is duty-free at U.S. customs and Utah has its own limits — buy whisky last and check the Customs tab.'},
-    {name:'LAX → SLC · Flight #4752',lat:33.9425,lng:-118.4081,ticketKey:'flight_lax_slc',
-     note:'Land LAX 10:55am Nov 4 (same calendar day). Customs, re-check, then #4752 departs 5:05pm and lands in SLC at 7:59pm.',
-     tip:'Declare purchases honestly. The Customs tab keeps your running total.'}
+    {name:'Back in Salt Lake City',lat:40.7884,lng:-111.9778,
+     note:'Declare purchases honestly at the first US port of entry. The Customs tab keeps your running total.',
+     tip:'Save a backup of the app from the Route tab so your photos, notes and ledger are safe.'}
   ]}
 ];
 
@@ -2387,24 +2460,19 @@ const DAYS=[
 
 // Items that can have tickets purchased and linked to itinerary days
 const BOOKABLE_ITEMS=[
-  {key:'disneysea', status:'booked', confirmed:true,
-   time:'Oct 26 — Gates open 8am · Sparkling Jubilee 25th Anniversary + Halloween',
-   confirmation:'Ticket #⟦DISNEY_TK⟧ · 1-Day Passport ×3',
-   name:'Tokyo DisneySea',         day:5,  icon:'🏰', url:'https://www.tokyodisneyresort.jp/en/', urgency:'high',
-   instructions:'BOOKED ✔️. Ticket #⟦DISNEY_TK⟧. 1-Day Passport ×3. Oct 26, gates open 8am. Halloween season + Sparkling Jubilee 25th anniversary. Book Premier Access for Villains Parade in Tokyo Disney Resort app.'},
+  {key:'disneysea', name:'Tokyo DisneySea', day:14, icon:'🏰', url:'https://www.tokyodisneyresort.jp/en/', urgency:'high',
+   time:'Apr 8', confirmation:'',
+   instructions:'Move your existing 1-Day Passports to Thu Apr 8 on the official Tokyo Disney Resort ticket page or app.'},
   {key:'ghibli',      name:'Ghibli Museum',            day:3,  icon:'🎨', url:'https://www.ghibli-museum.jp/en/tickets/', urgency:'high',
    instructions:'Tickets released on the 10th of each month at 10am JST for the following month. Use Lawson Ticket English site. Bring passport to entry.'},
-  {key:'nintendo', status:'booked', confirmed:true, time:'Oct 30 — 3:00pm–3:30pm entry', confirmation:'Purchase #⟦NINTENDO_TK⟧',    name:'Nintendo Museum',          day:9,  icon:'🎮', url:'https://www.nintendo.com/en-GB/Nintendo-Museum/Tickets/', urgency:'high',
-   instructions:'Monthly lottery — apply at museum-tickets.nintendo.com. Check for cancellations immediately. ¥3,300 (~$22) adult / ¥1,100 (~$7) child.'},
+  {key:'nintendo', name:'Nintendo Museum', day:9, icon:'🎮', url:'https://museum.nintendo.com/en/', urgency:'high', time:'', confirmation:'',
+   instructions:'Lottery — apply with a Nintendo Account about three months before your visit month. Closed Tuesdays.'},
   {key:'samurai',     name:'Samurai Ninja Museum',     day:6,  icon:'⚔️', url:'https://www.samurai-museum.com/en/', urgency:'med',
    instructions:'Book online at samurai-museum.com. Asakusa location. ~90 min experience. Consider the Premium Sword Experience upgrade.'},
   {key:'nijigen',     name:'Nijigen no Mori',          day:10, icon:'🐉', url:'https://nijigennomori.com/en/ticket/', urgency:'med',
    instructions:'Buy attraction tickets online. Book the highway bus (West Japan JR Bus) from Namba separately — ¥1,850 (~$12) one-way.'},
-  {key:'hakone_ryokan', status:'booked', confirmed:true,
-   time:'Oct 28–29 — Check-in 3:00pm',
-   confirmation:'⟦RYOKAN_BK⟧ · Private family onsen + kaiseki dinner + breakfast',
-   name:'Tōnosawa Ichinoyu Honkan', day:7,  icon:'♨️', url:'https://www.ichinoyu.co.jp/english/', urgency:'med',
-   instructions:'✔️ BOOKED. Confirmation: ⟦RYOKAN_BK⟧. Check-in Oct 28 3pm. Private family onsen, kaiseki dinner + breakfast. Wear yukata provided. Request room overlooking Hayakawa River.'},
+  {key:'hakone_ryokan', name:'Tōnosawa Ichinoyu Honkan', day:7, icon:'♨️', url:'https://www.ichinoyu.co.jp/english/', urgency:'med', time:'Apr 1–2', confirmation:'',
+   instructions:'Ask the ryokan to move your reservation to Apr 1–2.'},
   {key:'smartex',      name:'SmartEX — Book Shinkansen Tickets', day:1, icon:'🚄', url:'https://smart-ex.jp/en/', urgency:'high',
    instructions:'Book all Shinkansen tickets via SmartEX app BEFORE the trip. Register with an international credit card. Key bookings: (1) Tokyo→Odawara Oct 28 ¥4,270/~$28 adult, (2) Odawara→Shin-Osaka Oct 29 ¥13,870/~$92 adult, (3) Shin-Osaka→Tokyo Nov 4 ¥13,870/~$92 adult. Child is half price. Total family ~$585.'},
   {key:'hakone_ropeway', name:'Hakone Free Pass',     day:8,  icon:'🚡', url:'https://www.hakonenavi.jp/international/en/', urgency:'low',
@@ -2413,10 +2481,10 @@ const BOOKABLE_ITEMS=[
    instructions:'No advance booking needed. ¥450 (~$3) entry. Disc golf equipment rental may be available, bring your own discs to be safe.'},
   {key:'jr_pass',     name:'JR Pass — Skip It, Buy Individual Tickets', day:1,  icon:'🚅', url:'https://www.jreast.co.jp/e/index.html', urgency:'low',
    instructions:'MATH: Individual tickets for your routes = ~$585 total (family of 3). 14-day JR Pass = $1,267 (family of 3). You SAVE ~$682 buying individual tickets. Buy via SmartEX app or at station. Key routes: NRT→Shinjuku ¥3,070/~$20 adult, Tokyo→Odawara ¥4,270/~$28, Odawara→Shin-Osaka ¥13,870/~$92, Shin-Osaka→Tokyo ¥13,870/~$92.'},
-  {key:'osaka_hotel', name:'Osaka Castle Apartment (TBC)', day:8, icon:'🏨', url:'https://mimaru.com/en/', urgency:'med',
-   instructions:'Book 6 nights (Oct 29–Nov 4) at Osaka Castle Apartment Shinsaibashi. Apartment-style, great for family of 3.'},
-  {key:'hnd_hotel',   name:'HND Area Hotel (Nov 3)',   day:13, icon:'🏨', url:'https://www.tokyuhotels.co.jp/haneda-e/index.html', urgency:'high',
-   instructions:'Book 1 night near Haneda Airport for Nov 3. Haneda Excel Hotel Tokyu or APA Hotel Haneda are both excellent options right at the terminal.'},
+  {key:'osaka_hotel', name:'Osaka apartment', day:8, icon:'🏨', url:'https://www.airbnb.com/', urgency:'med',
+   instructions:'Book 5 nights (Apr 2–7) in an apartment near Tanimachi or Namba.'},
+  {key:'hnd_hotel',   name:'HND Area Hotel', day:13, icon:'🏨', url:'https://www.tokyuhotels.co.jp/haneda-e/index.html', urgency:'high',
+   instructions:'Retired — the last three nights are at a Tokyo hotel.'},
   // ── PARKS, HIKES & NATURE ──
   {key:'showa_disc_golf', name:'Disc Golf — Showa Kinen Park', day:4, icon:'🥏', url:'https://udisc.com/courses/showa-kinen-park-imLU', urgency:'low',
    instructions:'18-hole JPDGA course. 4.3★ rated (522 reviews). Park entry ¥450 (~$3). Holes 1-9 short/technical through bamboo grove; holes 10-18 longer with open areas. Bring your own discs (max 159g for JPDGA). Take Chuo Line from Shinjuku to Nishi-Tachikawa. Monthly event 1st Sunday 10am.'},
@@ -2452,8 +2520,8 @@ const BOOKABLE_ITEMS=[
    instructions:'Book at cookly.me — search Handmade Chopsticks Workshop Osaka. $32/person, 1 hour, groups 1-4. Gareria Akka 3F, 1-16-20 Higashishinsaibashi, Chuo-ku — 5-min walk from Shinsaibashi Station. Available 10am-4pm daily, English instructor. Free cancellation 48hrs before. Book the 10am slot on Oct 30.'},
   {key:'kimono', name:'Kimono Wearing — Arashiyama', day:11, icon:'??', url:'https://www.yumeyakata.com/en/arashiyama/', urgency:'med',
    instructions:'Book at Yumeyakata Arashiyama or search Kimono rental Arashiyama on Klook. ~¥3,000-5,000/~$20-33 per person including dressing. Staff dress you in ~20 min. Walk Bamboo Forest + Tenryu-ji in full kimono. Return by 5-6pm. Kids kimono available for your son. Book in advance — popular with tourists.'},
-  {key:'teamlab_tokyo', status:'booked', confirmed:true, name:'teamLab Planets Tokyo',              day:6,  icon:'??', url:'https://teamlab.art/e/planets/', urgency:'med',
-   instructions:'Book in advance at teamlab.art/e/planets — sells out fast. From ~¥4,000/~$27 per person. Walk barefoot through pools of water with body-immersive digital art. 4 indoor + 2 outdoor spaces. Toyosu — 30 min from Yotsuya. Allow 1.5 hrs. Evening visit (after 6pm) is most magical.'},
+  {key:'teamlab_tokyo', name:'teamLab Planets Tokyo', day:5, icon:'🌌', url:'https://teamlab.art/e/planets/', urgency:'med', confirmation:'',
+   instructions:'Book an evening admission window at teamlab.art/e/planets.'},
   {key:'teamlab_osaka', name:'teamLab Botanical Garden Osaka',     day:11, icon:'??', url:'https://teamlab.art/e/botanicalgarden/', urgency:'med',
    instructions:'Book at teamlab.art/e/botanicalgarden — tickets only sold online. ~¥1,800/~$12 per person. Open Oct 28–Nov 11: 6pm–10:30pm (last entry 9:30pm). Outdoor nighttime art museum at Nagai Botanical Garden. Take Midosuji Line to Nagai Station from Osaka Namba (10 min walk to garden).'},
   {key:'round1',        name:'Round1 Stadium Sennichimae — Osaka', day:9,  icon:'??', url:'https://www.round1.co.jp/shop/tenpo/osaka-sennichimae.html', urgency:'low',
@@ -2470,8 +2538,8 @@ const BOOKABLE_ITEMS=[
    instructions:'¥1,000 (~$6.70) adults, ¥350 (~$2.30) kids. UNESCO World Heritage. Famous squeaky nightingale floors designed to detect ninja assassins. Hidden rooms, trap doors, stunning interior. 15 min from Kinkakuji. Buy tickets online to skip queues.'},
   {key:'himeji',       name:'Himeji Castle',                  day:13, icon:'🏰', url:'https://www.himejicastle.jp/en/', urgency:'med',
    instructions:'UNESCO World Heritage — best preserved feudal castle in Japan. 35 min from Shin-Osaka by Shinkansen (~¥2,990/~$20 adult each way). Open 9am. ¥1,000 (~$6.70) adults, ¥300 (~$2) kids. Take early Shinkansen (~8am) to arrive at opening. Allow 2 hrs, then head to Kobe.'},
-  {key:'tattoo', status:'booked', confirmed:true, time:'Oct 31 at 11:00am', name:'Good Times Ink — Cherry Blossom Tattoo 🌸', day:9, icon:'🌸', url:'https://goodtimesink.jp/en/', urgency:'med',
-   instructions:'Book via goodtimesink.jp/en contact form — English supported. Located in Americamura, Nishi Shinsaibashi 2-12-14, Ocean Drive 4F, Osaka. Open noon-7pm, closed Tuesdays. Cherry blossom fine line tattoo — bring a reference image. Small piece (coin to business card size) runs ¥15,000-25,000 (~$100-167). Contact via LINE app. Book at least 2 weeks in advance.'},
+  {key:'tattoo', name:'Good Times Ink — Cherry Blossom Tattoo 🌸', day:10, icon:'🌸', url:'https://goodtimesink.jp/en/', urgency:'med', time:'', confirmation:'',
+   instructions:'Ask the shop to move your booking to the new date. Located in Americamura, Nishi Shinsaibashi 2-12-14, Ocean Drive 4F, Osaka. Closed Tuesdays.'},
   {key:'sword_master', name:'Samurai Sword Master Training',   day:13, icon:'⚔️', url:'https://www.klook.com/en-US/activity/osaka-samurai-experience/', urgency:'med',
    instructions:'Private samurai sword training with a master instructor. Real katana technique, one-on-one instruction, photos in armor. Book via Klook or Viator — search Osaka Samurai Experience. ~¥8,000 (~$53) adult, ¥5,000 (~$33) child. Family private session available. Book well in advance.'},
   {key:'samurai_kyoto',name:'Samurai Ninja Museum Kyoto',     day:13, icon:'🥷', url:'https://mai-ko.com/tour/samurai-experience-kyoto-samurai-museum-tour-and-armor-trial/', urgency:'med',
@@ -2480,35 +2548,45 @@ const BOOKABLE_ITEMS=[
 
 const LINKS=[
   {section:'🚆 Trains & transport', items:[
-    {name:'SmartEX (Shinkansen reservations)',desc:'Odawara → Shin-Osaka (Oct 29) and Shin-Osaka → Shinagawa (Nov 3)',url:'https://smart-ex.jp/en/',urgent:true},
+    {name:'SmartEX (Shinkansen reservations)',desc:'Odawara → Shin-Osaka (Apr 2) and Shin-Osaka → Shinagawa (Apr 7) · sales open one month ahead',url:'https://smart-ex.jp/en/',urgent:true},
     {name:'Narita Express (N’EX)',desc:'Fares, seat reservations and timetables',url:'https://www.jreast.co.jp/multi/en/nex/',urgent:false},
-    {name:'Fujikyu Bus',desc:'Kawaguchiko ↔ Gotemba timetable (Oct 28)',url:'https://www.fujikyubus.co.jp/',urgent:true},
-    {name:'Tokyo Monorail',desc:'Hamamatsucho → Haneda Terminal 3 (Nov 4)',url:'https://www.tokyo-monorail.co.jp/english/',urgent:false},
-    {name:'Yamato Transport (Takkyubin)',desc:'Luggage forwarding + Airport TA-Q-BIN',url:'https://www.kuronekoyamato.co.jp/en/',urgent:true},
+    {name:'Fujikyu Bus',desc:'Kawaguchiko ↔ Gotemba timetable (Apr 1)',url:'https://www.fujikyubus.co.jp/',urgent:true},
+    {name:'Tokyo Monorail',desc:'Hamamatsucho → Haneda (Apr 10)',url:'https://www.tokyo-monorail.co.jp/english/',urgent:false},
+    {name:'Yamato Transport (Takkyubin)',desc:'Luggage forwarding Tokyo → Osaka (Apr 1) and Osaka → Tokyo hotel (Apr 6)',url:'https://www.kuronekoyamato.co.jp/en/',urgent:true},
     {name:'Visit Japan Web',desc:'Immigration + customs QR codes for all three of you',url:'https://www.vjw.digital.go.jp/',urgent:true}
   ]},
+  {section:'✈️ Flights', items:[
+    {name:'Google Flights',desc:'Set price alerts: SLC → Tokyo Mar 26 and Tokyo → SLC Apr 10',url:'https://www.google.com/travel/flights',urgent:true},
+    {name:'Skyscanner — SLC to Tokyo',desc:'Compare Narita and Haneda, and check the month view',url:'https://www.skyscanner.com/routes/slc/tyoa/salt-lake-city-to-tokyo.html',urgent:false}
+  ]},
   {section:'🎟 Tickets & bookings', items:[
-    {name:'Tokyo Disney Resort',desc:'DisneySea tickets and today’s shows (Oct 26)',url:'https://www.tokyodisneyresort.jp/en/',urgent:false},
-    {name:'teamLab Planets TOKYO',desc:'Booked: Oct 27, 18:00–18:30',url:'https://www.teamlab.art/e/planets/',urgent:false},
-    {name:'teamLab Botanical Garden Osaka',desc:'Online tickets only · open through Nov 11',url:'https://www.teamlab.art/e/botanicalgarden/',urgent:false},
-    {name:'Nintendo Museum',desc:'Booked: Oct 30, 3:00–3:30pm · access info',url:'https://museum.nintendo.com/en/',urgent:false},
-    {name:'CAPPINESS Oshiage (TableCheck)',desc:'Oct 25, 10:00am — not booked yet',url:'https://www.tablecheck.com/en/shops/cappiness-oshiage/reserve',urgent:true},
-    {name:'Chopstick making (Cookly)',desc:'Oct 30, 10:00am — not booked yet',url:'https://www.cookly.me/do/4102-handmade-chopsticks-workshop-in-osaka/in/osaka',urgent:true},
-    {name:'Samurai Ninja Museum Asakusa',desc:'Oct 27 — book a timeslot',url:'https://www.samurai-museum.com/en/',urgent:true},
-    {name:'Nijigen no Mori (Godzilla)',desc:'Nov 2 — tickets + bus',url:'https://ticket.nijigennomori.com/en/',urgent:true},
-    {name:'Himeji Castle',desc:'Nov 3 — hours and tickets',url:'https://www.himejicastle.jp/en/',urgent:false},
+    {name:'Tokyo Disney Resort',desc:'Move your 3 DisneySea tickets to Thu Apr 8 (school is back in session)',url:'https://www.tokyodisneyresort.jp/en/',urgent:true},
+    {name:'Evening sitter (anniversary night)',desc:'Mar 30 · about 5:30–10:30pm · book weeks ahead',url:'https://carefinder.jp/en',urgent:false},
+    {name:'teamLab Planets TOKYO',desc:'Mar 29 evening — book an 18:00–18:30 window',url:'https://www.teamlab.art/e/planets/',urgent:true},
+    {name:'Nintendo Museum',desc:'Sat Apr 3, 3:00pm — lottery entries open about three months ahead (January)',url:'https://museum.nintendo.com/en/',urgent:true},
+    {name:'CAPPINESS Oshiage (TableCheck)',desc:'Mar 28, 10:00am — not booked yet',url:'https://www.tablecheck.com/en/shops/cappiness-oshiage/reserve',urgent:true},
+    {name:'Chopstick making (Cookly)',desc:'Apr 3, 10:00am — not booked yet',url:'https://www.cookly.me/do/4102-handmade-chopsticks-workshop-in-osaka/in/osaka',urgent:true},
+    {name:'Samurai Ninja Museum Asakusa',desc:'Mar 30 — book a timeslot',url:'https://www.samurai-museum.com/en/',urgent:true},
+    {name:'Nijigen no Mori (Godzilla)',desc:'Apr 6 — tickets + bus',url:'https://ticket.nijigennomori.com/en/',urgent:true},
+    {name:'Himeji Castle',desc:'Apr 7 — hours and tickets',url:'https://www.himejicastle.jp/en/',urgent:false},
+    {name:'Ghibli Museum (optional)',desc:'Tickets for March go on sale around Feb 10, 10:00am JST',url:'https://www.ghibli-museum.jp/en/tickets/',urgent:false},
+    {name:'Osaka Mint Bureau Cherry Blossom Passage (optional)',desc:'2027 dates announced around March · online registration',url:'https://osaka-info.jp/en/event/sakura-toorinuke',urgent:false},
     {name:'Suntory Yamazaki',desc:'Optional — museum reservation',url:'https://www.suntory.com/factory/yamazaki/',urgent:false},
- {name:'Osaka GLOW',desc:'Oct 31 evening — glow-in-the-dark dance show (not booked yet)',url:'https://osakaglow.jp/',urgent:true},
-    {name:'Good Times Ink',desc:'Booked: Oct 31, 11:00am',url:'https://goodtimesink.jp/',urgent:false}
+    {name:'Osaka GLOW',desc:'Apr 4 evening — check whether it is still running (optional)',url:'https://osakaglow.jp/',urgent:false},
+    {name:'Good Times Ink',desc:'Move the tattoo date — proposed Sun Apr 4, 11:00am',url:'https://goodtimesink.jp/',urgent:true}
   ]},
   {section:'🏨 Stays', items:[
-    {name:'Conrad Tokyo (Hilton)',desc:'Booked: Nov 3–4 · manage in the Hilton Honors app',url:'https://www.hilton.com/en/hotels/tyocici-conrad-tokyo/',urgent:false},
-    {name:'Hilton Los Angeles Airport',desc:'Booked: Oct 21–22',url:'https://www.hilton.com/en/hilton-honors/',urgent:false},
-    {name:'Booking.com trip',desc:'Yotsuya apartment (check-in instructions)',url:'https://www.booking.com/',urgent:false},
-    {name:'Airbnb trip',desc:'Gu’s Tani4 — Osaka (messages with host Ayumi)',url:'https://www.airbnb.com/trips',urgent:false}
+    {name:'Conrad Tokyo (Hilton)',desc:'Apr 7–10 · check award and cash rates in the Hilton Honors app',url:'https://www.hilton.com/en/hotels/tyocici-conrad-tokyo/',urgent:true},
+    {name:'Tōnosawa Ichinoyu Honkan',desc:'Ask to move your ryokan stay to Apr 1–2',url:'https://www.ichinoyu.co.jp/english/',urgent:true},
+    {name:'Booking.com',desc:'Tokyo apartment Mar 27–Apr 1 (Shinjuku / Yotsuya area)',url:'https://www.booking.com/',urgent:true},
+    {name:'Airbnb',desc:'Osaka apartment Apr 2–7 (ask your previous host first)',url:'https://www.airbnb.com/trips',urgent:true}
   ]},
   {section:'📸 Photos', items:[
     {name:'Family photo & video folder',desc:'Google Drive — upload and share trip photos and videos',url:'https://drive.google.com/drive/folders/⟦DRIVE_ID⟧',urgent:false}
+  ]},
+  {section:'🌸 Cherry blossom forecasts', items:[
+    {name:'Japan Weather Association (tenki.jp)',desc:'First 2027 forecast usually late January, then weekly updates',url:'https://tenki.jp/sakura/',urgent:false},
+    {name:'Weathernews sakura forecast',desc:'First forecast usually early January; spot pages return in February',url:'https://weathernews.jp/sakura/',urgent:false}
   ]},
   {section:'🛃 Coming home', items:[
     {name:'CBP — Know Before You Go',desc:'Duty-free exemption, alcohol, food and agriculture rules',url:'https://www.cbp.gov/travel/us-citizens/know-before-you-go',urgent:false}
@@ -2517,45 +2595,65 @@ const LINKS=[
 
 const ALERTS=[
  /* ── BOOK / ARRANGE NOW ── */
- {id:'a_conrad',group:'now',urgent:false,key:'hotel_conrad',title:'🏨 Conrad Tokyo — Nov 3–4 booked ✔',
-  body:'Hilton confirmation ⟦CONRAD_BK⟧. Ask for a high floor, and plan the taxi (~¥8,000–10,000) or Monorail from Hamamatsucho for Nov 4.'},
- {id:'a_glow',group:'now',urgent:true,key:'osaka_glow',title:'✨ Book Osaka GLOW — Halloween, Sat Oct 31 evening',
-  body:'osakaglow.jp or Viator / GetYourGuide. About 90–100 min; Stage Experience tickets are for ages 8+ (your son qualifies). Check the Oct 31 showtimes — pick the latest evening slot because cancellation closes 24 hours before and the tattoos may run long. Adults with fresh tattoos can watch instead of wearing the stage costume.'},
- {id:'a_cappiness',group:'now',urgent:true,key:'cappiness',title:'🦫 Book CAPPINESS — Sun Oct 25, 10:00am',
+ {id:'a_flights_out',group:'now',urgent:true,key:'flight_out',title:'✈️ Book flights: SLC → Tokyo, Fri Mar 26',
+  body:'No nonstop exists, so expect one stop. Set Google Flights alerts and compare landing at Narita vs Haneda. In October 2026 I found early-December and mid-January round trips of roughly $790–$960 per person, but no reliable April fares — spring is peak season, so expect more. Look for a flight that lands before ~6pm on Sat Mar 27, and prefer fares with free cancellation.'},
+ {id:'a_flights_back',group:'now',urgent:true,key:'flight_back',title:'✈️ Book flights home: Tokyo → SLC, Sat Apr 10',
+  body:'Departing Haneda lets you take the Monorail or a taxi from the Conrad. If an open-jaw ticket (into Narita, out of Haneda) costs more than a round trip through one airport, compare the total including transfers.'},
+ {id:'a_hotel_tokyo',group:'now',urgent:true,key:'tokyo_apt',title:'🏠 Book a Tokyo apartment — Mar 27–Apr 1 (5 nights)',
+  body:'Look near Shinjuku-gyoemmae or Yotsuya (Marunouchi Line) like before. Cherry-blossom weeks sell out; hold a refundable room first and cancel later. Tell the host your arrival time.'},
+ {id:'a_ryokan',group:'now',urgent:true,key:'hakone_ryokan',title:'♨️ Move the Hakone ryokan — Apr 1–2 (1 night)',
+  body:'Email Tōnosawa Ichinoyu Honkan and ask whether your reservation can move to Apr 1–2 (private family onsen, kaiseki dinner + breakfast). If not, they may have a cancellation policy that applies.'},
+ {id:'a_hotel_osaka',group:'now',urgent:true,key:'osaka_hotel',title:'🏠 Book an Osaka apartment — Apr 2–7 (5 nights)',
+  body:'Ask your previous Tanimachi 4-chome host whether the dates are open; otherwise look at similar apartments near Tanimachi or Namba. Hold a refundable one now — blossom season fills up.'},
+ {id:'a_conrad',group:'now',urgent:true,key:'hotel_conrad',title:'🏨 Book a Tokyo hotel — Apr 7–10 (3 nights)',
+  body:'The Conrad (Shiodome) fit the trip before; check Hilton points and cash rates for Apr 7–10. Tell the front desk a parcel is coming from Osaka on Apr 7, and plan the taxi (~¥8,000–10,000) or Monorail from Hamamatsucho for Apr 10.'},
+ {id:'a_disney',group:'now',urgent:true,key:'disneysea',title:'🏰 Move your DisneySea tickets to Thu Apr 8',
+  body:'You said the date can be moved. Crowd forecasts for these dates aren’t out yet. Japanese school spring break usually runs to about Apr 7, so Thu Apr 8 should be calmer than the days before it. Confirm the rules and any fare difference on the official ticket page. Forecasts are rough, so recheck in March.'},
+ {id:'a_nintendo',group:'now',urgent:true,key:'nintendo',title:'🎮 Nintendo Museum lottery — enter in January for Sat Apr 3',
+  body:'Tickets are sold by lottery. Entries open about three months before your visit month (January for April), results arrive on the 1st of the following month, and payment is due by the 7th with a credit card. The museum is closed Tuesdays. I did not verify the exact January entry dates — check museum.nintendo.com in early January.'},
+ {id:'a_tattoo',group:'now',urgent:true,key:'tattoo',title:'🌸🐯 Ask Good Times Ink to move your tattoo date',
+  body:'Your original session was for a different date. Ask Alex (support@goodtimesink.jp, +81-6-6212-0175) whether Sun Apr 4 around 11:00am is open for both pieces, and whether your earlier deposits can move with it. The studio is normally closed Tuesdays. If the date changes, move Kyoto and Nara around it.'},
+ {id:'a_cappiness',group:'now',urgent:true,key:'cappiness',title:'🦫 Book CAPPINESS — Sun Mar 28, 10:00am',
   body:'tablecheck.com (search “CAPPINESS OSHIAGE”). ¥4,000 per person, card charged at booking. Ages 5+; ages 5–12 need an adult.'},
- {id:'a_chopsticks',group:'now',urgent:true,key:'chopsticks',title:'✂️ Book chopstick making — Fri Oct 30, 10:00am',
+ {id:'a_teamlab',group:'now',urgent:true,key:'teamlab_tokyo',title:'🌌 Book teamLab Planets TOKYO — Mon Mar 29, 6:00–6:30pm',
+  body:'teamlab.art/e/planets — pick an 18:00–18:30 admission window for 2 adults and 1 child. It sells out, so book as soon as March tickets open (check teamlab.art).'},
+ {id:'a_chopsticks',group:'now',urgent:true,key:'chopsticks',title:'✂️ Book chopstick making — Sat Apr 3, 10:00am',
   body:'cookly.me → “Handmade Chopsticks Workshop in Osaka”, $32 per person, free cancellation until 48 hours before.'},
- {id:'a_kimono',group:'now',urgent:true,key:'kimono',title:'🌸 Book kimono rental — Sun Nov 1 (Arashiyama)',
+ {id:'a_kimono',group:'now',urgent:true,key:'kimono',title:'🌸 Book kimono rental — Mon Apr 5 (Arashiyama)',
   body:'Pick a shop near Saga-Arashiyama and reserve an ~11:00am start. Ask for a child kimono for your son and about wearing kimono over fresh tattoos.'},
- {id:'a_samurai',group:'now',urgent:true,key:'samurai',title:'⚔️ Book the Samurai Ninja Museum (Asakusa) — Tue Oct 27',
+ {id:'a_samurai',group:'now',urgent:true,key:'samurai',title:'⚔️ Book the Samurai Ninja Museum (Asakusa) — Tue Mar 30',
   body:'Book a ~10:30am timeslot online (search “Samurai Ninja Museum Asakusa”; Klook/Viator also sell slots).'},
- {id:'a_shink1',group:'now',urgent:true,key:'smartex_oct29',title:'🚄 Reserve Shinkansen Odawara → Shin-Osaka — Thu Oct 29',
-  body:'SmartEX app (international card). About ¥13,500+ per adult, half for your son. Choose a departure after ~11:00am — checkout is relaxed. Tokyo → Odawara is no longer needed.'},
- {id:'a_shink2',group:'now',urgent:true,key:'smartex_nov3',title:'🚄 Reserve Shinkansen Shin-Osaka → Shinagawa — Tue Nov 3',
+ {id:'a_shink1',group:'now',urgent:true,key:'smartex_apr9',title:'🚄 Reserve Shinkansen Odawara → Shin-Osaka — Fri Apr 2',
+  body:'SmartEX app (international card). About ¥13,500+ per adult, half for your son. Sales open one month before — reserve early because blossom season trains fill up. Choose a departure after ~11:00am.'},
+ {id:'a_shink2',group:'now',urgent:true,key:'smartex_apr14',title:'🚄 Reserve Shinkansen Shin-Osaka → Shinagawa — Wed Apr 7',
   body:'Aim for a ~3:30–4:00pm departure so you reach Tokyo around 6:30pm. About ¥14,700 per adult; your son half.'},
- {id:'a_fujibus',group:'now',urgent:true,key:'fuji_bus',title:'🚌 Reserve the Shinjuku → Kawaguchiko bus — Wed Oct 28',
+ {id:'a_fujibus',group:'now',urgent:true,key:'fuji_bus',title:'🚌 Reserve the Shinjuku → Kawaguchiko bus — Thu Apr 1',
   body:'Highway bus from Busta Shinjuku around 7:30am (~¥2,000–2,300 per adult). Also look up the Fujikyu Kawaguchiko → Gotemba timetable and pick your afternoon bus.'},
- {id:'a_godzilla',group:'now',urgent:true,key:'nijigen',title:'🦖 Buy Godzilla tickets + bus — Mon Nov 2',
+ {id:'a_godzilla',group:'now',urgent:true,key:'nijigen',title:'🦖 Buy Godzilla tickets + bus — Tue Apr 6',
   body:'ticket.nijigennomori.com/en. Zipline needs height ≥ 120 cm and weight 25–110 kg — measure your son now. Verify the bus timetable before you plan Nara around it.'},
- {id:'a_kobe',group:'now',urgent:false,key:'kobe_lunch',title:'🥩 Reserve a Kobe beef lunch — Tue Nov 3, ~12:30pm',
+ {id:'a_sitter',group:'now',urgent:false,key:'sitter',title:'💍 Book a sitter for your anniversary — Tue Mar 30, ~5:30–10:30pm',
+  body:'Compare CareFinder, Babysitters & Company, SAIGROWTH, Rainbow Kids Care and Poppins. Rates are roughly ¥1,500–2,500+/hour. Book weeks ahead, do a video call with your son, and check that your Tokyo apartment host allows a sitter.'},
+ {id:'a_kobe',group:'now',urgent:false,key:'kobe_lunch',title:'🥩 Reserve a Kobe beef lunch — Wed Apr 7, ~12:30pm',
   body:'Choose a restaurant near Sannomiya with an English booking page. Budget roughly ¥4,000 (sets) to ¥10,000+ (steak) per person.'},
- {id:'a_teamlab_o',group:'now',urgent:false,key:'teamlab_osaka',title:'🌿 Buy teamLab Botanical Garden Osaka — Thu Oct 29 evening (optional)',
-  body:'teamlab.art/e/botanicalgarden — online tickets only (~¥1,800 each), open through Nov 11. Skip or move to Nov 2 if the Hakone → Osaka day wears everyone out.'},
- {id:'a_yamato1',group:'now',urgent:true,key:'yamato_osaka',title:'📦 Arrange the Tokyo → Osaka bag shipment — Wed Oct 28',
-  body:'Message host Ayumi on Airbnb that a parcel will arrive Oct 29 (16:00–20:00). Pack the night of Oct 27 and drop it at the konbini around 6:30am.'},
- {id:'a_yamato2',group:'now',urgent:true,key:'yamato_hnd',title:'📦 Ship bags to Haneda by Nov 2',
-  body:'Airport TA-Q-BIN must be sent at least 2 days before departure, so a Nov 3 shipment is too late for a Nov 4 flight. Pick-up: Haneda T3 3F, from 3 hours before departure (3:00pm).'},
+ {id:'a_yamato1',group:'now',urgent:true,key:'yamato_osaka',title:'📦 Arrange the Tokyo → Osaka bag shipment — Thu Apr 1',
+  body:'Message the Osaka host that a parcel will arrive Apr 2 (16:00–20:00). Pack the night before and drop it at the konbini around 6:30am.'},
+ {id:'a_yamato2',group:'now',urgent:true,key:'yamato_tokyo',title:'📦 Ship the Osaka → Tokyo hotel bags — Tue Apr 6',
+  body:'Ask the hotel whether it accepts parcels, then ship the big bags from the konbini on your way to Nara for delivery on Wed Apr 7. Keep a small bag for the Osaka night.'},
+ {id:'a_ghibli',group:'now',urgent:false,key:'ghibli',title:'🎨 Optional: try for Ghibli Museum tickets around Feb 10',
+  body:'March tickets are released around Feb 10 at 10am JST on the Lawson Ticket English site. The museum is closed Tuesdays; Wed Mar 31 is a good fit with Kichijoji and Inokashira Park.'},
 
  /* ── BEFORE YOU FLY ── */
+ {id:'p_bloom',group:'prep',urgent:false,title:'🌸 Watch the cherry-blossom forecasts from December',
+  body:'The first 2027 forecasts appear between mid-December and late January and firm up in early March. Early estimates put Tokyo full bloom at about Mar 28–Apr 3 and Kyoto, Osaka and Nara at about Apr 1–6, so this window catches the peak in both. Fuji/Chureito (Apr 1) may be slightly early, so check the forecast. If it moves, nothing needs to change.'},
  {id:'p_vjw',group:'prep',urgent:true,title:'🛂 Register all three of you on Visit Japan Web',
   body:'vjw.digital.go.jp — immigration + customs QR codes. Screenshot them; do it a few days before the flight.'},
  {id:'p_ic',group:'prep',urgent:true,title:'💳 IC card plan — Suica in Google Wallet probably will not work',
   body:'Suica on Android needs a Japan-market phone with the FeliCa chip; most phones bought in the US do not have it. Test: Google Wallet → Add to Wallet → Transit → Suica. If it is not offered, buy physical Welcome Suica or PASMO Passport cards at Narita (airport counters), one per adult; you can also use paper tickets.'},
- {id:'p_host',group:'prep',urgent:true,title:'💬 Tell the Tokyo host you land late (~9pm)',
-  body:'The apartment’s listed check-in window is 4–5pm; you reach Shinjuku-gyoemmae around 9:00–9:30pm. Use the Booking.com chat, and screenshot the door-code instructions for offline use.'},
- {id:'p_ryokan',group:'prep',urgent:false,title:'💬 Tell the ryokan your arrival time (Oct 28)',
+ {id:'p_host',group:'prep',urgent:true,title:'💬 Tell the Tokyo host your real arrival time',
+  body:'Check-in windows are often 4–5pm; if your flight lands later, message the host through the booking site and screenshot the door-code instructions for offline use.'},
+ {id:'p_ryokan',group:'prep',urgent:false,title:'💬 Tell the ryokan your arrival time (Apr 1)',
   body:'Realistic arrival after the Fuji detour is 5:30–6pm. Confirm the dinner start time and ask for a taxi plan from Hakone-Yumoto if buses run late.'},
- {id:'p_tattoo',group:'prep',urgent:false,title:'🌸🐯 Email Good Times Ink about timing and your son',
+ {id:'p_tattoo',group:'prep',urgent:false,title:'🌸🐯 Ask Good Times Ink about timing and your son',
   body:'support@goodtimesink.jp — ask how long each piece will take, whether a child can wait in the studio, and for English aftercare instructions.'},
  {id:'p_disney',group:'prep',urgent:false,title:'🏰 Log in to the Tokyo Disney Resort app',
   body:'Make sure all 3 tickets show on the phones you will carry. Check the opening time the night before.'},
@@ -2564,21 +2662,22 @@ const ALERTS=[
  {id:'p_cash',group:'prep',urgent:false,title:'💴 Cash + card plan',
   body:'Japan still uses cash for stalls (Kuromon, Omoide Yokocho, some shrines). 7-Eleven ATMs take US cards. Tell your bank you will be abroad.'},
  {id:'p_firebase',group:'prep',urgent:true,traveler:true,title:'☁️ Publish the Firestore rules (makes quests, ledger and notes sync)',
-  body:'Firebase console → project japan-2026-ecfd7 → Firestore → Rules tab → paste the rule from the chat → Publish. Storage is not used, so there is nothing to do there.'},
+  body:'Firebase console → project japan-2026-ecfd7 → Firestore → Rules tab → paste the rule from the chat → Publish. Storage is not used, so there is nothing to do there. The rule from October expires before this trip, so ask me for the new date range.'},
  {id:'p_drive',group:'prep',urgent:true,traveler:true,title:'📁 Set the Google Drive folder’s sharing',
   body:'Open the folder → Share → add Cheryl as Editor, and set General access to “Anyone with the link → Viewer” so family can watch without signing in. Then test the Open folder button on the Photos tab.'},
- {id:'p_yamazaki',group:'prep',urgent:false,key:'yamazaki',title:'🥃 Optional: check Suntory Yamazaki for Nov 1 slots',
+ {id:'p_yamazaki',group:'prep',urgent:false,key:'yamazaki',title:'🥃 Optional: check Suntory Yamazaki for Apr 5 slots',
   body:'The production tour is lottery-based and 20+ only; the whisky museum needs a reservation. Backup plan: department-store liquor floors, Don Quijote, and airport duty-free (1 liter per adult duty-free).'},
 
  /* ── IN JAPAN: day-of reminders ── */
- {id:'j_oct23',group:'japan',urgent:false,when:'Oct 23',title:'Oct 23 — buy N’EX seats at Narita',body:'JR East Travel Service Center in the arrivals hall. Adults ¥3,330, your son about half. Switch to the Marunouchi Line at Shinjuku.'},
- {id:'j_oct26',group:'japan',urgent:false,when:'Oct 26',title:'Oct 26 — leave for DisneySea by 6:30am',body:'Marunouchi Line → Tokyo → Keiyo Line to Maihama → Resort Line. Door to door about 75 minutes.'},
- {id:'j_oct28',group:'japan',urgent:false,when:'Oct 28',title:'Oct 28 — ~6:30am ship bags to Osaka, then the 7:30 bus',body:'Overnight bag only for Fuji + Hakone. Expect to reach the ryokan ~5:30–6pm.'},
- {id:'j_oct30',group:'japan',urgent:false,when:'Oct 30',title:'Oct 30 — leave Kuromon by 12:45pm for Uji',body:'Entry window at the Nintendo Museum is 3:00–3:30pm; aim to be at the door by 2:45pm.'},
- {id:'j_oct31',group:'japan',urgent:false,when:'Oct 31',title:'Oct 31 — tattoos at 11:00am',body:'Eat first, bring water, leave Tanimachi by ~10:15am. No soaking while healing.'},
- {id:'j_nov2',group:'japan',urgent:false,when:'Nov 2',title:'Nov 2 — drop the Haneda bags before 7am',body:'Writing on the slip: Haneda Airport Terminal 3 · AA 26 · Nov 4 · 6:00pm. Keep a small bag for two nights.'},
- {id:'j_nov3',group:'japan',urgent:false,when:'Nov 3',title:'Nov 3 — Himeji opens at 9:00am',body:'Leave ~7:15am. Check out of the Airbnb on the way (checkout is 10:00am).'},
- {id:'j_nov4',group:'japan',urgent:false,when:'Nov 4',title:'Nov 4 — be at Haneda T3 by ~2:30pm',body:'Yamato pick-up opens at 3:00pm; then check in with American Airlines. Buy whisky last (1 liter per adult duty-free).'}
+ {id:'j_apr3',group:'japan',urgent:false,when:'Mar 27',title:'Mar 27 — buy N’EX seats at Narita',body:'JR East Travel Service Center in the arrivals hall. Adults about ¥3,300, your son about half. Switch to the Marunouchi Line at Shinjuku.'},
+ {id:'j_apr7',group:'japan',urgent:false,when:'Mar 31',title:'Mar 31 — Shinjuku Gyoen opens at 9:00am',body:'Bring a konbini or bakery picnic for your hanami. Weekend registration rules do not apply to a Wednesday, but check the official site.'},
+ {id:'j_apr8',group:'japan',urgent:false,when:'Apr 1',title:'Apr 1 — ~6:30am ship bags to Osaka, then the 7:30 bus',body:'Overnight bag only for Fuji + Hakone. Expect to reach the ryokan ~5:30–6pm.'},
+ {id:'j_apr10',group:'japan',urgent:false,when:'Apr 3',title:'Apr 3 — leave Kuromon by 12:45pm for Uji',body:'Entry window at the Nintendo Museum is 3:00–3:30pm; aim to be at the door by 2:45pm.'},
+ {id:'j_apr11',group:'japan',urgent:false,when:'Apr 4',title:'Apr 4 — tattoos (confirm the time)',body:'Eat first, bring water, leave Tanimachi by ~10:15am. No soaking while healing.'},
+ {id:'j_apr13',group:'japan',urgent:false,when:'Apr 6',title:'Apr 6 — drop the Tokyo hotel bags before 7am',body:'Write the hotel name, guest name and Apr 7 on the slip. Keep a small bag for the Osaka night.'},
+ {id:'j_apr14',group:'japan',urgent:false,when:'Apr 7',title:'Apr 7 — Himeji opens at 9:00am',body:'Leave ~7:15am. Check out of the apartment on the way (follow the host’s checkout time).'},
+ {id:'j_apr15',group:'japan',urgent:false,when:'Apr 8',title:'Apr 8 — leave for DisneySea by ~6:45am',body:'JR Shimbashi → Tokyo → Keiyo Line to Maihama → Resort Line. Check the opening time in the app the night before.'},
+ {id:'j_apr17',group:'japan',urgent:false,when:'Apr 10',title:'Apr 10 — leave for Haneda about 3 hours before your flight',body:'Check which terminal your airline uses. Buy whisky last (1 liter per adult duty-free).'}
 ];
 
 </script>
@@ -2917,7 +3016,7 @@ function renderEdit(){
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
         <div>
           <div class="f-lbl">Date</div>
-          <input class="f-in" id="ed-date-${rawDay.day}" value="${eff.date}" placeholder="e.g. Oct 31">
+          <input class="f-in" id="ed-date-${rawDay.day}" value="${eff.date}" placeholder="e.g. Apr 4">
         </div>
         <div>
           <div class="f-lbl">Label</div>
@@ -3182,7 +3281,7 @@ function openHotelEdit(idx){
     <div class="stop-edit-label" style="margin-bottom:8px">Edit Hotel ${idx+1}</div>
     <input class="edit-input" id="he-name-${idx}" placeholder="Hotel name" value="${h.name}">
     <input class="edit-input small" id="he-sub-${idx}" placeholder="Location / subtitle" value="${h.sub}">
-    <input class="edit-input small" id="he-nights-${idx}" placeholder="Nights (e.g. Oct 22–28 · 6 nights)" value="${h.nights}">
+    <input class="edit-input small" id="he-nights-${idx}" placeholder="Nights (e.g. Mar 27–Apr 1 · 5 nights)" value="${h.nights}">
     <input class="edit-input small" id="he-note-${idx}" placeholder="Notes" value="${h.note}">
     <div class="edit-btn-row">
       <button class="btn-edit-save" onclick="saveHotelEdit(${idx})">Save Hotel</button>
@@ -3310,7 +3409,7 @@ const FOOD_DATA = {
             price:'¥990–9,900 (~$7–66)', priceClass:'price-cheap',
             tags:['All ages','Tax-free','Huge selection'],
             desc:'Largest Uniqlo in Tokyo. Excellent quality Japanese basics — Heattech, AIRism, fleeces, and basics for all three of you. Tax-free with passport over ¥5,000 (~$33).',
-            tip:'Pick up Heattech base layers for the cooler Nov days. They pack down tiny — perfect for carry-on travel.',
+            tip:'Pick up Heattech base layers for chilly mornings and the Fuji/Hakone evening. They pack down tiny — perfect for carry-on travel.',
             maps:'https://maps.google.com/?q=Uniqlo+Shinjuku+Tokyo'
           },
           {
@@ -3528,7 +3627,7 @@ const FOOD_DATA = {
 };
 
 /* ── RENDER FOOD SCREEN ── */
-/* ── Added Oct 17: more food, arcade and adventure picks. Hours/prices are from public listings — confirm in Maps before you go. ── */
+/* ── Added for the first trip plan: more food, arcade and adventure picks. Hours/prices are from public listings — confirm in Maps before you go. ── */
 (function(){
   const F=(icon,name,area,price,pc,tags,desc,tip,q)=>({icon,name,area,price,priceClass:pc,tags,desc,tip,maps:'https://maps.google.com/?q='+encodeURIComponent(q)});
   const T=FOOD_DATA.tokyo.categories, O=FOOD_DATA.osaka.categories;
@@ -3544,10 +3643,10 @@ const FOOD_DATA = {
       'Bring cash. A calm, quick lunch option before a day out.','Ajiyushin Nakaya Yotsuya Tokyo')
   ]});
   T.push({cat:'🎮 Arcades & Game Centers — Tokyo',items:[
-    F('🕹️','Taito Station Akihabara','Akihabara','Pay per game','price-cheap',['Arcade','Claw machines','Fits Oct 25'],
+    F('🕹️','Taito Station Akihabara','Akihabara','Pay per game','price-cheap',['Arcade','Claw machines','Fits Mar 28'],
       'Big multi-floor Taito arcade right in Akihabara. Listed hours 10:00am–11:30pm. Fits the Sunday Akihabara day.',
       'Change ¥100 coins at the machines. Prize machines are the easy win for kids.','Taito Station Akihabara'),
-    F('🎯','GiGO Akihabara','Akihabara','Pay per game','price-cheap',['Arcade','Claw machines','Fits Oct 25'],
+    F('🎯','GiGO Akihabara','Akihabara','Pay per game','price-cheap',['Arcade','Claw machines','Fits Mar 28'],
       'Another large Akihabara game center. Listed hours 10:00am–11:30pm. Good to compare with Taito Station and pick the one your son likes more.',
       'Walk through both and play where the crowd is. Bring cash for coins.','GiGO Akihabara'),
     F('👾','Mikado Game Center Takadanobaba','Takadanobaba','Pay per game','price-cheap',['Retro arcade','Classic cabinets'],
@@ -3682,10 +3781,10 @@ const APPS_DATA = [
     cat: '🔴 Install Before You Go — Priority',
     items: [
       { emoji:'🗾', name:'Japan Travel by NAVITIME', desc:'Best train routing in Japan. Shows exact platforms, transfers and fares. Offline spot search.', tag:'Free', tagClass:'free', priority:true, url:'https://play.google.com/store/apps/details?id=com.navitime.inbound.walk' },
-      { emoji:'🏰', name:'Tokyo Disney Resort', desc:'Your 3 DisneySea tickets for Oct 26 live here (QR codes appear on the day). Also show times and Standby Pass / Premier Access options.', tag:'Free', tagClass:'free', priority:true, url:'https://play.google.com/store/apps/details?id=jp.tokyodisneyresort.app' },
+      { emoji:'🏰', name:'Tokyo Disney Resort', desc:'Your 3 DisneySea tickets for Apr 8 live here (QR codes appear on the day). Also show times and Standby Pass / Premier Access options.', tag:'Free', tagClass:'free', priority:true, url:'https://play.google.com/store/apps/details?id=jp.tokyodisneyresort.app' },
       { emoji:'🌐', name:'Google Translate', desc:'Download Japanese OFFLINE pack now — works without data. Point camera at any menu or sign for instant translation.', tag:'Pre-installed', tagClass:'preinstalled', priority:true, url:'https://play.google.com/store/apps/details?id=com.google.android.apps.translate' },
-      { emoji:'🛂', name:'Visit Japan Web', desc:'Register all 3 family members before Oct 22. Pre-fills customs and immigration — speeds up immigration and customs at Narita (NRT).', tag:'Free / Browser', tagClass:'free', priority:true, url:'https://www.vjw.digital.go.jp/' },
-      { emoji:'🚄', name:'SmartEX', desc:'Reserve the Odawara → Shin-Osaka (Oct 29) and Shin-Osaka → Shinagawa (Nov 3) Shinkansen seats with an international card.', tag:'Free', tagClass:'free', priority:true, url:'https://smart-ex.jp/en/' },
+      { emoji:'🛂', name:'Visit Japan Web', desc:'Register all 3 family members before Mar 26. Pre-fills customs and immigration — speeds up immigration and customs at Narita (NRT).', tag:'Free / Browser', tagClass:'free', priority:true, url:'https://www.vjw.digital.go.jp/' },
+      { emoji:'🚄', name:'SmartEX', desc:'Reserve the Odawara → Shin-Osaka (Apr 2) and Shin-Osaka → Shinagawa (Apr 7) Shinkansen seats with an international card.', tag:'Free', tagClass:'free', priority:true, url:'https://smart-ex.jp/en/' },
     ]
   },
   {
@@ -3727,7 +3826,7 @@ function renderApps() {
   // Intro banner
   const intro = document.createElement('div');
   intro.className = 'banner blue';
-  intro.innerHTML = '<strong>📱 Essential Apps — Android</strong><br>All confirmed on Google Play. Tap <strong>GET APP</strong> to open Play Store directly. Install the Priority apps before Oct 22.';
+  intro.innerHTML = '<strong>📱 Essential Apps — Android</strong><br>All confirmed on Google Play. Tap <strong>GET APP</strong> to open Play Store directly. Install the Priority apps before Mar 26.';
   wrap.appendChild(intro);
 
   APPS_DATA.forEach(section => {
@@ -3760,7 +3859,7 @@ function renderApps() {
   const note = document.createElement('div');
   note.className = 'banner green';
   note.style.marginTop = '12px';
-  note.innerHTML = '<strong>💡 Before Oct 22 checklist:</strong><br>① Download Japanese offline pack in Google Translate<br>② Download Japan offline map in Google Maps<br>③ Register family at Visit Japan Web (vjw.digital.go.jp)<br>④ Add Suica card to Google Wallet<br>⑤ Set up Google Photos auto-backup';
+  note.innerHTML = '<strong>💡 Before Mar 26 checklist:</strong><br>① Download Japanese offline pack in Google Translate<br>② Download Japan offline map in Google Maps<br>③ Register family at Visit Japan Web (vjw.digital.go.jp)<br>④ Add Suica card to Google Wallet<br>⑤ Set up Google Photos auto-backup';
   wrap.appendChild(note);
 }
 
@@ -3795,16 +3894,13 @@ const WMO_CODES = {
 function getTripCity(){
   // Figure out which city we're in based on today's date
   const today = new Date();
-  const tripStart = new Date('2026-10-22');
+  const tripStart = new Date('2027-03-26');
   const diffDays = Math.floor((today - tripStart) / 86400000);
-  const dayNum = Math.max(1, Math.min(14, diffDays + 1));
+  const dayNum = Math.max(1, Math.min(DAYS.length, diffDays + 1));
 
-  // Map day to city
-  const cityMap = {
-    1:'tokyo', 2:'tokyo', 3:'tokyo', 4:'tokyo', 5:'tokyo',
-    6:'tokyo', 7:'hakone', 8:'osaka', 9:'osaka', 10:'osaka',
-    11:'kyoto', 12:'nara', 13:'kobe', 14:'tokyo'
-  };
+  // Map day to city (taken from the itinerary itself)
+  const cityMap = {};
+  DAYS.forEach(d=>{ cityMap[d.day]=(d.city==='nara'||d.city==='kobe')?d.city:d.city; });
   return cityMap[dayNum] || 'tokyo';
 }
 
@@ -3970,10 +4066,10 @@ async function loadWeatherForCity(cityKey, wrap){
       avgMax < 15 ? '🧥 Pack your warmest layer — it\'s cold this week' : avgMax < 19 ? '🧥 Light jacket needed daily' : '👕 Comfortable t-shirt weather with a jacket for evenings',
       maxRain > 60 ? '☂️ High rain chance — umbrella is essential every day' : maxRain > 30 ? '☂️ Possible rain several days — pack an umbrella' : '🌞 Mostly dry week — umbrella just in case',
       cityKey === 'hakone' ? '🥶 Hakone is cooler than Tokyo — Heattech base layer essential at the lake' : '',
-      cityKey === 'kyoto' ? '🌅 Nov 1 Fushimi Inari dawn visit — extra warm layer needed at 6am' : '',
+      cityKey === 'kyoto' ? '🌅 Apr 5 Fushimi Inari early visit — an extra warm layer for the morning' : '',
       cityKey === 'awaji' ? '💨 Awaji Island can be windy — light windproof layer recommended' : '',
       '👟 Comfortable walking shoes — expect 15,000+ steps most days',
-      '🧴 Sunscreen for DisneySea day even in October',
+      '🧴 Sunscreen for DisneySea day even in April',
     ].filter(t => t);
 
     packCard.innerHTML = tips.map(t => `<div style="font-size:.7rem;color:#1a1f3a;padding:5px 0;border-bottom:1px solid rgba(200,212,248,.3);line-height:1.4;">${t}</div>`).join('');
@@ -4390,151 +4486,166 @@ setTimeout(()=>applyTypeTheme('itin'), 100);
 const FX_RATE=150; /* ¥ per US$ — rough, used only for estimates */
 
 const HOTELS=[
- {nights:'Oct 21–22 · 1 night',name:'Hilton Los Angeles Airport',sub:'Los Angeles · near LAX',lat:33.9453,lng:-118.3924,color:'#1d4ed8',status:'booked',key:'hotel_lax',
-  note:'Booked ✔ Hilton confirmation ⟦HILTON_LAX_BK⟧ (54,000 points). Check-out Oct 22 — SQ 11 departs LAX at 2:00pm, so plan to leave the hotel by ~10:30am.'},
- {nights:'Oct 23–28 · 5 nights',name:'Yotsuya apartment (Shinjuku)',sub:'⟦TOKYO_ADDR⟧',lat:35.6866,lng:139.7195,color:'#2c5f8a',status:'booked',key:'tokyo_apt',
-  note:'Booked ✔ Booking.com #⟦TOKYO_BK⟧. 5-minute walk from Shinjuku-gyoemmae Station, konbini 1 minute away. Self check-in with a door code; the listed window is 4–5pm, so tell the host you land at 5:50pm (arrive ~9pm). Check-out Oct 28.'},
- {nights:'Oct 28–29 · 1 night',name:'Tōnosawa Ichinoyu Honkan',sub:'Hakone · Tōnosawa',lat:35.2332,lng:139.0934,color:'#5b8c5a',status:'booked',key:'hakone_ryokan',
-  note:'Booked ✔ Confirmation ⟦RYOKAN_BK⟧. Private family onsen, kaiseki dinner + breakfast. Check-in from 3:00pm — expect to arrive ~5:30–6pm after Fuji; tell them your ETA.'},
- {nights:'Oct 29–Nov 3 · 5 nights',name:'Gu’s Tani4 (Airbnb)',sub:'⟦OSAKA_ADDR⟧',lat:34.6800,lng:135.5185,color:'#8b3a62',status:'booked',key:'osaka_hotel',
-  note:'Booked ✔ Airbnb · host Ayumi ⟦OSAKA_TEL⟧ · check-in Thu Oct 29 3:00pm, check-out Tue Nov 3 10:00am · 2 adults + 1 child. 3-minute walk to Tanimachi 4-chome Station; Osaka Castle is walkable.'},
- {nights:'Nov 3–4 · 1 night',name:'Conrad Tokyo (Shiodome)',sub:'1-9-1 Higashi-Shimbashi · floors 28–37',lat:35.6615,lng:139.7590,color:'#1a1f3a',status:'booked',key:'hotel_conrad',
-  note:'Booked ✔ Hilton confirmation ⟦CONRAD_BK⟧ (stay shows “pending” until you check out). Ask for a high floor with bay views. No direct airport bus from here: taxi (~¥8,000–10,000) or Monorail from Hamamatsucho on Nov 4.'}
+ {nights:'Mar 27–Apr 1 · 5 nights',name:'Tokyo apartment (Shinjuku / Yotsuya area)',sub:'Near Shinjuku-gyoemmae · add the address once booked',lat:35.6866,lng:139.7195,color:'#2c5f8a',status:'todo',key:'tokyo_apt',
+  note:'Not booked yet. Aim for a 5-minute walk from a Marunouchi Line station (Shinjuku-gyoemmae or Yotsuya) like your earlier apartment. Late March is peak cherry-blossom demand, so hold a refundable room now and cancel later if needed. Tell the host your arrival time.'},
+ {nights:'Apr 1–2 · 1 night',name:'Tōnosawa Ichinoyu Honkan',sub:'Hakone · Tōnosawa',lat:35.2332,lng:139.0934,color:'#5b8c5a',status:'todo',key:'hakone_ryokan',
+  note:'Not booked yet — ask the ryokan to move your reservation to Apr 1–2. Private family onsen, kaiseki dinner + breakfast. Check-in from 3:00pm; expect to arrive ~5:30–6pm after Fuji and tell them your ETA.'},
+ {nights:'Apr 2–7 · 5 nights',name:'Osaka apartment (Tanimachi / Namba area)',sub:'Near Tanimachi 4-chome Station · add the address once booked',lat:34.6800,lng:135.5185,color:'#8b3a62',status:'todo',key:'osaka_hotel',
+  note:'Not booked yet. Ask your previous host (near Tanimachi 4-chome, walkable to Osaka Castle) whether Apr 2–7 is open, or find a similar 2-adult + 1-child apartment. Check-in usually from 3:00pm.'},
+ {nights:'Apr 7–10 · 3 nights',name:'Conrad Tokyo (Shiodome)',sub:'1-9-1 Higashi-Shimbashi · floors 28–37',lat:35.6615,lng:139.7590,color:'#1a1f3a',status:'todo',key:'hotel_conrad',
+  note:'Not booked yet. Check Hilton points and cash rates for Apr 7–10. Ask for a high floor with bay views. No direct airport bus: taxi (~¥8,000–10,000) or Monorail from Hamamatsucho on Apr 10.'}
 ];
 
 const FLIGHT_CARDS=[
- {group:'Outbound',label:'SLC → LAX',type:'dom',code:'Flight #3618',route:'Salt Lake City → Los Angeles',date:'Wed Oct 21',time:'6:35pm → 7:30pm',dur:'1h 55m',stop:'Nonstop',key:'flight_slc_lax',
-  note:'Night before the long haul. You sleep near LAX.'},
- {group:'Outbound',label:'LAX → NRT',type:'intl',code:'SQ 11 · Singapore Airlines',route:'Los Angeles → Tokyo Narita',date:'Thu Oct 22',time:'2:00pm → 5:50pm (Fri Oct 23)',dur:'11h 50m',stop:'Nonstop',key:'flight_lax_nrt',
-  note:'Booking ref ⟦PNR_SQ⟧. Departure moved from 2:20pm to 2:00pm. You land at Narita (NRT) but fly home from Haneda (HND) — two different airports.'},
- {group:'Return',label:'HND → LAX',type:'intl',code:'AA 26 · American Airlines',route:'Tokyo Haneda → Los Angeles',date:'Wed Nov 4',time:'6:00pm → 10:55am (same day)',dur:'~9h',stop:'Nonstop · Economy · dinner + snack',key:'flight_hnd_lax',
-  note:'Departs Haneda Terminal 3. Be at the airport by ~2:30pm (bag pick-up opens at 3:00pm).'},
- {group:'Return',label:'LAX → SLC',type:'dom',code:'Flight #4752',route:'Los Angeles → Salt Lake City',date:'Wed Nov 4',time:'5:05pm → 7:59pm',dur:'1h 54m',stop:'Nonstop',key:'flight_lax_slc',
-  note:'About 6 hours after you land for customs, bags and the re-check.'}
+ {group:'Outbound',label:'SLC → Tokyo',type:'intl',code:'Not booked yet',route:'Salt Lake City → (one stop) → Tokyo Narita',date:'Fri Mar 26 → lands Sat Mar 27',time:'Choose a flight that lands before ~6pm',dur:'~14–18h with a connection',stop:'1 stop (no nonstop exists)',key:'flight_out',status:'todo',
+  note:'Set Google Flights alerts and compare Narita vs Haneda. I found no reliable April fares; early-December and mid-January round trips were roughly $790–$960 per person in October 2026, and spring is peak season, so expect more. Prefer free cancellation. You land at Narita but plan to fly home from Haneda — two different airports, so compare the total.'},
+ {group:'Return',label:'Tokyo → SLC',type:'intl',code:'Not booked yet',route:'Tokyo Haneda → (one stop) → Salt Lake City',date:'Sat Apr 10',time:'Choose a flight that leaves mid-afternoon or later if possible',dur:'~14–18h with a connection',stop:'1 stop',key:'flight_back',status:'todo',
+  note:'Be at the airport about 3 hours before departure and check which terminal your airline uses. The date line works in your favor: you arrive back on the same calendar day.'}
 ];
 
 /* adult / child are JPY per person (child defaults to half); flat = JPY for the whole family; rt = round trip */
 const KANSAI_PASS={adult:12000,child:6000,days:5};
 const TRANSPORT=[
- {date:'Oct 23',icon:'🚆',name:'Narita Express → Shinjuku',route:'Narita Airport → Shinjuku',when:'~7:30pm after immigration',dur:'80–90 min',adult:3330,child:1665,pay:'Buy at Narita',
-  note:'Reserved seats from the JR East Travel Service Center. Adult ¥3,330 for 2026; your son (6–11) about half.'},
- {date:'Oct 23',icon:'🚇',name:'Marunouchi Line',route:'Shinjuku → Shinjuku-gyoemmae + 5-min walk',when:'~9pm',dur:'~5 min',adult:180,approx:true,pay:'IC card',note:'Two stops.'},
- {date:'Oct 24',icon:'🚃',name:'Tokyo local · disc golf, Nakano, Shinjuku',route:'Chuo Line + Ome Line + Marunouchi',when:'all day',dur:'',adult:1300,approx:true,pay:'IC card',note:'Estimate for the whole day.'},
- {date:'Oct 25',icon:'🚇',name:'Tokyo local · Oshiage, Nihombashi, Akihabara',route:'Hanzomon Line + JR',when:'all day',dur:'',adult:1000,approx:true,pay:'IC card',note:'Estimate for the whole day.'},
- {date:'Oct 26',icon:'🎢',name:'DisneySea round trip',route:'Marunouchi → Tokyo → Keiyo Line → Maihama → Resort Line',when:'leave ~6:30am',dur:'~75 min each way',adult:1380,approx:true,pay:'IC card',note:'Includes the Disney Resort Line (~¥260 each way).'},
- {date:'Oct 27',icon:'🚇',name:'Tokyo local · Asakusa, Shibuya, Toyosu',route:'Ginza Line + Yurakucho Line',when:'all day',dur:'',adult:1300,approx:true,pay:'IC card',note:'Estimate for the whole day.'},
- {date:'Oct 28',icon:'🚌',name:'Highway bus Shinjuku → Kawaguchiko',route:'Busta Shinjuku → Kawaguchiko Station',when:'~7:30am',dur:'1h45–2h',adult:2200,approx:true,pay:'Reserve',note:'Reserve seats; prices vary by operator and time.'},
- {date:'Oct 28',icon:'🚃',name:'Fujikyu Line to Chureito (round trip)',route:'Kawaguchiko ↔ Shimoyoshida',when:'~9:30am',dur:'~20 min each way',adult:800,approx:true,pay:'IC card',note:'Walk 10–15 min from Shimoyoshida.'},
- {date:'Oct 28',icon:'🚌',name:'Fujikyu bus Kawaguchiko → Gotemba',route:'Kawaguchiko → Gotemba',when:'~2pm',dur:'60–90 min',adult:1750,child:880,pay:'Cash / IC',note:'Check the timetable — departures are limited.'},
- {date:'Oct 28',icon:'🚌',name:'Gotemba → Hakone → Tōnosawa',route:'Hakone Tozan bus + local bus + Tozan Railway',when:'~3:45pm',dur:'~1.5–2 hrs',adult:1800,approx:true,pay:'IC card',note:'Estimate; confirm connections on the day.'},
- {date:'Oct 28',icon:'📦',name:'Yamato luggage Tokyo → Osaka',route:'Convenience store → Gu’s Tani4',when:'~6:30am drop-off',dur:'next-day',flat:7000,approx:true,pay:'Cash at store',note:'Estimate for two large bags (price depends on size/weight). Deliver Oct 29, 16:00–20:00.'},
- {date:'Oct 29',icon:'🚃',name:'Hakone Tozan Railway → Odawara',route:'Tōnosawa → Hakone-Yumoto → Odawara',when:'~10:30am',dur:'30–35 min',adult:500,approx:true,pay:'IC card',note:''},
- {date:'Oct 29',icon:'🚅',name:'Shinkansen → Shin-Osaka',route:'Odawara → Shin-Osaka',when:'~11:30am',dur:'2.5–3 hrs',adult:13500,approx:true,pay:'Reserve (SmartEX)',note:'Estimate — SmartEX shows the exact fare. Your son is half price.'},
- {date:'Oct 29',icon:'🚇',name:'Osaka Metro to the apartment',route:'Shin-Osaka → Umeda → Tanimachi 4-chome',when:'~2:30pm',dur:'~35 min',adult:330,approx:true,pay:'IC card',note:''},
- {date:'Oct 29',icon:'🚇',name:'Osaka Metro · teamLab Nagai (optional)',route:'Tanimachi → Tennoji → Nagai',when:'~6:15pm',dur:'~25 min',adult:700,approx:true,pay:'IC card',note:'Round trip estimate.'},
- {date:'Oct 30',icon:'🚇',name:'Osaka Metro · Shinsaibashi + Kuromon',route:'Tanimachi 4 → Shinsaibashi → Nippombashi',when:'morning',dur:'',adult:800,approx:true,pay:'IC card',note:''},
- {date:'Oct 30',icon:'🚃',name:'JR to the Nintendo Museum (round trip)',route:'Osaka → Kyoto → JR Ogura',when:'12:45pm out · ~5:45pm back',dur:'~1h15 each way',adult:1780,approx:true,pay:'IC card',jrWest:true,note:'About ¥580 (Osaka→Kyoto) + ¥310 (Kyoto→Ogura) each way.'},
- {date:'Oct 31',icon:'🚇',name:'Osaka Metro · tattoos, Osaka GLOW, Dotonbori',route:'Tanimachi ↔ Namba/Shinsaibashi',when:'',dur:'',adult:700,approx:true,pay:'IC card',note:''},
- {date:'Nov 1',icon:'🚃',name:'Keihan to Fushimi-Inari',route:'Tanimachi → Tenma-bashi → Keihan → Fushimi-Inari',when:'~7:00am',dur:'~1 hr',adult:660,approx:true,pay:'IC card',note:'Not a JR line.'},
- {date:'Nov 1',icon:'🚃',name:'JR · Inari → Arashiyama → Osaka',route:'Fushimi-Inari → Kyoto → Saga-Arashiyama → Kyoto → Osaka',when:'',dur:'',adult:1210,approx:true,pay:'IC card',jrWest:true,note:'Estimate of the JR legs of the day.'},
- {date:'Nov 2',icon:'🚃',name:'Kintetsu to Nara (round trip)',route:'Osaka-Uehommachi ↔ Kintetsu-Nara',when:'~7:15am out',dur:'~35 min each way',adult:1150,approx:true,pay:'IC card',note:'Not a JR line.'},
- {date:'Nov 2',icon:'🚌',name:'Highway bus to Awaji (round trip)',route:'Osaka–Namba (or Kobe-Sannomiya) ↔ Awaji IC',when:'~10:30am out · early afternoon back',dur:'~60 min each way',adult:3700,approx:true,pay:'Reserve (combo ticket)',note:'Estimate. Kobe-Sannomiya departures are cheaper and frequent; verify the price and timetable when you book.'},
- {date:'Nov 2',icon:'🚇',name:'Osaka Metro (evening)',route:'',when:'',dur:'',adult:700,approx:true,pay:'IC card',note:''},
- {date:'Nov 3',icon:'🚃',name:'Osaka → Himeji (JR Special Rapid)',route:'Osaka → Himeji',when:'~7:15am',dur:'~1 hr',adult:1520,approx:true,pay:'IC card',jrWest:true,note:'Shinkansen from Shin-Osaka saves ~25 min but costs more.'},
- {date:'Nov 3',icon:'🚃',name:'Himeji → Sannomiya (Kobe)',route:'Himeji → Sannomiya',when:'~11am',dur:'~40 min',adult:1100,approx:true,pay:'IC card',jrWest:true,note:''},
- {date:'Nov 3',icon:'🚃',name:'Sannomiya → Shin-Osaka',route:'Sannomiya → Shin-Osaka',when:'~2:45pm',dur:'~25 min',adult:570,approx:true,pay:'IC card',jrWest:true,note:''},
- {date:'Nov 3',icon:'🚅',name:'Nozomi → Shinagawa',route:'Shin-Osaka → Shinagawa',when:'~3:30–4:00pm',dur:'~2h20',adult:14700,approx:true,pay:'Reserve (SmartEX)',note:'Estimate — SmartEX shows the exact fare.'},
- {date:'Nov 3',icon:'🚃',name:'Shinagawa → Shimbashi → Conrad',route:'JR + 10-min walk',when:'~6:15pm',dur:'~20 min',adult:170,approx:true,pay:'IC card',note:''},
- {date:'Nov 4',icon:'🚕',name:'Conrad → Haneda T3 (taxi)',route:'Shiodome → Haneda Terminal 3',when:'~12:45pm',dur:'20–30 min',flat:9000,approx:true,pay:'Cash / card',note:'Cheaper alternative: JR to Hamamatsucho + Tokyo Monorail (~¥650 per adult, ~35 min).'}
+ {date:'Mar 27',icon:'🚆',name:'Narita Express → Shinjuku',route:'Narita Airport → Shinjuku',when:'after immigration',dur:'80–90 min',adult:3330,child:1665,pay:'Buy at Narita',
+  note:'Reserved seats from the JR East Travel Service Center. Adult about ¥3,330 (confirm the current fare); your son (6–11) about half.'},
+ {date:'Mar 27',icon:'🚇',name:'Marunouchi Line',route:'Shinjuku → Shinjuku-gyoemmae + 5-min walk',when:'evening',dur:'~5 min',adult:180,approx:true,pay:'IC card',note:'Two stops.'},
+ {date:'Mar 28',icon:'🚇',name:'Tokyo local · Oshiage, Nihombashi, Akihabara',route:'Hanzomon Line + JR',when:'all day',dur:'',adult:1000,approx:true,pay:'IC card',note:'Estimate for the whole day.'},
+ {date:'Mar 29',icon:'🚃',name:'Tokyo local · disc golf, Nakano, Shinjuku',route:'Chuo Line + Ome Line + Marunouchi',when:'all day',dur:'',adult:1300,approx:true,pay:'IC card',note:'Estimate for the whole day.'},
+ {date:'Mar 30',icon:'🚇',name:'Tokyo local · Asakusa, Shibuya, Toyosu',route:'Ginza Line + Yurakucho Line',when:'all day',dur:'',adult:1300,approx:true,pay:'IC card',note:'Estimate for the whole day.'},
+ {date:'Mar 31',icon:'🚇',name:'Tokyo local · Shinjuku Gyoen, Harajuku, Nakameguro',route:'JR + Toyoko Line + Marunouchi',when:'all day',dur:'',adult:900,approx:true,pay:'IC card',note:'Estimate for the whole day.'},
+ {date:'Apr 1',icon:'🚌',name:'Highway bus Shinjuku → Kawaguchiko',route:'Busta Shinjuku → Kawaguchiko Station',when:'~7:30am',dur:'1h45–2h',adult:2200,approx:true,pay:'Reserve',note:'Reserve seats; prices vary by operator and time.'},
+ {date:'Apr 1',icon:'🚃',name:'Fujikyu Line to Chureito (round trip)',route:'Kawaguchiko ↔ Shimoyoshida',when:'~9:30am',dur:'~20 min each way',adult:800,approx:true,pay:'IC card',note:'Walk 10–15 min from Shimoyoshida.'},
+ {date:'Apr 1',icon:'🚌',name:'Fujikyu bus Kawaguchiko → Gotemba',route:'Kawaguchiko → Gotemba',when:'~2pm',dur:'60–90 min',adult:1750,child:880,pay:'Cash / IC',note:'Check the timetable — departures are limited.'},
+ {date:'Apr 1',icon:'🚌',name:'Gotemba → Hakone → Tōnosawa',route:'Hakone Tozan bus + local bus + Tozan Railway',when:'~3:45pm',dur:'~1.5–2 hrs',adult:1800,approx:true,pay:'IC card',note:'Estimate; confirm connections on the day.'},
+ {date:'Apr 1',icon:'📦',name:'Yamato luggage Tokyo → Osaka',route:'Convenience store → Osaka apartment',when:'~6:30am drop-off',dur:'next-day',flat:7000,approx:true,pay:'Cash at store',note:'Estimate for two large bags (price depends on size/weight). Deliver Apr 2, 16:00–20:00.'},
+ {date:'Apr 2',icon:'🚃',name:'Hakone Tozan Railway → Odawara',route:'Tōnosawa → Hakone-Yumoto → Odawara',when:'~10:30am',dur:'30–35 min',adult:500,approx:true,pay:'IC card',note:''},
+ {date:'Apr 2',icon:'🚅',name:'Shinkansen → Shin-Osaka',route:'Odawara → Shin-Osaka',when:'~11:30am',dur:'2.5–3 hrs',adult:13500,approx:true,pay:'Reserve (SmartEX)',note:'Estimate — SmartEX shows the exact fare. Your son is half price.'},
+ {date:'Apr 2',icon:'🚇',name:'Osaka Metro to the apartment',route:'Shin-Osaka → Umeda → Tanimachi 4-chome',when:'~2:30pm',dur:'~35 min',adult:330,approx:true,pay:'IC card',note:''},
+ {date:'Apr 3',icon:'🚇',name:'Osaka Metro · Shinsaibashi + Kuromon',route:'Tanimachi 4 → Shinsaibashi → Nippombashi',when:'morning',dur:'',adult:800,approx:true,pay:'IC card',note:''},
+ {date:'Apr 3',icon:'🚃',name:'JR to the Nintendo Museum (round trip)',route:'Osaka → Kyoto → JR Ogura',when:'12:45pm out · ~5:45pm back',dur:'~1h15 each way',adult:1780,approx:true,pay:'IC card',jrWest:true,note:'About ¥580 (Osaka→Kyoto) + ¥310 (Kyoto→Ogura) each way.'},
+ {date:'Apr 4',icon:'🚇',name:'Osaka Metro · tattoos and evening',route:'Tanimachi ↔ Namba/Shinsaibashi',when:'',dur:'',adult:700,approx:true,pay:'IC card',note:''},
+ {date:'Apr 5',icon:'🚃',name:'Keihan to Fushimi-Inari',route:'Tanimachi → Tenma-bashi → Keihan → Fushimi-Inari',when:'~7:00am',dur:'~1 hr',adult:660,approx:true,pay:'IC card',note:'Not a JR line.'},
+ {date:'Apr 5',icon:'🚃',name:'JR · Inari → Arashiyama → Osaka',route:'Fushimi-Inari → Kyoto → Saga-Arashiyama → Kyoto → Osaka',when:'',dur:'',adult:1210,approx:true,pay:'IC card',jrWest:true,note:'Estimate of the JR legs of the day.'},
+ {date:'Apr 6',icon:'📦',name:'Yamato luggage Osaka → Tokyo hotel',route:'Convenience store → Conrad Tokyo',when:'~7am drop-off',dur:'next-day',flat:7500,approx:true,pay:'Cash at store',note:'Estimate for two large bags. Deliver Apr 7; check with the hotel first.'},
+ {date:'Apr 6',icon:'🚃',name:'Kintetsu to Nara (round trip)',route:'Osaka-Uehommachi ↔ Kintetsu-Nara',when:'~7:15am out',dur:'~35 min each way',adult:1150,approx:true,pay:'IC card',note:'Not a JR line.'},
+ {date:'Apr 6',icon:'🚌',name:'Highway bus to Awaji (round trip)',route:'Osaka–Namba (or Kobe-Sannomiya) ↔ Awaji IC',when:'~10:30am out · early afternoon back',dur:'~60 min each way',adult:3700,approx:true,pay:'Reserve (combo ticket)',note:'Estimate. Kobe-Sannomiya departures are cheaper and frequent; verify the price and timetable when you book.'},
+ {date:'Apr 6',icon:'🚇',name:'Osaka Metro (evening)',route:'',when:'',dur:'',adult:700,approx:true,pay:'IC card',note:''},
+ {date:'Apr 7',icon:'🚃',name:'Osaka → Himeji (JR Special Rapid)',route:'Osaka → Himeji',when:'~7:15am',dur:'~1 hr',adult:1520,approx:true,pay:'IC card',jrWest:true,note:'Shinkansen from Shin-Osaka saves ~25 min but costs more.'},
+ {date:'Apr 7',icon:'🚃',name:'Himeji → Sannomiya (Kobe)',route:'Himeji → Sannomiya',when:'~11am',dur:'~40 min',adult:1100,approx:true,pay:'IC card',jrWest:true,note:''},
+ {date:'Apr 7',icon:'🚃',name:'Sannomiya → Shin-Osaka',route:'Sannomiya → Shin-Osaka',when:'~2:45pm',dur:'~25 min',adult:570,approx:true,pay:'IC card',jrWest:true,note:''},
+ {date:'Apr 7',icon:'🚅',name:'Nozomi → Shinagawa',route:'Shin-Osaka → Shinagawa',when:'~3:30–4:00pm',dur:'~2h20',adult:14700,approx:true,pay:'Reserve (SmartEX)',note:'Estimate — SmartEX shows the exact fare.'},
+ {date:'Apr 7',icon:'🚃',name:'Shinagawa → Shimbashi → Conrad',route:'JR + 10-min walk',when:'~6:15pm',dur:'~20 min',adult:170,approx:true,pay:'IC card',note:''},
+ {date:'Apr 8',icon:'🎢',name:'DisneySea round trip',route:'Shimbashi → Tokyo → Keiyo Line → Maihama → Resort Line',when:'leave ~6:45am',dur:'~1 hr each way',adult:1300,approx:true,pay:'IC card',note:'Includes the Disney Resort Line (~¥260 each way).'},
+ {date:'Apr 9',icon:'🚇',name:'Tokyo local · Hamarikyu, Tsukiji, Ginza (and Kichijoji, optional)',route:'Walking + JR + Metro',when:'all day',dur:'',adult:1200,approx:true,pay:'IC card',note:'Estimate for the whole day, including the optional Chuo Line trip to Kichijoji.'},
+ {date:'Apr 10',icon:'🚕',name:'Conrad → Haneda (taxi)',route:'Shiodome → Haneda',when:'~3 hours before your flight',dur:'20–30 min',flat:9000,approx:true,pay:'Cash / card',note:'Cheaper alternative: JR to Hamamatsucho + Tokyo Monorail (~¥650 per adult, ~35 min).'}
 ];
 
 /* Old duplicate Catch keys → canonical key (so anything you already checked off is carried over, never deleted) */
-const TICKET_ALIAS={teamlab:'teamlab_tokyo',showa_disc_golf:'disc_golf',showa_kinen:'disc_golf',nintendo_museum:'nintendo',smartex:'smartex_oct29'};
+const TICKET_ALIAS={teamlab:'teamlab_tokyo',showa_disc_golf:'disc_golf',showa_kinen:'disc_golf',nintendo_museum:'nintendo',smartex:'smartex_apr9'};
 
-/* Corrections to the existing Catch items */
+/* Corrections to the existing Catch items — rebuilt for the April 2027 trip. Nothing here is marked booked. */
 const BOOKABLE_PATCH={
- disneysea:{confirmed:true,urgency:'high',timeLabel:'Mon Oct 26 · park opening ~8:00am (confirm in app)',confirmation:'1-Day Passport ×3 · ticket ⟦DISNEY_TK⟧ (1 of 3)',
-  instructions:'BOOKED ✔ 3 × 1-Day Passport (Sparkling Jubilee 25th design). Open the Tokyo Disney Resort app on the day — QR codes appear when ready, and the app asks you not to show the screen to anyone but a Cast Member. Check Halloween shows and Standby Pass / Premier Access options in the morning.'},
- ghibli:{archived:true,instructions:'Retired — sold out for your Tokyo dates (Oct 24/25) and the Oct 23 slots fall while you are still flying in. The museum is closed Tuesdays.'},
- nintendo:{confirmed:true,urgency:'high',timeLabel:'Fri Oct 30 · entry 3:00–3:30pm',confirmation:'Purchase # ⟦NINTENDO_TK⟧',
-  instructions:'BOOKED ✔ Entry window 3:00–3:30pm on Fri Oct 30. Open 10:00–19:00. Nearest stations: Kintetsu Ogura (5 min, east exit) or JR Ogura (8 min, north exit), about an hour from Osaka. Lockers and baggage screening on site; allow 2–3 hours.'},
- samurai:{urgency:'med',timeLabel:'Tue Oct 27 · ~10:30am (book a slot)',
+ disneysea:{confirmed:false,status:'todo',urgency:'high',time:'Apr 8 — move your existing tickets',timeLabel:'Thu Apr 8 · move your tickets (quietest forecast day)',confirmation:'',
+  instructions:'You have 3 × 1-Day Passports bought for October, and you told me the date can be moved. Once your dates are firm, change them to Thu Apr 8 on the official Tokyo Disney Resort ticket page or app and confirm any rules or fare difference. Crowd forecasts for these dates aren’t published yet. Japanese school spring break usually runs to about Apr 7, so Thu Apr 8 (schools back in session) is a sensible pick; recheck the crowd calendar in March. Check Standby Pass and Premier Access options in the app on the day. “Catch” it here after the move so it ticks off in Alerts.'},
+ ghibli:{optional:true,archived:false,urgency:'low',name:'Ghibli Museum (optional)',timeLabel:'Wed Mar 31 · only if you win tickets',
+  instructions:'March tickets are released around Feb 10 at 10:00am JST on the Lawson Ticket English site (check the official page for the exact date). The museum is closed Tuesdays. If you get tickets for Wed Mar 31, swap it for the Shinjuku Gyoen morning and add Kichijoji and Inokashira Park next door. Bring your passport for entry.'},
+ nintendo:{confirmed:false,status:'todo',urgency:'high',time:'Sat Apr 3 — 3:00pm–3:30pm entry',timeLabel:'Sat Apr 3 · lottery entry in January',confirmation:'',
+  instructions:'Tickets are sold by lottery with a Nintendo Account. Entries open about three months before your visit month (January for April), results arrive on the afternoon of the 1st of the following month, and payment is due by the 7th by credit card (Visa, MasterCard or JCB with 3-D Secure). The museum is closed Tuesdays and Dec 30–Jan 3. Open 10:00–19:00 (hours may vary). Nearest stations: Kintetsu Ogura (5 min) or JR Ogura (8 min). I did not verify the exact January entry dates — check museum.nintendo.com in early January.'},
+ samurai:{urgency:'med',timeLabel:'Tue Mar 30 · ~10:30am (book a slot)',
   instructions:'Book a timeslot for the Asakusa location (search “Samurai Ninja Museum Asakusa”; Klook/Viator also sell slots). About 90 minutes of armor, sword demo and ninja-star throwing — good for kids.'},
- nijigen:{name:'Nijigen no Mori — Godzilla zipline',urgency:'med',timeLabel:'Mon Nov 2 · afternoon',
-  instructions:'Buy tickets + the bus at ticket.nijigennomori.com/en. Godzilla Interception Operation: adults ~¥3,800, kids ~¥2,200, about 1.5–2 hours. Zipline minimums: height 120 cm, weight 25 kg (max 110 kg) — measure your son first. No photos on the zipline. Verify the bus timetable before building Nara around it; Kobe-Sannomiya → Awaji is the frequent backup.'},
- hakone_ryokan:{confirmed:true,urgency:'high',timeLabel:'Wed Oct 28–Thu Oct 29 · check-in from 3:00pm',confirmation:'⟦RYOKAN_BK⟧ · private family onsen, kaiseki dinner + breakfast',
-  instructions:'BOOKED ✔ Check-in from 3:00pm on Oct 28, check-out Oct 29. After the Fuji detour you will arrive around 5:30–6pm — message the ryokan your ETA and dinner time.'},
- smartex:{archived:true},
+ nijigen:{name:'Nijigen no Mori — Godzilla zipline',urgency:'med',timeLabel:'Tue Apr 6 · afternoon',
+  instructions:'Buy tickets + the bus at ticket.nijigennomori.com/en. Godzilla Interception Operation: adults ~¥3,800, kids ~¥2,200, about 1.5–2 hours. Zipline minimums: height 120 cm, weight 25 kg (max 110 kg) — measure your son first. No photos on the zipline. Verify the bus timetable before building Nara around it; Kobe-Sannomiya → Awaji is the frequent backup. If your tattoos are only two days old, ask the artist about the harness first.'},
+ hakone_ryokan:{confirmed:false,status:'todo',urgency:'high',time:'Apr 1–2 — Check-in 3:00pm',timeLabel:'Thu Apr 1–Fri Apr 2 · check-in from 3:00pm',confirmation:'',
+  instructions:'Not booked yet — ask Tōnosawa Ichinoyu Honkan to move your reservation to Apr 1–2. Private family onsen, kaiseki dinner + breakfast. After the Fuji detour you will arrive around 5:30–6pm — message the ryokan your ETA and dinner time.'},
+ smartex:{archived:true,instructions:'Retired — the Shinkansen legs are now separate items: Odawara → Shin-Osaka (Apr 2) and Shin-Osaka → Shinagawa (Apr 7).'},
  hakone_ropeway:{archived:true,instructions:'Retired — your Hakone stay is one night at Tōnosawa; no Free Pass needed.'},
  showa_kinen:{archived:true},
  jr_pass:{archived:true,instructions:'Retired — the national JR Pass does not pay off for this itinerary. See the Travel tab for the numbers.'},
- osaka_hotel:{name:'Gu’s Tani4 — Osaka Airbnb',icon:'🏠',confirmed:true,urgency:'high',timeLabel:'Thu Oct 29 3:00pm → Tue Nov 3 10:00am',confirmation:'Airbnb · host Ayumi · ⟦OSAKA_ADDR⟧',url:'https://www.airbnb.com/trips',
-  instructions:'BOOKED ✔ 2 adults + 1 child. Host Ayumi ⟦OSAKA_TEL⟧. 3 minutes to Tanimachi 4-chome Station. Your shipped bags arrive Oct 29 evening.'},
- hnd_hotel:{archived:true,instructions:'Retired — you are staying at the Conrad on Nov 3 instead.'},
+ osaka_hotel:{name:'Osaka apartment — Apr 2–7',icon:'🏠',confirmed:false,status:'todo',urgency:'high',time:'',timeLabel:'Fri Apr 2 → Wed Apr 7 · 5 nights',confirmation:'',url:'https://www.airbnb.com/trips',
+  instructions:'Not booked yet. 2 adults + 1 child. Ask your previous host (near Tanimachi 4-chome, walkable to Osaka Castle) whether Apr 2–7 is open, or find a similar apartment near Tanimachi or Namba. Hold a refundable room now — blossom season fills up. Your shipped bags arrive Apr 2 evening.'},
+ hnd_hotel:{archived:true,instructions:'Retired — the last three nights are in Tokyo, and you fly home from Haneda on Apr 10.'},
  showa_disc_golf:{archived:true},
  fushimi_hike:{optional:true,walkin:true,urgency:'low',instructions:'Walk-in. Your plan covers the climb to the Yotsutsuji viewpoint (40–60 min); the full summit loop takes 2–3 hours.'},
- arashiyama_monkey:{archived:true,instructions:'Retired — not in the Nov 1 plan (kimono + Bamboo Grove fill the day).'},
+ arashiyama_monkey:{archived:true,instructions:'Retired — not in the Apr 5 plan (kimono + Bamboo Grove fill the day).'},
  mount_ikoma:{archived:true},
- pokemon_center_dx:{walkin:true,urgency:'low',timeLabel:'Sun Oct 25 · walk-in',instructions:'Walk-in, no reservation. Pokémon Center Tokyo DX is in the Nihombashi Takashimaya building (not in Akihabara) and sells Tokyo-exclusive items.'},
+ pokemon_center_dx:{walkin:true,urgency:'low',timeLabel:'Sun Mar 28 · walk-in',instructions:'Walk-in, no reservation. Pokémon Center Tokyo DX is in the Nihombashi Takashimaya building (not in Akihabara) and sells Tokyo-exclusive items. For authentic cards, buy sealed packs here or from established chains.'},
  kidzania:{archived:true},
  teamlab:{archived:true},
- osaka_castle_park:{optional:true,walkin:true,urgency:'low',instructions:'Free to walk the grounds (10 min from the Airbnb). The keep interior is paid and optional.'},
- nara_wakakusa:{archived:true},
+ osaka_castle_park:{optional:true,walkin:true,urgency:'low',timeLabel:'Sat Apr 3 · morning',instructions:'Free to walk the grounds (10 min from a Tanimachi-area apartment). The keep interior is paid and optional. Nishinomaru Garden (paid) has the classic keep-and-blossom view if the trees are blooming.'},
+ nara_wakakusa:{archived:true,instructions:'Retired — not in the April plan.'},
  mario_kart:{archived:true,instructions:'Retired — not scheduled. Street karts also need an International Driving Permit (AAA, same day).'},
  taiko_drum:{archived:true},
- disc_golf:{walkin:true,urgency:'low',timeLabel:'Sat Oct 24 · morning · walk-in',instructions:'Walk-in at Showa Kinen Park (Tachikawa). 18 holes; bring your own discs. Park entry about ¥450 per adult.'},
- cappiness:{urgency:'high',timeLabel:'Sun Oct 25 · book the 10:00am slot',
+ disc_golf:{walkin:true,urgency:'low',timeLabel:'Mon Mar 29 · morning · walk-in',instructions:'Walk-in at Showa Kinen Park (Tachikawa). 18 holes; bring your own discs. Park entry about ¥450 per adult. Check the park’s calendar for closure days.'},
+ cappiness:{urgency:'high',timeLabel:'Sun Mar 28 · book the 10:00am slot',
   instructions:'Reserve at tablecheck.com (search CAPPINESS OSHIAGE). ¥4,000 per person; your card is charged when you book. Ages 5+ (5–12 with an adult). JU Skytower Mukojima 5F, 200 m from Tokyo Skytree Station. If a capybara is unwell the café can close even with a booking.'},
- chopsticks:{urgency:'med',timeLabel:'Fri Oct 30 · book the 10:00am slot',
+ chopsticks:{urgency:'med',timeLabel:'Sat Apr 3 · book the 10:00am slot',
   instructions:'Book at cookly.me (“Handmade Chopsticks Workshop in Osaka”). $32 per person, 1 hour, English instructor, free cancellation until 48 hours before. Gareria Akka 3F, 1-16-20 Higashishinsaibashi — 5 min from Shinsaibashi Station.'},
- kimono:{urgency:'med',timeLabel:'Sun Nov 1 · ~11:00am',
+ kimono:{urgency:'med',timeLabel:'Mon Apr 5 · ~11:00am',
   instructions:'Reserve a shop near Saga-Arashiyama (roughly ¥3,000–5,000 per person with dressing; kids’ kimono available). Plan 30 minutes to dress and return by 4–5pm. Ask about wearing kimono over fresh tattoos.'},
- teamlab_tokyo:{confirmed:true,urgency:'high',timeLabel:'Tue Oct 27 · entry 6:00–6:30pm',confirmation:'Ref ⟦TEAMLAB_TK⟧ · 2 adults + 1 child',
-  instructions:'BOOKED ✔ Admission window 18:00–18:30 on Tue Oct 27. Arrive ~5:45pm. You walk barefoot through water — wear shorts or roll pants above the knee.'},
- teamlab_osaka:{optional:true,urgency:'med',timeLabel:'Thu Oct 29 · evening (open to Nov 11)',
-  instructions:'Online tickets only (~¥1,800 each) at teamlab.art/e/botanicalgarden. Open 6:00–10:30pm through Nov 11 at Nagai Botanical Garden. Optional — skip if the Hakone → Osaka day wears everyone out; Nov 2 evening also works.'},
- round1:{optional:true,walkin:true,urgency:'low',timeLabel:'Mon Nov 2 · optional evening',instructions:'Walk-in, open 24/7 (Namba/Sennichimae). Bowling, arcade and Spo-Cha; roughly ¥2,000 per person for 3 hours.'},
- yamazaki:{optional:true,urgency:'low',name:'Yamazaki Whisky Museum (optional)',timeLabel:'Sun Nov 1 · only with a reservation',
+ teamlab_tokyo:{confirmed:false,status:'todo',urgency:'high',timeLabel:'Mon Mar 29 · entry 6:00–6:30pm',confirmation:'',
+  instructions:'Not booked yet. Book an admission window around 18:00–18:30 for 2 adults + 1 child at teamlab.art/e/planets. Arrive ~15 minutes early. You walk barefoot through water — wear shorts or roll pants above the knee.'},
+ teamlab_osaka:{archived:true,optional:false,instructions:'Retired — the Botanical Garden run was a fall show (Oct 28–Nov 11, 2026). Check teamlab.art for any spring dates, but nothing is planned.'},
+ round1:{optional:true,walkin:true,urgency:'low',timeLabel:'Tue Apr 6 · optional evening',instructions:'Walk-in, open 24/7 (Namba/Sennichimae). Bowling, arcade and Spo-Cha; roughly ¥2,000 per person for 3 hours.'},
+ yamazaki:{optional:true,urgency:'low',name:'Yamazaki Whisky Museum (optional)',timeLabel:'Mon Apr 5 · only with a reservation',
   instructions:'Reservation is required for the museum and all tours. The paid production tour is lottery-based and 20+ only (your son cannot join). Open 10:00–16:45, 10 minutes on foot from JR Yamazaki. If you cannot get a slot, buy whisky at a department store, Don Quijote or the airport.'},
  bar_freedom:{optional:true,walkin:true,urgency:'low',instructions:'A small whisky counter in Dotonbori — adults only after dark, so one parent at a time. Pours are roughly ¥1,500–3,000. For bottles to carry home: department-store liquor floors, Don Quijote, or the airport (1 liter per adult duty-free).'},
  stamp_rally:{optional:true,walkin:true,urgency:'low',instructions:'Optional. Ask at the Nihombashi info counters whether the Chuo City stamp rally is running. The goshuin stamp book from Senso-ji works anywhere.'},
  park_golf:{optional:true,walkin:true,urgency:'low',instructions:'Not on a day — Showa Kinen disc golf covers the golf slot. If you want it: Kiba Park or Tatsumi no Mori Kaihin Park (walk-in, ~¥840 for 9 holes).'},
  nijo_castle:{optional:true,walkin:true,urgency:'low',instructions:'Not on a day. Famous nightingale floors; about ¥1,000 for adults.'},
- himeji:{urgency:'med',walkin:true,timeLabel:'Tue Nov 3 · opens 9:00am',
-  instructions:'Adults ¥2,500 (non-resident price since March 2026); children reportedly free — confirm at the gate. Allow ~2 hours; about 20 minutes on foot from the station. Leave Tanimachi by ~7:15am.'},
- tattoo:{confirmed:true,urgency:'high',timeLabel:'Sat Oct 31 · 11:00am',confirmation:'Corby: cherry blossom 🌸 · Cheryl: tiger 🐯 · deposits paid',
-  instructions:'CONFIRMED ✔ Both sessions start 11:00am. Ocean Drive 4F, 2-12-14 Nishishinsaibashi. Contact: Alex (shop manager), +81-6-6212-0175, support@goodtimesink.jp. Ask how long each piece takes and whether your son can wait in the studio.'},
- sword_master:{optional:true,urgency:'low',instructions:'Not on a day — Nov 3 is already full (Himeji + Kobe + the train to Tokyo).'},
+ himeji:{urgency:'med',walkin:true,timeLabel:'Wed Apr 7 · opens 9:00am',
+  instructions:'Adults ¥2,500 (non-resident price since March 2026); children reportedly free — confirm at the gate. Allow ~2 hours; about 20 minutes on foot from the station. Leave Tanimachi by ~7:15am. Himeji’s cherry trees usually bloom in the first half of April.'},
+ tattoo:{confirmed:false,status:'todo',urgency:'high',time:'',timeLabel:'Sun Apr 4 · 11:00am (proposed — ask the shop)',confirmation:'',
+  instructions:'Move your booking: ask Alex (shop manager, +81-6-6212-0175, support@goodtimesink.jp) whether Sun Apr 4 around 11:00am is open for both pieces (Corby: cherry blossom 🌸 · Cheryl: tiger 🐯) and whether your earlier deposits move with it. Ocean Drive 4F, 2-12-14 Nishishinsaibashi. The studio is normally closed Tuesdays. Ask how long each piece takes and whether your son can wait in the studio. No onsen or soaking while healing.'},
+ sword_master:{optional:true,urgency:'low',instructions:'Not on a day — Apr 7 is already full (Himeji + Kobe + the train to Tokyo).'},
  samurai_kyoto:{optional:true,urgency:'low',instructions:'Not on a day.'}
 };
 
 const BOOKABLE_EXTRA=[
- {key:'flight_slc_lax',dayLabel:'Night before Day 1 · Wed Oct 21',name:'SLC → LAX · Flight #3618',icon:'✈️',url:'https://www.delta.com/',urgency:'high',confirmed:true,timeLabel:'Wed Oct 21 · 6:35pm → 7:30pm',confirmation:'Flight #3618',instructions:'CONFIRMED ✔'},
- {key:'flight_lax_nrt',dayLabel:'Day 1 · Thu Oct 22 → lands Fri Oct 23',name:'LAX → Narita · SQ 11',icon:'✈️',url:'https://www.singaporeair.com/',urgency:'high',confirmed:true,timeLabel:'Thu Oct 22 · 2:00pm → Fri Oct 23 5:50pm',confirmation:'Ref ⟦PNR_SQ⟧',instructions:'CONFIRMED ✔ Departure now 2:00pm (was 2:20pm). 11h 50m, nonstop.'},
- {key:'flight_hnd_lax',dayLabel:'Day 14 · Wed Nov 4',name:'Haneda → LAX · AA 26',icon:'✈️',url:'https://www.aa.com/',urgency:'high',confirmed:true,timeLabel:'Wed Nov 4 · 6:00pm → 10:55am',confirmation:'AA 26 · Economy · dinner + snack',instructions:'CONFIRMED ✔ Departs Haneda Terminal 3. Arrive by ~2:30pm.'},
- {key:'flight_lax_slc',dayLabel:'Day 14 · Wed Nov 4',name:'LAX → SLC · Flight #4752',icon:'✈️',url:'https://www.delta.com/',urgency:'high',confirmed:true,timeLabel:'Wed Nov 4 · 5:05pm → 7:59pm',confirmation:'Flight #4752',instructions:'CONFIRMED ✔'},
- {key:'tokyo_apt',name:'Yotsuya apartment — Tokyo',icon:'🏠',url:'https://www.booking.com/',urgency:'high',confirmed:true,timeLabel:'Fri Oct 23 → Wed Oct 28 · check-in window 4–5pm',confirmation:'Booking.com #⟦TOKYO_BK⟧',
-  instructions:'BOOKED ✔ Door-code entry (see the Booking.com check-in instructions). You arrive ~9pm — tell the host. Address: ⟦TOKYO_ADDR⟧.'},
- {key:'osaka_glow',name:'Osaka GLOW — glow-in-the-dark show',icon:'✨',url:'https://osakaglow.jp/',urgency:'high',timeLabel:'Sat Oct 31 · evening (pick a slot)',
-  instructions:'A glow-in-the-dark dance performance and hands-on experience in a fully dark venue, about 90–100 minutes, near Umeda / Shin-Osaka. Build a glowing wand, watch dancers in EL-wire costumes; Stage Experience tickets (age 8+, which your son meets) let you wear a costume and perform. Roughly $53–65 per adult on Viator/GetYourGuide (child price not checked). Free cancellation until 24 hours before. It opens October 2026, so Oct 31 showtimes were not visible to me — check osakaglow.jp or the ticket sites and choose the latest slot, since the tattoos may run long.'},
- {key:'hotel_lax',dayLabel:'Night before Day 1 · Wed Oct 21',name:'Hilton Los Angeles Airport',icon:'🏨',url:'https://www.hilton.com/en/hilton-honors/',urgency:'high',confirmed:true,timeLabel:'Wed Oct 21 → Thu Oct 22 · 1 night',confirmation:'Hilton #⟦HILTON_LAX_BK⟧ · 54,000 points',
-  instructions:'BOOKED ✔ Paid with 54,000 Hilton Honors points. Check-out Oct 22; leave for LAX by ~10:30am for the 2:00pm SQ 11 departure. Ask the front desk about the airport shuttle.'},
- {key:'hotel_conrad',name:'Conrad Tokyo — Nov 3',icon:'🏨',url:'https://www.hilton.com/en/hilton-honors/',urgency:'high',confirmed:true,timeLabel:'Tue Nov 3 → Wed Nov 4 · 1 night',confirmation:'Hilton #⟦CONRAD_BK⟧ (stay pending)',
-  instructions:'BOOKED ✔ Ask for a high floor with Tokyo Bay / Hamarikyu views. No direct airport bus: taxi ≈ ¥8,000–10,000 or Monorail from Hamamatsucho on Nov 4.'},
- {key:'fuji_bus',name:'Shinjuku → Kawaguchiko highway bus',icon:'🚌',url:'https://www.fujikyubus.co.jp/',urgency:'high',timeLabel:'Wed Oct 28 · ~7:30am',
+ {key:'flight_out',dayLabel:'Day 1 · Fri Mar 26 → lands Sat Mar 27',name:'SLC → Tokyo (outbound flights)',icon:'✈️',url:'https://www.google.com/travel/flights',urgency:'high',timeLabel:'Fri Mar 26 · one stop',confirmation:'',
+  instructions:'Not booked yet. Compare Narita and Haneda, set price alerts, and prefer free cancellation. Enter the confirmation number here when you book.'},
+ {key:'flight_back',dayLabel:'Day 16 · Sat Apr 10',name:'Tokyo → SLC (return flights)',icon:'✈️',url:'https://www.google.com/travel/flights',urgency:'high',timeLabel:'Sat Apr 10 · one stop',confirmation:'',
+  instructions:'Not booked yet. Be at the airport about 3 hours before departure and check which terminal your airline uses.'},
+ {key:'tokyo_apt',name:'Tokyo apartment — Mar 27–Apr 1',icon:'🏠',url:'https://www.booking.com/',urgency:'high',timeLabel:'Sat Mar 27 → Thu Apr 1 · 5 nights',confirmation:'',
+  instructions:'Not booked yet. Look near Shinjuku-gyoemmae or Yotsuya (Marunouchi Line), 2 adults + 1 child. Hold a refundable room first — late March is blossom season. Tell the host your arrival time.'},
+ {key:'osaka_glow',name:'Osaka GLOW — glow-in-the-dark show (optional)',icon:'✨',url:'https://osakaglow.jp/',urgency:'low',optional:true,timeLabel:'Sun Apr 4 · evening (if it is still running)',
+  instructions:'A glow-in-the-dark dance performance and hands-on experience in a fully dark venue, about 90–100 minutes, near Umeda / Shin-Osaka. Stage Experience tickets (age 8+) let your son wear a costume and perform. I could not confirm that it is still running in April 2027 — check osakaglow.jp or Viator/GetYourGuide. Choose the latest evening slot, since the tattoos may run long.'},
+ {key:'hotel_conrad',name:'Conrad Tokyo — Apr 7–10',icon:'🏨',url:'https://www.hilton.com/en/hilton-honors/',urgency:'high',timeLabel:'Wed Apr 7 → Sat Apr 10 · 3 nights',confirmation:'',
+  instructions:'Not booked yet. Check Hilton points and cash rates. Ask for a high floor with Tokyo Bay / Hamarikyu views, and tell the front desk a parcel is coming from Osaka on Apr 7. No direct airport bus: taxi ≈ ¥8,000–10,000 or Monorail from Hamamatsucho on Apr 10.'},
+ {key:'fuji_bus',name:'Shinjuku → Kawaguchiko highway bus',icon:'🚌',url:'https://www.fujikyubus.co.jp/',urgency:'high',timeLabel:'Thu Apr 1 · ~7:30am',
   instructions:'Reserve from Busta Shinjuku (about 1h45–2h; roughly ¥2,000–2,300 per adult). Also pick your afternoon Kawaguchiko → Gotemba bus from the Fujikyu timetable.'},
- {key:'yamato_osaka',name:'Yamato: Tokyo → Osaka bags',icon:'📦',url:'https://www.kuronekoyamato.co.jp/en/',urgency:'med',timeLabel:'Wed Oct 28 · drop ~6:30am',
-  instructions:'Ship the large bags from the konbini near the apartment to the Airbnb; choose delivery Thu Oct 29 in the 16:00–20:00 window and tell host Ayumi.'},
- {key:'yamato_hnd',name:'Yamato Airport TA-Q-BIN → Haneda',icon:'📦',url:'https://www.kuronekoyamato.co.jp/en/',urgency:'high',timeLabel:'Mon Nov 2 (latest) · pick-up Nov 4 from 3:00pm',
-  instructions:'Must be sent at least 2 days before departure — Nov 2 is the last day for a Nov 4 flight. Write the airport, terminal (T3), flight (AA 26) and departure date/time on the slip. Pick-up: Haneda T3, 3F departure lobby near check-in counter A, from 3 hours before departure.'},
- {key:'smartex_oct29',name:'Shinkansen Odawara → Shin-Osaka',icon:'🚅',url:'https://smart-ex.jp/en/',urgency:'high',timeLabel:'Thu Oct 29 · after ~11am',
-  instructions:'Reserve in SmartEX with an international card. About ¥13,500+ per adult; your son half. Tokyo → Odawara is no longer needed.'},
- {key:'smartex_nov3',name:'Shinkansen Shin-Osaka → Shinagawa',icon:'🚅',url:'https://smart-ex.jp/en/',urgency:'high',timeLabel:'Tue Nov 3 · ~3:30–4:00pm',
+ {key:'yamato_osaka',name:'Yamato: Tokyo → Osaka bags',icon:'📦',url:'https://www.kuronekoyamato.co.jp/en/',urgency:'med',timeLabel:'Thu Apr 1 · drop ~6:30am',
+  instructions:'Ship the large bags from the konbini near the apartment to the Osaka apartment; choose delivery Fri Apr 2 in the 16:00–20:00 window and tell the host.'},
+ {key:'yamato_tokyo',name:'Yamato: Osaka → Tokyo hotel bags',icon:'📦',url:'https://www.kuronekoyamato.co.jp/en/',urgency:'med',timeLabel:'Tue Apr 6 · drop ~7am',
+  instructions:'Ask the Tokyo hotel whether it accepts parcels, then ship the big bags from the konbini near the Osaka apartment for delivery on Wed Apr 7. Write the guest name, hotel and check-in date on the slip.'},
+ {key:'smartex_apr9',name:'Shinkansen Odawara → Shin-Osaka',icon:'🚅',url:'https://smart-ex.jp/en/',urgency:'high',timeLabel:'Fri Apr 2 · after ~11am',
+  instructions:'Reserve in SmartEX with an international card; sales open one month ahead. About ¥13,500+ per adult; your son half.'},
+ {key:'smartex_apr14',name:'Shinkansen Shin-Osaka → Shinagawa',icon:'🚅',url:'https://smart-ex.jp/en/',urgency:'high',timeLabel:'Wed Apr 7 · ~3:30–4:00pm',
   instructions:'Reserve in SmartEX. About ¥14,700 per adult; your son half. Aim to reach Tokyo around 6:30pm.'},
- {key:'kobe_lunch',name:'Kobe beef lunch',icon:'🥩',url:'https://www.google.com/maps/search/kobe+beef+lunch+sannomiya',urgency:'med',timeLabel:'Tue Nov 3 · ~12:30pm',
+ {key:'kobe_lunch',name:'Kobe beef lunch',icon:'🥩',url:'https://www.google.com/maps/search/kobe+beef+lunch+sannomiya',urgency:'med',timeLabel:'Wed Apr 7 · ~12:30pm',
   instructions:'Reserve a restaurant near Sannomiya with an English booking page. Roughly ¥4,000 (sets/bowls) to ¥10,000+ (steaks) per person.'},
+ {key:'sitter',name:'Evening sitter — anniversary night',icon:'💍',url:'https://carefinder.jp/en',urgency:'high',timeLabel:'Tue Mar 30 · about 5:30–10:30pm',
+  instructions:'Not booked yet. Options for an English-speaking sitter who comes to the apartment: CareFinder (pick a screened sitter), Babysitters & Company, SAIGROWTH (ages 0–15), Rainbow Kids Care, or Poppins. Rates start around ¥1,500/hour and often run ¥2,500+ in Tokyo, with extra for evenings and travel. Book weeks ahead, have a video call so your son meets them, and ask the apartment host whether outside sitters are allowed. Give the sitter the address, allergies, bedtime and your phone numbers.'},
  {key:'kansai_pass',name:'JR Kansai Wide Area Pass (optional)',icon:'🎫',url:'https://www.westjr.co.jp/global/en/ticket/pass/kansai_wide/',urgency:'low',optional:true,timeLabel:'5 consecutive days · only if you decide to buy it',
-  instructions:'My estimate says it does NOT pay off: the JR West legs in your plan come to roughly ¥15,000–20,000 for the family, against about ¥30,000 for the pass. If you buy it anyway, “catch” it here and the covered trains on the Travel tab turn green.'}
+  instructions:'My estimate says it does NOT pay off: the JR West legs in your plan come to roughly ¥15,000–20,000 for the family, against about ¥30,000 for the pass. If you buy it anyway, “catch” it here and the covered trains on the Travel tab turn green.'},
+ /* ── spring additions ── */
+ {key:'shinjuku_gyoen',name:'Shinjuku Gyoen (cherry blossoms)',icon:'🌸',url:'https://www.env.go.jp/garden/shinjukugyoen/english/',urgency:'low',walkin:true,timeLabel:'Wed Mar 31 · opens 9:00am',
+  instructions:'About ¥500 per adult (confirm child pricing at the gate), a 5–10 minute walk from Shinjuku-gyoemmae. It has many cherry varieties that bloom later than the main trees. Weekends and holidays in March–April can require advance registration, and the garden is normally closed Mondays; Wed Mar 31 should be fine, but confirm on the official site. Bring a picnic.'},
+ {key:'hamarikyu',name:'Hamarikyu Gardens',icon:'🌿',url:'https://www.tokyo-park.or.jp/teien/en/hama-rikyu/',urgency:'low',walkin:true,timeLabel:'Fri Apr 9 · opens 9:00am',
+  instructions:'A small admission fee, about a 10-minute walk from the Conrad. The garden usually has spring flowers (rapeseed/nanohana fields and later cherry varieties); confirm what is blooming closer to the date. The pond teahouse is a nice rest for kids.'},
+ {key:'mint_bureau',name:'Osaka Mint Bureau Cherry Blossom Passage',icon:'🌸',url:'https://osaka-info.jp/en/event/sakura-toorinuke',urgency:'low',optional:true,timeLabel:'Sun Apr 4 · only if it is open',
+  instructions:'A riverside path of late-blooming cherry trees that opens for about a week each spring. It ran Apr 2–8 in 2026 (10:00–19:15 on weekdays, 9:00–19:15 on weekends, with online registration required and first-come, first-served). The 2027 dates are not announced yet; check in March.'},
+ {key:'chidorigafuchi',name:'Chidorigafuchi boats (optional)',icon:'🚣',url:'https://www.google.com/maps/search/Chidorigafuchi+boat',urgency:'low',optional:true,walkin:true,timeLabel:'Not on a day yet · only if the blossoms are late',
+  instructions:'The most photographed blossom spot in Tokyo, best seen from a rowboat. Boat queues can run 1–3 hours in peak week, so arrive before opening. If the trees are already past peak by Mar 31, skip this and use Shinjuku Gyoen instead.'},
+ {key:'ueno_park',name:'Ueno Park hanami (optional)',icon:'🌸',url:'https://www.google.com/maps/search/Ueno+Park',urgency:'low',optional:true,walkin:true,timeLabel:'Not on a day yet · optional',
+  instructions:'A lively hanami park. Weekend afternoons are very crowded; weekday mornings before 9am are calmer. Combine with the Tokyo National Museum or the zoo if the blossoms are past peak.'},
+ {key:'sakuranomiya',name:'Kema Sakuranomiya Park (Osaka, optional)',icon:'🌸',url:'https://www.google.com/maps/search/Kema+Sakuranomiya+Park',urgency:'low',optional:true,walkin:true,timeLabel:'Not on a day yet · near the Mint Bureau',
+  instructions:'A long riverside cherry-tree walk along the Okawa river, near the Mint Bureau. A gentle, flat walk and a good swap on Apr 3 or 11 if the Castle Park trees are bare.'},
+ {key:'philosophers_path',name:'Philosopher’s Path + Maruyama Park (Kyoto, optional)',icon:'🌸',url:'https://www.google.com/maps/search/Philosophers+Path+Kyoto',urgency:'low',optional:true,walkin:true,timeLabel:'Not on a day yet · swap for Arashiyama if blossoms linger',
+  instructions:'A canal-side walk lined with cherry trees, with Maruyama Park and the Keage Incline nearby. Kyoto’s main trees may be done by Apr 5 (early estimate for full bloom is about Mar 27), so use this only if a local bloom report says they are still out.'},
+ {key:'ninnaji',name:'Ninna-ji late cherries (Kyoto, optional)',icon:'🌸',url:'https://www.google.com/maps/search/Ninna-ji+Kyoto',urgency:'low',optional:true,walkin:true,timeLabel:'Not on a day yet · mid-April',
+  instructions:'Ninna-ji’s low-growing Omuro cherry trees bloom later than most in Kyoto, often in mid-April. There is a fee for the cherry garden during the blooming period. Check the temple’s bloom report before you go; it fits Apr 5 as an add-on near Arashiyama.'},
+ {key:'fuji_shibazakura',name:'Fuji Shibazakura Festival (probably too early)',icon:'🌺',url:'https://www.google.com/maps/search/Fuji+Shibazakura+Festival',urgency:'low',optional:true,walkin:true,timeLabel:'Not on a day · usually starts mid-April, after your trip',
+  instructions:'One listing shows the 2027 festival running Apr 9–May 29, which is after your Fuji day on Apr 1, so it will probably not be in bloom. Chureito and Lake Kawaguchiko’s cherry trees are the better April stop.'}
 ];
 
 /* ── Quest corrections (ids kept so any completed quest stays completed) ── */
@@ -4543,20 +4654,32 @@ const QUEST_PATCH={
  q_ochudo:{retired:true},q_discgolf:{retired:true},q_ropeway:{retired:true},q_mario_kart:{retired:true},q_taiko:{retired:true},q_cheesecake:{retired:true},
  q_ghibli:{retired:true},q_pokemon_cafe:{retired:true},q_nijigen:{retired:true},q_snoopy:{retired:true},q_park_golf:{retired:true},q_nijo:{retired:true},
  q_sword_master:{retired:true},q_samurai_kyoto:{retired:true},q_nightingale:{retired:true},q_shuriken:{retired:true},q_godzilla:{retired:true},
+ q_halloween:{retired:true},q_teamlab_osaka:{retired:true},
+ q_sensoji:{day:'Day 5'},q_fushimi:{day:'Day 11'},q_tenryuji:{day:'Day 11'},q_chureito:{day:'Day 7'},q_bamboo:{day:'Day 11'},
+ q_kawaguchi:{day:'Day 7'},q_osaka_castle:{day:'Day 9'},q_chureito_steps:{day:'Day 7'},q_onsen:{day:'Day 7'},q_samurai:{day:'Day 5'},
+ q_kobe_beef:{day:'Day 13'},q_matcha:{day:'Day 11'},q_disneysea:{day:'Day 14'},q_nintendo:{day:'Day 9'},
+ q_yukata:{day:'Day 7'},q_fuji_photo:{day:'Day 7'},q_himeji:{day:'Day 13'},q_himeji_maze:{day:'Day 13'},
+ q_cappiness:{day:'Day 3'},q_chopsticks:{day:'Day 9'},q_kimono:{day:'Day 11'},q_godzilla_zip:{day:'Day 12'},
  q_todaiji:{day:'Day 12'},q_narapark:{day:'Day 12'},q_deer_bow:{day:'Day 12'},q_deer_crackers:{day:'Day 12'},
- q_takoyaki:{day:'Day 8'},q_nakano:{day:'Day 3'},q_suica:{day:'Day 2',name:'Tap an IC card on a Japanese train'},
- q_tattoo:{day:'Day 10'},q_teamlab_osaka:{day:'Day 8'},q_round1:{day:'Day 12'},q_yamazaki:{day:'Bonus'},q_stamp_rally:{day:'Bonus'},q_fushimi_hike:{day:'Bonus'}
+ q_takoyaki:{day:'Day 8'},q_nakano:{day:'Day 4'},q_suica:{day:'Day 2',name:'Tap an IC card on a Japanese train'},
+ q_tattoo:{day:'Day 10'},q_round1:{day:'Day 12'},q_yamazaki:{day:'Bonus'},q_stamp_rally:{day:'Day 3'},q_fushimi_hike:{day:'Bonus'},
+ q_conrad:{day:'Day 13'},q_disc_golf:{day:'Day 4'},q_teamlab_tokyo:{day:'Day 4'}
 };
 const QUEST_EXTRA=[
- {id:'q_glow',cat:'🗾 Japan Moments',icon:'✨',name:'Dance in the dark at Osaka GLOW',day:'Day 10',xp:200,photo:true},
+ {id:'q_glow',cat:'🗾 Japan Moments',icon:'✨',name:'Dance in the dark at Osaka GLOW (if it is running)',day:'Day 10',xp:200,photo:true},
  {id:'q_nex',cat:'🗾 Japan Moments',icon:'🚆',name:'Ride the Narita Express',day:'Day 2',xp:75,photo:true},
  {id:'q_shinkansen',cat:'🗾 Japan Moments',icon:'🚅',name:'Ride the Shinkansen (bullet train)',day:'Day 8',xp:100,photo:true},
- {id:'q_hamarikyu',cat:'🌿 Parks & Nature',icon:'🍵',name:'Hamarikyu Gardens at the Conrad',day:'Day 14',xp:100,photo:true}
+ {id:'q_hamarikyu',cat:'🌿 Parks & Nature',icon:'🍵',name:'Hamarikyu Gardens near the Conrad',day:'Day 15',xp:100,photo:true},
+ {id:'q_hanami',cat:'🌸 Spring Blossoms',icon:'🌸',name:'Have a hanami picnic under cherry trees',day:'Day 6',xp:200,photo:true},
+ {id:'q_petals',cat:'🌸 Spring Blossoms',icon:'🌸',name:'Photograph petals floating on a canal or moat',day:'Day 6',xp:100,photo:true},
+ {id:'q_chureito_blossom',cat:'🌸 Spring Blossoms',icon:'🗻',name:'Chureito Pagoda with cherry blossoms and Fuji',day:'Day 7',xp:300,photo:true},
+ {id:'q_late_cherry',cat:'🌸 Spring Blossoms',icon:'🌸',name:'Find a late-blooming cherry tree in Kansai',day:'Day 9',xp:150,photo:true},
+ {id:'q_sakura_treat',cat:'🌸 Spring Blossoms',icon:'🍡',name:'Try a sakura-flavored treat',day:'Any',xp:75,photo:true}
 ];
 
 
 /* ═══════════ CORE: data version · access roles · helpers ═══════════ */
-const DATA_VERSION='2026-10-05-final';
+const DATA_VERSION='2027-04-trip-v1';
 
 /* Edit-mode changes are saved by stop POSITION. The schedule was rebuilt, so older saved edits would land on the wrong stops.
    Move them to a backup key once, keep everything else (Catch bookings, quests, photos, ledger). */
@@ -5023,12 +5146,13 @@ function renderFlights(){
 
   H('✈️ FLIGHTS');
   const note=document.createElement('div'); note.className='info-banner blue';
-  note.innerHTML='<strong>Two airports:</strong> you land at <b>Narita (NRT)</b> but fly home from <b>Haneda (HND) Terminal 3</b>.'; wrap.appendChild(note);
+  note.innerHTML='<strong>Two airports (if you keep the plan):</strong> you land at <b>Narita (NRT)</b> and fly home from <b>Haneda (HND)</b>. Flights are not booked yet — compare an open-jaw ticket against a round trip through one airport.'; wrap.appendChild(note);
   let lastGroup='';
   FLIGHT_CARDS.forEach(f=>{
     if(f.group!==lastGroup){ lastGroup=f.group; const g=document.createElement('div'); g.className='sx-sub'; g.textContent=f.group; wrap.appendChild(g); }
-    const c=document.createElement('div'); c.className='cardx booked';
-    c.innerHTML='<div class="cx-top"><span class="cx-pill '+(f.type==='intl'?'intl':'dom')+'">'+f.label+' · '+(f.type==='intl'?'International':'Domestic')+'</span><span class="cx-ok">✓ Confirmed</span></div>'+
+    const fv=(f.key&&typeof ticketView==='function')?ticketView(f.key):{booked:false}; const fok=!!fv.booked||f.status!=='todo';
+    const c=document.createElement('div'); c.className='cardx'+(fok?' booked':' todo');
+    c.innerHTML='<div class="cx-top"><span class="cx-pill '+(f.type==='intl'?'intl':'dom')+'">'+f.label+' · '+(f.type==='intl'?'International':'Domestic')+'</span><span class="'+(fok?'cx-ok':'cx-warn')+'">'+(fok?'✓ Booked':'⚠ To book')+'</span></div>'+
       '<div class="cx-big">'+f.route+'</div><div class="cx-mid"><b>'+f.date+'</b> · '+f.code+'</div>'+
       '<div class="cx-meta"><span>🕐 '+f.time+'</span><span>⏱ '+f.dur+'</span><span>'+f.stop+'</span></div><div class="cx-note">'+f.note+'</div>';
     wrap.appendChild(c);
@@ -5072,14 +5196,14 @@ function renderFlights(){
   const p1=document.createElement('div'); p1.className='cardx';
   p1.innerHTML='<div class="cx-name">🎫 JR Kansai Wide Area Pass (5 days) — probably skip</div>'+
     '<div class="cx-mid">Pass: '+yen(KANSAI_PASS.adult)+' adult / '+yen(KANSAI_PASS.child)+' child ⇒ <b>'+yen(passTot)+'</b> for your family</div>'+
-    '<div class="cx-note">The JR West trips in your plan (Nintendo Museum day, the Nov 1 Kyoto loop, Himeji + Kobe on Nov 3) add up to roughly <b>'+yen(fam)+'</b> for the family — about '+Math.round(fam/passTot*100)+'% of the pass. Even if you upgrade the Himeji legs to the Shinkansen (+~¥5,000) it stays below the pass price. It would also not cover Oct 29 or Nov 3\'s Tokaido Shinkansen (JR Central). The 14-day national JR Pass is far worse for this route. If you buy the Kansai pass anyway, “catch” it in the Catch tab and the covered trips above turn green.</div>';
+    '<div class="cx-note">The JR West trips in your plan (Nintendo Museum day, the Apr 5 Kyoto loop, Himeji + Kobe on Apr 7) add up to roughly <b>'+yen(fam)+'</b> for the family — about '+Math.round(fam/passTot*100)+'% of the pass. Even if you upgrade the Himeji legs to the Shinkansen (+~¥5,000) it stays below the pass price. It would also not cover Apr 2 or Apr 7\'s Tokaido Shinkansen (JR Central). The 14-day national JR Pass is far worse for this route. If you buy the Kansai pass anyway, “catch” it in the Catch tab and the covered trips above turn green.</div>';
   wrap.appendChild(p1);
   const p2=document.createElement('div'); p2.className='cardx todo';
   p2.innerHTML='<div class="cx-name">💳 IC card (Suica / PASMO / ICOCA) — read this before you fly</div>'+
     '<div class="cx-note"><b>Suica in Google Wallet will most likely not work on a US-bought Android phone</b> — it needs the Japanese FeliCa chip. Check: Google Wallet → Add to Wallet → Transit → Suica; if it is not offered, plan on <b>physical Welcome Suica or PASMO Passport</b> cards from the airport counters at Narita (one per adult; they do not need a deposit but unused balance is not refunded). An IC card works in Tokyo, Osaka and Kyoto alike. Children 6–11 ride half price on a child ticket; a card tapped as an adult is charged the adult fare, so for your son use the ticket machines on the long rides.</div>';
   wrap.appendChild(p2);
   const p3=document.createElement('div'); p3.className='cardx';
-  p3.innerHTML='<div class="cx-name">🚇 Osaka Metro day pass</div><div class="cx-note">On days with 4+ subway rides (Oct 30, Oct 31, Nov 2) a 1-day Osaka Metro pass can beat paying per ride — check the current price at the station machine. It is not worth it on days you mostly walk.</div>';
+  p3.innerHTML='<div class="cx-name">🚇 Osaka Metro day pass</div><div class="cx-note">On days with 4+ subway rides (Apr 3, Apr 4, Apr 6) a 1-day Osaka Metro pass can beat paying per ride — check the current price at the station machine. It is not worth it on days you mostly walk.</div>';
   wrap.appendChild(p3);
 
   setTimeout(renderTravelMap,60);
@@ -5464,9 +5588,9 @@ renderWeather=async function(){
     const wrap=document.getElementById('screen-weather'); if(!wrap||wrap.querySelector('#typical-wx')) return;
     const c=document.createElement('div'); c.id='typical-wx'; c.className='cardx'; c.style.marginTop='12px';
     c.innerHTML='<div class="cx-name">🧳 What to expect on your dates (typical, not a forecast)</div>'+
-     '<div class="cx-note"><b>Tokyo, Oct 23–27:</b> highs ~17–20°C (63–68°F), lows ~11–14°C; showers possible — a light jacket + compact umbrella.<br>'+
-     '<b>Fuji / Hakone, Oct 28–29:</b> several degrees cooler, highs ~12–16°C (54–61°F), lows ~5–9°C; cloud often hides Fuji after noon.<br>'+
-     '<b>Osaka / Kyoto / Nara, Oct 29–Nov 3:</b> highs ~17–20°C (63–68°F), lows ~9–13°C; Kyoto and Nara mornings feel colder.<br>'+
+     '<div class="cx-note"><b>Tokyo, Mar 27–31 and Apr 7–10:</b> highs typically ~14–19°C (57–66°F), lows ~6–11°C; some rainy days are normal in spring — a light jacket, a warm layer for evenings and a compact umbrella.<br>'+
+     '<b>Fuji / Hakone, Apr 1–2:</b> several degrees cooler, highs ~10–16°C (50–61°F), lows ~1–6°C; mornings and evenings are cold and cloud often hides Fuji after noon.<br>'+
+     '<b>Osaka / Kyoto / Nara, Apr 2–7:</b> highs ~16–20°C (61–68°F), lows ~7–11°C; Kyoto and Nara mornings feel colder.<br>'+
      'The live 7-day forecast above only reaches about 16 days ahead, so it will show your trip once you are within that window. Pack layers, one rain jacket each, and comfortable walking shoes.</div>';
     wrap.appendChild(c);
   }catch(e){}
@@ -5518,10 +5642,10 @@ AUTH.init();
 </script>
 <script>
 /* ═══════════ BACKUP / IMPORT  +  STEP LOG (added Oct 17) ═══════════ */
-const BACKUP_KEYS=['japan2026_tickets','japan2026_quests','japan2026_gallery','japan2026_photos','japan2026_ledger','japan2026_todo','japan2026_edits','japan2026_hotels','japan2026_steps'];
+const BACKUP_KEYS=['japan2026_tickets','japan2026_quests','japan2026_gallery','japan2026_photos','japan2026_ledger','japan2026_todo','japan2026_edits','japan2026_hotels','japan2026_steps','japan2026_dex','japan2026_buddy','japan2026_stopdone','japan2026_luggage','japan2026_research','japan2026_allergy','japan2026_badges'];
 const STEPS_KEY='japan2026_steps', LASTBK_KEY='japan2026_lastbackup';
 const STEP_PEOPLE=[['corby','Corby'],['cheryl','Cheryl'],['son','Son']];
-const TRIP_DATES=(function(){ const a=[]; for(let i=0;i<14;i++){ const d=new Date(Date.UTC(2026,9,22+i)); a.push(d.toISOString().slice(0,10)); } return a; })();
+const TRIP_DATES=(function(){ const a=[]; for(let i=0;i<16;i++){ const d=new Date(Date.UTC(2027,2,26+i)); a.push(d.toISOString().slice(0,10)); } return a; })();
 function tripDateLabel(iso){ const d=new Date(iso+'T12:00:00Z'); return 'Day '+(TRIP_DATES.indexOf(iso)+1)+' · '+d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',timeZone:'UTC'}); }
 function bkRead(k){ try{ const r=localStorage.getItem(k); return r?JSON.parse(r):null; }catch(e){ return null; } }
 function bkWrite(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
@@ -5533,6 +5657,7 @@ function buildBackup(includePhotos){
     if(!includePhotos&&(k==='japan2026_gallery'||k==='japan2026_photos')){
       const slim={}; Object.keys(v).forEach(d=>{ slim[d]={imgs:[],note:(v[d]&&v[d].note)||''}; }); v=slim;
     }
+    if(!includePhotos&&k==='japan2026_dex'&&Array.isArray(v)) v=v.map(x=>Object.assign({},x,{photo:''}));
     data[k]=v;
   });
   return {app:'japan2026-backup',format:1,exported:new Date().toISOString(),includesPhotos:!!includePhotos,data};
@@ -5579,6 +5704,7 @@ function mergeBackup(payload){
     bkWrite(STEPS_KEY,m); }
   /* edits / hotels: only restore if this phone has none (avoids mixing old position-based edits into a newer itinerary) */
   ['japan2026_edits','japan2026_hotels'].forEach(k=>{ if(d[k]&&bkRead(k)==null){ bkWrite(k,d[k]); rep.other++; } });
+  try{ mergeExtra(payload,rep); }catch(e){ console.warn(e); }
   return rep;
 }
 function importBackup(file){
@@ -5624,7 +5750,7 @@ renderItin=function(){
     const wrap=document.getElementById('screen-itin'); if(!wrap||wrap.querySelector('#bk-card')) return;
     const stamp=wrap.querySelector('.ver-stamp'), card=backupCardEl();
     if(stamp) wrap.insertBefore(card,stamp); else wrap.appendChild(card);
-    if(stamp&&stamp.textContent.indexOf('Build')<0) stamp.textContent+=' · Build Oct 17';
+    if(stamp&&stamp.textContent.indexOf('Build')<0) stamp.textContent+=' · Build Oct 27';
   }catch(e){ console.warn(e); }
 };
 
@@ -5652,6 +5778,7 @@ function checkStepQuests(){
   const t=stepTotals(), want=[];
   STEP_MILESTONES.forEach(m=>{ if(t.fam>=m) want.push('q_steps_'+(m/1000)+'k'); });
   if(t.best>=20000) want.push('q_walk_20k'); if(t.allTen) want.push('q_walk_all10k');
+  (window.AUTO_RULES||[]).forEach(f=>{ try{ (f()||[]).forEach(id=>{ if(!want.includes(id)) want.push(id); }); }catch(e){ console.warn(e); } });
   const state=loadQuestState(), fresh=want.filter(id=>!state[id]); if(!fresh.length) return;
   const prev=getRank(getTotalXP()); fresh.forEach(id=>{ state[id]=true; }); saveQuestState(state);
   const now=getRank(getTotalXP()), first=QUESTS.find(q=>q.id===fresh[0]);
@@ -5696,6 +5823,275 @@ renderAdventure=function(){
     if(first&&first.nextSibling) wrap.insertBefore(card,first.nextSibling); else wrap.appendChild(card);
   }catch(e){ console.warn(e); }
 };
+
+/* ═══════════ POKÉMON LAYER (added Oct 17): Right-now · staff cards · luggage · buddy · badges · Pokédex · research · catch FX ═══════════ */
+const K2={dex:'japan2026_dex',buddy:'japan2026_buddy',stop:'japan2026_stopdone',lug:'japan2026_luggage',res:'japan2026_research',allergy:'japan2026_allergy',badges:'japan2026_badges',sound:'japan2026_sound'};
+function h2(tag,cls,html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!=null) e.innerHTML=html; return e; }
+function todayISO(){ if(window.__fakeToday) return window.__fakeToday; const t=new Date(); return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0'); }
+function mapsTo(lat,lng){ return 'https://www.google.com/maps/dir/?api=1&destination='+lat+','+lng+'&travelmode=transit'; }
+function effDay(raw){ try{ return (STATE.edits&&typeof getEffectiveDay==='function')?getEffectiveDay(raw):raw; }catch(e){ return raw; } }
+
+/* ── sound + vibration + catch animation ── */
+let _ac=null;
+function soundOn(){ try{ return localStorage.getItem(K2.sound)!=='off'; }catch(e){ return true; } }
+function audioCtx(){ try{ _ac=_ac||new (window.AudioContext||window.webkitAudioContext)(); if(_ac.state==='suspended') _ac.resume(); return _ac; }catch(e){ return null; } }
+function tone(a,f,t,d,type,v){ const o=a.createOscillator(), g=a.createGain(); o.type=type||'square'; o.frequency.value=f; g.gain.setValueAtTime(v||.05,t); g.gain.exponentialRampToValueAtTime(.0001,t+d); o.connect(g); g.connect(a.destination); o.start(t); o.stop(t+d+.02); }
+function sfxCatch(){ if(!soundOn()) return; const a=audioCtx(); if(!a) return; const n=a.currentTime; [[523,0],[659,.14],[784,.28],[1047,.46]].forEach(x=>tone(a,x[0],n+x[1],.18,'square',.05)); }
+function sfxLevel(){ if(!soundOn()) return; const a=audioCtx(); if(!a) return; const n=a.currentTime; [[392,0],[523,.12],[659,.24],[784,.36],[659,.5],[784,.62],[1047,.76]].forEach(x=>tone(a,x[0],n+x[1],.2,'triangle',.07)); }
+function buzz(p){ try{ if(navigator.vibrate) navigator.vibrate(p); }catch(e){} }
+function toggleSound(){ try{ localStorage.setItem(K2.sound,soundOn()?'off':'on'); }catch(e){} showToast(soundOn()?'🔊 Sounds on':'🔇 Sounds off'); if(soundOn()) sfxCatch(); const b=document.getElementById('snd-btn'); if(b) b.textContent=soundOn()?'🔊':'🔇'; }
+function catchFx(label,shiny){
+  sfxCatch(); buzz(shiny?[60,40,60,40,120]:[40,30,90]);
+  try{ if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return; }catch(e){}
+  const old=document.getElementById('ballFx'); if(old) old.remove();
+  const ov=h2('div','ball-fx'+(shiny?' shiny':''),'<div class="ball"><i></i></div><div class="ball-msg">'+(shiny?'✨ Shiny! ':'Gotcha! ')+(label?esc(String(label).slice(0,44)):'')+'</div>');
+  ov.id='ballFx'; document.body.appendChild(ov); setTimeout(()=>{ if(ov.parentNode) ov.remove(); },1900);
+}
+const __tq=toggleQuest;
+toggleQuest=function(id){
+  const can=canEdit(), before=!!loadQuestState()[id];
+  __tq.apply(this,arguments);
+  if(can&&!before&&loadQuestState()[id]){ const q=QUESTS.find(x=>x.id===id); catchFx(q?q.name:''); try{ checkBadges(); }catch(e){} }
+};
+const __slu=showLevelUp;
+showLevelUp=function(){ sfxLevel(); buzz([80,50,80,50,220]); return __slu.apply(this,arguments); };
+
+/* ── gym badges (earned per city from its quests) ── */
+const BADGES={tokyo:['🗼','Neon Badge'],hakone:['♨️','Onsen Badge'],osaka:['🐙','Takoyaki Badge'],kyoto:['⛩️','Torii Badge'],nara:['🦌','Deer Badge'],kobe:['🥩','Harbor Badge']};
+function cityOfQuest(q){ const m=/Day (\d+)/.exec(q.day||''); if(!m) return null; const d=DAYS.find(x=>x.day===+m[1]); return d?d.city:null; }
+function badgeProgress(){ const st=loadQuestState(), out={}; questsInPlay(st).forEach(q=>{ const c=cityOfQuest(q); if(!c||!BADGES[c]) return; const o=out[c]=out[c]||{done:0,total:0}; o.total++; if(st[q.id]) o.done++; }); Object.keys(out).forEach(c=>{ out[c].need=Math.max(1,Math.ceil(out[c].total*.75)); }); return out; }
+function earnedBadges(){ return bkRead(K2.badges)||{}; }
+function checkBadges(){
+  if(!canEdit()) return; const p=badgeProgress(), e=earnedBadges(), fresh=[];
+  Object.keys(p).forEach(c=>{ if(!e[c]&&p[c].done>=p[c].need){ e[c]=true; fresh.push(c); } });
+  if(!fresh.length) return; bkWrite(K2.badges,e);
+  setTimeout(()=>{ sfxLevel(); buzz([100,60,100,60,250]); showToast('🏅 '+BADGES[fresh[0]][1]+' earned!'+(fresh.length>1?' (+'+(fresh.length-1)+' more)':''),3200); },1100);
+  setTimeout(()=>{ if(STATE.activeScreen==='adventure') renderAdventure(); },1200);
+}
+function badgeCaseEl(){
+  const p=badgeProgress(), e=earnedBadges(), c=h2('div','badge-case');
+  c.innerHTML='<div class="bc-h">🏅 Gym Badges <small>earn one by catching 75% of a city’s quests</small></div>';
+  const row=h2('div','bc-row');
+  Object.keys(BADGES).forEach(k=>{ const pr=p[k]; if(!pr) return; const got=!!e[k];
+    row.appendChild(h2('div','bc-b'+(got?' got':''),'<div class="bc-i">'+BADGES[k][0]+'</div><div class="bc-n">'+(CITIES[k]?CITIES[k].label:k)+'</div><div class="bc-p">'+(got?'✓ earned':Math.min(pr.done,pr.need)+'/'+pr.need)+'</div>')); });
+  c.appendChild(row); return c;
+}
+
+/* ── partner Pokémon (evolves with family steps) ── */
+const BUDDIES=[
+ {id:'pichu',st:[['Pichu','🐭',0],['Pikachu','⚡',100000],['Raichu','🌩️',300000]]},
+ {id:'charmander',st:[['Charmander','🦎',0],['Charmeleon','🔥',100000],['Charizard','🐉',300000]]},
+ {id:'squirtle',st:[['Squirtle','🐢',0],['Wartortle','💧',100000],['Blastoise','🌊',300000]]},
+ {id:'bulbasaur',st:[['Bulbasaur','🌱',0],['Ivysaur','🌿',100000],['Venusaur','🌳',300000]]},
+ {id:'magikarp',st:[['Magikarp','🐟',0],['Gyarados','🐲',200000]]},
+ {id:'togepi',st:[['Togepi','🥚',0],['Togetic','🐣',100000],['Togekiss','🕊️',300000]]}
+];
+function buddyStage(b,steps){ let s=0; b.st.forEach((x,i)=>{ if(steps>=x[2]) s=i; }); return s; }
+function checkBuddy(){
+  if(!canEdit()) return; const sv=bkRead(K2.buddy); if(!sv||!sv.id) return; const b=BUDDIES.find(x=>x.id===sv.id); if(!b) return;
+  const s=buddyStage(b,stepTotals().fam), prev=sv.stage||0; if(s<=prev) return;
+  sv.stage=s; bkWrite(K2.buddy,sv);
+  setTimeout(()=>{ sfxLevel(); buzz([120,60,120,60,300]); showToast('✨ '+b.st[prev][0]+' evolved into '+b.st[s][0]+'!',3600); if(STATE.activeScreen==='adventure') renderAdventure(); },900);
+}
+function pickBuddy(id){ if(!canEdit()){ viewOnlyToast(); return; } const b=BUDDIES.find(x=>x.id===id); bkWrite(K2.buddy,{id,stage:buddyStage(b,stepTotals().fam)}); catchFx(b.st[0][0]+' is your partner!'); renderAdventure(); }
+function buddyCardEl(){
+  const sv=bkRead(K2.buddy), c=h2('div','buddy-card'), fam=stepTotals().fam;
+  if(!sv||!BUDDIES.find(x=>x.id===sv.id)){
+    c.innerHTML='<div class="bd-h">🤝 Choose your partner Pokémon</div><div class="bd-sub">It walks with the family. Every step you log helps it grow and evolve.</div>';
+    const g=h2('div','bd-grid'); BUDDIES.forEach(b=>{ const x=h2('button','bd-pick','<span>'+b.st[0][1]+'</span><b>'+b.st[0][0]+'</b>'); x.onclick=()=>pickBuddy(b.id); g.appendChild(x); }); c.appendChild(g); return c;
+  }
+  const b=BUDDIES.find(x=>x.id===sv.id), s=buddyStage(b,fam), cur=b.st[s], nxt=b.st[s+1];
+  const pct=nxt?Math.round((fam-cur[2])/(nxt[2]-cur[2])*100):100;
+  c.innerHTML='<div class="bd-top"><div class="bd-emoji">'+cur[1]+'</div><div><div class="bd-name">'+cur[0]+'</div><div class="bd-sub">Partner · walked <b>'+fam.toLocaleString()+'</b> steps with you</div></div></div>'+
+    '<div class="st-bar"><div style="width:'+pct+'%"></div></div><div class="st-next">'+(nxt?(nxt[2]-fam).toLocaleString()+' steps until it evolves into '+nxt[0]:'Fully evolved! 🌟')+'</div>'+
+    '<button class="bd-change">Change partner</button>';
+  c.querySelector('.bd-change').onclick=()=>{ if(confirm('Switch partner Pokémon?')){ try{ localStorage.removeItem(K2.buddy); }catch(e){} renderAdventure(); } };
+  return c;
+}
+
+/* ── Daily Research ── */
+const RESEARCH_POOL=['Try a drink from a vending machine you cannot read','Find a lucky cat (maneki-neko) and give it a wave','Pick a snack at a konbini you have never seen before','Spot a cartoon mascot on a sign or a shop','Read one station name out loud in Japanese','Say “arigatō gozaimasu” to a shopkeeper','Find a capsule-toy (gachapon) machine and try it','Photograph the most colorful sign you can find','Eat something you cannot name — ask what it is','Spot someone wearing a kimono or yukata','Count the vending machines on one street','Toss a coin and make a wish at a shrine','Learn a new word in the Translate tab and use it today','Find a mochi, dango or taiyaki treat','Spot a red torii gate','Use chopsticks for a whole meal','Take a photo with a statue or mascot','Walk back a different way than you came','Find a cat (real or a statue)','Watch a busy crossing for one minute and spot something surprising','Find the weirdest flavor of a snack or Kit Kat'];
+function researchDate(){ const t=todayISO(); if(t<TRIP_DATES[0]) return TRIP_DATES[0]; if(t>TRIP_DATES[TRIP_DATES.length-1]) return TRIP_DATES[TRIP_DATES.length-1]; return t; }
+function researchTasks(dt){ const n=TRIP_DATES.indexOf(dt)+1, P=RESEARCH_POOL.length; return [0,1,2].map(i=>(n*3+i)%P); }
+function researchState(){ return bkRead(K2.res)||{}; }
+function researchDaysDone(){ const s=researchState(); return TRIP_DATES.filter(d=>{ const t=s[d]||{}; return researchTasks(d).every((p,i)=>t[i]); }).length; }
+function researchStreak(){ const s=researchState(); let i=TRIP_DATES.indexOf(researchDate()); const full=d=>{ const t=s[d]||{}; return researchTasks(d).every((p,k)=>t[k]); }; if(!full(TRIP_DATES[i])) i--; let n=0; while(i>=0&&full(TRIP_DATES[i])){ n++; i--; } return n; }
+function toggleResearch(i){ if(!canEdit()){ viewOnlyToast(); return; } const dt=researchDate(), s=researchState(); s[dt]=s[dt]||{}; s[dt][i]=!s[dt][i]; bkWrite(K2.res,s);
+  if(s[dt][i]){ sfxCatch(); buzz(40); } try{ checkStepQuests(); }catch(e){} renderAdventure(); }
+function researchCardEl(){
+  const dt=researchDate(), s=researchState()[dt]||{}, tasks=researchTasks(dt), pre=todayISO()<TRIP_DATES[0];
+  const c=h2('div','res-card'), done=tasks.filter((p,i)=>s[i]).length;
+  c.innerHTML='<div class="res-h">🔎 Daily Research <small>'+tripDateLabel(dt)+'</small></div><div class="st-sub">'+(pre?'Preview — it starts on Mar 26. ':'')+'Finish all 3 for a research day. '+researchDaysDone()+' full days so far · streak '+researchStreak()+' 🔥</div>';
+  tasks.forEach((p,i)=>{ const r=h2('div','res-t'+(s[i]?' done':''),'<span class="res-c">'+(s[i]?'✓':'')+'</span><span>'+esc(RESEARCH_POOL[p])+'</span>'); r.onclick=()=>toggleResearch(i); c.appendChild(r); });
+  c.appendChild(h2('div','st-next',done+'/3 today'+(done===3?' · research day complete! 🎉':'')));
+  return c;
+}
+
+/* ── Pokédex ── */
+const DEX_CATS=[['food','🍜','Food'],['drink','🥤','Drink'],['mascot','🐾','Mascot / animal'],['place','⛩️','Place'],['toy','🎮','Game / toy'],['other','✨','Other']];
+function dexList(){ const d=bkRead(K2.dex); return Array.isArray(d)?d:[]; }
+function dexCat(id){ return DEX_CATS.find(x=>x[0]===id)||DEX_CATS[5]; }
+function readPhoto(file,cb){ const fr=new FileReader(); fr.onerror=()=>cb(''); fr.onload=()=>{ const img=new Image(); img.onerror=()=>cb(''); img.onload=()=>{ const sc=Math.min(1,480/Math.max(img.width,img.height)), c=document.createElement('canvas'); c.width=Math.round(img.width*sc); c.height=Math.round(img.height*sc); c.getContext('2d').drawImage(img,0,0,c.width,c.height); cb(c.toDataURL('image/jpeg',.6)); }; img.src=fr.result; }; fr.readAsDataURL(file); }
+function addDexEntry(e){ const l=dexList(); e.id=Date.now().toString(36)+Math.random().toString(36).slice(2,5); e.ts=Date.now(); l.push(e); bkWrite(K2.dex,l); catchFx('Pokédex: '+e.name,!!e.shiny); try{ checkStepQuests(); }catch(x){} }
+function closeDex(){ const o=document.getElementById('dexOv'); if(o) o.remove(); if(STATE.activeScreen==='adventure') renderAdventure(); }
+function openDex(){
+  if(!canEdit()){ viewOnlyToast(); return; }
+  let ov=document.getElementById('dexOv'); if(ov) ov.remove();
+  ov=h2('div','dex-ov'); ov.id='dexOv'; let photo='';
+  const draw=()=>{
+    const l=dexList(), shiny=l.filter(x=>x.shiny).length;
+    ov.innerHTML='<div class="dex-top"><div><div class="dex-t">📖 Japan Pokédex</div><div class="dex-s">'+l.length+' registered · '+shiny+' shiny ✨</div></div><button class="dex-x" id="dexClose">✕</button></div>'+
+     '<div class="dex-form"><input id="dx-name" class="st-in" maxlength="40" placeholder="What did you find? (e.g. Melon soda)">'+
+     '<select id="dx-cat" class="st-in">'+DEX_CATS.map(c=>'<option value="'+c[0]+'">'+c[1]+' '+c[2]+'</option>').join('')+'</select>'+
+     '<input id="dx-note" class="st-in" maxlength="80" placeholder="Where / what was it like? (optional)">'+
+     '<div class="dex-row"><label class="bk-btn" style="text-align:center;cursor:pointer">📷 '+(photo?'Photo added ✓':'Add photo')+'<input id="dx-ph" type="file" accept="image/*" capture="environment" style="display:none"></label>'+
+     '<label class="bk-chk" style="margin:0"><input type="checkbox" id="dx-shiny"> ✨ Rare find</label></div>'+
+     '<button class="st-save" id="dx-add">Register in Pokédex</button></div><div class="dex-grid" id="dx-grid"></div>';
+    document.getElementById('dexClose').onclick=closeDex;
+    document.getElementById('dx-ph').onchange=function(){ const f=this.files[0]; if(!f) return; readPhoto(f,u=>{ photo=u; const n=document.getElementById('dx-name').value, c=document.getElementById('dx-cat').value, no=document.getElementById('dx-note').value, sh=document.getElementById('dx-shiny').checked; draw(); document.getElementById('dx-name').value=n; document.getElementById('dx-cat').value=c; document.getElementById('dx-note').value=no; document.getElementById('dx-shiny').checked=sh; }); };
+    document.getElementById('dx-add').onclick=()=>{ const name=document.getElementById('dx-name').value.trim(); if(!name){ showToast('Give it a name first'); return; }
+      addDexEntry({name,cat:document.getElementById('dx-cat').value,note:document.getElementById('dx-note').value.trim(),shiny:document.getElementById('dx-shiny').checked,photo,day:(TRIP_DATES.indexOf(researchDate())+1)}); photo=''; draw(); };
+    const g=document.getElementById('dx-grid'); l.slice().reverse().forEach((x,i)=>{ const no=l.length-i, cat=dexCat(x.cat);
+      const cd=h2('div','dex-c'+(x.shiny?' shiny':''),(x.photo?'<img src="'+x.photo+'" alt="">':'<div class="dex-em">'+cat[1]+'</div>')+'<div class="dex-n">#'+String(no).padStart(3,'0')+(x.shiny?' ✨':'')+'</div><div class="dex-nm">'+esc(x.name)+'</div>'+(x.note?'<div class="dex-no">'+esc(x.note)+'</div>':''));
+      cd.onclick=()=>{ if(confirm('Remove “'+x.name+'” from the Pokédex?')){ bkWrite(K2.dex,dexList().filter(y=>y.id!==x.id)); draw(); } }; g.appendChild(cd); });
+  };
+  document.body.appendChild(ov); draw();
+}
+function dexLauncherEl(){ const n=dexList().length, c=h2('button','dex-launch','📖 <b>Japan Pokédex</b> <span>'+n+' registered · tap to add a find</span>'); c.onclick=openDex; return c; }
+
+/* ── “Right now” card ── */
+function tripDayFor(iso){ return DAYS.find(d=>d.dateObj===iso)||null; }
+function stopDoneState(){ return bkRead(K2.stop)||{}; }
+function toggleStopDone(day,i){ if(!canEdit()){ viewOnlyToast(); return; } const s=stopDoneState(); s[day]=s[day]||{}; s[day][i]=!s[day][i]; bkWrite(K2.stop,s); if(s[day][i]){ sfxCatch(); buzz(30); } refreshNowCard(); }
+function nowCardEl(){
+  const iso=todayISO(), c=h2('div','now-card'), trav=canEdit(); c.id='nowCard';
+  const d=tripDayFor(iso);
+  if(!d){
+    if(iso<'2027-03-26'){
+      const diff=Math.round((Date.UTC(2027,2,26)-Date.UTC(+iso.slice(0,4),+iso.slice(5,7)-1,+iso.slice(8,10)))/864e5);
+      c.innerHTML='<div class="now-h">🛫 Countdown</div><div class="now-big">'+diff+' day'+(diff===1?'':'s')+' to takeoff</div><div class="now-sub">First leg: Fri Mar 26 · Salt Lake City → Tokyo (flights are not booked yet).</div>';
+    } else { c.innerHTML='<div class="now-h">🏠 Welcome home, trainers!</div><div class="now-big">What a trip</div><div class="now-sub">Log any last spending in Customs, and save a backup of everything from the Route tab.</div>'; }
+    return c;
+  }
+  const day=effDay(d), stops=(day.stops||d.stops||[]), done=(stopDoneState()[d.day]||{});
+  const nextI=stops.findIndex((s,i)=>!done[i]);
+  c.innerHTML='<div class="now-h">📍 Right now <small>Day '+d.day+' · '+esc(day.date||d.date)+'</small></div><div class="now-lbl">'+esc(day.label||d.label)+'</div>';
+  if(nextI<0){ c.appendChild(h2('div','now-big','All stops done today 🎉')); }
+  else{
+    const s=stops[nextI]; c.appendChild(h2('div','now-next','<span>NEXT UP</span>'+esc(s.name)));
+    if(trav&&s.note) c.appendChild(h2('div','now-note',esc(String(s.note).slice(0,170))+(String(s.note).length>170?'…':'')));
+    if(trav){ const row=h2('div','now-btns'); if(s.lat&&s.lng){ const a=h2('a','drive-btn primary','🧭 Directions (transit)'); a.href=mapsTo(s.lat,s.lng); a.target='_blank'; a.rel='noopener'; row.appendChild(a); }
+      const dn=h2('button','drive-btn','✓ Done'); dn.onclick=()=>toggleStopDone(d.day,nextI); row.appendChild(dn); c.appendChild(row); }
+  }
+  const list=h2('details','now-list'); list.appendChild(h2('summary',null,'All of today’s stops ('+stops.filter((s,i)=>done[i]).length+'/'+stops.length+')'));
+  stops.forEach((s,i)=>{ const r=h2('div','now-row'+(done[i]?' done':''),'<span class="res-c">'+(done[i]?'✓':'')+'</span><span>'+esc(s.name)+'</span>'); if(trav) r.onclick=()=>toggleStopDone(d.day,i); list.appendChild(r); });
+  c.appendChild(list); return c;
+}
+function refreshNowCard(){ const o=document.getElementById('nowCard'); if(!o) return; const open=o.querySelector('details')&&o.querySelector('details').open; const n=nowCardEl(); o.replaceWith(n); const dt=n.querySelector('details'); if(dt&&open) dt.open=true; }
+
+/* ── Luggage tracker ── */
+const LUG_ROWS=[
+ {id:'ship1',label:'Tokyo apartment → Osaka apartment',when:'Thu Apr 1 morning, before the 7:30 bus. Delivery to the Osaka apartment for Fri Apr 2 (16:00–20:00).'},
+ {id:'ship2',label:'Osaka apartment → Tokyo hotel (Conrad)',when:'Tue Apr 6 morning, before Nara. Delivery to the hotel for Wed Apr 7 — ask the hotel first whether it accepts parcels.'}];
+const LUG_STATUS=['Not shipped yet','Shipped','Delivered / collected'];
+function lugState(){ return bkRead(K2.lug)||{}; }
+function lugCardEl(){
+  const s=lugState(), c=h2('div','bk-card'); c.id='lugCard';
+  c.innerHTML='<div class="bk-h">🧳 Luggage Tracker <small>Yamato (Black Cat) shipping</small></div><div class="bk-sub">Keep each waybill number here. The counter staff give you a receipt with the number on it.</div>';
+  LUG_ROWS.forEach(r=>{ const v=s[r.id]||{num:'',st:0}, row=h2('div','lug-row','<div class="lug-l">'+esc(r.label)+'</div><div class="lug-w">'+esc(r.when)+'</div>');
+    const inp=h2('input','st-in'); inp.placeholder='Waybill / tracking number'; inp.value=v.num||''; inp.inputMode='numeric'; inp.onchange=()=>{ const st=lugState(); st[r.id]=Object.assign({num:'',st:0},st[r.id],{num:inp.value.trim()}); bkWrite(K2.lug,st); };
+    const b=h2('button','bk-btn',LUG_STATUS[v.st||0]); b.style.cssText='width:100%;margin-top:2px'; if(v.st===2) b.classList.add('primary');
+    b.onclick=()=>{ const st=lugState(), cur=Object.assign({num:inp.value.trim(),st:0},st[r.id]); cur.st=((cur.st||0)+1)%3; cur.num=inp.value.trim(); st[r.id]=cur; bkWrite(K2.lug,st); if(cur.st>0) showToast('🧳 '+LUG_STATUS[cur.st]); const n=lugCardEl(); c.replaceWith(n); };
+    row.appendChild(inp); row.appendChild(b); c.appendChild(row); });
+  return c;
+}
+
+/* ── Show-to-staff cards (Translate tab) ── */
+const STAFF_PHRASES=[
+ ['この住所までお願いします。','Please take us to this address.'],['道に迷いました。助けてください。','We are lost. Please help us.'],['トイレはどこですか？','Where is the restroom?'],
+ ['英語のメニューはありますか？','Do you have an English menu?'],['三人です。','Three people.'],['クレジットカードは使えますか？','Can I use a credit card?'],
+ ['免税をお願いします。','Tax-free, please.'],['荷物を羽田空港に送りたいです。','I would like to send luggage to Haneda Airport.'],
+ ['助けてください。','Please help me.'],['救急車を呼んでください。','Please call an ambulance.'],['これはいくらですか？','How much is this?'],['写真を撮ってもいいですか？','May I take a photo?']];
+const ALLERGENS=[['egg','卵','Egg'],['milk','乳製品','Dairy'],['wheat','小麦','Wheat'],['buckwheat','そば','Buckwheat'],['peanut','ピーナッツ','Peanuts'],['nuts','ナッツ類','Tree nuts'],['shrimp','えび','Shrimp'],['crab','かに','Crab'],['fish','魚','Fish'],['soy','大豆','Soy'],['sesame','ごま','Sesame']];
+function staffDest(){
+  const hv=k=>HOTELS.find(x=>x.key===k)||{};
+  const L=[['Tokyo apartment',hv('tokyo_apt'),null],['Tōnosawa ryokan (Hakone)',hv('hakone_ryokan'),'塔ノ沢 一の湯 本館'],['Osaka apartment',hv('osaka_hotel'),null],['Conrad Tokyo',hv('hotel_conrad'),'コンラッド東京'],
+    ['Haneda Airport Terminal 3',{sub:'Haneda Airport T3',lat:35.5494,lng:139.7798},'羽田空港 第3ターミナル'],['Shin-Osaka Station',{sub:'Shin-Osaka Station',lat:34.7335,lng:135.5001},'新大阪駅'],['Odawara Station',{sub:'Odawara Station',lat:35.2563,lng:139.1550},'小田原駅'],['Shinagawa Station',{sub:'Shinagawa Station',lat:35.6285,lng:139.7387},'品川駅']];
+  return L.map(x=>({label:x[0],jp:x[2],addr:String(x[1].sub||x[1].name||x[0]).split(' · ')[0],lat:x[1].lat,lng:x[1].lng}));
+}
+function allergyChosen(){ const a=bkRead(K2.allergy); return Array.isArray(a)?a:[]; }
+function showStaff(jp,en,extra,link){
+  const o=document.getElementById('staffOv'); if(o) o.remove();
+  const ov=h2('div','staff-ov'); ov.id='staffOv';
+  ov.innerHTML='<div class="staff-jp">'+esc(jp)+'</div><div class="staff-en">'+esc(en)+'</div>'+(extra?'<div class="staff-x">'+esc(extra)+'</div>':'')+
+   '<div class="staff-btns">'+(link?'<a class="drive-btn primary" target="_blank" rel="noopener" href="'+link+'">🗺️ Show on map</a>':'')+'<button class="drive-btn" id="stSpeak">🔊 Say it</button><button class="drive-btn" id="stClose">Close</button></div><div class="staff-hint">Hand your phone to the person you are speaking with</div>';
+  document.body.appendChild(ov);
+  ov.querySelector('#stClose').onclick=()=>ov.remove();
+  ov.querySelector('#stSpeak').onclick=()=>{ try{ const u=new SpeechSynthesisUtterance(jp); u.lang='ja-JP'; u.rate=.85; speechSynthesis.speak(u); }catch(e){ showToast('Speech not available'); } };
+}
+function staffSectionEl(){
+  const sec=h2('div','staff-sec'); sec.innerHTML='<div class="kid-section-title">🆘 Show to Staff — hand them your phone</div>';
+  const t=h2('div','staff-h','🚕 Taxi · tap a destination'); sec.appendChild(t); const g=h2('div','staff-grid');
+  staffDest().forEach(d=>{ const b=h2('button','staff-chip','🚕 '+esc(d.label)); const mp=d.lat?'https://www.google.com/maps/search/?api=1&query='+d.lat+','+d.lng:null; b.onclick=()=>showStaff(d.jp?d.jp+' までお願いします。':'この住所までお願いします。','Please take us to: '+d.label,d.addr,mp); g.appendChild(b); });
+  sec.appendChild(g);
+  sec.appendChild(h2('div','staff-h','🥜 Food allergy card · pick any that apply'));
+  const ag=h2('div','staff-grid'), ch=allergyChosen();
+  ALLERGENS.forEach(a=>{ const b=h2('button','staff-chip'+(ch.includes(a[0])?' on':''),a[2]+' · '+a[1]); b.onclick=()=>{ const cur=allergyChosen(), i=cur.indexOf(a[0]); if(i>=0) cur.splice(i,1); else cur.push(a[0]); bkWrite(K2.allergy,cur); b.classList.toggle('on'); }; ag.appendChild(b); });
+  sec.appendChild(ag);
+  const sb=h2('button','st-save','Show allergy card'); sb.onclick=()=>{ const cur=allergyChosen().map(id=>ALLERGENS.find(x=>x[0]===id)).filter(Boolean); if(!cur.length){ showToast('Tap the allergens first'); return; }
+    showStaff('私は'+cur.map(x=>x[1]).join('、')+'のアレルギーがあります。これらを含む料理は食べられません。','I am allergic to: '+cur.map(x=>x[2]).join(', ')+'. I cannot eat food containing these.',''); }; sec.appendChild(sb);
+  sec.appendChild(h2('div','staff-h','💬 Quick phrases'));
+  const pg=h2('div','staff-grid one'); STAFF_PHRASES.forEach(p=>{ const b=h2('button','staff-chip',esc(p[1])); b.onclick=()=>showStaff(p[0],p[1],''); pg.appendChild(b); }); sec.appendChild(pg);
+  return sec;
+}
+const __rtBase=renderTranslate;
+renderTranslate=function(){ __rtBase.apply(this,arguments); try{ if(!canEdit()) return; const w=document.getElementById('screen-translate'); if(!w||w.querySelector('.staff-sec')) return; w.insertBefore(staffSectionEl(),w.firstChild); }catch(e){ console.warn(e); } };
+
+/* ── wire into Route and Quest tabs ── */
+const __riBase2=renderItin;
+renderItin=function(){
+  __riBase2.apply(this,arguments);
+  try{
+    const w=document.getElementById('screen-itin'); if(!w) return;
+    if(!w.querySelector('#nowCard')){ const first=w.querySelector('.day-card'); w.insertBefore(nowCardEl(),first||null); }
+    if(canEdit()&&!w.querySelector('#lugCard')){ const bk=w.querySelector('#bk-card'); const l=lugCardEl(); if(bk) w.insertBefore(l,bk); else w.appendChild(l); }
+  }catch(e){ console.warn(e); }
+};
+const __raBase2=renderAdventure;
+renderAdventure=function(){
+  __raBase2.apply(this,arguments);
+  try{
+    if(!canEdit()) return; const w=document.getElementById('screen-adventure'); if(!w||w.querySelector('.buddy-card')) return;
+    const steps=w.querySelector('.st-card'); const anchor=steps||w.firstElementChild; const frag=document.createDocumentFragment();
+    frag.appendChild(buddyCardEl()); frag.appendChild(dexLauncherEl()); frag.appendChild(researchCardEl()); frag.appendChild(badgeCaseEl());
+    if(anchor&&anchor.nextSibling) w.insertBefore(frag,anchor.nextSibling); else w.appendChild(frag);
+    const sb=h2('button','snd-btn',soundOn()?'🔊':'🔇'); sb.id='snd-btn'; sb.title='Sounds'; sb.onclick=toggleSound; w.appendChild(sb);
+  }catch(e){ console.warn(e); }
+};
+
+/* ── extra auto-quests (Pokédex, research) + hooks ── */
+const EXTRA_QUESTS=[
+ {id:'q_dex_10',cat:'📖 Pokédex & Research',icon:'📖',name:'Register 10 finds in the Japan Pokédex',day:'',xp:100},
+ {id:'q_dex_25',cat:'📖 Pokédex & Research',icon:'📖',name:'Register 25 finds in the Japan Pokédex',day:'',xp:200},
+ {id:'q_dex_50',cat:'📖 Pokédex & Research',icon:'🏆',name:'Register 50 finds in the Japan Pokédex',day:'',xp:400},
+ {id:'q_dex_shiny',cat:'📖 Pokédex & Research',icon:'✨',name:'Find a rare (shiny) Pokédex entry',day:'',xp:150},
+ {id:'q_res_3',cat:'📖 Pokédex & Research',icon:'🔎',name:'Complete 3 Daily Research days',day:'',xp:100},
+ {id:'q_res_7',cat:'📖 Pokédex & Research',icon:'🔎',name:'Complete 7 Daily Research days',day:'',xp:250},
+ {id:'q_res_12',cat:'📖 Pokédex & Research',icon:'🔎',name:'Complete 12 Daily Research days',day:'',xp:400}];
+EXTRA_QUESTS.forEach(q=>{ if(!QUESTS.find(x=>x.id===q.id)) QUESTS.push(q); });
+window.AUTO_RULES=window.AUTO_RULES||[];
+AUTO_RULES.push(function(){ const w=[], n=dexList().length; [10,25,50].forEach(m=>{ if(n>=m) w.push('q_dex_'+m); }); if(dexList().some(x=>x.shiny)) w.push('q_dex_shiny');
+  const rd=researchDaysDone(); [3,7,12].forEach(m=>{ if(rd>=m) w.push('q_res_'+m); }); try{ checkBuddy(); }catch(e){} return w; });
+
+/* backup: merge the new data kinds */
+function mergeExtra(payload,rep){
+  const d=payload.data||{};
+  if(d[K2.dex]){ const l=dexList(), ids=new Set(l.map(x=>x.id)), add=(d[K2.dex]||[]).filter(x=>x&&!ids.has(x.id)); rep.other+=add.length; bkWrite(K2.dex,l.concat(add)); }
+  [K2.stop,K2.res].forEach(k=>{ if(!d[k]) return; const l=bkRead(k)||{}, m=JSON.parse(JSON.stringify(l)); Object.keys(d[k]).forEach(a=>{ m[a]=m[a]||{}; Object.keys(d[k][a]||{}).forEach(b=>{ if(d[k][a][b]&&!m[a][b]){ m[a][b]=true; rep.other++; } }); }); bkWrite(k,m); });
+  [K2.buddy,K2.allergy].forEach(k=>{ if(d[k]&&bkRead(k)==null){ bkWrite(k,d[k]); rep.other++; } });
+  if(d[K2.badges]){ const l=bkRead(K2.badges)||{}; bkWrite(K2.badges,Object.assign({},d[K2.badges],l)); }
+  if(d[K2.lug]){ const l=lugState(), m=JSON.parse(JSON.stringify(d[K2.lug])); Object.keys(l).forEach(k=>{ if(l[k]&&(l[k].num||l[k].st)) m[k]=l[k]; }); bkWrite(K2.lug,m); }
+}
 
 /* run once so goals already earned unlock */
 try{ checkStepQuests(); }catch(e){}
