@@ -2096,6 +2096,10 @@ select.fr-in{appearance:auto}
 .dairy-note.easy{background:#e6f9f0}.dairy-note.ask{background:#fff3cd}.dairy-note.avoid{background:#fde4e1}
 .lactose-btn{margin:6px 0 10px}
 
+.mini-ball{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-2px;border:1.5px solid #222;background:linear-gradient(180deg,#e53935 0 46%,#222 46% 54%,#fff 54% 100%);position:relative}
+.mini-ball::after{content:'';position:absolute;left:3px;top:3px;width:3px;height:3px;border-radius:50%;background:#fff;border:1px solid #222}
+.fr-join.kj{background:#fff4f2;border-color:#f0a79e;color:#a33a2c}.fr-join.kj.on{background:#e53935;border-color:#e53935;color:#fff}
+
 </style>
 </head>
 <body>
@@ -4766,7 +4770,7 @@ function deepReplace(o,map,seen){
 }
 const b64d=b=>Uint8Array.from(atob(b),c=>c.charCodeAt(0));
 
-const AUTH_BLOBS={"v":"uKZglphnuKpNMohz","traveler":{"salt":"vK+2Ae1j0tr6+PX4/dyV3w==","iv":"vi8hBAwLwDjod46J","ct":"uKZglphnuK7S7+cP3DlekyagjGHBUXTYmGUwhvCIGL3+Xxip2ImlG9P1+SrVEQB2ehsb1qwlPajHGqkjTIsT66qHSy940V5EfFsHcGYUn+j8Ta7Ej/q5Fu3a0SsV8IFJdl3LAHr2v0EGk11damleO+zn4zWFKcapSBseTaPyvYKoBIE7VAJmw8YS4ypShlMNlN6mbWDmhlOZSm9XQmx6rkVFp7j1NFFQHmFkFoh1IvbQx3KeaXBPzRX/tHvCnL6UlKCw99TdVZnMu5a0wFHrGZircp5/WcC/f5lzZpMvNwoPkgZjUs/wzI0qQuGLytUd+7NZ0MhhDhamwJwFO3CYbF3unUQrxScPEERu+BtTKTgwXgUvw1YF0rPbehaqHRpoL1G1qpF7IG7YwcbeipLpkjFhulUVDoGRXoeRjyngcPwxmuUYyFHvTFe8YaulpiUATwG3QgDI1Hxs959D1ALyDGflUxoPZbth3jwwA7aMUNbbSAh29Kv2eaFO0oQdjKXHRklDIEsBhMxLUE9Rhjx2cR9eSMLW1jYU8Genj9UEDBMeG8o5kpbfPU8ZJ7xc8RZdAxxpqmNYDOfVoRMQTh2m0F+FKeO+o/zQK0pXR20LzWK+zWTAwn3KTRwwBoTT73PqHj8CSx7poZb0GrhK5IvbnAeILA==","iter":150000},"family":{"salt":"XiVrwTvQmKPLYx1rNH3d6Q==","iv":"2wjeIsvU9rYDYsCs","ct":"pNMohzMzOFYegiofo228Pkxm1+oG9zLLSntmvcLCnw8nIrrYCY0b9zuqw0kJ5Dr3WqKm4vJkifDI7m6C2m32/NjzM7UDe45q2qbO7nroqOICTQtT+g37fMPmIIY=","iter":150000},"friend":{"salt":"24V4QWMr0RqFNseYoq9Mfw==","iv":"EjgDUgT+JHcJY0En","ct":"/EsZ7oNVRqpdGbMYb+eh1U4J8rbhE2q61pqRdHsDfRKzNG6RsnNCI7YEet1sJBVzcHR/Utjv/QnMnbq2B8jggGD4qt/EOLt2un2tbW9F+Oq2L27QNd1RZPplfOU=","iter":150000}};
+const AUTH_BLOBS={"v":"uKZglphnuKpNMohz","traveler":{"salt":"vK+2Ae1j0tr6+PX4/dyV3w==","iv":"vi8hBAwLwDjod46J","ct":"uKZglphnuK7S7+cP3DlekyagjGHBUXTYmGUwhvCIGL3+Xxip2ImlG9P1+SrVEQB2ehsb1qwlPajHGqkjTIsT66qHSy940V5EfFsHcGYUn+j8Ta7Ej/q5Fu3a0SsV8IFJdl3LAHr2v0EGk11damleO+zn4zWFKcapSBseTaPyvYKoBIE7VAJmw8YS4ypShlMNlN6mbWDmhlOZSm9XQmx6rkVFp7j1NFFQHmFkFoh1IvbQx3KeaXBPzRX/tHvCnL6UlKCw99TdVZnMu5a0wFHrGZircp5/WcC/f5lzZpMvNwoPkgZjUs/wzI0qQuGLytUd+7NZ0MhhDhamwJwFO3CYbF3unUQrxScPEERu+BtTKTgwXgUvw1YF0rPbehaqHRpoL1G1qpF7IG7YwcbeipLpkjFhulUVDoGRXoeRjyngcPwxmuUYyFHvTFe8YaulpiUATwG3QgDI1Hxs959D1ALyDGflUxoPZbth3jwwA7aMUNbbSAh29Kv2eaFO0oQdjKXHRklDIEsBhMxLUE9Rhjx2cR9eSMLW1jYU8Genj9UEDBMeG8o5kpbfPU8ZJ7xc8RZdAxxpqmNYDOfVoRMQTh2m0F+FKeO+o/zQK0pXR20LzWK+zWTAwn3KTRwwBoTT73PqHj8CSx7poZb0GrhK5IvbnAeILA==","iter":150000},"family":{"salt":"XiVrwTvQmKPLYx1rNH3d6Q==","iv":"2wjeIsvU9rYDYsCs","ct":"pNMohzMzOFYegiofo228Pkxm1+oG9zLLSntmvcLCnw8nIrrYCY0b9zuqw0kJ5Dr3WqKm4vJkifDI7m6C2m32/NjzM7UDe45q2qbO7nroqOICTQtT+g37fMPmIIY=","iter":150000},"friend":{"salt":"8sA/ozvyxniGRH3mbNi+aA==","iv":"DMrnLoWy+3zobO3F","ct":"ojsgacZr8EFm5YOjmf/7LN7KuQSzgBOmoYaRggeFaLLDbnd6T1w8+cNnUg5BHILgEmqFaIexna83T2uz4CuUHvgPmIqB5oxy6LL4YVELCdD0XOw/+hSkNld4tSY=","iter":150000}};
 const AUTH={
   async derive(pass,saltB64,iter){
     const enc=new TextEncoder();
@@ -6245,16 +6249,21 @@ function hashStr(s){ let h=0; for(let i=0;i<s.length;i++){ h=(h*31+s.charCodeAt(
 const teamNames=()=>{ const n=(FP.basics.names||'').split(/[,&]| and /).map(x=>x.trim()).filter(Boolean); return [n[0]||'Friend 1',n[1]||'Friend 2']; };
 const teamLabel=()=>{ const n=teamNames(); return (FP.basics.names?n[0]+' & '+n[1]:'OUR FLOCK').toUpperCase(); };
 
+function friendPayload(){ const o=JSON.parse(JSON.stringify(FP)); delete o.kjoins; return o; }
 function saveFP(push){
+  FP.kjoins=FP.kjoins||{};
   FP.updatedAt=Date.now();
   try{ localStorage.setItem(FP_KEY,JSON.stringify(FP)); }catch(e){}
-  if(push && ROLE==='friend' && window.FB && FB.setFriend) FB.setFriend(JSON.parse(JSON.stringify(FP)));
-  if(ROLE==='friend') rebuildFriend();
+  if(push && ROLE==='friend' && window.FB && FB.setFriend) FB.setFriend(friendPayload());
+  if(push && ROLE==='traveler' && window.FB && FB.setFriend) FB.setFriend({kjoins:FP.kjoins});
+  if(ROLE==='friend') rebuildFriend(); else if(ROLE==='traveler') applyKellyJoins();
 }
 function mergeFP(r){
   if(!r) return false; let ch=false;
   Object.keys(r.items||{}).forEach(id=>{ const a=FP.items[id], b=r.items[id]; if(!a||(b.u||0)>(a.u||0)){ FP.items[id]=b; ch=true; } });
   Object.keys(r.joins||{}).forEach(k=>{ const a=FP.joins[k], b=r.joins[k]; if(!a||(b.u||0)>(a.u||0)){ FP.joins[k]=b; ch=true; } });
+  FP.kjoins=FP.kjoins||{};
+  Object.keys(r.kjoins||{}).forEach(k=>{ const a=FP.kjoins[k], b=r.kjoins[k]; if(!a||(b.u||0)>(a.u||0)){ FP.kjoins[k]=b; ch=true; } });
   if(r.basics && (r.basics.u||0)>(FP.basics.u||0)){ FP.basics=r.basics; ch=true; }
   if(ch){ saveFP(false); }
   return ch;
@@ -6325,6 +6334,19 @@ function rebuildFriend(){
   });
   updateQuestBadge&&updateQuestBadge();
 }
+/* ── the Kellys can join the friends' plans too (adds to the Kellys' own Quest / Catch) ── */
+function applyKellyJoins(){
+  if(ROLE!=='traveler') return;
+  for(let i=QUESTS.length-1;i>=0;i--) if(QUESTS[i]._kj) QUESTS.splice(i,1);
+  for(let i=BOOKABLE_ITEMS.length-1;i>=0;i--) if(BOOKABLE_ITEMS[i]._kj) BOOKABLE_ITEMS.splice(i,1);
+  Object.keys(FP.kjoins||{}).forEach(id=>{
+    const j=FP.kjoins[id], it=FP.items[id]; if(!j||!j.v||!it||it.del) return; const tt=TYPES[it.type]||TYPES.see;
+    QUESTS.push({_kj:1,id:'qk_'+id,cat:'🔴 With the friends',icon:tt[0],name:it.name,day:'Day '+it.day,xp:100,photo:false});
+    if(it.type==='book'||it.type==='stay'||it.type==='fly') BOOKABLE_ITEMS.push({_kj:1,key:'k_'+id,name:esc(it.name)+' (with the friends)',icon:tt[0],url:it.place?mapsLink(it.place):'#',urgency:'med',day:it.day,timeLabel:it.time||'',optional:false,walkin:false,
+      instructions:'You joined your friends’ plan. Book your own tickets, then enter the confirmation number here.'});
+  });
+  try{ updateQuestBadge(); }catch(e){}
+}
 window.__FV=()=>FRIEND_VIEW; window._lsRawGet=rawGet; window.pvPull=pvPull;
 function friendBoot(){
   if(ROLE!=='friend'||window.__NS) return;
@@ -6341,7 +6363,7 @@ function friendBoot(){
 }
 
 window.addEventListener('fb-ready',()=>{
-  if(window.FB&&FB.onFriend){ FB.onFriend(r=>{ if(mergeFP(r)) refreshFriendUI(); }); if(ROLE==='friend'&&(Object.keys(FP.items).length||FP.basics.u)&&FB.setFriend) FB.setFriend(JSON.parse(JSON.stringify(FP))); }
+  if(window.FB&&FB.onFriend){ FB.onFriend(r=>{ if(mergeFP(r)){ if(ROLE==='traveler') applyKellyJoins(); refreshFriendUI(); } }); if(ROLE==='friend'&&(Object.keys(FP.items).length||FP.basics.u)&&FB.setFriend) FB.setFriend(friendPayload()); }
   if(ROLE==='friend'&&window.FB&&FB.onFriendPrivate){ FB.onFriendPrivate(pvPull); setTimeout(pvPush,2500); }
 });
 
@@ -6371,6 +6393,13 @@ function friendBox(raw){
       (it.place?'<a class="fr-map" target="_blank" rel="noopener" href="'+mapsLink(it.place)+'">📍 '+esc(it.place)+'</a>':'')+
       (me?'<div class="fr-where">'+whereTags(it)+(bk?(bk.booked?' · <b class="fr-ok">✓ Booked'+(bk.confirmation?' '+esc(bk.confirmation):'')+'</b>':' · <b class="fr-todo">⚠ not booked</b>'):'')+'</div>':'')+'</div>'+
       (me?'<div class="fr-act"><button data-a="e" aria-label="Edit">✎</button><button data-a="d" aria-label="Delete">✕</button></div>':'');
+    if(ROLE==='traveler'){
+      const on=!!(FP.kjoins&&FP.kjoins[it.id]&&FP.kjoins[it.id].v);
+      const jb=document.createElement('button'); jb.className='fr-join kj'+(on?' on':''); jb.innerHTML='<span class="mini-ball"></span> '+(on?'We’re joining ✓':'We’ll join');
+      jb.onclick=e=>{ e.stopPropagation(); FP.kjoins=FP.kjoins||{}; FP.kjoins[it.id]={v:!on,u:Date.now()}; saveFP(true); renderItin(); };
+      r.querySelector('.fr-b').appendChild(jb);
+    }
+    if(me&&FP.kjoins&&FP.kjoins[it.id]&&FP.kjoins[it.id].v){ const t=document.createElement('div'); t.className='fr-joined'; t.innerHTML='<span class="mini-ball"></span> The Kellys are joining — book for 5'; r.querySelector('.fr-b').appendChild(t); }
     if(me){
       r.querySelector('[data-a="d"]').onclick=e=>{ e.stopPropagation(); it.del=true; it.u=Date.now(); saveFP(true); renderItin(); };
       r.querySelector('[data-a="e"]').onclick=e=>{ e.stopPropagation(); openForm(box,raw,it); };
@@ -6593,9 +6622,9 @@ navigate=function(screen){
 
 /* ── boot ── */
 const __au9=afterUnlock;
-afterUnlock=function(){ try{ friendBoot(); applyTheme(); }catch(e){ console.warn(e); } __au9.apply(this,arguments); };
+afterUnlock=function(){ try{ friendBoot(); applyKellyJoins(); applyTheme(); }catch(e){ console.warn(e); } __au9.apply(this,arguments); };
 document.addEventListener('DOMContentLoaded',()=>{ try{ applyTheme(); }catch(e){} });
-try{ if(ROLE){ friendBoot(); applyTheme(); renderItin(); if(ROLE==='friend'){ updateQuestBadge(); } } }catch(e){ console.warn(e); }
+try{ if(ROLE){ friendBoot(); applyKellyJoins(); applyTheme(); renderItin(); if(ROLE==='friend'){ updateQuestBadge(); } } }catch(e){ console.warn(e); }
 })();
 
 </script>
