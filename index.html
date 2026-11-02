@@ -2049,6 +2049,50 @@ body[data-role="family"] #nav-tickets,body[data-role="family"] #nav-customs,body
 @keyframes ballMsg{0%,62%{opacity:0;transform:scale(.6)}78%{opacity:1;transform:scale(1.15)}100%{opacity:1;transform:scale(1)}}
 @keyframes ballBg{0%{opacity:0}10%,86%{opacity:1}100%{opacity:0}}
 </style>
+<style>
+/* ── Penguin theme + friends layer ── */
+body[data-theme="penguin"]{
+  --sky:#15324d; --sky2:#1b4467; --sky3:#2a6a9a; --pokered:#e9715c; --pokered2:#ff9078;
+  --yellow:#ffc857; --yellow2:#ffe3a6; --card-bg:#f1f8ff; --card-bg2:#e4f1fb; --border:#b9d6ea; --muted:#5882a3;
+  --shadow-glow:0 0 16px rgba(120,190,240,.3);
+}
+body[data-theme="penguin"] .app-header{background-image:radial-gradient(circle at 12% 30%,rgba(255,255,255,.28) 1.4px,transparent 2px),radial-gradient(circle at 63% 70%,rgba(255,255,255,.22) 1.2px,transparent 2px),radial-gradient(circle at 88% 25%,rgba(255,255,255,.25) 1.6px,transparent 2px);background-size:120px 60px,90px 50px,150px 70px}
+body[data-theme="penguin"] .type-indicator{display:none}
+body[data-theme="penguin"] #penguinIcon{display:inline-flex;align-items:center;margin-right:4px}
+body[data-role="friend"] #nav-tickets,body[data-role="friend"] #nav-customs,body[data-role="friend"] #nav-alerts,body[data-role="friend"] #nav-adventure{display:none}
+.theme-btn{background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.25);border-radius:10px;color:#fff;font-size:.8rem;padding:3px 7px;margin-left:6px}
+.fr-box{margin:10px 0 4px;padding:10px;border-radius:12px;background:rgba(80,160,230,.10);border:1.5px dashed #5aa7e0}
+.fr-h{font-weight:900;font-size:.78rem;display:flex;align-items:center;gap:6px;color:var(--sky2)}
+.fr-peng{display:inline-flex}.fr-n{background:#4f9be0;color:#fff;border-radius:10px;padding:0 7px;font-size:.62rem}
+.fr-item{display:flex;gap:8px;padding:7px 0;border-top:1px solid rgba(80,160,230,.25);font-size:.78rem}
+.fr-t{min-width:44px;font-weight:800;color:#2a6a9a}.fr-b{flex:1}.fr-note{color:var(--muted);font-size:.72rem;margin-top:2px}
+.fr-map{display:inline-block;margin-top:3px;font-size:.7rem;color:#2a6a9a;text-decoration:none}
+.fr-act button{background:none;border:none;font-size:.9rem;color:var(--muted);padding:2px 5px}
+.fr-add,.fr-save{background:#4f9be0;color:#fff;border:none;border-radius:10px;font-weight:800;font-size:.74rem;padding:8px 12px;margin-top:6px}
+.fr-cancel{background:transparent;border:1.5px solid #9bbbd6;color:var(--muted);border-radius:10px;font-weight:700;font-size:.74rem;padding:7px 12px;margin-top:6px;margin-left:6px}
+.fr-form{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.fr-in{width:100%;border:1.5px solid var(--border);border-radius:9px;padding:8px;font:inherit;font-size:.78rem;background:#fff;color:#1b2b3c;box-sizing:border-box}
+.fr-join{margin-top:6px;background:#e4f1fb;color:#2a6a9a;border:1.5px solid #9fcaec;border-radius:14px;font-size:.68rem;font-weight:800;padding:5px 10px}
+.fr-join.on{background:#4f9be0;color:#fff;border-color:#4f9be0}
+.fr-joined{margin-top:6px;font-size:.68rem;font-weight:800;color:#2a6a9a}
+.fr-tag{font-size:.58rem;font-weight:800;border-radius:8px;padding:1px 6px;margin-left:6px;background:#e4f1fb;color:#2a6a9a}.fr-tag.away{background:#eee;color:#888}
+.fr-dot{margin-right:4px;font-size:.8rem}
+.fr-welcome{display:flex;gap:10px;align-items:center;background:linear-gradient(135deg,#e4f1fb,#f8fcff);border:1.5px solid #9fcaec;border-radius:14px;padding:10px;margin-bottom:10px;font-size:.76rem;line-height:1.35;color:#1b3b57}
+.fr-wp{display:flex}
+.fr-card{background:var(--card-bg);border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px;color:#1b2b3c}
+.fr-card label{display:block;font-size:.7rem;font-weight:800;margin-top:8px;color:var(--sky2)}
+.fr-hero{display:flex;justify-content:center;gap:6px;margin-bottom:4px}
+.fr-title{font-weight:900;font-size:.95rem;text-align:center;margin-bottom:4px;color:var(--sky2)}
+.fr-line{font-size:.78rem;margin-top:6px}.fr-hint{font-size:.68rem;color:var(--muted);margin-top:8px}
+.dairy-bar{background:#fff8e6;border:1.5px solid #ffd98a;border-radius:12px;padding:10px;margin:10px 0;font-size:.74rem;color:#4a3a12}
+.dairy-title{font-weight:900;font-size:.82rem}.dairy-legend{margin:4px 0;font-weight:700}.dairy-toggle{display:block;margin:6px 0;font-weight:800}.dairy-hint{font-size:.68rem;opacity:.85}
+.dairy-pill{font-size:.6rem;font-weight:800;border-radius:8px;padding:1px 6px}
+.dairy-pill.easy{background:#e6f9f0;color:#16774a}.dairy-pill.ask{background:#fff3cd;color:#8a6a00}.dairy-pill.avoid{background:#fde4e1;color:#a52a1d}
+.dairy-note{font-size:.72rem;border-radius:8px;padding:7px 9px;margin-bottom:8px}
+.dairy-note.easy{background:#e6f9f0}.dairy-note.ask{background:#fff3cd}.dairy-note.avoid{background:#fde4e1}
+.lactose-btn{margin:6px 0 10px}
+
+</style>
 </head>
 <body>
 <div id="authOverlay">
@@ -2071,8 +2115,9 @@ body[data-role="family"] #nav-tickets,body[data-role="family"] #nav-customs,body
       <h1>JAPAN 2027</h1>
       <span class="jp">日本旅行</span>
     </div>
-    <div class="app-header-meta">OCT 22 – NOV 4<br>TRAINER PARTY: 3 <span id="rolePill" class="role-pill"></span></div>
+    <div class="app-header-meta">MAR 26 – APR 10<br>TRAINER PARTY: 3 <span id="rolePill" class="role-pill"></span></div>
     <button class="install-btn" id="install-btn" onclick="promptInstall()">+ HOME</button>
+    <button class="lock-btn theme-btn" id="themeBtn" onclick="toggleTheme()" title="Switch theme">🐧</button>
     <button class="lock-btn" id="lockBtn" onclick="AUTH.lock()" title="Lock / switch user">🔒</button>
   </header>
   <div class="content-area">
@@ -4679,7 +4724,7 @@ const QUEST_EXTRA=[
 
 
 /* ═══════════ CORE: data version · access roles · helpers ═══════════ */
-const DATA_VERSION='2027-04-trip-v1';
+const DATA_VERSION='2027-03-trip-v2';
 
 /* Edit-mode changes are saved by stop POSITION. The schedule was rebuilt, so older saved edits would land on the wrong stops.
    Move them to a backup key once, keep everything else (Catch bookings, quests, photos, ledger). */
@@ -4698,6 +4743,8 @@ const DATA_VERSION='2027-04-trip-v1';
 
 let ROLE=null;                                   /* 'traveler' (full) · 'family' (view-only) */
 function canEdit(){ return ROLE==='traveler'; }
+function isFriend(){ return ROLE==='friend'; }
+function isViewer(){ return ROLE==='family'||ROLE==='friend'; }
 function viewOnlyToast(){ showToast('👀 View-only access'); }
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
@@ -4716,7 +4763,7 @@ function deepReplace(o,map,seen){
 }
 const b64d=b=>Uint8Array.from(atob(b),c=>c.charCodeAt(0));
 
-const AUTH_BLOBS={"v":"uKZglphnuKpNMohz","traveler":{"salt":"vK+2Ae1j0tr6+PX4/dyV3w==","iv":"vi8hBAwLwDjod46J","ct":"uKZglphnuK7S7+cP3DlekyagjGHBUXTYmGUwhvCIGL3+Xxip2ImlG9P1+SrVEQB2ehsb1qwlPajHGqkjTIsT66qHSy940V5EfFsHcGYUn+j8Ta7Ej/q5Fu3a0SsV8IFJdl3LAHr2v0EGk11damleO+zn4zWFKcapSBseTaPyvYKoBIE7VAJmw8YS4ypShlMNlN6mbWDmhlOZSm9XQmx6rkVFp7j1NFFQHmFkFoh1IvbQx3KeaXBPzRX/tHvCnL6UlKCw99TdVZnMu5a0wFHrGZircp5/WcC/f5lzZpMvNwoPkgZjUs/wzI0qQuGLytUd+7NZ0MhhDhamwJwFO3CYbF3unUQrxScPEERu+BtTKTgwXgUvw1YF0rPbehaqHRpoL1G1qpF7IG7YwcbeipLpkjFhulUVDoGRXoeRjyngcPwxmuUYyFHvTFe8YaulpiUATwG3QgDI1Hxs959D1ALyDGflUxoPZbth3jwwA7aMUNbbSAh29Kv2eaFO0oQdjKXHRklDIEsBhMxLUE9Rhjx2cR9eSMLW1jYU8Genj9UEDBMeG8o5kpbfPU8ZJ7xc8RZdAxxpqmNYDOfVoRMQTh2m0F+FKeO+o/zQK0pXR20LzWK+zWTAwn3KTRwwBoTT73PqHj8CSx7poZb0GrhK5IvbnAeILA==","iter":150000},"family":{"salt":"XiVrwTvQmKPLYx1rNH3d6Q==","iv":"2wjeIsvU9rYDYsCs","ct":"pNMohzMzOFYegiofo228Pkxm1+oG9zLLSntmvcLCnw8nIrrYCY0b9zuqw0kJ5Dr3WqKm4vJkifDI7m6C2m32/NjzM7UDe45q2qbO7nroqOICTQtT+g37fMPmIIY=","iter":150000}};
+const AUTH_BLOBS={"v":"uKZglphnuKpNMohz","traveler":{"salt":"vK+2Ae1j0tr6+PX4/dyV3w==","iv":"vi8hBAwLwDjod46J","ct":"uKZglphnuK7S7+cP3DlekyagjGHBUXTYmGUwhvCIGL3+Xxip2ImlG9P1+SrVEQB2ehsb1qwlPajHGqkjTIsT66qHSy940V5EfFsHcGYUn+j8Ta7Ej/q5Fu3a0SsV8IFJdl3LAHr2v0EGk11damleO+zn4zWFKcapSBseTaPyvYKoBIE7VAJmw8YS4ypShlMNlN6mbWDmhlOZSm9XQmx6rkVFp7j1NFFQHmFkFoh1IvbQx3KeaXBPzRX/tHvCnL6UlKCw99TdVZnMu5a0wFHrGZircp5/WcC/f5lzZpMvNwoPkgZjUs/wzI0qQuGLytUd+7NZ0MhhDhamwJwFO3CYbF3unUQrxScPEERu+BtTKTgwXgUvw1YF0rPbehaqHRpoL1G1qpF7IG7YwcbeipLpkjFhulUVDoGRXoeRjyngcPwxmuUYyFHvTFe8YaulpiUATwG3QgDI1Hxs959D1ALyDGflUxoPZbth3jwwA7aMUNbbSAh29Kv2eaFO0oQdjKXHRklDIEsBhMxLUE9Rhjx2cR9eSMLW1jYU8Genj9UEDBMeG8o5kpbfPU8ZJ7xc8RZdAxxpqmNYDOfVoRMQTh2m0F+FKeO+o/zQK0pXR20LzWK+zWTAwn3KTRwwBoTT73PqHj8CSx7poZb0GrhK5IvbnAeILA==","iter":150000},"family":{"salt":"XiVrwTvQmKPLYx1rNH3d6Q==","iv":"2wjeIsvU9rYDYsCs","ct":"pNMohzMzOFYegiofo228Pkxm1+oG9zLLSntmvcLCnw8nIrrYCY0b9zuqw0kJ5Dr3WqKm4vJkifDI7m6C2m32/NjzM7UDe45q2qbO7nroqOICTQtT+g37fMPmIIY=","iter":150000},"friend":{"salt":"/g+t22SKyenTG8uKg4C59w==","iv":"HPd1d/BkLewwHa9r","ct":"JL2HH8k8rM5rX8vuQXNdDUG+CvgSQZJ1U2ReFjQzLhQD4AeEV8BlBPfoC2n43+ro5Xv53YcXN1UMc3aO6DB4NtWviW4k2iLEBHyaOIIHnAqYnnO64/1VMAVT9qQ=","iter":150000}};
 const AUTH={
   async derive(pass,saltB64,iter){
     const enc=new TextEncoder();
@@ -4734,7 +4781,7 @@ const AUTH={
     pass=(pass||'').trim();
     if(!pass) return {ok:false,msg:'Enter the passcode'};
     if(!(window.crypto&&crypto.subtle)) return {ok:false,msg:'This browser blocked secure unlock — open the https:// link in Chrome (not a file or http page).'};
-    for(const role of ['traveler','family']){
+    for(const role of ['traveler','family','friend']){
       const payload=await this.open(pass,AUTH_BLOBS[role]);
       if(payload && payload.role===role){
         if(remember){ try{ localStorage.setItem('japan2026_session',JSON.stringify({v:AUTH_BLOBS.v,role,secrets:payload.secrets})); }catch(e){} }
@@ -4750,7 +4797,7 @@ const AUTH={
     const map=secrets||{};
     [DAYS,ALERTS,BOOKABLE_ITEMS,HOTELS,FLIGHT_CARDS,TRANSPORT,LINKS,DRIVE].forEach(o=>deepReplace(o,map));
     const ov=document.getElementById('authOverlay'); if(ov) ov.classList.add('hidden');
-    const pill=document.getElementById('rolePill'); if(pill) pill.textContent=role==='family'?'👀 VIEW ONLY':'🧢 TRAVELER';
+    const pill=document.getElementById('rolePill'); if(pill) pill.textContent=role==='family'?'👀 VIEW ONLY':role==='friend'?'🐧 FRIENDS':'🧢 TRAVELER';
     if(typeof afterUnlock==='function') afterUnlock();
   },
   lock(){ try{ localStorage.removeItem('japan2026_session'); }catch(e){} location.reload(); },
@@ -5214,7 +5261,7 @@ function renderHotels(){ if(typeof renderFlights==='function') renderFlights(); 
 /* ═══════════ QUESTS (XP) ═══════════ */
 let REMOTE_QUESTS=null;
 function loadQuestState(){
-  if(ROLE==='family'&&REMOTE_QUESTS) return REMOTE_QUESTS;
+  if(isViewer()&&REMOTE_QUESTS) return REMOTE_QUESTS;
   try{ return JSON.parse(localStorage.getItem('japan2026_quests')||'{}'); }catch(e){ return {}; }
 }
 function saveQuestState(state){
@@ -5254,7 +5301,7 @@ function renderAdventure(){
     '<div class="trainer-stat"><span class="trainer-stat-val">'+left+'</span><span class="trainer-stat-lbl">Remaining</span></div>'+
     '<div class="trainer-stat"><span class="trainer-stat-val">'+totalXP+'</span><span class="trainer-stat-lbl">Total XP</span></div></div>';
   wrap.appendChild(tc);
-  if(ROLE==='family'){
+  if(isViewer()){
     const n=document.createElement('div'); n.className='info-banner blue'; n.innerHTML='👀 Following along — this is the family’s live progress'+(window.FB&&FB.ready?'.':' (it updates once shared sync is switched on).'); wrap.appendChild(n);
   }
   const pb=document.createElement('button');
@@ -5290,7 +5337,7 @@ function toggleDriveEmbed(){
 function driveCardHtml(){
   const ok=driveReady();
   return '<div class="drive-card"><div class="drive-h">📁 Family Photo & Video Folder <small>Google Drive</small></div>'+
-   '<div class="drive-sub">'+(ROLE==='family'?'Trip photos and videos appear here as they are added.':'Put your best photos and all videos here — family can watch from anywhere. In the Drive app tap + → Upload (Cheryl can add too).')+'</div>'+
+   '<div class="drive-sub">'+(isViewer()?'Trip photos and videos appear here as they are added.':'Put your best photos and all videos here — family can watch from anywhere. In the Drive app tap + → Upload (Cheryl can add too).')+'</div>'+
    (ok?'<div class="drive-btns"><a class="drive-btn primary" href="'+driveUrl()+'" target="_blank" rel="noopener">Open folder ↗</a><button class="drive-btn" onclick="toggleDriveEmbed()">Preview here</button></div><div id="drive-embed"></div>':
        '<div class="drive-sub">Sign in to see the folder link.</div>')+'</div>';
 }
@@ -5388,7 +5435,7 @@ function renderGallery(){
   const wrap=document.getElementById('screen-photos'); wrap.innerHTML='';
   const shared=!!(window.FB&&FB.ready&&FB.mediaReady), g=loadLocalGallery();
   const hdr=document.createElement('div'); hdr.className='info-banner blue';
-  hdr.innerHTML='<strong>📸 Trip Photo & Video Gallery</strong><br>'+(ROLE==='family'?'Following along: the Drive folder below has the photos and videos.':'Photos you add with ＋ below are saved on this phone, day by day. Use the Drive folder for videos and for sharing with family.');
+  hdr.innerHTML='<strong>📸 Trip Photo & Video Gallery</strong><br>'+(isViewer()?'Following along: the Drive folder below has the photos and videos.':'Photos you add with ＋ below are saved on this phone, day by day. Use the Drive folder for videos and for sharing with family.');
   wrap.appendChild(hdr);
   const dv=document.createElement('div'); dv.innerHTML=driveCardHtml(); wrap.appendChild(dv.firstChild);
   const back=document.createElement('button'); back.className='gal-back'; back.textContent='← Back to Quest'; back.onclick=()=>navigate('adventure'); wrap.appendChild(back);
@@ -5600,7 +5647,7 @@ renderWeather=async function(){
 const _navBase=navigate;
 navigate=function(screen){
   const famBlocked=['tickets','customs','alerts','edit','links','hotels'];
-  if(ROLE==='family'&&famBlocked.includes(screen)) screen='itin';
+  if(isViewer()&&famBlocked.includes(screen)) screen='itin';
   _navBase(screen);
   if(screen==='tickets') renderTickets();
   if(screen==='flights') renderFlights();
@@ -5617,7 +5664,7 @@ function afterUnlock(){
 window.addEventListener('fb-ready',()=>{
   FB.onQuests(remote=>{
     remote=remote||{};
-    if(ROLE==='family'){ REMOTE_QUESTS=remote; updateQuestBadge(); if(STATE.activeScreen==='adventure') renderAdventure(); return; }
+    if(isViewer()){ REMOTE_QUESTS=remote; updateQuestBadge(); if(STATE.activeScreen==='adventure') renderAdventure(); return; }
     const local=loadQuestState(); let changed=false;
     Object.keys(remote).forEach(k=>{ if(remote[k]&&!local[k]){ local[k]=true; changed=true; } });
     if(changed){ try{ localStorage.setItem('japan2026_quests',JSON.stringify(local)); }catch(e){} updateQuestBadge(); if(STATE.activeScreen==='adventure') renderAdventure(); }
@@ -6008,6 +6055,7 @@ function lugCardEl(){
 
 /* ── Show-to-staff cards (Translate tab) ── */
 const STAFF_PHRASES=[
+ ['この料理には乳製品が入っていますか？','Does this dish contain dairy?'],['牛乳なし、バターなしでお願いできますか？','Can you make it without milk or butter?'],['豆乳に変更できますか？','Can I switch to soy milk?'],
  ['この住所までお願いします。','Please take us to this address.'],['道に迷いました。助けてください。','We are lost. Please help us.'],['トイレはどこですか？','Where is the restroom?'],
  ['英語のメニューはありますか？','Do you have an English menu?'],['三人です。','Three people.'],['クレジットカードは使えますか？','Can I use a credit card?'],
  ['免税をお願いします。','Tax-free, please.'],['荷物を羽田空港に送りたいです。','I would like to send luggage to Haneda Airport.'],
@@ -6045,7 +6093,7 @@ function staffSectionEl(){
   return sec;
 }
 const __rtBase=renderTranslate;
-renderTranslate=function(){ __rtBase.apply(this,arguments); try{ if(!canEdit()) return; const w=document.getElementById('screen-translate'); if(!w||w.querySelector('.staff-sec')) return; w.insertBefore(staffSectionEl(),w.firstChild); }catch(e){ console.warn(e); } };
+renderTranslate=function(){ __rtBase.apply(this,arguments); try{ if(!canEdit()&&ROLE!=='friend') return; const w=document.getElementById('screen-translate'); if(!w||w.querySelector('.staff-sec')) return; w.insertBefore(staffSectionEl(),w.firstChild); }catch(e){ console.warn(e); } };
 
 /* ── wire into Route and Quest tabs ── */
 const __riBase2=renderItin;
@@ -6095,6 +6143,273 @@ function mergeExtra(payload,rep){
 
 /* run once so goals already earned unlock */
 try{ checkStepQuests(); }catch(e){}
+
+/* ═══════════════════════════════════════════════════════════
+   FRIENDS LAYER · THEMES (Pokémon / Penguin) · DAIRY HELPERS
+   ═══════════════════════════════════════════════════════════ */
+(function(){
+const $=(s,r)=> (r||document).querySelector(s);
+const FP_KEY='japan2026_friendplans', TH_KEY='japan2026_theme';
+let FP; try{ FP=JSON.parse(localStorage.getItem(FP_KEY)||'null'); }catch(e){ FP=null; }
+FP=FP||{}; FP.items=FP.items||{}; FP.joins=FP.joins||{}; FP.basics=FP.basics||{};
+window.FP=FP;
+
+/* ── penguin artwork (original characters, drawn in SVG) ── */
+function penguin(o){
+  o=o||{}; const s=o.size||64, body=o.body||'#27425e', beak='#ffb347';
+  let acc='';
+  if(o.hat==='kippah') acc+='<ellipse cx="50" cy="21" rx="11" ry="5.5" fill="'+(o.hatc||'#4f9be0')+'" stroke="#fff" stroke-width="1.3"/><path d="M43 21 Q50 17 57 21" stroke="#fff" stroke-width="1" fill="none" opacity=".85"/>';
+  if(o.hat==='candles') acc+='<g><rect x="37" y="14" width="4" height="9" rx="1" fill="#fff"/><rect x="48" y="11" width="4" height="12" rx="1" fill="#fff"/><rect x="59" y="14" width="4" height="9" rx="1" fill="#fff"/><ellipse cx="39" cy="11.5" rx="2.2" ry="3.4" fill="#ffc83d"/><ellipse cx="50" cy="8" rx="2.2" ry="3.4" fill="#ffc83d"/><ellipse cx="61" cy="11.5" rx="2.2" ry="3.4" fill="#ffc83d"/></g>';
+  if(o.scarf) acc+='<g><rect x="23" y="55" width="54" height="9" rx="4.5" fill="#fff"/><rect x="23" y="57.2" width="54" height="1.8" fill="#4f9be0"/><rect x="23" y="60.2" width="54" height="1.8" fill="#4f9be0"/><rect x="66" y="62" width="9" height="14" rx="2" fill="#fff"/><rect x="66" y="65" width="9" height="1.6" fill="#4f9be0"/><rect x="66" y="69" width="9" height="1.6" fill="#4f9be0"/></g>';
+  if(o.bow) acc+='<g><path d="M50 62 L40 56 L40 68 Z M50 62 L60 56 L60 68 Z" fill="#e9715c"/><circle cx="50" cy="62" r="3" fill="#c9503e"/></g>';
+  if(o.glasses) acc+='<g fill="none" stroke="#ffc857" stroke-width="2"><circle cx="40" cy="43" r="7"/><circle cx="60" cy="43" r="7"/><path d="M47 43h6"/></g>';
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="'+s+'" height="'+s+'" role="img" aria-label="cute penguin">'+
+   '<ellipse cx="50" cy="94" rx="24" ry="3.2" fill="#000" opacity=".12"/>'+
+   '<ellipse cx="22" cy="63" rx="6.5" ry="16" transform="rotate(14 22 63)" fill="'+body+'"/><ellipse cx="78" cy="63" rx="6.5" ry="16" transform="rotate(-14 78 63)" fill="'+body+'"/>'+
+   '<ellipse cx="50" cy="55" rx="30" ry="37" fill="'+body+'"/><ellipse cx="50" cy="62" rx="21" ry="28" fill="#fff"/>'+
+   '<ellipse cx="42" cy="91" rx="9" ry="4" fill="'+beak+'"/><ellipse cx="58" cy="91" rx="9" ry="4" fill="'+beak+'"/>'+
+   '<circle cx="40" cy="43" r="4.6" fill="#101c2c"/><circle cx="60" cy="43" r="4.6" fill="#101c2c"/><circle cx="41.6" cy="41.4" r="1.6" fill="#fff"/><circle cx="61.6" cy="41.4" r="1.6" fill="#fff"/>'+
+   '<circle cx="31" cy="52" r="4.2" fill="#ffb3a7" opacity=".7"/><circle cx="69" cy="52" r="4.2" fill="#ffb3a7" opacity=".7"/>'+
+   '<path d="M44 50 Q50 45 56 50 Q50 58 44 50Z" fill="'+beak+'"/>'+acc+'</svg>';
+}
+window.penguin=penguin;
+const PENGUINS={bagel:{hat:'kippah'},mazel:{scarf:1,body:'#2d5578'},noodle:{glasses:1,bow:1,body:'#34495e'},latke:{hat:'candles',body:'#2a4a66'}};
+window.PENGUINS=PENGUINS;
+const pg=(k,s)=>penguin(Object.assign({size:s||56},PENGUINS[k]||{}));
+
+/* ── theme ── */
+function curTheme(){ try{ const t=localStorage.getItem(TH_KEY); if(t==='pokemon'||t==='penguin') return t; }catch(e){} return ROLE==='friend'?'penguin':'pokemon'; }
+function pillText(){ return ROLE==='family'?'👀 VIEW ONLY':ROLE==='friend'?'🐧 FRIENDS':'🧢 TRAVELER'; }
+function applyTheme(){
+  const t=curTheme(), pen=t==='penguin';
+  document.body.dataset.theme=t;
+  const h1=$('.app-header-title h1'), jp=$('.app-header-title .jp'), meta=$('.app-header-meta'), ic=$('.pokeball-icon');
+  if(h1) h1.textContent=pen?'WADDLE JAPAN':'JAPAN 2027';
+  if(jp) jp.textContent=pen?'日本 🐧':'日本旅行';
+  if(meta) meta.innerHTML='MAR 26 – APR 10<br>'+(pen?'FLOCK: 3 + FRIENDS':'TRAINER PARTY: 3')+' <span id="rolePill" class="role-pill">'+pillText()+'</span>';
+  if(ic){ let pi=$('#penguinIcon'); if(pen){ if(!pi){ pi=document.createElement('span'); pi.id='penguinIcon'; pi.innerHTML=pg('bagel',30); ic.parentNode.insertBefore(pi,ic.nextSibling); } ic.style.display='none'; pi.style.display=''; } else { ic.style.display=''; if(pi) pi.style.display='none'; } }
+  const nf=$('#nav-flights'); if(nf){ const isF=ROLE==='friend'; const ni=$('.nav-icon',nf), nl=$('.nav-label',nf); if(ni) ni.textContent=isF?'🐧':'🗺️'; if(nl) nl.textContent=isF?'Us':'Travel'; }
+  const tb=$('#themeBtn'); if(tb) tb.textContent=pen?'⚡':'🐧';
+  if(tb) tb.title=pen?'Switch to Pokémon theme':'Switch to penguin theme';
+}
+window.toggleTheme=function(){ const n=curTheme()==='penguin'?'pokemon':'penguin'; try{ localStorage.setItem(TH_KEY,n); }catch(e){} applyTheme(); try{ renderItin(); }catch(e){} };
+
+/* ── friend-plan storage + merge (two friends can edit from two phones) ── */
+function saveFP(push){
+  FP.updatedAt=Date.now();
+  try{ localStorage.setItem(FP_KEY,JSON.stringify(FP)); }catch(e){}
+  if(push && ROLE==='friend' && window.FB && FB.setFriend) FB.setFriend(JSON.parse(JSON.stringify(FP)));
+}
+function mergeFP(r){
+  if(!r) return false; let ch=false;
+  Object.keys(r.items||{}).forEach(id=>{ const a=FP.items[id], b=r.items[id]; if(!a||(b.u||0)>(a.u||0)){ FP.items[id]=b; ch=true; } });
+  Object.keys(r.joins||{}).forEach(k=>{ const a=FP.joins[k], b=r.joins[k]; if(!a||(b.u||0)>(a.u||0)){ FP.joins[k]=b; ch=true; } });
+  if(r.basics && (r.basics.u||0)>(FP.basics.u||0)){ FP.basics=r.basics; ch=true; }
+  if(ch) saveFP(false);
+  return ch;
+}
+window.mergeFP=mergeFP;
+function refreshFriendUI(){ try{ if(STATE.activeScreen==='itin') renderItin(); if(STATE.activeScreen==='flights') renderFlights(); }catch(e){} }
+window.addEventListener('fb-ready',()=>{
+  if(!window.FB||!FB.onFriend) return;
+  FB.onFriend(r=>{ if(mergeFP(r)) refreshFriendUI(); });
+  if(ROLE==='friend' && (Object.keys(FP.items).length||FP.basics.u) && FB.setFriend) FB.setFriend(JSON.parse(JSON.stringify(FP)));
+});
+
+/* ── itinerary: friends' layer on every day ── */
+const uid=()=>'f'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const mapsLink=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+function awayState(dateObj){ const a=FP.basics.arrive, d=FP.basics.depart; if(!a||!d) return ''; return (dateObj<a||dateObj>d)?'away':'here'; }
+function stopKey(day,stop){ return day+'|'+(stop.name||''); }
+
+function friendBox(raw){
+  const items=Object.values(FP.items).filter(x=>!x.del&&x.day===raw.day).sort((a,b)=>(a.time||'~').localeCompare(b.time||'~')||(a.u||0)-(b.u||0));
+  const me=ROLE==='friend';
+  if(!items.length && !me) return null;
+  const box=document.createElement('div'); box.className='fr-box';
+  box.innerHTML='<div class="fr-h"><span class="fr-peng">'+pg('mazel',26)+'</span> Friends’ plans'+(items.length?' <span class="fr-n">'+items.length+'</span>':'')+'</div>';
+  items.forEach(it=>{
+    const r=document.createElement('div'); r.className='fr-item';
+    r.innerHTML='<div class="fr-t">'+(it.time?esc(it.time):'🐧')+'</div><div class="fr-b"><b>'+esc(it.name)+'</b>'+(it.note?'<div class="fr-note">'+esc(it.note)+'</div>':'')+
+      (it.place?'<a class="fr-map" target="_blank" rel="noopener" href="'+mapsLink(it.place)+'">📍 '+esc(it.place)+'</a>':'')+'</div>'+
+      (me?'<div class="fr-act"><button data-a="e" aria-label="Edit">✎</button><button data-a="d" aria-label="Delete">✕</button></div>':'');
+    if(me){
+      r.querySelector('[data-a="d"]').onclick=e=>{ e.stopPropagation(); it.del=true; it.u=Date.now(); saveFP(true); renderItin(); };
+      r.querySelector('[data-a="e"]').onclick=e=>{ e.stopPropagation(); openForm(box,raw,it); };
+    }
+    box.appendChild(r);
+  });
+  if(me){
+    const b=document.createElement('button'); b.className='fr-add'; b.textContent='＋ Add our plan for this day';
+    b.onclick=e=>{ e.stopPropagation(); openForm(box,raw,null); };
+    box.appendChild(b);
+  }
+  return box;
+}
+function openForm(box,raw,it){
+  const old=box.querySelector('.fr-form'); if(old) old.remove();
+  const f=document.createElement('div'); f.className='fr-form';
+  f.innerHTML='<input class="fr-in" id="frTime" placeholder="Time (e.g. 6pm)" maxlength="20"><input class="fr-in" id="frName" placeholder="What are you doing?" maxlength="80">'+
+    '<input class="fr-in" id="frPlace" placeholder="Place or address (optional, makes a map link)" maxlength="120"><textarea class="fr-in" id="frNote" rows="2" placeholder="Notes (optional)" maxlength="300"></textarea>'+
+    '<div class="fr-row"><button class="fr-save">Save</button><button class="fr-cancel">Cancel</button></div>';
+  if(it){ $('#frTime',f).value=it.time||''; $('#frName',f).value=it.name||''; $('#frPlace',f).value=it.place||''; $('#frNote',f).value=it.note||''; }
+  f.onclick=e=>e.stopPropagation();
+  $('.fr-cancel',f).onclick=()=>f.remove();
+  $('.fr-save',f).onclick=()=>{
+    const name=$('#frName',f).value.trim(); if(!name){ showToast('Add a name for the plan'); return; }
+    const rec=it||{id:uid(),day:raw.day};
+    Object.assign(rec,{time:$('#frTime',f).value.trim(),name,place:$('#frPlace',f).value.trim(),note:$('#frNote',f).value.trim(),u:Date.now(),del:false});
+    FP.items[rec.id]=rec; saveFP(true); STATE.expandedDays.add(raw.day); renderItin();
+  };
+  box.appendChild(f); const nm=$('#frName',f); if(nm) nm.focus();
+}
+function decorateItin(){
+  const wrap=$('#screen-itin'); if(!wrap) return;
+  const me=ROLE==='friend';
+  if(me && !wrap.querySelector('.fr-welcome')){
+    const w=document.createElement('div'); w.className='fr-welcome';
+    w.innerHTML='<div class="fr-wp">'+pg('bagel',46)+pg('mazel',46)+'</div><div><b>Welcome, friends!</b><br>This is the Kellys’ route. Tap a day to open it, press <b>🐧 We’ll join</b> on anything you’d like to do with them, and use <b>＋ Add our plan</b> for your own stops. They’ll see them too.</div>';
+    wrap.insertBefore(w,wrap.firstChild);
+  }
+  DAYS.forEach(raw=>{
+    const card=wrap.querySelector('.day-card[data-day="'+raw.day+'"]'); if(!card) return;
+    const body=$('.day-body',card); if(!body) return;
+    const eff=(typeof getEffectiveDay==='function')?getEffectiveDay(raw):raw;
+    const stops=eff.stops.filter(s=>s.name!=='[Removed]');
+    body.querySelectorAll('.stop-row').forEach((row,i)=>{
+      const st=stops[i]; if(!st) return; const key=stopKey(raw.day,st), j=FP.joins[key], on=!!(j&&j.v);
+      if(me){
+        const b=document.createElement('button'); b.className='fr-join'+(on?' on':''); b.textContent=on?'🐧 We’re joining ✓':'🐧 We’ll join';
+        b.onclick=e=>{ e.stopPropagation(); FP.joins[key]={v:!on,u:Date.now()}; saveFP(true); renderItin(); };
+        const c=$('.stop-content',row); if(c) c.appendChild(b);
+      } else if(on){
+        const t=document.createElement('div'); t.className='fr-joined'; t.textContent='🐧 Friends are joining'; const c=$('.stop-content',row); if(c) c.appendChild(t);
+      }
+    });
+    const box=friendBox(raw); if(box) body.appendChild(box);
+    const st=awayState(raw.dateObj), dd=$('.day-date',card);
+    if(st && dd && !dd.querySelector('.fr-tag')){ const t=document.createElement('span'); t.className='fr-tag '+st; t.textContent=st==='here'?'🐧 here':'🐧 away'; dd.appendChild(t); }
+    const items=Object.values(FP.items).filter(x=>!x.del&&x.day===raw.day).length;
+    if(items && !me){ const hd=$('.day-header',card); if(hd && !hd.querySelector('.fr-dot')){ const d=document.createElement('span'); d.className='fr-dot'; d.title='Friends have plans this day'; d.textContent='🐧'; hd.insertBefore(d,$('.day-city-tag',hd)); } }
+  });
+}
+const __ri3=renderItin; renderItin=function(){ __ri3.apply(this,arguments); try{ decorateItin(); }catch(e){ console.warn(e); } };
+
+/* ── "Travel" tab: friends' own page / read-only card for the Kellys ── */
+function basicsCard(edit){
+  const b=FP.basics, c=document.createElement('div'); c.className='fr-card';
+  if(edit){
+    c.innerHTML='<div class="fr-hero">'+pg('bagel',64)+pg('mazel',64)+'</div><div class="fr-title">Our trip basics</div>'+
+    '<label>We arrive in Japan<input type="date" id="fbArrive" class="fr-in"></label><label>We fly home<input type="date" id="fbDepart" class="fr-in"></label>'+
+    '<label>Our flights<textarea id="fbFlights" class="fr-in" rows="2" placeholder="Airline, flight numbers, times"></textarea></label>'+
+    '<label>Where we are staying<textarea id="fbLodging" class="fr-in" rows="2" placeholder="Hotel or apartment, address, dates"></textarea></label>'+
+    '<label>Notes for the Kellys<textarea id="fbNotes" class="fr-in" rows="2" placeholder="Ideas, must-sees, things to coordinate"></textarea></label>'+
+    '<button class="fr-save" id="fbSave">Save</button><div class="fr-hint">Saved plans sync to the Kellys automatically. Days outside your dates show “🐧 away” on the route.</div>';
+    $('#fbArrive',c).value=b.arrive||''; $('#fbDepart',c).value=b.depart||''; $('#fbFlights',c).value=b.flights||''; $('#fbLodging',c).value=b.lodging||''; $('#fbNotes',c).value=b.notes||'';
+    $('#fbSave',c).onclick=()=>{ FP.basics={arrive:$('#fbArrive',c).value,depart:$('#fbDepart',c).value,flights:$('#fbFlights',c).value.trim(),lodging:$('#fbLodging',c).value.trim(),notes:$('#fbNotes',c).value.trim(),u:Date.now()}; saveFP(true); showToast('Saved ✓'); try{ renderItin(); }catch(e){} };
+  } else {
+    const has=b.arrive||b.depart||b.flights||b.lodging||b.notes;
+    c.innerHTML='<div class="fr-hero">'+pg('mazel',48)+'</div><div class="fr-title">Friends’ trip</div>'+
+     (has?('<div class="fr-line"><b>Dates</b> '+esc(b.arrive||'?')+' → '+esc(b.depart||'?')+'</div>'+(b.flights?'<div class="fr-line"><b>Flights</b> '+esc(b.flights)+'</div>':'')+(b.lodging?'<div class="fr-line"><b>Staying</b> '+esc(b.lodging)+'</div>':'')+(b.notes?'<div class="fr-line"><b>Notes</b> '+esc(b.notes)+'</div>':'')):'<div class="fr-line">They haven’t added their dates yet.</div>');
+  }
+  return c;
+}
+const __rf=renderFlights;
+renderFlights=function(){
+  if(ROLE==='friend'){
+    const w=$('#screen-flights'); if(!w) return; w.innerHTML='';
+    w.appendChild(basicsCard(true));
+    const n=Object.values(FP.items).filter(x=>!x.del).length;
+    const s=document.createElement('div'); s.className='fr-card';
+    s.innerHTML='<div class="fr-title">🥛 Dairy-free help</div><div class="fr-line">Open <b>Translate</b> for a Japanese card that says you are lactose intolerant, and <b>Food</b> to filter for dairy-friendly places.</div><div class="fr-line">You have added <b>'+n+'</b> plan'+(n===1?'':'s')+' so far.</div>';
+    w.appendChild(s); return;
+  }
+  __rf.apply(this,arguments);
+  try{ const w=$('#screen-flights'); if(w && !w.querySelector('.fr-card')) w.insertBefore(basicsCard(false),w.firstChild); }catch(e){}
+};
+
+/* ── navigation guard for friends ── */
+const __nav9=navigate;
+navigate=function(screen){
+  if(ROLE==='friend' && ['tickets','customs','alerts','edit','links','hotels','adventure'].includes(screen)) screen='itin';
+  __nav9(screen);
+  if(screen==='flights' && ROLE==='friend') renderFlights();
+};
+
+/* ── dairy-friendly food guide ── */
+const DAIRY={
+ 'Fuunji':['easy','Pork-and-fish broth with wheat noodles — dairy is not a normal ingredient.'],
+ 'Ichiran':['easy','Pork-bone (tonkotsu) broth and noodles; dairy is not a normal ingredient.'],
+ 'Nagi Golden Gai':['easy','Sardine-based broth — no dairy expected.'],
+ 'Sushiro':['easy','Sushi is naturally dairy-free. Skip the desserts and creamy mayo-topped plates.'],
+ 'Uobei':['easy','Sushi is naturally dairy-free. Skip the desserts and creamy mayo-topped plates.'],
+ 'Omoide Yokocho':['easy','Grilled yakitori skewers; skip anything topped with cheese.'],
+ 'Nakamise':['ask','Savory snacks and senbei are usually fine. Sweets like ningyo-yaki, ice cream and cakes may contain milk or butter.'],
+ '7-Eleven':['ask','Onigiri and most drinks are fine. Check labels for 乳 (milk): breads, sandwiches and pastries often contain it.'],
+ 'Yakitori Arakiyama':['easy','Grilled skewers — dairy is not a normal ingredient.'],
+ 'Shabu Zen':['easy','Broth and thin-sliced meat; sesame sauce is not dairy. Sukiyaki uses egg, not milk.'],
+ 'Ajiyushin':['easy','Soba and tempura are normally dairy-free.'],
+ 'Takoyaki':['easy','Batter, octopus and sauce; the mayo is egg-based, not dairy.'],
+ 'Okonomiyaki — Mizuno':['easy','Batter, cabbage and sauce. Some versions add cheese, so ask for no cheese.'],
+ 'Kushikatsu — Daruma':['easy','Breaded skewers with a shared dipping sauce; skip the cheese skewers.'],
+ '551 Horai':['ask','The pork filling is fine, but the dough recipe can vary. Ask, or check the label for 乳.'],
+ 'Rikuro':['avoid','Cream cheese is the main ingredient. With mild lactose intolerance a few bites may be fine; lactase tablets can help if you use them.'],
+ 'Daiki Suisan':['easy','Sushi is naturally dairy-free. Skip the desserts.'],
+ 'Kinryu':['easy','Pork-based ramen — dairy is not a normal ingredient.'],
+ 'Kuromon':['easy','Seafood, skewers and fruit are fine. Watch for cream-filled desserts and milk-based drinks.'],
+ 'Yaekatsu':['easy','Breaded skewers; skip cheese skewers.'],
+ 'Kushinobo':['easy','Breaded skewers; skip cheese skewers.'],
+ 'Tsuruhashi Fugetsu':['easy','Okonomiyaki batter and toppings; skip any cheese options.'],
+ 'Yakiniku Manno':['easy','Grilled meat and rice; marinades are soy-based.'],
+ 'Udon-bo':['easy','Kitsune udon is broth, noodles and fried tofu.'],
+ 'Nishiki Market':['ask','Pickles, seafood skewers and tofu are fine; sweets and soft-serve may contain milk.'],
+ 'Shigetsu':['easy','Buddhist temple cuisine is plant-based, so naturally dairy-free.'],
+ 'Matcha Everything':['ask','Soft-serve, parfaits and lattes use milk or cream. Plain matcha tea and sweets like warabi mochi are fine; ask for soy milk (豆乳).'],
+ 'Pontocho':['ask','Mixed restaurants — show the lactose card and ask about cream sauces.']
+};
+const DBADGE={easy:['🟢','Dairy-easy'],ask:['🟡','Ask first'],avoid:['🔴','Dairy-heavy']};
+let dairyOnly=false;
+function dairyFor(name){ const k=Object.keys(DAIRY).find(x=>name.indexOf(x)===0||name.indexOf(x)>-1); return k?DAIRY[k]:null; }
+const __rfood=renderFood;
+renderFood=function(){
+  __rfood.apply(this,arguments);
+  try{
+    const w=$('#screen-food'); if(!w) return;
+    w.querySelectorAll('.food-card').forEach(card=>{
+      const nm=$('.food-name',card); if(!nm) return; const d=dairyFor(nm.textContent); if(!d) return;
+      card.dataset.dairy=d[0];
+      const meta=$('.food-meta',card); if(meta) meta.insertAdjacentHTML('beforeend',' · <span class="dairy-pill '+d[0]+'">'+DBADGE[d[0]][0]+' '+DBADGE[d[0]][1]+'</span>');
+      const body=$('.food-body',card); if(body) body.insertAdjacentHTML('afterbegin','<div class="dairy-note '+d[0]+'"><b>'+DBADGE[d[0]][0]+' Lactose:</b> '+d[1]+' <i>(general guidance — confirm ingredients with staff)</i></div>');
+    });
+    const bar=document.createElement('div'); bar.className='dairy-bar';
+    bar.innerHTML='<div class="dairy-title">🥛 Lactose-intolerance guide</div><div class="dairy-legend">🟢 dairy-easy · 🟡 ask first · 🔴 dairy-heavy</div><label class="dairy-toggle"><input type="checkbox" id="dairyOnly"> Show only dairy-easy places</label><div class="dairy-hint">Tip: show the lactose card in <b>Translate</b>. Milk (牛乳, 乳) also hides in breads, curry roux and cream sauces.</div>';
+    const first=w.firstElementChild; w.insertBefore(bar,first?first.nextSibling:null);
+    const cb=$('#dairyOnly',bar); cb.checked=dairyOnly;
+    const apply=()=>{ w.querySelectorAll('.food-card').forEach(c=>{ c.style.display=(dairyOnly&&c.dataset.dairy!=='easy')?'none':''; }); w.querySelectorAll('.food-cat-label,.food-city-header').forEach(l=>{ l.style.display=dairyOnly?'none':''; }); };
+    cb.onchange=()=>{ dairyOnly=cb.checked; apply(); }; apply();
+  }catch(e){ console.warn(e); }
+};
+
+/* ── Translate: lactose card for everybody; friends skip the Kellys' taxi list ── */
+const __rt9=renderTranslate;
+renderTranslate=function(){
+  __rt9.apply(this,arguments);
+  try{
+    const s=$('#screen-translate .staff-sec'); if(!s || s.dataset.fr) return; s.dataset.fr=1;
+    if(ROLE==='friend'){ [s.children[2],s.children[1]].forEach(e=>e&&e.remove()); }
+    const btn=document.createElement('button'); btn.className='st-save lactose-btn'; btn.textContent='🥛 Show lactose-intolerance card';
+    btn.onclick=()=>showStaff('私は乳糖不耐症です。牛乳、クリーム、チーズ、バターがたくさん入った料理は食べられません。少量なら大丈夫です。','I am lactose intolerant. I cannot eat dishes with a lot of milk, cream, cheese or butter. Small amounts are OK.','');
+    s.insertBefore(btn,s.children[1]||null);
+  }catch(e){ console.warn(e); }
+};
+
+/* ── boot ── */
+const __au9=afterUnlock;
+afterUnlock=function(){ try{ applyTheme(); }catch(e){} __au9.apply(this,arguments); };
+document.addEventListener('DOMContentLoaded',()=>{ try{ applyTheme(); }catch(e){} });
+try{ if(ROLE){ applyTheme(); renderItin(); } }catch(e){}
+})();
+
 </script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
@@ -6126,6 +6441,8 @@ if (firebaseConfig.apiKey) {
     Object.assign(FBx, {
       /* quests */
       setQuests: safe(s => setDoc(doc(db, 'trip', 'quests'), { completions: s, updatedAt: Date.now() })),
+      setFriend: safe(s => setDoc(doc(db, 'trip', 'friendPlans'), s)),
+      onFriend: safe(cb => onSnapshot(doc(db, 'trip', 'friendPlans'), snap => cb(snap.exists() ? snap.data() : null), e => console.warn(e))),
       onQuests: safe(cb => onSnapshot(doc(db, 'trip', 'quests'), snap => cb(snap.exists() ? (snap.data().completions || {}) : {}), e => console.warn(e))),
       /* ledger */
       addLedger: safe(it => { const x = Object.assign({}, it); delete x.synced; return setDoc(doc(db, 'ledger', it.id), x); }),
