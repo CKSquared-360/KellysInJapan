@@ -2059,7 +2059,11 @@ body[data-theme="penguin"]{
 body[data-theme="penguin"] .app-header{background-image:radial-gradient(circle at 12% 30%,rgba(255,255,255,.28) 1.4px,transparent 2px),radial-gradient(circle at 63% 70%,rgba(255,255,255,.22) 1.2px,transparent 2px),radial-gradient(circle at 88% 25%,rgba(255,255,255,.25) 1.6px,transparent 2px);background-size:120px 60px,90px 50px,150px 70px}
 body[data-theme="penguin"] .type-indicator{display:none}
 body[data-theme="penguin"] #penguinIcon{display:inline-flex;align-items:center;margin-right:4px}
-body[data-role="friend"] #nav-tickets,body[data-role="friend"] #nav-customs,body[data-role="friend"] #nav-alerts,body[data-role="friend"] #nav-adventure{display:none}
+body[data-role="friend"] #nav-alerts{display:none}
+.fr-empty{background:#eef6fd;border:1.5px dashed #9fcaec;border-radius:12px;padding:12px;margin:8px 0;font-size:.76rem;color:#1b3b57}
+.fr-where{font-size:.64rem;color:#2a6a9a;margin-top:3px;font-weight:700}.fr-ok{color:#16774a}.fr-todo{color:#b25a00}
+.fr-auto{font-size:.66rem;color:#2a6a9a;font-weight:700}
+select.fr-in{appearance:auto}
 .theme-btn{background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.25);border-radius:10px;color:#fff;font-size:.8rem;padding:3px 7px;margin-left:6px}
 .fr-box{margin:10px 0 4px;padding:10px;border-radius:12px;background:rgba(80,160,230,.10);border:1.5px dashed #5aa7e0}
 .fr-h{font-weight:900;font-size:.78rem;display:flex;align-items:center;gap:6px;color:var(--sky2)}
@@ -4742,9 +4746,8 @@ const DATA_VERSION='2027-03-trip-v2';
 })();
 
 let ROLE=null;                                   /* 'traveler' (full) · 'family' (view-only) */
-function canEdit(){ return ROLE==='traveler'; }
+function canEdit(){ return ROLE==='traveler'||ROLE==='friend'; }
 function isFriend(){ return ROLE==='friend'; }
-function isViewer(){ return ROLE==='family'||ROLE==='friend'; }
 function viewOnlyToast(){ showToast('👀 View-only access'); }
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
@@ -4763,7 +4766,7 @@ function deepReplace(o,map,seen){
 }
 const b64d=b=>Uint8Array.from(atob(b),c=>c.charCodeAt(0));
 
-const AUTH_BLOBS={"v":"uKZglphnuKpNMohz","traveler":{"salt":"vK+2Ae1j0tr6+PX4/dyV3w==","iv":"vi8hBAwLwDjod46J","ct":"uKZglphnuK7S7+cP3DlekyagjGHBUXTYmGUwhvCIGL3+Xxip2ImlG9P1+SrVEQB2ehsb1qwlPajHGqkjTIsT66qHSy940V5EfFsHcGYUn+j8Ta7Ej/q5Fu3a0SsV8IFJdl3LAHr2v0EGk11damleO+zn4zWFKcapSBseTaPyvYKoBIE7VAJmw8YS4ypShlMNlN6mbWDmhlOZSm9XQmx6rkVFp7j1NFFQHmFkFoh1IvbQx3KeaXBPzRX/tHvCnL6UlKCw99TdVZnMu5a0wFHrGZircp5/WcC/f5lzZpMvNwoPkgZjUs/wzI0qQuGLytUd+7NZ0MhhDhamwJwFO3CYbF3unUQrxScPEERu+BtTKTgwXgUvw1YF0rPbehaqHRpoL1G1qpF7IG7YwcbeipLpkjFhulUVDoGRXoeRjyngcPwxmuUYyFHvTFe8YaulpiUATwG3QgDI1Hxs959D1ALyDGflUxoPZbth3jwwA7aMUNbbSAh29Kv2eaFO0oQdjKXHRklDIEsBhMxLUE9Rhjx2cR9eSMLW1jYU8Genj9UEDBMeG8o5kpbfPU8ZJ7xc8RZdAxxpqmNYDOfVoRMQTh2m0F+FKeO+o/zQK0pXR20LzWK+zWTAwn3KTRwwBoTT73PqHj8CSx7poZb0GrhK5IvbnAeILA==","iter":150000},"family":{"salt":"XiVrwTvQmKPLYx1rNH3d6Q==","iv":"2wjeIsvU9rYDYsCs","ct":"pNMohzMzOFYegiofo228Pkxm1+oG9zLLSntmvcLCnw8nIrrYCY0b9zuqw0kJ5Dr3WqKm4vJkifDI7m6C2m32/NjzM7UDe45q2qbO7nroqOICTQtT+g37fMPmIIY=","iter":150000},"friend":{"salt":"/g+t22SKyenTG8uKg4C59w==","iv":"HPd1d/BkLewwHa9r","ct":"JL2HH8k8rM5rX8vuQXNdDUG+CvgSQZJ1U2ReFjQzLhQD4AeEV8BlBPfoC2n43+ro5Xv53YcXN1UMc3aO6DB4NtWviW4k2iLEBHyaOIIHnAqYnnO64/1VMAVT9qQ=","iter":150000}};
+const AUTH_BLOBS={"v":"uKZglphnuKpNMohz","traveler":{"salt":"vK+2Ae1j0tr6+PX4/dyV3w==","iv":"vi8hBAwLwDjod46J","ct":"uKZglphnuK7S7+cP3DlekyagjGHBUXTYmGUwhvCIGL3+Xxip2ImlG9P1+SrVEQB2ehsb1qwlPajHGqkjTIsT66qHSy940V5EfFsHcGYUn+j8Ta7Ej/q5Fu3a0SsV8IFJdl3LAHr2v0EGk11damleO+zn4zWFKcapSBseTaPyvYKoBIE7VAJmw8YS4ypShlMNlN6mbWDmhlOZSm9XQmx6rkVFp7j1NFFQHmFkFoh1IvbQx3KeaXBPzRX/tHvCnL6UlKCw99TdVZnMu5a0wFHrGZircp5/WcC/f5lzZpMvNwoPkgZjUs/wzI0qQuGLytUd+7NZ0MhhDhamwJwFO3CYbF3unUQrxScPEERu+BtTKTgwXgUvw1YF0rPbehaqHRpoL1G1qpF7IG7YwcbeipLpkjFhulUVDoGRXoeRjyngcPwxmuUYyFHvTFe8YaulpiUATwG3QgDI1Hxs959D1ALyDGflUxoPZbth3jwwA7aMUNbbSAh29Kv2eaFO0oQdjKXHRklDIEsBhMxLUE9Rhjx2cR9eSMLW1jYU8Genj9UEDBMeG8o5kpbfPU8ZJ7xc8RZdAxxpqmNYDOfVoRMQTh2m0F+FKeO+o/zQK0pXR20LzWK+zWTAwn3KTRwwBoTT73PqHj8CSx7poZb0GrhK5IvbnAeILA==","iter":150000},"family":{"salt":"XiVrwTvQmKPLYx1rNH3d6Q==","iv":"2wjeIsvU9rYDYsCs","ct":"pNMohzMzOFYegiofo228Pkxm1+oG9zLLSntmvcLCnw8nIrrYCY0b9zuqw0kJ5Dr3WqKm4vJkifDI7m6C2m32/NjzM7UDe45q2qbO7nroqOICTQtT+g37fMPmIIY=","iter":150000},"friend":{"salt":"24V4QWMr0RqFNseYoq9Mfw==","iv":"EjgDUgT+JHcJY0En","ct":"/EsZ7oNVRqpdGbMYb+eh1U4J8rbhE2q61pqRdHsDfRKzNG6RsnNCI7YEet1sJBVzcHR/Utjv/QnMnbq2B8jggGD4qt/EOLt2un2tbW9F+Oq2L27QNd1RZPplfOU=","iter":150000}};
 const AUTH={
   async derive(pass,saltB64,iter){
     const enc=new TextEncoder();
@@ -4906,7 +4909,7 @@ function renderItin(){
   const wrap=document.getElementById('screen-itin');
   wrap.innerHTML='';
   const bar=document.createElement('div'); bar.className='top-action-bar'; bar.style.cssText='display:flex;gap:8px;margin-bottom:10px;';
-  if(canEdit()){
+  if(canEdit()&&!isFriend()){
     bar.innerHTML=
      '<button onclick="navigate(\'edit\')" style="flex:1;background:linear-gradient(135deg,#cc0000,#990000);color:#fff;font-size:.72rem;font-weight:900;padding:9px;border-radius:10px;border:1.5px solid rgba(255,215,0,.35)">✏️ EDIT ITINERARY</button>'+
      '<button onclick="navigate(\'links\')" style="flex:1;background:linear-gradient(135deg,#1e2f7a,#162259);color:#ffd700;font-size:.72rem;font-weight:900;padding:9px;border-radius:10px;border:1.5px solid rgba(255,215,0,.35)">🔗 BOOKING LINKS</button>';
@@ -5261,7 +5264,7 @@ function renderHotels(){ if(typeof renderFlights==='function') renderFlights(); 
 /* ═══════════ QUESTS (XP) ═══════════ */
 let REMOTE_QUESTS=null;
 function loadQuestState(){
-  if(isViewer()&&REMOTE_QUESTS) return REMOTE_QUESTS;
+  if(ROLE==='family'&&REMOTE_QUESTS) return REMOTE_QUESTS;
   try{ return JSON.parse(localStorage.getItem('japan2026_quests')||'{}'); }catch(e){ return {}; }
 }
 function saveQuestState(state){
@@ -5301,7 +5304,7 @@ function renderAdventure(){
     '<div class="trainer-stat"><span class="trainer-stat-val">'+left+'</span><span class="trainer-stat-lbl">Remaining</span></div>'+
     '<div class="trainer-stat"><span class="trainer-stat-val">'+totalXP+'</span><span class="trainer-stat-lbl">Total XP</span></div></div>';
   wrap.appendChild(tc);
-  if(isViewer()){
+  if(ROLE==='family'){
     const n=document.createElement('div'); n.className='info-banner blue'; n.innerHTML='👀 Following along — this is the family’s live progress'+(window.FB&&FB.ready?'.':' (it updates once shared sync is switched on).'); wrap.appendChild(n);
   }
   const pb=document.createElement('button');
@@ -5337,7 +5340,7 @@ function toggleDriveEmbed(){
 function driveCardHtml(){
   const ok=driveReady();
   return '<div class="drive-card"><div class="drive-h">📁 Family Photo & Video Folder <small>Google Drive</small></div>'+
-   '<div class="drive-sub">'+(isViewer()?'Trip photos and videos appear here as they are added.':'Put your best photos and all videos here — family can watch from anywhere. In the Drive app tap + → Upload (Cheryl can add too).')+'</div>'+
+   '<div class="drive-sub">'+(ROLE==='family'?'Trip photos and videos appear here as they are added.':'Put your best photos and all videos here — family can watch from anywhere. In the Drive app tap + → Upload (Cheryl can add too).')+'</div>'+
    (ok?'<div class="drive-btns"><a class="drive-btn primary" href="'+driveUrl()+'" target="_blank" rel="noopener">Open folder ↗</a><button class="drive-btn" onclick="toggleDriveEmbed()">Preview here</button></div><div id="drive-embed"></div>':
        '<div class="drive-sub">Sign in to see the folder link.</div>')+'</div>';
 }
@@ -5435,7 +5438,7 @@ function renderGallery(){
   const wrap=document.getElementById('screen-photos'); wrap.innerHTML='';
   const shared=!!(window.FB&&FB.ready&&FB.mediaReady), g=loadLocalGallery();
   const hdr=document.createElement('div'); hdr.className='info-banner blue';
-  hdr.innerHTML='<strong>📸 Trip Photo & Video Gallery</strong><br>'+(isViewer()?'Following along: the Drive folder below has the photos and videos.':'Photos you add with ＋ below are saved on this phone, day by day. Use the Drive folder for videos and for sharing with family.');
+  hdr.innerHTML='<strong>📸 Trip Photo & Video Gallery</strong><br>'+(ROLE==='family'?'Following along: the Drive folder below has the photos and videos.':'Photos you add with ＋ below are saved on this phone, day by day. Use the Drive folder for videos and for sharing with family.');
   wrap.appendChild(hdr);
   const dv=document.createElement('div'); dv.innerHTML=driveCardHtml(); wrap.appendChild(dv.firstChild);
   const back=document.createElement('button'); back.className='gal-back'; back.textContent='← Back to Quest'; back.onclick=()=>navigate('adventure'); wrap.appendChild(back);
@@ -5647,7 +5650,7 @@ renderWeather=async function(){
 const _navBase=navigate;
 navigate=function(screen){
   const famBlocked=['tickets','customs','alerts','edit','links','hotels'];
-  if(isViewer()&&famBlocked.includes(screen)) screen='itin';
+  if(ROLE==='family'&&famBlocked.includes(screen)) screen='itin';
   _navBase(screen);
   if(screen==='tickets') renderTickets();
   if(screen==='flights') renderFlights();
@@ -5663,15 +5666,16 @@ function afterUnlock(){
 /* shared sync (Firebase) wiring — only does anything once the module reports ready */
 window.addEventListener('fb-ready',()=>{
   FB.onQuests(remote=>{
+    if(ROLE==='friend') return;
     remote=remote||{};
-    if(isViewer()){ REMOTE_QUESTS=remote; updateQuestBadge(); if(STATE.activeScreen==='adventure') renderAdventure(); return; }
+    if(ROLE==='family'){ REMOTE_QUESTS=remote; updateQuestBadge(); if(STATE.activeScreen==='adventure') renderAdventure(); return; }
     const local=loadQuestState(); let changed=false;
     Object.keys(remote).forEach(k=>{ if(remote[k]&&!local[k]){ local[k]=true; changed=true; } });
     if(changed){ try{ localStorage.setItem('japan2026_quests',JSON.stringify(local)); }catch(e){} updateQuestBadge(); if(STATE.activeScreen==='adventure') renderAdventure(); }
     if(Object.keys(local).some(k=>local[k]&&!remote[k])) FB.setQuests(local);   /* push anything the cloud is missing */
   });
   FB.onMedia(map=>{ REMOTE_MEDIA=map||{}; if(STATE.activeScreen==='photos') renderGallery(); });
-  if(canEdit()){
+  if(canEdit()&&ROLE!=='friend'){
     FB.onLedger(remote=>{
       const ids=new Set(remote.map(i=>i.id)), keep=LEDGER.items.filter(i=>!ids.has(i.id)&&i.synced===false);
       LEDGER.items=remote.map(i=>Object.assign({synced:true},i)).concat(keep).sort((a,b)=>(b.at||'').localeCompare(a.at||'')); saveLedger();
@@ -6065,6 +6069,7 @@ function staffDest(){
   const hv=k=>HOTELS.find(x=>x.key===k)||{};
   const L=[['Tokyo apartment',hv('tokyo_apt'),null],['Tōnosawa ryokan (Hakone)',hv('hakone_ryokan'),'塔ノ沢 一の湯 本館'],['Osaka apartment',hv('osaka_hotel'),null],['Conrad Tokyo',hv('hotel_conrad'),'コンラッド東京'],
     ['Haneda Airport Terminal 3',{sub:'Haneda Airport T3',lat:35.5494,lng:139.7798},'羽田空港 第3ターミナル'],['Shin-Osaka Station',{sub:'Shin-Osaka Station',lat:34.7335,lng:135.5001},'新大阪駅'],['Odawara Station',{sub:'Odawara Station',lat:35.2563,lng:139.1550},'小田原駅'],['Shinagawa Station',{sub:'Shinagawa Station',lat:35.6285,lng:139.7387},'品川駅']];
+  if(ROLE==='friend'){ L.splice(0,4); HOTELS.forEach(h=>L.unshift([h.name,{sub:h.sub||h.name,lat:h.lat,lng:h.lng},null])); }
   return L.map(x=>({label:x[0],jp:x[2],addr:String(x[1].sub||x[1].name||x[0]).split(' · ')[0],lat:x[1].lat,lng:x[1].lng}));
 }
 function allergyChosen(){ const a=bkRead(K2.allergy); return Array.isArray(a)?a:[]; }
@@ -6093,7 +6098,7 @@ function staffSectionEl(){
   return sec;
 }
 const __rtBase=renderTranslate;
-renderTranslate=function(){ __rtBase.apply(this,arguments); try{ if(!canEdit()&&ROLE!=='friend') return; const w=document.getElementById('screen-translate'); if(!w||w.querySelector('.staff-sec')) return; w.insertBefore(staffSectionEl(),w.firstChild); }catch(e){ console.warn(e); } };
+renderTranslate=function(){ __rtBase.apply(this,arguments); try{ if(!canEdit()) return; const w=document.getElementById('screen-translate'); if(!w||w.querySelector('.staff-sec')) return; w.insertBefore(staffSectionEl(),w.firstChild); }catch(e){ console.warn(e); } };
 
 /* ── wire into Route and Quest tabs ── */
 const __riBase2=renderItin;
@@ -6102,7 +6107,7 @@ renderItin=function(){
   try{
     const w=document.getElementById('screen-itin'); if(!w) return;
     if(!w.querySelector('#nowCard')){ const first=w.querySelector('.day-card'); w.insertBefore(nowCardEl(),first||null); }
-    if(canEdit()&&!w.querySelector('#lugCard')){ const bk=w.querySelector('#bk-card'); const l=lugCardEl(); if(bk) w.insertBefore(l,bk); else w.appendChild(l); }
+    if(canEdit()&&!isFriend()&&!w.querySelector('#lugCard')){ const bk=w.querySelector('#bk-card'); const l=lugCardEl(); if(bk) w.insertBefore(l,bk); else w.appendChild(l); }
   }catch(e){ console.warn(e); }
 };
 const __raBase2=renderAdventure;
@@ -6145,7 +6150,7 @@ function mergeExtra(payload,rep){
 try{ checkStepQuests(); }catch(e){}
 
 /* ═══════════════════════════════════════════════════════════
-   FRIENDS LAYER · THEMES (Pokémon / Penguin) · DAIRY HELPERS
+   FRIENDS EDITION · PRIVATE PAGES · THEMES · DAIRY HELPERS
    ═══════════════════════════════════════════════════════════ */
 (function(){
 const $=(s,r)=> (r||document).querySelector(s);
@@ -6156,26 +6161,55 @@ window.FP=FP;
 
 /* ── penguin artwork (original characters, drawn in SVG) ── */
 function penguin(o){
-  o=o||{}; const s=o.size||64, body=o.body||'#27425e', beak='#ffb347';
-  let acc='';
-  if(o.hat==='kippah') acc+='<ellipse cx="50" cy="21" rx="11" ry="5.5" fill="'+(o.hatc||'#4f9be0')+'" stroke="#fff" stroke-width="1.3"/><path d="M43 21 Q50 17 57 21" stroke="#fff" stroke-width="1" fill="none" opacity=".85"/>';
-  if(o.hat==='candles') acc+='<g><rect x="37" y="14" width="4" height="9" rx="1" fill="#fff"/><rect x="48" y="11" width="4" height="12" rx="1" fill="#fff"/><rect x="59" y="14" width="4" height="9" rx="1" fill="#fff"/><ellipse cx="39" cy="11.5" rx="2.2" ry="3.4" fill="#ffc83d"/><ellipse cx="50" cy="8" rx="2.2" ry="3.4" fill="#ffc83d"/><ellipse cx="61" cy="11.5" rx="2.2" ry="3.4" fill="#ffc83d"/></g>';
-  if(o.scarf) acc+='<g><rect x="23" y="55" width="54" height="9" rx="4.5" fill="#fff"/><rect x="23" y="57.2" width="54" height="1.8" fill="#4f9be0"/><rect x="23" y="60.2" width="54" height="1.8" fill="#4f9be0"/><rect x="66" y="62" width="9" height="14" rx="2" fill="#fff"/><rect x="66" y="65" width="9" height="1.6" fill="#4f9be0"/><rect x="66" y="69" width="9" height="1.6" fill="#4f9be0"/></g>';
-  if(o.bow) acc+='<g><path d="M50 62 L40 56 L40 68 Z M50 62 L60 56 L60 68 Z" fill="#e9715c"/><circle cx="50" cy="62" r="3" fill="#c9503e"/></g>';
-  if(o.glasses) acc+='<g fill="none" stroke="#ffc857" stroke-width="2"><circle cx="40" cy="43" r="7"/><circle cx="60" cy="43" r="7"/><path d="M47 43h6"/></g>';
+  o=o||{}; const s=o.size||64, body=o.body||'#27425e', beak='#ffb347', pose=o.pose||'';
+  let back='', front='', flip, feet='<ellipse cx="42" cy="91" rx="9" ry="4" fill="'+beak+'"/><ellipse cx="58" cy="91" rx="9" ry="4" fill="'+beak+'"/>';
+  const down='<ellipse cx="22" cy="63" rx="6.5" ry="16" transform="rotate(14 22 63)" fill="'+body+'"/><ellipse cx="78" cy="63" rx="6.5" ry="16" transform="rotate(-14 78 63)" fill="'+body+'"/>';
+  flip=down;
+  if(pose==='ski'){
+    back='<g stroke="#8a97a6" stroke-width="2" stroke-linecap="round"><path d="M16 60 L6 96"/><path d="M84 60 L94 96"/></g><circle cx="6" cy="96" r="2.4" fill="none" stroke="#8a97a6" stroke-width="1.5"/><circle cx="94" cy="96" r="2.4" fill="none" stroke="#8a97a6" stroke-width="1.5"/>';
+    feet='<g transform="rotate(-5 30 95)"><rect x="8" y="93" width="44" height="4.5" rx="2.2" fill="#e9715c"/></g><g transform="rotate(5 70 95)"><rect x="48" y="93" width="44" height="4.5" rx="2.2" fill="#e9715c"/></g><ellipse cx="40" cy="91" rx="8" ry="3.4" fill="'+beak+'"/><ellipse cx="60" cy="91" rx="8" ry="3.4" fill="'+beak+'"/>';
+    front='<path d="M35 27 Q50 3 65 27 Z" fill="#e9715c"/><rect x="34" y="25" width="32" height="6" rx="3" fill="#fff"/><circle cx="50" cy="8" r="4.5" fill="#fff"/><rect x="36" y="35" width="28" height="7" rx="3.5" fill="#7fc4ff" opacity=".0"/>';
+  }
+  if(pose==='lift'){
+    flip='<ellipse cx="19" cy="38" rx="6.5" ry="16" transform="rotate(-10 19 38)" fill="'+body+'"/><ellipse cx="81" cy="38" rx="6.5" ry="16" transform="rotate(10 81 38)" fill="'+body+'"/>';
+    back='<g><rect x="4" y="9" width="92" height="3.6" rx="1.8" fill="#9aa5b1"/><rect x="6" y="1" width="6" height="20" rx="2" fill="#3b4350"/><rect x="88" y="1" width="6" height="20" rx="2" fill="#3b4350"/><rect x="13" y="4" width="4" height="14" rx="1.6" fill="#e9715c"/><rect x="83" y="4" width="4" height="14" rx="1.6" fill="#e9715c"/></g>';
+    front='<rect x="31" y="26" width="38" height="5.5" rx="2.7" fill="#e9715c"/>';
+  }
+  if(pose==='pickle'){
+    flip='<ellipse cx="22" cy="63" rx="6.5" ry="16" transform="rotate(14 22 63)" fill="'+body+'"/><ellipse cx="80" cy="54" rx="6.5" ry="15" transform="rotate(-48 80 54)" fill="'+body+'"/>';
+    back='<circle cx="12" cy="30" r="6" fill="#d9f24e" stroke="#9ab61c" stroke-width="1"/><g fill="#9ab61c"><circle cx="10" cy="28" r="1"/><circle cx="14" cy="29" r="1"/><circle cx="11" cy="33" r="1"/><circle cx="15" cy="33" r="1"/></g>';
+    front='<g><rect x="84" y="36" width="5" height="12" rx="2" transform="rotate(30 86 42)" fill="#a56a2b"/><ellipse cx="94" cy="30" rx="9.5" ry="12" transform="rotate(30 94 30)" fill="#4f9be0" stroke="#2a6a9a" stroke-width="1.6"/></g><rect x="31" y="26" width="38" height="5.5" rx="2.7" fill="#fff"/><rect x="31" y="28" width="38" height="2" fill="#e9715c"/>';
+  }
+  if(pose==='ramen'){
+    front='<path d="M47 52 Q40 40 30 46 Q22 56 30 64 Q38 72 36 78" fill="none" stroke="#ffd36b" stroke-width="2.6" stroke-linecap="round"/><path d="M53 52 Q60 42 70 47" fill="none" stroke="#ffd36b" stroke-width="2.6" stroke-linecap="round"/><path d="M20 74 H80 Q78 99 50 99 Q22 99 20 74Z" fill="#f7f7f7" stroke="#e9715c" stroke-width="2.2"/><ellipse cx="50" cy="74" rx="30" ry="5" fill="#f5c76b" stroke="#e9715c" stroke-width="2"/><circle cx="40" cy="73" r="3" fill="#fff" stroke="#e9715c" stroke-width=".8"/><path d="M62 70 L86 44 M68 72 L90 48" stroke="#a56a2b" stroke-width="2.2" stroke-linecap="round"/>';
+    feet='';
+  }
   return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="'+s+'" height="'+s+'" role="img" aria-label="cute penguin">'+
-   '<ellipse cx="50" cy="94" rx="24" ry="3.2" fill="#000" opacity=".12"/>'+
-   '<ellipse cx="22" cy="63" rx="6.5" ry="16" transform="rotate(14 22 63)" fill="'+body+'"/><ellipse cx="78" cy="63" rx="6.5" ry="16" transform="rotate(-14 78 63)" fill="'+body+'"/>'+
-   '<ellipse cx="50" cy="55" rx="30" ry="37" fill="'+body+'"/><ellipse cx="50" cy="62" rx="21" ry="28" fill="#fff"/>'+
-   '<ellipse cx="42" cy="91" rx="9" ry="4" fill="'+beak+'"/><ellipse cx="58" cy="91" rx="9" ry="4" fill="'+beak+'"/>'+
+   '<ellipse cx="50" cy="95" rx="26" ry="3.2" fill="#000" opacity=".12"/>'+back+flip+
+   '<ellipse cx="50" cy="55" rx="30" ry="37" fill="'+body+'"/><ellipse cx="50" cy="62" rx="21" ry="28" fill="#fff"/>'+feet+
    '<circle cx="40" cy="43" r="4.6" fill="#101c2c"/><circle cx="60" cy="43" r="4.6" fill="#101c2c"/><circle cx="41.6" cy="41.4" r="1.6" fill="#fff"/><circle cx="61.6" cy="41.4" r="1.6" fill="#fff"/>'+
    '<circle cx="31" cy="52" r="4.2" fill="#ffb3a7" opacity=".7"/><circle cx="69" cy="52" r="4.2" fill="#ffb3a7" opacity=".7"/>'+
-   '<path d="M44 50 Q50 45 56 50 Q50 58 44 50Z" fill="'+beak+'"/>'+acc+'</svg>';
+   '<path d="M44 50 Q50 45 56 50 Q50 58 44 50Z" fill="'+beak+'"/>'+front+'</svg>';
 }
 window.penguin=penguin;
-const PENGUINS={bagel:{hat:'kippah'},mazel:{scarf:1,body:'#2d5578'},noodle:{glasses:1,bow:1,body:'#34495e'},latke:{hat:'candles',body:'#2a4a66'}};
-window.PENGUINS=PENGUINS;
+const PENGUINS={skier:{pose:'ski'},lifter:{pose:'lift',body:'#2d5578'},pickle:{pose:'pickle',body:'#34495e'},ramen:{pose:'ramen',body:'#2a4a66'}};
 const pg=(k,s)=>penguin(Object.assign({size:s||56},PENGUINS[k]||{}));
+window.PENGUINS=PENGUINS;
+
+/* ── private storage namespace: friends' own Catch / Quest / Customs data lives under jf_* keys, never mixed with the Kellys' ── */
+const NS_EXEMPT=['japan2026_session','japan2026_theme','japan2026_friendplans','japan2026_dataver','japan2026_lastbackup'];
+const _lsGet=Storage.prototype.getItem, _lsSet=Storage.prototype.setItem, _lsRem=Storage.prototype.removeItem;
+const rawGet=k=>_lsGet.call(localStorage,k), rawSet=(k,v)=>_lsSet.call(localStorage,k,v);
+function nsKey(k){ return (window.__NS&&typeof k==='string'&&k.indexOf('japan2026_')===0&&NS_EXEMPT.indexOf(k)<0)?window.__NS+k.slice(10):k; }
+Storage.prototype.getItem=function(k){ return _lsGet.call(this,this===localStorage?nsKey(k):k); };
+Storage.prototype.setItem=function(k,v){ const n=this===localStorage?nsKey(k):k; _lsSet.call(this,n,v); if(this===localStorage&&n!==k) pvTouch(n); };
+Storage.prototype.removeItem=function(k){ const n=this===localStorage?nsKey(k):k; _lsRem.call(this,n); if(this===localStorage&&n!==k) pvTouch(n); };
+
+/* the friends never write to the Kellys' shared cloud data */
+(function(){ const F=window.FB=window.FB||{}; let r=!!F.ready, m=!!F.mediaReady;
+  Object.defineProperty(F,'ready',{configurable:true,enumerable:true,get(){ return ROLE==='friend'?false:r; },set(v){ r=v; }});
+  Object.defineProperty(F,'mediaReady',{configurable:true,enumerable:true,get(){ return ROLE==='friend'?false:m; },set(v){ m=v; }});
+})();
 
 /* ── theme ── */
 function curTheme(){ try{ const t=localStorage.getItem(TH_KEY); if(t==='pokemon'||t==='penguin') return t; }catch(e){} return ROLE==='friend'?'penguin':'pokemon'; }
@@ -6186,52 +6220,156 @@ function applyTheme(){
   const h1=$('.app-header-title h1'), jp=$('.app-header-title .jp'), meta=$('.app-header-meta'), ic=$('.pokeball-icon');
   if(h1) h1.textContent=pen?'WADDLE JAPAN':'JAPAN 2027';
   if(jp) jp.textContent=pen?'日本 🐧':'日本旅行';
-  if(meta) meta.innerHTML='MAR 26 – APR 10<br>'+(pen?'FLOCK: 3 + FRIENDS':'TRAINER PARTY: 3')+' <span id="rolePill" class="role-pill">'+pillText()+'</span>';
-  if(ic){ let pi=$('#penguinIcon'); if(pen){ if(!pi){ pi=document.createElement('span'); pi.id='penguinIcon'; pi.innerHTML=pg('bagel',30); ic.parentNode.insertBefore(pi,ic.nextSibling); } ic.style.display='none'; pi.style.display=''; } else { ic.style.display=''; if(pi) pi.style.display='none'; } }
-  const nf=$('#nav-flights'); if(nf){ const isF=ROLE==='friend'; const ni=$('.nav-icon',nf), nl=$('.nav-label',nf); if(ni) ni.textContent=isF?'🐧':'🗺️'; if(nl) nl.textContent=isF?'Us':'Travel'; }
-  const tb=$('#themeBtn'); if(tb) tb.textContent=pen?'⚡':'🐧';
-  if(tb) tb.title=pen?'Switch to Pokémon theme':'Switch to penguin theme';
+  if(meta) meta.innerHTML='MAR 26 – APR 10<br>'+(pen?(ROLE==='friend'?'OUR FLOCK':'FLOCK: 3 + FRIENDS'):'TRAINER PARTY: 3')+' <span id="rolePill" class="role-pill">'+pillText()+'</span>';
+  if(ic){ let pi=$('#penguinIcon'); if(pen){ if(!pi){ pi=document.createElement('span'); pi.id='penguinIcon'; pi.innerHTML=pg('skier',30); ic.parentNode.insertBefore(pi,ic.nextSibling); } ic.style.display='none'; pi.style.display=''; } else { ic.style.display=''; if(pi) pi.style.display='none'; } }
+  const tb=$('#themeBtn'); if(tb){ tb.textContent=pen?'⚡':'🐧'; tb.title=pen?'Switch to Pokémon theme':'Switch to penguin theme'; }
 }
 window.toggleTheme=function(){ const n=curTheme()==='penguin'?'pokemon':'penguin'; try{ localStorage.setItem(TH_KEY,n); }catch(e){} applyTheme(); try{ renderItin(); }catch(e){} };
 
-/* ── friend-plan storage + merge (two friends can edit from two phones) ── */
+/* ── shared friend plans (Route layer, the Kellys can see it) ── */
+const TYPES={see:['📍','Sightseeing'],eat:['🍜','Food / drink'],shop:['🛍️','Shopping'],book:['🎟️','Needs a ticket or reservation'],stay:['🏨','Stay (hotel / apartment)'],fly:['✈️','Flight'],move:['🚆','Train / taxi / bus']};
+function guessType(t){ t=(t||'').toLowerCase();
+  if(/flight|airline|airport|\bfly\b/.test(t)) return 'fly';
+  if(/hotel|airbnb|apartment|ryokan|check.?in|\bstay\b/.test(t)) return 'stay';
+  if(/\btrain\b|shinkansen|taxi|\bbus\b|metro|subway|ferry|transfer/.test(t)) return 'move';
+  if(/ticket|reserv|\bbook|museum|\btour\b|disney|teamlab|\bshow\b|class|workshop|tattoo|lottery|observation|sky\b/.test(t)) return 'book';
+  if(/dinner|lunch|breakfast|ramen|sushi|cafe|café|\beat\b|restaurant|izakaya|market|yakitori|coffee|food|udon|soba|brunch/.test(t)) return 'eat';
+  if(/\bshop|\bbuy\b|store|mall|uniqlo|shopping|pokemon center|souvenir/.test(t)) return 'shop';
+  return 'see'; }
+const uid=()=>'f'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const mapsLink=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+const dayInfo=n=>DAYS.find(d=>d.day===n)||{};
+function addDaysISO(iso,n){ const d=new Date(iso+'T12:00:00Z'); d.setUTCDate(d.getUTCDate()+n); return d.toISOString().slice(0,10); }
+function fmtShort(iso){ return new Date(iso+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'}); }
+function hashStr(s){ let h=0; for(let i=0;i<s.length;i++){ h=(h*31+s.charCodeAt(i))|0; } return Math.abs(h).toString(36); }
+const teamNames=()=>{ const n=(FP.basics.names||'').split(/[,&]| and /).map(x=>x.trim()).filter(Boolean); return [n[0]||'Friend 1',n[1]||'Friend 2']; };
+const teamLabel=()=>{ const n=teamNames(); return (FP.basics.names?n[0]+' & '+n[1]:'OUR FLOCK').toUpperCase(); };
+
 function saveFP(push){
   FP.updatedAt=Date.now();
   try{ localStorage.setItem(FP_KEY,JSON.stringify(FP)); }catch(e){}
   if(push && ROLE==='friend' && window.FB && FB.setFriend) FB.setFriend(JSON.parse(JSON.stringify(FP)));
+  if(ROLE==='friend') rebuildFriend();
 }
 function mergeFP(r){
   if(!r) return false; let ch=false;
   Object.keys(r.items||{}).forEach(id=>{ const a=FP.items[id], b=r.items[id]; if(!a||(b.u||0)>(a.u||0)){ FP.items[id]=b; ch=true; } });
   Object.keys(r.joins||{}).forEach(k=>{ const a=FP.joins[k], b=r.joins[k]; if(!a||(b.u||0)>(a.u||0)){ FP.joins[k]=b; ch=true; } });
   if(r.basics && (r.basics.u||0)>(FP.basics.u||0)){ FP.basics=r.basics; ch=true; }
-  if(ch) saveFP(false);
+  if(ch){ saveFP(false); }
   return ch;
 }
 window.mergeFP=mergeFP;
-function refreshFriendUI(){ try{ if(STATE.activeScreen==='itin') renderItin(); if(STATE.activeScreen==='flights') renderFlights(); }catch(e){} }
+
+/* ── private sync between the friends' own phones (per-key, newest wins) ── */
+const PV={ts:{},t:null};
+function pvLoadTs(){ try{ PV.ts=JSON.parse(rawGet('jf__ts')||'{}')||{}; }catch(e){ PV.ts={}; } }
+const pvSkip=k=>/^jf_(_ts|photos|gallery)$/.test(k);
+function pvTouch(k){ if(pvSkip(k)||ROLE!=='friend') return; PV.ts[k]=Date.now(); rawSet('jf__ts',JSON.stringify(PV.ts)); clearTimeout(PV.t); PV.t=setTimeout(pvPush,1500); }
+function pvPush(){
+  if(ROLE!=='friend'||!(window.FB&&FB.setFriendPrivate)) return;
+  const keys={}; for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k.indexOf('jf_')===0&&!pvSkip(k)) keys[k]=rawGet(k); }
+  const d={keys,ts:PV.ts,updatedAt:Date.now()}; if(JSON.stringify(d).length>900000){ console.warn('private data too large to sync'); return; }
+  FB.setFriendPrivate(d);
+}
+function pvPull(r){
+  if(!r||ROLE!=='friend') return; let ch=false;
+  Object.keys(r.keys||{}).forEach(k=>{ if(pvSkip(k)||k.indexOf('jf_')!==0) return; const rt=(r.ts||{})[k]||0; if(rt>(PV.ts[k]||0)){ rawSet(k,r.keys[k]); PV.ts[k]=rt; ch=true; } });
+  if(ch){ rawSet('jf__ts',JSON.stringify(PV.ts)); reloadFriendState(); }
+}
+function reloadFriendState(){
+  try{ loadTickets(); loadLedger(); }catch(e){}
+  try{ rebuildFriend(); }catch(e){}
+  refreshFriendUI(true);
+}
+function refreshFriendUI(all){
+  try{
+    const sc=STATE.activeScreen;
+    if(sc==='itin') renderItin(); else if(sc==='flights') renderFlights(); else if(sc==='tickets') renderTickets(); else if(sc==='adventure') renderAdventure(); else if(sc==='customs') renderCustoms();
+    if(all){ updateQuestBadge(); }
+  }catch(e){}
+}
+
+/* ── friends' own Catch / Travel / Quest / Customs, built automatically from their Route plans ── */
+let KELLY_ITEMS={}, KELLY_ALIAS={}, KELLY_SNAP=false, FRIEND_VIEW={flights:[],stays:[],moves:[],shops:[]};
+function snapshotKelly(){
+  if(KELLY_SNAP) return; KELLY_SNAP=true;
+  Object.assign(KELLY_ALIAS,TICKET_ALIAS);
+  BOOKABLE_ITEMS.forEach(i=>{ KELLY_ITEMS[i.key]={name:i.name,icon:i.icon,url:i.url,timeLabel:i.timeLabel||'',walkin:!!i.walkin}; });
+}
+function rebuildFriend(){
+  if(ROLE!=='friend') return; snapshotKelly();
+  { const nn=teamNames(); STEP_PEOPLE.length=0; STEP_PEOPLE.push(['corby',nn[0]],['cheryl',nn[1]]); LEDGER_WHO.length=0; LEDGER_WHO.push(nn[0],nn[1],'Both'); }
+  BOOKABLE_ITEMS.length=0; HOTELS.length=0; FLIGHT_CARDS.length=0; TRANSPORT.length=0; QUESTS.length=0; ALERTS.length=0;
+  Object.keys(TICKET_ALIAS).forEach(k=>delete TICKET_ALIAS[k]);
+  FRIEND_VIEW={flights:[],stays:[],moves:[],shops:[]};
+  const live=Object.values(FP.items).filter(x=>!x.del).sort((a,b)=>(a.day-b.day)||((a.time||'~').localeCompare(b.time||'~')));
+  live.forEach(it=>{
+    const t=TYPES[it.type]?it.type:'see', tt=TYPES[t], d=dayInfo(it.day), key='f_'+it.id, url=it.place?mapsLink(it.place):'#';
+    if(t==='book'||t==='stay'||t==='fly') BOOKABLE_ITEMS.push({key,name:esc(it.name),icon:tt[0],url,urgency:t==='book'?'med':'high',day:it.day,timeLabel:it.time||'',optional:false,walkin:false,
+      instructions:(it.note?esc(it.note)+' · ':'')+'Book it, then enter the confirmation number here and press CATCH IT. It will show as booked on your Route.'});
+    if(t==='see'||t==='eat'||t==='shop'||t==='book') QUESTS.push({id:'qf_'+it.id,cat:'🐧 Our plans',icon:tt[0],name:it.name,day:'Day '+it.day,xp:t==='book'?150:100,photo:t==='see'});
+    if(t==='fly') FRIEND_VIEW.flights.push({key,it,d});
+    if(t==='stay'){ const n=Math.max(1,parseInt(it.nights)||1), a=d.dateObj, b=a?addDaysISO(a,n):''; FRIEND_VIEW.stays.push({key,it,d,n,label:a?fmtShort(a)+' – '+fmtShort(b)+' · '+n+' night'+(n>1?'s':''):n+' night(s)'});
+      HOTELS.push({key,name:it.name,sub:it.place||it.name,nights:'',note:it.note||'',status:'todo',color:'#4f9be0'}); }
+    if(t==='move') FRIEND_VIEW.moves.push({it,d});
+    if(t==='shop') FRIEND_VIEW.shops.push({it,d});
+  });
+  /* stops they chose to join on the Kellys' route */
+  Object.keys(FP.joins).forEach(k=>{
+    const j=FP.joins[k]; if(!j||!j.v) return; const p=k.split('|'), dn=+p[0], nm=p.slice(1).join('|'), d=dayInfo(dn), st=(d.stops||[]).find(s=>s.name===nm); if(!st) return;
+    QUESTS.push({id:'qj_'+hashStr(k),cat:'🤝 With the Kellys',icon:'⭐',name:nm,day:'Day '+dn,xp:100,photo:false});
+    if(st.ticketKey){ const c=KELLY_ALIAS[st.ticketKey]||st.ticketKey, ki=KELLY_ITEMS[c];
+      if(ki&&!BOOKABLE_ITEMS.find(x=>x.key==='j_'+c)) BOOKABLE_ITEMS.push({key:'j_'+c,name:ki.name+' (with the Kellys)',icon:ki.icon||'🎟',url:ki.url||'#',urgency:'med',day:dn,timeLabel:ki.timeLabel,optional:false,walkin:!!ki.walkin,
+        instructions:'You marked this stop as one you will join. Check the opening hours and book your own tickets, then enter the confirmation here.'}); }
+  });
+  updateQuestBadge&&updateQuestBadge();
+}
+window.__FV=()=>FRIEND_VIEW; window._lsRawGet=rawGet; window.pvPull=pvPull;
+function friendBoot(){
+  if(ROLE!=='friend'||window.__NS) return;
+  snapshotKelly();
+  window.__NS='jf_'; pvLoadTs();
+  try{ loadTickets(); loadEdits(); loadLedger(); }catch(e){}
+  const n=teamNames();
+  STEP_PEOPLE.length=0; STEP_PEOPLE.push(['corby',n[0]],['cheryl',n[1]]);
+  LEDGER_WHO.length=0; LEDGER_WHO.push(n[0],n[1],'Both');
+  if(!rawGet('jf_ledger')) LEDGER.settings.travelers=2;
+  const PB={pichu:[['Puffball','🐧',0],['Skier','⛷️',100000],['Champion','🏆',300000]],charmander:[['Chilly','🧊',0],['Lifter','🏋️',100000],['Titan','💪',300000]],squirtle:[['Splash','💦',0],['Surfer','🏄',100000],['Wave King','🌊',300000]],bulbasaur:[['Sprout','🌱',0],['Hiker','🥾',100000],['Trailblazer','🏔️',300000]],magikarp:[['Fishy','🐟',0],['Pickler','🏓',200000]],togepi:[['Egg','🥚',0],['Hatchling','🐣',100000],['Soarer','🕊️',300000]]};
+  BUDDIES.forEach(b=>{ if(PB[b.id]){ b.st.length=0; PB[b.id].forEach(x=>b.st.push(x)); } });
+  rebuildFriend();
+}
+
 window.addEventListener('fb-ready',()=>{
-  if(!window.FB||!FB.onFriend) return;
-  FB.onFriend(r=>{ if(mergeFP(r)) refreshFriendUI(); });
-  if(ROLE==='friend' && (Object.keys(FP.items).length||FP.basics.u) && FB.setFriend) FB.setFriend(JSON.parse(JSON.stringify(FP)));
+  if(window.FB&&FB.onFriend){ FB.onFriend(r=>{ if(mergeFP(r)) refreshFriendUI(); }); if(ROLE==='friend'&&(Object.keys(FP.items).length||FP.basics.u)&&FB.setFriend) FB.setFriend(JSON.parse(JSON.stringify(FP))); }
+  if(ROLE==='friend'&&window.FB&&FB.onFriendPrivate){ FB.onFriendPrivate(pvPull); setTimeout(pvPush,2500); }
 });
 
-/* ── itinerary: friends' layer on every day ── */
-const uid=()=>'f'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-const mapsLink=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+/* ── text skin for the reused pages (friends see penguin wording, their own names) ── */
+function skin(root){
+  if(ROLE!=='friend'||!root) return;
+  const W=[[/POKÉDEX/g,'PENGUIN LOG'],[/Pokédex/g,'Penguin Log'],[/Pokémon/g,'penguin'],[/POKÉMON/g,'PENGUIN'],[/Poké Ball/g,'Snowball'],[/TRAINER/g,'WADDLER'],[/Trainer/g,'Waddler'],[/KELLY FAMILY/g,teamLabel()],[/the family’s/g,'your'],[/Kelly family/gi,'your team'],[/Family Step/g,'Team Step'],[/Family steps/g,'Team steps'],[/walks with the family/g,'walks with the team']];
+  const tw=document.createTreeWalker(root,NodeFilter.SHOW_TEXT); let n;
+  while((n=tw.nextNode())){ let v=n.nodeValue,o=v; W.forEach(w=>{ v=v.replace(w[0],w[1]); }); if(v!==o) n.nodeValue=v; }
+  root.querySelectorAll('.trainer-avatar').forEach(e=>{ e.textContent='🐧'; });
+}
+
+/* ── Route: the friends' layer on every day ── */
 function awayState(dateObj){ const a=FP.basics.arrive, d=FP.basics.depart; if(!a||!d) return ''; return (dateObj<a||dateObj>d)?'away':'here'; }
 function stopKey(day,stop){ return day+'|'+(stop.name||''); }
-
+function whereTags(it){ const t=it.type||'see', a=[]; if(t==='book'||t==='stay'||t==='fly') a.push('🎟 Catch'); if(t==='see'||t==='eat'||t==='shop'||t==='book') a.push('⭐ Quest'); if(t==='stay'||t==='fly'||t==='move') a.push('🗺️ Travel'); if(t==='shop') a.push('🛃 Customs'); return a.join(' · '); }
 function friendBox(raw){
   const items=Object.values(FP.items).filter(x=>!x.del&&x.day===raw.day).sort((a,b)=>(a.time||'~').localeCompare(b.time||'~')||(a.u||0)-(b.u||0));
   const me=ROLE==='friend';
   if(!items.length && !me) return null;
   const box=document.createElement('div'); box.className='fr-box';
-  box.innerHTML='<div class="fr-h"><span class="fr-peng">'+pg('mazel',26)+'</span> Friends’ plans'+(items.length?' <span class="fr-n">'+items.length+'</span>':'')+'</div>';
+  box.innerHTML='<div class="fr-h"><span class="fr-peng">'+pg('pickle',26)+'</span> '+(me?'Our plans':'Friends’ plans')+(items.length?' <span class="fr-n">'+items.length+'</span>':'')+'</div>';
   items.forEach(it=>{
+    const tt=TYPES[it.type]||TYPES.see, bk=ROLE==='friend'&&(it.type==='book'||it.type==='stay'||it.type==='fly')?ticketView('f_'+it.id):null;
     const r=document.createElement('div'); r.className='fr-item';
-    r.innerHTML='<div class="fr-t">'+(it.time?esc(it.time):'🐧')+'</div><div class="fr-b"><b>'+esc(it.name)+'</b>'+(it.note?'<div class="fr-note">'+esc(it.note)+'</div>':'')+
-      (it.place?'<a class="fr-map" target="_blank" rel="noopener" href="'+mapsLink(it.place)+'">📍 '+esc(it.place)+'</a>':'')+'</div>'+
+    r.innerHTML='<div class="fr-t">'+(it.time?esc(it.time):tt[0])+'</div><div class="fr-b"><b>'+tt[0]+' '+esc(it.name)+'</b>'+(it.note?'<div class="fr-note">'+esc(it.note)+'</div>':'')+
+      (it.place?'<a class="fr-map" target="_blank" rel="noopener" href="'+mapsLink(it.place)+'">📍 '+esc(it.place)+'</a>':'')+
+      (me?'<div class="fr-where">'+whereTags(it)+(bk?(bk.booked?' · <b class="fr-ok">✓ Booked'+(bk.confirmation?' '+esc(bk.confirmation):'')+'</b>':' · <b class="fr-todo">⚠ not booked</b>'):'')+'</div>':'')+'</div>'+
       (me?'<div class="fr-act"><button data-a="e" aria-label="Edit">✎</button><button data-a="d" aria-label="Delete">✕</button></div>':'');
     if(me){
       r.querySelector('[data-a="d"]').onclick=e=>{ e.stopPropagation(); it.del=true; it.u=Date.now(); saveFP(true); renderItin(); };
@@ -6249,17 +6387,27 @@ function friendBox(raw){
 function openForm(box,raw,it){
   const old=box.querySelector('.fr-form'); if(old) old.remove();
   const f=document.createElement('div'); f.className='fr-form';
-  f.innerHTML='<input class="fr-in" id="frTime" placeholder="Time (e.g. 6pm)" maxlength="20"><input class="fr-in" id="frName" placeholder="What are you doing?" maxlength="80">'+
-    '<input class="fr-in" id="frPlace" placeholder="Place or address (optional, makes a map link)" maxlength="120"><textarea class="fr-in" id="frNote" rows="2" placeholder="Notes (optional)" maxlength="300"></textarea>'+
-    '<div class="fr-row"><button class="fr-save">Save</button><button class="fr-cancel">Cancel</button></div>';
-  if(it){ $('#frTime',f).value=it.time||''; $('#frName',f).value=it.name||''; $('#frPlace',f).value=it.place||''; $('#frNote',f).value=it.note||''; }
+  f.innerHTML='<input class="fr-in" id="frName" placeholder="What are you doing?" maxlength="80">'+
+    '<select class="fr-in" id="frType">'+Object.keys(TYPES).map(k=>'<option value="'+k+'">'+TYPES[k][0]+' '+TYPES[k][1]+'</option>').join('')+'</select>'+
+    '<input class="fr-in" id="frTime" placeholder="Time (e.g. 6pm)" maxlength="20">'+
+    '<input class="fr-in" id="frPlace" placeholder="Place or address (optional, makes a map link)" maxlength="120">'+
+    '<input class="fr-in" id="frNights" type="number" min="1" max="30" placeholder="How many nights?" style="display:none">'+
+    '<input class="fr-in" id="frCost" type="number" min="0" placeholder="Cost per adult in ¥ (optional)" style="display:none">'+
+    '<textarea class="fr-in" id="frNote" rows="2" placeholder="Notes (optional)" maxlength="300"></textarea>'+
+    '<div class="fr-auto" id="frAuto"></div><div class="fr-row"><button class="fr-save">Save</button><button class="fr-cancel">Cancel</button></div>';
+  let touched=!!it;
+  const sync=()=>{ const t=$('#frType',f).value; $('#frNights',f).style.display=t==='stay'?'':'none'; $('#frCost',f).style.display=t==='move'?'':'none';
+    $('#frAuto',f).textContent='Will appear in: Route'+({see:' · Quest',eat:' · Quest',shop:' · Quest · Customs',book:' · Catch · Quest',stay:' · Catch · Travel',fly:' · Catch · Travel',move:' · Travel'}[t]||''); };
+  if(it){ $('#frName',f).value=it.name||''; $('#frType',f).value=it.type||'see'; $('#frTime',f).value=it.time||''; $('#frPlace',f).value=it.place||''; $('#frNote',f).value=it.note||''; $('#frNights',f).value=it.nights||''; $('#frCost',f).value=it.cost||''; }
+  $('#frName',f).oninput=e=>{ if(!touched){ $('#frType',f).value=guessType(e.target.value); sync(); } };
+  $('#frType',f).onchange=()=>{ touched=true; sync(); }; sync();
   f.onclick=e=>e.stopPropagation();
   $('.fr-cancel',f).onclick=()=>f.remove();
   $('.fr-save',f).onclick=()=>{
     const name=$('#frName',f).value.trim(); if(!name){ showToast('Add a name for the plan'); return; }
     const rec=it||{id:uid(),day:raw.day};
-    Object.assign(rec,{time:$('#frTime',f).value.trim(),name,place:$('#frPlace',f).value.trim(),note:$('#frNote',f).value.trim(),u:Date.now(),del:false});
-    FP.items[rec.id]=rec; saveFP(true); STATE.expandedDays.add(raw.day); renderItin();
+    Object.assign(rec,{type:$('#frType',f).value,time:$('#frTime',f).value.trim(),name,place:$('#frPlace',f).value.trim(),note:$('#frNote',f).value.trim(),nights:$('#frNights',f).value,cost:$('#frCost',f).value,u:Date.now(),del:false});
+    FP.items[rec.id]=rec; saveFP(true); STATE.expandedDays.add(raw.day); renderItin(); showToast('Added ✓ '+whereTags(rec));
   };
   box.appendChild(f); const nm=$('#frName',f); if(nm) nm.focus();
 }
@@ -6268,7 +6416,7 @@ function decorateItin(){
   const me=ROLE==='friend';
   if(me && !wrap.querySelector('.fr-welcome')){
     const w=document.createElement('div'); w.className='fr-welcome';
-    w.innerHTML='<div class="fr-wp">'+pg('bagel',46)+pg('mazel',46)+'</div><div><b>Welcome, friends!</b><br>This is the Kellys’ route. Tap a day to open it, press <b>🐧 We’ll join</b> on anything you’d like to do with them, and use <b>＋ Add our plan</b> for your own stops. They’ll see them too.</div>';
+    w.innerHTML='<div class="fr-wp">'+pg('skier',46)+pg('lifter',46)+pg('pickle',46)+'</div><div><b>Welcome, friends!</b><br>This is the Kellys’ route. Tap <b>🐧 We’ll join</b> on anything you want to do with them, or <b>＋ Add our plan</b> on any day. Your plans become items in <b>Catch, Quest, Travel</b> and <b>Customs</b> automatically — and the Kellys see your Route plans.</div>';
     wrap.insertBefore(w,wrap.firstChild);
   }
   DAYS.forEach(raw=>{
@@ -6289,52 +6437,86 @@ function decorateItin(){
     const box=friendBox(raw); if(box) body.appendChild(box);
     const st=awayState(raw.dateObj), dd=$('.day-date',card);
     if(st && dd && !dd.querySelector('.fr-tag')){ const t=document.createElement('span'); t.className='fr-tag '+st; t.textContent=st==='here'?'🐧 here':'🐧 away'; dd.appendChild(t); }
-    const items=Object.values(FP.items).filter(x=>!x.del&&x.day===raw.day).length;
-    if(items && !me){ const hd=$('.day-header',card); if(hd && !hd.querySelector('.fr-dot')){ const d=document.createElement('span'); d.className='fr-dot'; d.title='Friends have plans this day'; d.textContent='🐧'; hd.insertBefore(d,$('.day-city-tag',hd)); } }
+    const n=Object.values(FP.items).filter(x=>!x.del&&x.day===raw.day).length;
+    if(n && !me){ const hd=$('.day-header',card); if(hd && !hd.querySelector('.fr-dot')){ const d=document.createElement('span'); d.className='fr-dot'; d.title='Friends have plans this day'; d.textContent='🐧'; hd.insertBefore(d,$('.day-city-tag',hd)); } }
+    if(me){ const booked=Object.values(FP.items).filter(x=>!x.del&&x.day===raw.day&&['book','stay','fly'].includes(x.type)&&ticketView('f_'+x.id).booked);
+      if(booked.length){ let tb=$('.day-ticket-bar',card); if(!tb){ tb=document.createElement('div'); tb.className='day-ticket-bar'; card.insertBefore(tb,body); } booked.forEach(x=>{ const c=document.createElement('span'); c.className='ticket-chip'; c.textContent=(TYPES[x.type]||TYPES.see)[0]+' '+x.name; tb.appendChild(c); }); } }
   });
+  skin(wrap);
 }
 const __ri3=renderItin; renderItin=function(){ __ri3.apply(this,arguments); try{ decorateItin(); }catch(e){ console.warn(e); } };
 
-/* ── "Travel" tab: friends' own page / read-only card for the Kellys ── */
+/* ── Travel tab ── */
 function basicsCard(edit){
   const b=FP.basics, c=document.createElement('div'); c.className='fr-card';
   if(edit){
-    c.innerHTML='<div class="fr-hero">'+pg('bagel',64)+pg('mazel',64)+'</div><div class="fr-title">Our trip basics</div>'+
+    c.innerHTML='<div class="fr-hero">'+pg('skier',56)+pg('lifter',56)+pg('pickle',56)+pg('ramen',56)+'</div><div class="fr-title">Our trip basics</div>'+
+    '<label>Our names (two, separated by a comma)<input id="fbNames" class="fr-in" placeholder="e.g. Sam, Alex" maxlength="40"></label>'+
     '<label>We arrive in Japan<input type="date" id="fbArrive" class="fr-in"></label><label>We fly home<input type="date" id="fbDepart" class="fr-in"></label>'+
-    '<label>Our flights<textarea id="fbFlights" class="fr-in" rows="2" placeholder="Airline, flight numbers, times"></textarea></label>'+
-    '<label>Where we are staying<textarea id="fbLodging" class="fr-in" rows="2" placeholder="Hotel or apartment, address, dates"></textarea></label>'+
     '<label>Notes for the Kellys<textarea id="fbNotes" class="fr-in" rows="2" placeholder="Ideas, must-sees, things to coordinate"></textarea></label>'+
-    '<button class="fr-save" id="fbSave">Save</button><div class="fr-hint">Saved plans sync to the Kellys automatically. Days outside your dates show “🐧 away” on the route.</div>';
-    $('#fbArrive',c).value=b.arrive||''; $('#fbDepart',c).value=b.depart||''; $('#fbFlights',c).value=b.flights||''; $('#fbLodging',c).value=b.lodging||''; $('#fbNotes',c).value=b.notes||'';
-    $('#fbSave',c).onclick=()=>{ FP.basics={arrive:$('#fbArrive',c).value,depart:$('#fbDepart',c).value,flights:$('#fbFlights',c).value.trim(),lodging:$('#fbLodging',c).value.trim(),notes:$('#fbNotes',c).value.trim(),u:Date.now()}; saveFP(true); showToast('Saved ✓'); try{ renderItin(); }catch(e){} };
+    '<button class="fr-save" id="fbSave">Save</button><div class="fr-hint">Flights, stays and trains are added from the Route tab (＋ Add our plan) and show up below. Names and dates are shared with the Kellys; Catch, Quest, Customs and costs stay private to you.</div>';
+    $('#fbNames',c).value=b.names||''; $('#fbArrive',c).value=b.arrive||''; $('#fbDepart',c).value=b.depart||''; $('#fbNotes',c).value=b.notes||'';
+    $('#fbSave',c).onclick=()=>{ FP.basics=Object.assign({},FP.basics,{names:$('#fbNames',c).value.trim(),arrive:$('#fbArrive',c).value,depart:$('#fbDepart',c).value,notes:$('#fbNotes',c).value.trim(),u:Date.now()});
+      const n=teamNames(); STEP_PEOPLE.length=0; STEP_PEOPLE.push(['corby',n[0]],['cheryl',n[1]]); LEDGER_WHO.length=0; LEDGER_WHO.push(n[0],n[1],'Both');
+      saveFP(true); showToast('Saved ✓'); try{ renderItin(); }catch(e){} };
   } else {
-    const has=b.arrive||b.depart||b.flights||b.lodging||b.notes;
-    c.innerHTML='<div class="fr-hero">'+pg('mazel',48)+'</div><div class="fr-title">Friends’ trip</div>'+
-     (has?('<div class="fr-line"><b>Dates</b> '+esc(b.arrive||'?')+' → '+esc(b.depart||'?')+'</div>'+(b.flights?'<div class="fr-line"><b>Flights</b> '+esc(b.flights)+'</div>':'')+(b.lodging?'<div class="fr-line"><b>Staying</b> '+esc(b.lodging)+'</div>':'')+(b.notes?'<div class="fr-line"><b>Notes</b> '+esc(b.notes)+'</div>':'')):'<div class="fr-line">They haven’t added their dates yet.</div>');
+    const has=b.arrive||b.depart||b.notes||b.names;
+    c.innerHTML='<div class="fr-hero">'+pg('pickle',48)+'</div><div class="fr-title">Friends’ trip</div>'+
+     (has?((b.names?'<div class="fr-line"><b>Who</b> '+esc(b.names)+'</div>':'')+'<div class="fr-line"><b>Dates</b> '+esc(b.arrive||'?')+' → '+esc(b.depart||'?')+'</div>'+(b.notes?'<div class="fr-line"><b>Notes</b> '+esc(b.notes)+'</div>':'')):'<div class="fr-line">They haven’t added their dates yet.</div>');
   }
   return c;
 }
+function friendTravel(){
+  const w=$('#screen-flights'); if(!w) return; w.innerHTML='';
+  const H=t=>{ const d=document.createElement('div'); d.className='sx-title'; d.textContent=t; w.appendChild(d); };
+  const empty=t=>{ const e=document.createElement('div'); e.className='fr-empty'; e.textContent=t; w.appendChild(e); };
+  w.appendChild(basicsCard(true));
+  const bookBtn=(key)=>{ const b=document.createElement('button'); b.className='fr-join'; b.textContent='Open in Catch →'; b.onclick=()=>{ STATE.expandedItems.add(key); navigate('tickets'); }; return b; };
+  const card=(top,big,mid,note,key)=>{ const ok=key&&ticketView(key).booked; const c=document.createElement('div'); c.className='cardx'+(ok?' booked':' todo');
+    c.innerHTML='<div class="cx-top"><span class="cx-pill intl">'+top+'</span><span class="'+(ok?'cx-ok':'cx-warn')+'">'+(ok?'✓ Booked':'⚠ To book')+'</span></div><div class="cx-big">'+esc(big)+'</div>'+(mid?'<div class="cx-mid">'+esc(mid)+'</div>':'')+(note?'<div class="cx-note">'+esc(note)+'</div>':'');
+    if(key) c.appendChild(bookBtn(key)); w.appendChild(c); };
+  H('✈️ OUR FLIGHTS');
+  if(!FRIEND_VIEW.flights.length) empty('No flights yet. On the Route tab open the day you land (or leave) and press ＋ Add our plan → Flight.');
+  FRIEND_VIEW.flights.forEach(x=>card('Day '+x.it.day+(x.d.date?' · '+x.d.date:''),x.it.name,[x.it.time,x.it.place].filter(Boolean).join(' · '),x.it.note,x.key));
+  H('🏨 OUR STAYS');
+  if(!FRIEND_VIEW.stays.length) empty('No stays yet. On the Route tab, ＋ Add our plan → Stay, and enter the number of nights.');
+  FRIEND_VIEW.stays.forEach(x=>card(x.label,x.it.name,x.it.place,x.it.note,x.key));
+  H('🚅 GETTING AROUND');
+  if(!FRIEND_VIEW.moves.length) empty('No trains or taxis yet. ＋ Add our plan → Train / taxi / bus (add a cost per adult if you know it).');
+  let total=0, last='';
+  FRIEND_VIEW.moves.forEach(x=>{ const lab='Day '+x.it.day+(x.d.date?' · '+x.d.date:''); if(lab!==last){ last=lab; const g=document.createElement('div'); g.className='sx-sub'; g.textContent=lab; w.appendChild(g); }
+    const cost=(parseFloat(x.it.cost)||0)*2; total+=cost; const c=document.createElement('div'); c.className='cardx';
+    c.innerHTML='<div class="cx-top"><div class="cx-name">🚆 '+esc(x.it.name)+'</div><span class="cx-when">'+esc(x.it.time||'')+'</span></div>'+(x.it.place?'<div class="cx-mid">'+esc(x.it.place)+'</div>':'')+(cost?'<div class="cx-price">≈ ¥'+Math.round(cost).toLocaleString('en-US')+' for 2 adults</div>':'')+(x.it.note?'<div class="cx-note">'+esc(x.it.note)+'</div>':''); w.appendChild(c); });
+  if(total){ const s=document.createElement('div'); s.className='info-banner blue'; s.innerHTML='<strong>Estimated transport for the two of you: ¥'+Math.round(total).toLocaleString('en-US')+'</strong>'; w.appendChild(s); }
+  const t=document.createElement('div'); t.className='fr-card'; t.innerHTML='<div class="fr-title">🥛 Dairy-free help</div><div class="fr-line">Open <b>Translate</b> for a Japanese lactose-intolerance card, and <b>Food</b> to show only dairy-easy places.</div>'; w.appendChild(t);
+  skin(w);
+}
 const __rf=renderFlights;
 renderFlights=function(){
-  if(ROLE==='friend'){
-    const w=$('#screen-flights'); if(!w) return; w.innerHTML='';
-    w.appendChild(basicsCard(true));
-    const n=Object.values(FP.items).filter(x=>!x.del).length;
-    const s=document.createElement('div'); s.className='fr-card';
-    s.innerHTML='<div class="fr-title">🥛 Dairy-free help</div><div class="fr-line">Open <b>Translate</b> for a Japanese card that says you are lactose intolerant, and <b>Food</b> to filter for dairy-friendly places.</div><div class="fr-line">You have added <b>'+n+'</b> plan'+(n===1?'':'s')+' so far.</div>';
-    w.appendChild(s); return;
-  }
+  if(ROLE==='friend'){ friendTravel(); return; }
   __rf.apply(this,arguments);
-  try{ const w=$('#screen-flights'); if(w && !w.querySelector('.fr-card')) w.insertBefore(basicsCard(false),w.firstChild); }catch(e){}
+  try{ const w=$('#screen-flights'); if(w && !w.querySelector('.fr-card')) w.insertBefore(basicsCard(false),w.firstChild);
+    const n=FRIEND_COUNT(); if(n && w && !w.querySelector('.fr-note-n')){ const d=document.createElement('div'); d.className='fr-note-n info-banner blue'; d.textContent='🐧 Friends have added '+n+' plan'+(n>1?'s':'')+' to the Route tab.'; w.insertBefore(d,w.children[1]||null); } }catch(e){}
 };
+const FRIEND_COUNT=()=>Object.values(FP.items).filter(x=>!x.del).length;
 
-/* ── navigation guard for friends ── */
-const __nav9=navigate;
-navigate=function(screen){
-  if(ROLE==='friend' && ['tickets','customs','alerts','edit','links','hotels','adventure'].includes(screen)) screen='itin';
-  __nav9(screen);
-  if(screen==='flights' && ROLE==='friend') renderFlights();
-};
+/* ── Catch / Quest / Customs wrappers for the friends' own pages ── */
+const __rt1=renderTickets;
+renderTickets=function(){ __rt1.apply(this,arguments); try{ if(ROLE!=='friend') return; const w=$('#screen-tickets'); const i=$('.info-banner',w);
+  if(i) i.innerHTML='<strong>🎟 Your Catch list — bookings & tickets</strong><br>Anything you mark as a ticket, reservation, flight or stay on the Route tab lands here automatically, plus tickets for Kelly stops you join. Open a card, enter the confirmation number and press CATCH IT.';
+  if(!BOOKABLE_ITEMS.length){ const e=document.createElement('div'); e.className='fr-empty'; e.textContent='Nothing to book yet. Add a plan on the Route tab and choose “Needs a ticket or reservation”, “Stay” or “Flight”.'; w.appendChild(e); }
+  skin(w); }catch(e){ console.warn(e); } };
+const __ra1=renderAdventure;
+renderAdventure=function(){ __ra1.apply(this,arguments); try{ if(ROLE!=='friend') return; const w=$('#screen-adventure');
+  if(!QUESTS.length && !w.querySelector('.fr-empty')){ const e=document.createElement('div'); e.className='fr-empty'; e.textContent='No quests yet. Plans you add on the Route tab, and Kelly stops you join, become quests here.'; const tc=$('.trainer-card',w); if(tc&&tc.nextSibling) w.insertBefore(e,tc.nextSibling); else w.appendChild(e); }
+  skin(w); }catch(e){ console.warn(e); } };
+const __rc1=renderCustoms;
+renderCustoms=function(){ __rc1.apply(this,arguments); try{ if(ROLE!=='friend') return; const w=$('#screen-customs'); if(!w) return;
+  const box=document.createElement('div'); box.className='fr-card'; box.innerHTML='<div class="fr-title">🛍️ Shopping plans from your Route</div>';
+  if(!FRIEND_VIEW.shops.length){ box.insertAdjacentHTML('beforeend','<div class="fr-line">None yet. Add a plan on the Route tab with type “Shopping” and it shows here, ready to log when you buy.</div>'); }
+  FRIEND_VIEW.shops.forEach(x=>{ const r=document.createElement('div'); r.className='fr-item'; r.innerHTML='<div class="fr-t">Day '+x.it.day+'</div><div class="fr-b"><b>'+esc(x.it.name)+'</b>'+(x.it.place?'<div class="fr-note">'+esc(x.it.place)+'</div>':'')+'</div>';
+    const b=document.createElement('button'); b.className='fr-join'; b.textContent='Log purchase'; b.onclick=()=>{ const n=document.getElementById('lg-name'), s=document.getElementById('lg-store'); if(n){ n.value=x.it.name; n.scrollIntoView({block:'center'}); n.focus(); } if(s&&x.it.place) s.value=x.it.place; }; r.appendChild(b); box.appendChild(r); });
+  w.insertBefore(box,w.children[1]||null); skin(w); }catch(e){ console.warn(e); } };
 
 /* ── dairy-friendly food guide ── */
 const DAIRY={
@@ -6390,24 +6572,30 @@ renderFood=function(){
   }catch(e){ console.warn(e); }
 };
 
-/* ── Translate: lactose card for everybody; friends skip the Kellys' taxi list ── */
+/* ── Translate: lactose card for everybody ── */
 const __rt9=renderTranslate;
 renderTranslate=function(){
   __rt9.apply(this,arguments);
   try{
     const s=$('#screen-translate .staff-sec'); if(!s || s.dataset.fr) return; s.dataset.fr=1;
-    if(ROLE==='friend'){ [s.children[2],s.children[1]].forEach(e=>e&&e.remove()); }
     const btn=document.createElement('button'); btn.className='st-save lactose-btn'; btn.textContent='🥛 Show lactose-intolerance card';
     btn.onclick=()=>showStaff('私は乳糖不耐症です。牛乳、クリーム、チーズ、バターがたくさん入った料理は食べられません。少量なら大丈夫です。','I am lactose intolerant. I cannot eat dishes with a lot of milk, cream, cheese or butter. Small amounts are OK.','');
     s.insertBefore(btn,s.children[1]||null);
   }catch(e){ console.warn(e); }
 };
 
+/* ── navigation guard: the friends never open the Kellys' planning screens ── */
+const __nav9=navigate;
+navigate=function(screen){
+  if(ROLE==='friend' && ['edit','links','hotels','alerts'].includes(screen)) screen='itin';
+  __nav9(screen);
+};
+
 /* ── boot ── */
 const __au9=afterUnlock;
-afterUnlock=function(){ try{ applyTheme(); }catch(e){} __au9.apply(this,arguments); };
+afterUnlock=function(){ try{ friendBoot(); applyTheme(); }catch(e){ console.warn(e); } __au9.apply(this,arguments); };
 document.addEventListener('DOMContentLoaded',()=>{ try{ applyTheme(); }catch(e){} });
-try{ if(ROLE){ applyTheme(); renderItin(); } }catch(e){}
+try{ if(ROLE){ friendBoot(); applyTheme(); renderItin(); if(ROLE==='friend'){ updateQuestBadge(); } } }catch(e){ console.warn(e); }
 })();
 
 </script>
@@ -6441,7 +6629,9 @@ if (firebaseConfig.apiKey) {
     Object.assign(FBx, {
       /* quests */
       setQuests: safe(s => setDoc(doc(db, 'trip', 'quests'), { completions: s, updatedAt: Date.now() })),
-      setFriend: safe(s => setDoc(doc(db, 'trip', 'friendPlans'), s)),
+      setFriend: safe(s => setDoc(doc(db, 'trip', 'friendPlans'), s, { merge: true })),
+      setFriendPrivate: safe(s => setDoc(doc(db, 'trip', 'friendPrivate'), s, { merge: true })),
+      onFriendPrivate: safe(cb => onSnapshot(doc(db, 'trip', 'friendPrivate'), snap => cb(snap.exists() ? snap.data() : null), e => console.warn(e))),
       onFriend: safe(cb => onSnapshot(doc(db, 'trip', 'friendPlans'), snap => cb(snap.exists() ? snap.data() : null), e => console.warn(e))),
       onQuests: safe(cb => onSnapshot(doc(db, 'trip', 'quests'), snap => cb(snap.exists() ? (snap.data().completions || {}) : {}), e => console.warn(e))),
       /* ledger */
